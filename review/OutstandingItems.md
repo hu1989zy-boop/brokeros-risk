@@ -1,44 +1,48 @@
-# Phase 0.6 Outstanding Items
+# Q-004 Outstanding Items
 
 ## Remaining Work
 
-- Architect review and approval of Q-003, ADR-005, and this Review Package.
-- Create the repository's initial reviewed Git commit.
-- Run Docker Compose, MySQL/Flyway, Kafka, Redis, and Kubernetes validation in an
-  environment that provides the required tools.
+- Push or otherwise run `.github/workflows/ci.yml` on a Docker-capable GitHub
+  runner, or execute `scripts/verify-infrastructure.sh` on an equivalent isolated
+  host.
+- Capture actual MySQL health and `flyway_schema_history` evidence, including V1
+  checksum/success and post-restart row count.
+- Capture Redis PONG/empty-keyspace and Kafka broker API evidence.
+- Regenerate the Q-004 Review Package after those checks and obtain architect
+  review of Q-004 and ADR-006.
 
 ## Known Issues
 
-- `git diff --stat` cannot represent untracked files because the repository has
-  no commit baseline.
-- Maven uses Java 23 with `--release 21`, while the host default `java` command
-  points elsewhere; builds are valid but developer setup is confusing.
-- Mockito emits a non-failing dynamic-agent warning under the Maven Java 23
-  runtime.
+- This host has no Docker CLI/daemon. A standalone Compose binary can validate
+  semantics but cannot start containers.
+- The repository has no Git remote, so the new CI workflow cannot be dispatched
+  from this task.
+- Maven runs on local Java 23 with `--release 21`; Mockito warns that dynamic
+  agent loading will be restricted in a future JDK.
 
 ## Deferred Work
 
-- CI enforcement for build, tests, Compose config, Kustomize rendering, and
-  MySQL-backed Flyway migration verification.
-- Optional architecture/static-analysis tools; deferred under YAGNI until
-  recurring violations justify them.
-- Authentication/authorization, API versioning, business result codes, business
-  modules, business tables, topics, Redis keys, Audit implementation, and all
-  external integrations; each requires an approved Requirement.
+- CI performance optimization or job splitting; first obtain one successful
+  end-to-end run.
+- CD and production deployment automation.
+- Shared BrokerOS framework extraction; current patterns have one consumer.
+- Authentication, authorization, API versioning, business ResultCodes, all risk
+  modules, formal Audit, business tables, topics, Redis keys, and adapters.
 
 ## Risks
 
-- Standards can drift if future Architecture Reviews provide labels without
-  inspected-scope evidence.
-- Starting business work before an initial commit would continue to weaken diff
-  traceability.
-- Future numeric ResultCode adoption could be breaking if symbolic codes have
-  external consumers; it requires explicit migration design.
-- First business migrations remain at risk until validated on real MySQL.
+- Q-004 runtime acceptance is incomplete until real MySQL/Flyway, Redis, and
+  Kafka checks pass.
+- A first business migration could still fail on MySQL despite unit/static
+  success.
+- Pinned Actions and kubectl versions require maintenance as runner support and
+  security releases evolve.
+
+DO NOT START FIRST BUSINESS MIGRATION.
 
 ## Suggested Next Step
 
-After architect approval, establish a small Q-004 CI and integration-validation
-foundation or explicitly approve the first business Requirement. Before the
-first business schema migration, prioritize an initial Git baseline and real
-MySQL/Flyway verification.
+Provide a Docker-capable runner by configuring the repository remote and
+running the Q-004 workflow, or run the infrastructure script on an approved
+local/test host. Resolve any runtime failure, regenerate evidence, and request
+architect approval. Do not start Phase 1 business work before that gate passes.

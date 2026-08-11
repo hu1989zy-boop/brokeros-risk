@@ -1,0 +1,7 @@
+Command: git diff --stat
+
+No output.
+
+The repository has no commits yet, so every project file is untracked and
+`git diff --stat` has no tracked baseline to compare. `GitStatus.txt` records
+the Git state, while `Summary.md` provides the Phase 0.6 file accounting.

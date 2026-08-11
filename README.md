@@ -3,10 +3,10 @@
 BrokerOS Risk is an independent, broker-neutral trading risk management
 platform for Forex/CFD brokers.
 
-This repository currently contains the Phase 0.6 development standards. It follows
-the Phase 1 architecture constraints: a Java 21/Spring Boot modular monolith,
-MySQL, Redis, Kafka, Docker, and Kubernetes. Formal risk-management features
-have not been implemented yet.
+This repository currently contains the Q-004 CI and integration-verification
+foundation. It follows the Phase 1 architecture constraints: a Java 21/Spring
+Boot modular monolith, MySQL, Redis, Kafka, Docker, and Kubernetes. Formal
+risk-management features have not been implemented yet.
 
 ## Repository layout
 
@@ -17,7 +17,7 @@ have not been implemented yet.
 - `docs/` — architecture, requirements, ADRs, and reusable skills
 - `docs/lessons/` — honest lessons from completed phases and requirements
 - `review/` — architect review package for the completed phase or requirement
-- `scripts/` — project automation placeholder
+- `scripts/` — repository-owned engineering verification
 
 ## Local verification
 
@@ -31,7 +31,21 @@ Run the backend tests:
 ```bash
 cd backend
 mvn test
+mvn package
 ```
+
+Run repository and deployment verification when the required tools are
+available:
+
+```bash
+sh scripts/verify-static.sh
+sh scripts/verify-kustomize.sh
+sh scripts/verify-infrastructure.sh
+```
+
+The GitHub Actions workflow runs the same blocking checks with Java 21,
+Kustomize, and an isolated Docker Compose project. It verifies infrastructure
+only and performs no deployment.
 
 ## Local development with Docker Compose
 
@@ -62,6 +76,8 @@ Local endpoints and ports:
 - Redis: `localhost:6379`
 - Kafka: `localhost:29092`
 
+All Compose host ports bind to loopback only.
+
 Docker Compose reads local database passwords from the ignored `.env` file.
 The tracked `.env.example` contains no credential values. Kubernetes database
 credentials must be supplied through the deployment environment's approved
@@ -69,9 +85,9 @@ Secret-management process.
 
 ## Current scope
 
-Phase 0.6 adds durable development, naming, API, database, auditability,
-messaging, cache, security, delivery, and review standards. It adds no business
-functionality, business tables, production topics, or external integrations.
+Q-004 adds CI and infrastructure verification only. It adds no business
+functionality, business table, production topic, production Redis key, or
+external integration.
 
 ## Mandatory development sequence
 

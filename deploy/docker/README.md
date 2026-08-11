@@ -20,3 +20,8 @@ docker compose --profile app up --build
 
 This directory is reserved for future Docker-specific deployment assets that
 do not belong in the local Compose file.
+
+Q-004 integration verification uses `scripts/verify-infrastructure.sh`. It
+generates in-memory local/test credentials, assigns a unique Compose project,
+verifies the full `app` profile, and removes only that project's containers and
+volumes. All published ports bind to `127.0.0.1`.

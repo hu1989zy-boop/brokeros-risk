@@ -1,87 +1,115 @@
-Command: tree -a -L 4 -I '.git|target|.DS_Store'
-
 .
 ├── .editorconfig
+├── .env.example
+├── .github
+│   └── workflows
+│       └── ci.yml
 ├── .gitignore
 ├── AGENTS.md
 ├── README.md
 ├── adapters
-│   ├── mt4
-│   │   └── README.md
-│   └── mt5
-│       └── README.md
+│   ├── mt4
+│   │   └── README.md
+│   └── mt5
+│       └── README.md
 ├── backend
-│   ├── .dockerignore
-│   ├── Dockerfile
-│   ├── README.md
-│   ├── pom.xml
-│   └── src
-│       ├── main
-│       │   ├── java
-│       │   └── resources
-│       └── test
-│           └── java
+│   ├── .dockerignore
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   └── resources
+│       └── test
+│           └── java
 ├── deploy
-│   ├── docker
-│   │   └── README.md
-│   └── kubernetes
-│       ├── README.md
-│       ├── base
-│       │   ├── configmap.yaml
-│       │   ├── deployment.yaml
-│       │   ├── kustomization.yaml
-│       │   └── service.yaml
-│       ├── prod
-│       │   ├── configmap-patch.yaml
-│       │   ├── deployment-patch.yaml
-│       │   └── kustomization.yaml
-│       └── test
-│           ├── configmap-patch.yaml
-│           ├── deployment-patch.yaml
-│           └── kustomization.yaml
+│   ├── docker
+│   │   └── README.md
+│   └── kubernetes
+│       ├── README.md
+│       ├── base
+│       │   ├── configmap.yaml
+│       │   ├── deployment.yaml
+│       │   ├── kustomization.yaml
+│       │   └── service.yaml
+│       ├── prod
+│       │   ├── configmap-patch.yaml
+│       │   ├── deployment-patch.yaml
+│       │   └── kustomization.yaml
+│       └── test
+│           ├── configmap-patch.yaml
+│           ├── deployment-patch.yaml
+│           └── kustomization.yaml
 ├── docker-compose.yml
 ├── docs
-│   ├── adr
-│   │   ├── ADR-001-technology-roadmap.md
-│   │   ├── ADR-002-system-isolation.md
-│   │   ├── ADR-003-engineering-foundation-standards.md
-│   │   ├── ADR-004-local-development-and-deployment-layout.md
-│   │   └── ADR-005-development-standards.md
-│   ├── architecture
-│   │   ├── phase-0-foundation.md
-│   │   ├── phase-0.5-engineering-foundation.md
-│   │   └── phase-0.6-development-standards.md
-│   ├── lessons
-│   │   ├── 2026-08-11-phase-0.6.md
-│   │   └── README.md
-│   ├── requirements
-│   │   ├── Q-001-phase-0-project-foundation.md
-│   │   ├── Q-002-phase-0.5-engineering-foundation.md
-│   │   └── Q-003-phase-0.6-development-standards.md
-│   └── skills
-│       ├── README.md
-│       ├── development-standards.md
-│       └── phase-0.5-engineering-foundation.md
+│   ├── adr
+│   │   ├── ADR-001-technology-roadmap.md
+│   │   ├── ADR-002-system-isolation.md
+│   │   ├── ADR-003-engineering-foundation-standards.md
+│   │   ├── ADR-004-local-development-and-deployment-layout.md
+│   │   ├── ADR-005-development-standards.md
+│   │   └── ADR-006-ci-and-integration-verification.md
+│   ├── architecture
+│   │   ├── phase-0-foundation.md
+│   │   ├── phase-0.5-engineering-foundation.md
+│   │   ├── phase-0.6-development-standards.md
+│   │   └── q-004-ci-integration-verification-foundation.md
+│   ├── lessons
+│   │   ├── 2026-08-11-phase-0.6.md
+│   │   ├── 2026-08-11-q-004-ci-integration-verification.md
+│   │   └── README.md
+│   ├── requirements
+│   │   ├── Q-001-phase-0-project-foundation.md
+│   │   ├── Q-002-phase-0.5-engineering-foundation.md
+│   │   ├── Q-003-phase-0.6-development-standards.md
+│   │   └── Q-004-ci-integration-verification-foundation.md
+│   └── skills
+│       ├── README.md
+│       ├── ci-integration-verification.md
+│       ├── development-standards.md
+│       └── phase-0.5-engineering-foundation.md
 ├── frontend
-│   └── README.md
+│   └── README.md
 ├── review
-│   ├── ArchitectureReview.md
-│   ├── GitDiffStat.txt
-│   ├── GitStatus.txt
-│   ├── OutstandingItems.md
-│   ├── ProjectTree.txt
-│   ├── Summary.md
-│   ├── Verification.md
-│   └── archive
-│       └── phase-0.5
-│           ├── ArchitectureReview.md
-│           ├── GitDiffStat.txt
-│           ├── GitStatus.txt
-│           ├── OutstandingItems.md
-│           ├── ProjectTree.txt
-│           ├── Summary.md
-│           └── Verification.md
+│   ├── ArchitectureReview.md
+│   ├── GitDiffStat.txt
+│   ├── GitStatus.txt
+│   ├── InitialBaselineCheck.md
+│   ├── OutstandingItems.md
+│   ├── PhaseReviewIndex.md
+│   ├── ProjectTree.txt
+│   ├── Summary.md
+│   ├── Verification.md
+│   └── archive
+│       ├── phase-0
+│       │   ├── ArchitectureReview.md
+│       │   ├── GitDiffStat.txt
+│       │   ├── GitStatus.txt
+│       │   ├── OutstandingItems.md
+│       │   ├── ProjectTree.txt
+│       │   ├── Summary.md
+│       │   └── Verification.md
+│       ├── phase-0.5
+│       │   ├── ArchitectureReview.md
+│       │   ├── GitDiffStat.txt
+│       │   ├── GitStatus.txt
+│       │   ├── OutstandingItems.md
+│       │   ├── ProjectTree.txt
+│       │   ├── Summary.md
+│       │   └── Verification.md
+│       └── phase-0.6
+│           ├── ArchitectureReview.md
+│           ├── GitDiffStat.txt
+│           ├── GitStatus.txt
+│           ├── OutstandingItems.md
+│           ├── ProjectTree.txt
+│           ├── Summary.md
+│           └── Verification.md
 └── scripts
-    └── README.md
+    ├── README.md
+    ├── verify-infrastructure.sh
+    ├── verify-kustomize.sh
+    └── verify-static.sh
 
-28 directories, 55 files
+32 directories, 81 files

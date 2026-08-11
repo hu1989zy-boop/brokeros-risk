@@ -9,9 +9,14 @@ The manifests use Kustomize:
 Render an environment locally with:
 
 ```bash
+kubectl kustomize deploy/kubernetes/base
 kubectl kustomize deploy/kubernetes/test
 kubectl kustomize deploy/kubernetes/prod
 ```
+
+Run `sh scripts/verify-kustomize.sh` to render all three and assert their common
+resource, profile, label, and Secret-reference contracts. Rendering is not a
+cluster deployment.
 
 Both environment overlays expect a Secret named `brokeros-risk-secrets` with a
 `db-password` key. Create it through each cluster's approved secret-management
