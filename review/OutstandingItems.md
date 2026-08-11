@@ -2,9 +2,10 @@
 
 ## Remaining Work
 
-- Push or otherwise run `.github/workflows/ci.yml` on a Docker-capable GitHub
-  runner, or execute `scripts/verify-infrastructure.sh` on an equivalent isolated
-  host.
+- Configure an approved GitHub HTTPS credential or SSH key for the existing
+  `origin`, push local commit `33e0e48`, and run `.github/workflows/ci.yml` on a
+  Docker-capable GitHub runner; alternatively execute
+  `scripts/verify-infrastructure.sh` on an equivalent isolated host.
 - Capture actual MySQL health and `flyway_schema_history` evidence, including V1
   checksum/success and post-restart row count.
 - Capture Redis PONG/empty-keyspace and Kafka broker API evidence.
@@ -15,8 +16,9 @@
 
 - This host has no Docker CLI/daemon. A standalone Compose binary can validate
   semantics but cannot start containers.
-- The repository has no Git remote, so the new CI workflow cannot be dispatched
-  from this task.
+- The configured GitHub `origin` is readable but cannot be written with the
+  available credentials. HTTPS push cannot obtain a username and GitHub rejects
+  the available SSH identity. No remote branch or Actions run was created.
 - Maven runs on local Java 23 with `--release 21`; Mockito warns that dynamic
   agent loading will be restricted in a future JDK.
 
@@ -42,7 +44,8 @@ DO NOT START FIRST BUSINESS MIGRATION.
 
 ## Suggested Next Step
 
-Provide a Docker-capable runner by configuring the repository remote and
-running the Q-004 workflow, or run the infrastructure script on an approved
-local/test host. Resolve any runtime failure, regenerate evidence, and request
-architect approval. Do not start Phase 1 business work before that gate passes.
+Provide approved write authentication for the configured GitHub remote and push
+`33e0e48` to run the Q-004 workflow, or run the infrastructure script on an
+approved local/test host. Resolve any runtime failure, regenerate evidence, and
+request architect approval. Do not start Phase 1 business work before that gate
+passes.

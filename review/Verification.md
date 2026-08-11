@@ -7,7 +7,7 @@
 | Git Baseline | PASS | Root commit `8bf42bc` exists; post-commit `git status --short` contained no unignored path. |
 | Maven Build | PASS | `mvn package` exited 0 and produced the ignored executable JAR; package lifecycle ran all 12 tests. |
 | Unit Tests | PASS | `mvn test`: 12 tests, 0 failures, 0 errors, 0 skipped. |
-| CI | PARTIAL | Workflow exists, uses Java 21/read-only SHA-pinned Actions, and actionlint 1.7.12 exits 0; no remote runner execution exists. |
+| CI | PARTIAL | Workflow exists, uses Java 21/read-only SHA-pinned Actions, and actionlint 1.7.12 exits 0. `origin` is readable, but HTTPS and SSH push authentication failed before upload; no remote runner execution exists. |
 | Docker Compose Config | PASS | Checksum-verified Docker Compose v5.4.0 standalone `config --quiet` exited 0 and listed redis, kafka, mysql, backend. |
 | Docker Startup | NOT EXECUTED | No Docker CLI/daemon is installed locally; infrastructure script exits 1 at its prerequisite check. |
 | MySQL | NOT EXECUTED | Requires the unavailable isolated Docker runtime. |
@@ -74,8 +74,20 @@ sh scripts/verify-static.sh 8bf42bc
 ```
 
 The checksum-verified actionlint 1.7.12 binary exited 0. Static/range/shell and
-migration-boundary checks pass. The selected GitHub Actions workflow has not run
-because this repository has no remote, so CI is not marked PASS.
+migration-boundary checks pass. Local commit `33e0e48` contains the Q-004
+implementation. The configured `origin` was reachable for read, but both
+available write paths failed before upload:
+
+```bash
+git ls-remote --heads origin
+git push -u origin main
+ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new -T git@github.com
+```
+
+`git ls-remote` exited 0 with no remote branch. HTTPS push exited 128 with
+`could not read Username for 'https://github.com'`; the SSH authentication
+check exited 255 with `Permission denied (publickey)`. No commit was uploaded,
+no workflow was dispatched, and CI remains PARTIAL.
 
 ## Docker Validation
 
@@ -146,3 +158,22 @@ Results: 15 YAML files and the POM parse; scripts are syntactically valid; no
 business DDL or Hibernate schema generation is present; no committed credential
 value/private key/certificate is detected. `gitleaks` and `trufflehog` are not
 installed, so their scans were not executed.
+
+## Final Local Reverification
+
+PASS for all locally executable gates on 2026-08-12.
+
+```bash
+cd backend && mvn test
+cd backend && mvn package
+sh scripts/verify-static.sh 8bf42bc
+git diff --check
+actionlint .github/workflows/ci.yml
+docker-compose --profile app -f docker-compose.yml config --quiet
+sh scripts/verify-kustomize.sh
+```
+
+Both Maven lifecycles passed with 12 tests and no failure/error/skip. Static,
+actionlint, Compose semantic config, and base/test/prod Kustomize checks passed.
+The temporary verified tool locations and versions are recorded above; they do
+not alter repository dependencies.

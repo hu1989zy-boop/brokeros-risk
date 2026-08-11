@@ -1,36 +1,13 @@
 Command: git diff --stat
 
- README.md                    |  32 +++++--
- deploy/docker/README.md      |   5 +
- deploy/kubernetes/README.md  |   5 +
- docker-compose.yml           |   8 +-
- docs/skills/README.md        |   3 +
- review/ArchitectureReview.md | 216 +++++++++++++++++++++++--------------------
- review/GitDiffStat.txt       |  37 +++++++-
- review/GitStatus.txt         |  51 +++++-----
- review/OutstandingItems.md   |  62 +++++++------
- review/ProjectTree.txt       | 174 +++++++++++++++++++---------------
- review/Summary.md            | 107 ++++++++++++---------
- review/Verification.md       | 147 +++++++++++++++++++----------
- scripts/README.md            |  23 ++++-
- 13 files changed, 534 insertions(+), 336 deletions(-)
+ ...2026-08-11-q-004-ci-integration-verification.md | 13 ++++++--
+ review/ArchitectureReview.md                       | 13 +++++---
+ review/OutstandingItems.md                         | 21 ++++++------
+ review/Summary.md                                  | 12 +++++--
+ review/Verification.md                             | 37 ++++++++++++++++++++--
+ 5 files changed, 74 insertions(+), 22 deletions(-)
 
-Note: default git diff --stat does not include untracked files. New Q-004
-files are listed below from git ls-files --others --exclude-standard:
-
-.github/workflows/ci.yml
-docs/adr/ADR-006-ci-and-integration-verification.md
-docs/architecture/q-004-ci-integration-verification-foundation.md
-docs/lessons/2026-08-11-q-004-ci-integration-verification.md
-docs/requirements/Q-004-ci-integration-verification-foundation.md
-docs/skills/ci-integration-verification.md
-review/archive/phase-0.6/ArchitectureReview.md
-review/archive/phase-0.6/GitDiffStat.txt
-review/archive/phase-0.6/GitStatus.txt
-review/archive/phase-0.6/OutstandingItems.md
-review/archive/phase-0.6/ProjectTree.txt
-review/archive/phase-0.6/Summary.md
-review/archive/phase-0.6/Verification.md
-scripts/verify-infrastructure.sh
-scripts/verify-kustomize.sh
-scripts/verify-static.sh
+Snapshot note: captured after local Q-004 commit 33e0e48 and before updating
+GitStatus.txt/GitDiffStat.txt themselves. Q-004 implementation changes are in
+that local commit; this stat records only the final evidence correction caused
+by the unavailable GitHub write credentials.

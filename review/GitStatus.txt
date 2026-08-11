@@ -1,29 +1,17 @@
- M README.md
- M deploy/docker/README.md
- M deploy/kubernetes/README.md
- M docker-compose.yml
- M docs/skills/README.md
- M review/ArchitectureReview.md
- M review/GitDiffStat.txt
- M review/GitStatus.txt
- M review/OutstandingItems.md
- M review/ProjectTree.txt
- M review/Summary.md
- M review/Verification.md
- M scripts/README.md
-?? .github/
-?? docs/adr/ADR-006-ci-and-integration-verification.md
-?? docs/architecture/q-004-ci-integration-verification-foundation.md
-?? docs/lessons/2026-08-11-q-004-ci-integration-verification.md
-?? docs/requirements/Q-004-ci-integration-verification-foundation.md
-?? docs/skills/ci-integration-verification.md
-?? review/archive/phase-0.6/
-?? scripts/verify-infrastructure.sh
-?? scripts/verify-kustomize.sh
-?? scripts/verify-static.sh
-!! .DS_Store
-!! backend/.DS_Store
-!! backend/src/.DS_Store
-!! backend/src/main/.DS_Store
-!! backend/target/
-!! deploy/.DS_Store
+Command: git status
+
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   docs/lessons/2026-08-11-q-004-ci-integration-verification.md
+	modified:   review/ArchitectureReview.md
+	modified:   review/OutstandingItems.md
+	modified:   review/Summary.md
+	modified:   review/Verification.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Snapshot note: captured after local Q-004 commit 33e0e48 and before updating
+GitStatus.txt/GitDiffStat.txt themselves. No upstream is configured because the
+authorized push failed before upload; origin/main does not exist.

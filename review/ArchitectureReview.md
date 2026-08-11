@@ -5,8 +5,9 @@
 PARTIAL — DO NOT MARK PASS. No unresolved development-standards violation was
 found in the implementation, but Q-004 acceptance requires real
 MySQL/Flyway/Redis/Kafka verification. Those checks and the selected CI run are
-NOT EXECUTED because this host has no Docker daemon and the repository has no
-remote. The first business migration remains blocked.
+NOT EXECUTED because this host has no Docker daemon and the configured GitHub
+remote cannot be written with the available HTTPS or SSH credentials. The
+first business migration remains blocked.
 
 ## Architecture Decision
 
@@ -81,9 +82,9 @@ found.
 
 Evidence: no critical risk action or business transition was implemented, so
 no runtime Audit record is required. Engineering traceability improved through
-initial commit `8bf42bc`, range-aware diff checks, explicit command evidence,
-component statuses, and preserved Review Packages. Generated credentials are
-intentionally excluded from logs.
+initial commit `8bf42bc`, local Q-004 commit `33e0e48`, range-aware diff checks,
+explicit command evidence, component statuses, and preserved Review Packages.
+Generated credentials are intentionally excluded from logs.
 
 ### Skill compliance
 
@@ -144,6 +145,8 @@ Requirement. No `brokeros-framework`, `brokeros-common`, `brokeros-starter`, or
 
 - Execute the workflow on a Docker-capable GitHub runner or run
   `scripts/verify-infrastructure.sh` on an equivalent host.
+- Configure an approved GitHub HTTPS credential or SSH key for the existing
+  `origin`, then push local commit `33e0e48` to trigger the workflow.
 - Capture the real `flyway_schema_history` row and repeat the Review gate.
 - Do not approve Q-004 or start the first business migration until Docker,
   MySQL/Flyway, Redis, and Kafka rows are PASS.

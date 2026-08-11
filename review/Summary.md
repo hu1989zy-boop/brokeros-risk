@@ -3,9 +3,11 @@
 ## Review Status
 
 PARTIAL — implementation and all locally executable checks pass, but the
-selected CI workflow has not run and this host has no Docker daemon. Real
-MySQL/Flyway, Redis, Kafka, backend-container, and restart-idempotence evidence
-is therefore NOT EXECUTED. Q-004 is not ready for architect approval.
+selected CI workflow has not run and this host has no Docker daemon. The
+configured GitHub remote is reachable, but HTTPS and SSH write authentication
+are unavailable, so commit `33e0e48` could not be pushed. Real MySQL/Flyway,
+Redis, Kafka, backend-container, and restart-idempotence evidence is therefore
+NOT EXECUTED. Q-004 is not ready for architect approval.
 
 ## Current Phase / Requirement
 
@@ -39,6 +41,8 @@ Initial Git baseline status: PASS — commit `8bf42bc`.
 - Confirmed Phase 0, Phase 0.5, and Phase 0.6 Approved requirements and Review
   evidence; added an explicitly retrospective Phase 0 package.
 - Created and verified initial commit `8bf42bc`.
+- Created local Q-004 implementation commit `33e0e48`; verified the configured
+  GitHub remote is readable and recorded the unavailable write credentials.
 - Created Q-004, its architecture document, and Accepted ADR-006.
 - Added one read-only, SHA-pinned GitHub Actions workflow for Java 21, Maven,
   static, Kustomize, Compose, and integration verification.
@@ -85,5 +89,7 @@ None.
 - Compose verification generates ephemeral credentials, owns a unique project,
   and cleans only that project's resources.
 - Compose config and runtime evidence are tracked separately.
+- Remote reachability, authenticated push, workflow dispatch, and successful
+  workflow execution are treated as separate CI evidence levels.
 - Potentially reusable verification remains repository-local and Not Ready To
   Extract because there is only one real consumer.

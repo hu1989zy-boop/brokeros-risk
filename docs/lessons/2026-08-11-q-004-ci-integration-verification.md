@@ -27,8 +27,14 @@ unique Compose projects make integration checks isolated and safe to clean up.
 The local host has no Docker CLI/daemon, kubectl, or kustomize. A checksum-
 verified temporary kubectl completed all Kustomize renders. A checksum-verified
 standalone Docker Compose binary completed semantic config validation, but it
-cannot start containers without a Docker daemon. The repository has no remote,
-so the new GitHub Actions workflow could not be executed from this task.
+cannot start containers without a Docker daemon.
+
+An `origin` remote was later configured for the GitHub repository and read
+access was confirmed. Commit `33e0e48` was created to trigger the workflow, but
+the host has neither HTTPS credentials nor an accepted SSH key for GitHub.
+HTTPS push failed before upload with `could not read Username`; SSH
+authentication failed with `Permission denied (publickey)`. No remote branch or
+workflow run was created, so CI and runtime checks remain PARTIAL/NOT EXECUTED.
 
 ## Problems encountered
 
@@ -49,6 +55,9 @@ commit content before the baseline was created.
   separate evidence levels and must be reported separately.
 - A CI workflow file can be syntax-valid and actionlint-valid while remaining
   PARTIAL until a runner actually executes it.
+- A reachable remote is not equivalent to an authenticated CI execution path;
+  preflight must distinguish remote discovery, write authentication, workflow
+  dispatch, and completed-run evidence.
 - Infrastructure cleanup must be scoped by a unique project name, not by broad
   resource deletion.
 
