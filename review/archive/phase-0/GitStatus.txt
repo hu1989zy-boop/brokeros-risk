@@ -1,0 +1,4 @@
+NOT AVAILABLE — Phase 0 completed before the repository's initial Git commit
+and before the mandatory Review Package process. No historical git status is
+fabricated. The current pre-baseline status is recorded in
+review/InitialBaselineCheck.md.

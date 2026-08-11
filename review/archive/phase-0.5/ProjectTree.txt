@@ -1,0 +1,71 @@
+Command: tree -a -L 4 -I '.git|target|.DS_Store'
+
+.
+├── .editorconfig
+├── .gitignore
+├── AGENTS.md
+├── README.md
+├── adapters
+│   ├── mt4
+│   │   └── README.md
+│   └── mt5
+│       └── README.md
+├── backend
+│   ├── .dockerignore
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   └── resources
+│       └── test
+│           └── java
+├── deploy
+│   ├── docker
+│   │   └── README.md
+│   └── kubernetes
+│       ├── README.md
+│       ├── base
+│       │   ├── configmap.yaml
+│       │   ├── deployment.yaml
+│       │   ├── kustomization.yaml
+│       │   └── service.yaml
+│       ├── prod
+│       │   ├── configmap-patch.yaml
+│       │   ├── deployment-patch.yaml
+│       │   └── kustomization.yaml
+│       └── test
+│           ├── configmap-patch.yaml
+│           ├── deployment-patch.yaml
+│           └── kustomization.yaml
+├── docker-compose.yml
+├── docs
+│   ├── adr
+│   │   ├── ADR-001-technology-roadmap.md
+│   │   ├── ADR-002-system-isolation.md
+│   │   ├── ADR-003-engineering-foundation-standards.md
+│   │   └── ADR-004-local-development-and-deployment-layout.md
+│   ├── architecture
+│   │   ├── phase-0-foundation.md
+│   │   └── phase-0.5-engineering-foundation.md
+│   ├── requirements
+│   │   ├── Q-001-phase-0-project-foundation.md
+│   │   └── Q-002-phase-0.5-engineering-foundation.md
+│   └── skills
+│       ├── README.md
+│       └── phase-0.5-engineering-foundation.md
+├── frontend
+│   └── README.md
+├── review
+│   ├── ArchitectureReview.md
+│   ├── GitDiffStat.txt
+│   ├── GitStatus.txt
+│   ├── OutstandingItems.md
+│   ├── ProjectTree.txt
+│   ├── Summary.md
+│   └── Verification.md
+└── scripts
+    └── README.md
+
+25 directories, 42 files

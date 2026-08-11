@@ -1,0 +1,33 @@
+Phase 0 deliverable tree (retrospective scope; not a contemporaneous Git snapshot)
+
+.
+|-- AGENTS.md
+|-- README.md
+|-- adapters
+|   |-- mt4/README.md
+|   `-- mt5/README.md
+|-- backend
+|   |-- Dockerfile
+|   |-- README.md
+|   |-- pom.xml
+|   `-- src
+|       |-- main
+|       |   |-- java/com/brokeros/risk
+|       |   `-- resources
+|       `-- test/java/com/brokeros/risk
+|-- deploy
+|   |-- docker/README.md
+|   `-- kubernetes
+|       |-- base
+|       |-- test
+|       `-- prod
+|-- docker-compose.yml
+|-- docs
+|   |-- adr
+|   |   |-- ADR-001-technology-roadmap.md
+|   |   `-- ADR-002-system-isolation.md
+|   |-- architecture/phase-0-foundation.md
+|   |-- requirements/Q-001-phase-0-project-foundation.md
+|   `-- skills
+|-- frontend/README.md
+`-- scripts/README.md

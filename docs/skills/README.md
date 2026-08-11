@@ -1,0 +1,14 @@
+# Repository Skills
+
+This directory is reserved for reusable BrokerOS Risk engineering lessons and
+task-specific skills extracted from completed work.
+
+Available engineering knowledge:
+
+- `development-standards.md` — mandatory preflight, architecture, API, database,
+  security, auditability, review, and completion rules for every future task.
+- `phase-0.5-engineering-foundation.md` — Flyway, API envelopes, validation,
+  exception handling, API documentation, and local development checks.
+
+Future skills must remain consistent with `AGENTS.md`, approved requirements,
+and accepted ADRs.

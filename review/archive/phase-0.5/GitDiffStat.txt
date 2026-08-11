@@ -1,0 +1,7 @@
+Command: git diff --stat
+
+No output.
+
+The repository has no commits yet, so every project file is untracked and
+`git diff --stat` has no tracked baseline to compare. See `GitStatus.txt` and
+`Summary.md` for the complete created/modified-file accounting.

@@ -1,0 +1,3 @@
+NOT AVAILABLE — Phase 0 completed without a parent commit, so Git cannot
+reconstruct a meaningful Phase 0 diff stat. No synthetic historical diff is
+presented as original evidence.

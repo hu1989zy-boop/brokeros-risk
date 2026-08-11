@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/brokeros_risk_test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${DB_USERNAME:brokeros}
+    password: ${DB_PASSWORD:}
+    hikari:
+      initialization-fail-timeout: -1
+  kafka:
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP:brokeros-risk-test}
+
+logging:
+  level:
+    root: INFO
+    com.brokeros.risk: DEBUG
