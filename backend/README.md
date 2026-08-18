@@ -46,6 +46,19 @@ database. Add schema changes as new versioned files under
 `src/main/resources/db/migration`. Never edit a migration that has already been
 applied in any shared environment.
 
+## Configuration management
+
+Spring Boot Externalized Configuration is the only runtime configuration
+mechanism. Framework-owned properties retain their native namespaces and must
+not be wrapped in BrokerOS-specific classes. A future real BrokerOS-owned group
+uses `brokeros.risk.<capability>`, immutable `@ConfigurationProperties`, and
+startup-time Jakarta Validation.
+
+There is currently no BrokerOS-owned configuration group, so no production
+properties class exists. See `../docs/configuration/README.md` for the complete
+catalog, profiles, aliases, validation, Secret, restart, and compatibility
+rules.
+
 ## Run tests
 
 ```bash

@@ -1,146 +1,175 @@
-# Q-005 Architecture Review
+# Q-006 Architecture Review
 
 ## Review Result
 
-PARTIAL — ARCHITECTURE AND STANDARDS REVIEW PASS; RUNTIME GATE PENDING
+PARTIAL — ARCHITECTURE AND DEVELOPMENT STANDARDS PASS; CURRENT-REVISION
+DOCKER/CI RUNTIME GATE PENDING
 
-No architecture or development-standards violation was found. Overall Q-005
-cannot be marked PASS because the Docker-capable infrastructure verification
-has not executed against the current changes.
+No architecture or standards violation was found. The only incomplete item is
+operational evidence: the local host has no Docker CLI and no committed Q-006
+revision exists for the approved GitHub Actions fallback.
 
 ## Architecture Decision
 
 ADR required: YES.
 
-Accepted ADR-007 records Micrometer Tracing through the OpenTelemetry bridge,
-W3C-only Trace Context, separate Request ID, MDC ownership, Spring Boot Logback,
-and the explicit absence of exporters or observability infrastructure.
+Accepted ADR-008 records the durable cross-module and deployment contract:
+Spring Boot Externalized Configuration is the sole mechanism, framework-owned
+properties remain native, real BrokerOS-owned settings use
+`brokeros.risk.<capability>` with immutable typed startup validation,
+configuration is startup-bound, and Secret values remain external and
+unexposed.
 
 The application remains one Java/Spring Boot feature-first modular-monolith
-deployable. Q-005 adds one narrowly owned platform package,
-`com.brokeros.risk.observability`; it does not move existing packages or create
-horizontal `interfaces/application/domain/infrastructure` layers.
+deployable. Q-006 adds no production package or runtime component.
 
 ## Why These Decisions Were Made
 
-Spring MVC and Actuator already provide the HTTP server observation lifecycle.
-Reusing it avoids a duplicate server span and produces a real Micrometer Trace
-ID that can continue W3C `traceparent`. A small inner filter is still necessary
-because Request ID is an application HTTP contract rather than a Trace ID or
-W3C baggage concern.
+The repository already delegates datasource, Redis, Kafka, Flyway, server,
+management, logging, tracing, and SpringDoc configuration to Spring Boot and
+library binders. Wrapping them would duplicate ownership and create contracts
+BrokerOS does not own.
 
-Strict single-value, character, and length validation permits safe opaque
-correlation without trusting caller metadata or logging rejected input.
-Component-owned cleanup prevents the application from disrupting Micrometer's
-trace scope while ensuring servlet-thread reuse cannot retain MDC state.
+Repository inspection found no real BrokerOS-owned runtime setting. Creating an
+empty `BrokerProperties` or a fake test group would add abstraction without a
+consumer. The approved YAGNI decision therefore establishes rules, catalog, and
+verification now, while deferring the first production properties type until a
+concrete approved capability needs it.
 
-No exporter is needed to satisfy inbound correlation. Adding one would require
-unapproved decisions about destination, authentication, encryption, sampling,
-retention, sensitive attributes, access control, cost, and failure handling.
+Startup-bound configuration fits the current deployment model. Dynamic refresh
+would require authorization, auditing, rollout, rollback, atomicity, failure,
+and multi-instance consistency decisions absent from Q-006.
 
 ## Architecture Impact
 
 | Area | Impact |
-|---|---|
-| Runtime | One managed tracing bridge inside the existing backend JAR; no new process or network destination. |
-| HTTP | Adds `X-Request-ID` response/header behavior; no endpoint or response-body change. |
-| Logging | Existing Logback correlation pattern now contains safe request/trace/span fields. |
-| Packages | Adds only `com.brokeros.risk.observability`; no package move or feature/DDD restructure. |
-| Database/Flyway | No impact; unchanged V1 remains the only migration. |
-| Redis | No impact; no key, TTL, cache, or data access. |
-| Kafka | No impact; no topic, event, producer, consumer, or auto-creation. |
-| Kubernetes/Docker | No topology/config change; dependency packages in the existing backend image. |
-| External systems | No MT4, MT5, CRM, BrokerPilot, oneZero, or other adapter behavior. |
+| --- | --- |
+| Runtime | No production Java, dependency, runtime property, or new process. |
+| Packages | One test-only `com.brokeros.risk.config` package; no production package or restructure. |
+| Configuration | Existing keys/values/profiles/aliases unchanged; their contract is cataloged and tested. |
+| API | No endpoint, response, header, ResultCode, exception, validation DTO, OpenAPI, or Actuator format change. |
+| Database/Flyway | No migration, schema, entity, repository, SQL, DDL, or DML change. |
+| Redis | No key, TTL, cache, business data, or connectivity behavior change. |
+| Kafka | No topic, event, producer, consumer, or auto-creation change. |
+| Logging/tracing | Existing Logback, Request ID, W3C tracing, MDC, and sensitive-log rules unchanged. |
+| Docker/Kubernetes | Existing sources inspected and rendered; no image, manifest, overlay, Secret object, or topology change. |
+| CI | Existing workflow and scripts reused; no workflow or gate change. |
+| External systems | No MT4, MT5, CRM, database, SDK, or adapter implementation. |
 | Risk business | No Risk Case, Rule Engine, Workflow, Account Control, Audit Module, or RBAC. |
+
+## Implementation Review
+
+The new integration test uses Spring Boot's existing test foundation and
+`ConfigDataApplicationContextInitializer` to resolve the repository's actual
+base/test/prod files. It deliberately does not start the full application or
+external services. Host environment and system-property sources are removed in
+the isolated runner so missing/invalid cases cannot depend on a developer's
+shell.
+
+The catalog-coverage test extracts environment placeholders from the actual
+application YAML and Compose file, plus environment names from Kubernetes YAML,
+then requires every alias to appear in the catalog. A runtime-generated
+synthetic sensitive value verifies that an unrelated typed-conversion failure
+does not include the value, without committing credential-like test data.
 
 ## Development Standards Compliance
 
 ### AGENTS.md compliance
 
-Evidence checked: root `AGENTS.md`, approved Q-005, Phase 0.5/0.6 and Q-004
-architecture documents, ADR-001 through ADR-007, the development-standards
-skill, and recent Q-004 lessons. The sequence was Requirement approval → Q-005
-architecture/ADR → implementation → tests → skill/lesson → Review. The only
-production package added is the authorized observability capability; no
-prohibited business or technology scope appears in code or dependencies.
+Evidence checked: root `AGENTS.md`, approved Q-006 Requirement, Q-006
+architecture/Gap Analysis/plan, ADR-001 through ADR-008, architecture documents,
+development standards, applicable repository skills, recent Q-004/Q-005
+lessons, production/test source, deployment sources, and the final change set.
+The sequence was design approval → Accepted ADR-008 → smallest implementation →
+tests/docs/skill/lesson → Review. No formal business behavior was inferred from
+chat, and no prohibited Phase 1 technology or module was introduced.
+
+The protected `review/review-history/` archive was excluded from static and tree
+generation and was not read, modified, deleted, staged, or committed.
 
 ### Architecture compliance
 
-Evidence: `backend/src/main/java/com/brokeros/risk/observability` contains one
-filter inside the existing deployable. `backend/pom.xml` retains Spring Boot,
-Java 21, MySQL, Redis, Kafka, Flyway, Docker, and Kubernetes direction. No
-module/package relocation, repository split, service mesh, external database
-access, vendor SDK, or microservice exists. Risk detection/action separation is
-unaffected because neither is implemented.
+Evidence: `git diff --exit-code` over production Java, runtime resources,
+`backend/pom.xml`, Compose, Kubernetes, CI, scripts, and Flyway reports no Q-006
+change. The only Java addition is a focused integration test. The feature-first
+modular monolith, one deployable, approved Java/Spring/MySQL/Redis/Kafka/Docker/
+Kubernetes stack, adapter isolation, and risk detection/action boundary remain
+unchanged. Scans found no Flink, Python, Elasticsearch, microservice, service
+mesh, horizontal package restructure, or external database access.
 
 ### ADR compliance
 
-Evidence: ADR-001 modular monolith/stack, ADR-002 isolation, ADR-003
-API/Flyway/Logback standards, ADR-004 local/deployment layout, ADR-005 durable
-standards, and ADR-006 CI gates remain unchanged. ADR-007 contains Context,
-Decision, Alternatives, and Consequences and explicitly authorizes the new
-bridge, W3C propagation, filter order, MDC ownership, and no-exporter boundary.
-The implementation and configuration match ADR-007.
+Evidence: ADR-001 modular monolith/stack, ADR-002 system isolation, ADR-003 API/
+Flyway/Logback foundation, ADR-004 deployment layout, ADR-005 standards
+authority, ADR-006 CI gates, and ADR-007 tracing remain unchanged. ADR-008 has
+Status Accepted and contains Context, Decision, Alternatives, and Consequences.
+The implementation matches it: no parallel configuration system, no native-key
+wrapper, no empty application group, startup-bound semantics, external Secrets,
+and unexposed Actuator configuration endpoints.
 
 ### API standard compliance
 
-Evidence: no controller, endpoint, DTO, `ApiResponse`, `ErrorResponse`,
-`ResultCode`, `BusinessException`, or `GlobalExceptionHandler` changed. The
-existing health success/404 error contract tests still pass. The only external
-HTTP addition is `X-Request-ID`; success and standardized error tests prove the
-header without changing body formats. Actuator/OpenAPI remain framework-native.
+Evidence: no production controller, DTO, `ApiResponse`, `ErrorResponse`,
+`ResultCode`, `BusinessException`, `GlobalExceptionHandler`, OpenAPI, or Actuator
+contract changed. Existing API/exception/health/OpenAPI tests are included in
+the 26-test PASS. The configuration test confirms Actuator exposure remains
+exactly `health,info`, so framework-managed `env` and `configprops` remain
+unavailable over HTTP.
 
 ### Database standard compliance
 
 Evidence: `git diff --exit-code -- backend/src/main/resources/db/migration`
-passed; the directory still contains only unchanged
-`V1__initial_schema.sql`. Static verification found no business DDL and no
-Hibernate schema generation. Q-005 introduces no entity, repository, SQL, DDL,
-DML, table, column, index, constraint, lock, or data migration.
+passes; unchanged `V1__initial_schema.sql` remains the only migration and has no
+business DDL. No entity, repository, SQL, table, column, index, constraint,
+data migration, Hibernate schema setting, or direct external database operation
+was added. Framework-owned datasource and Flyway properties remain unwrapped.
 
 ### Security standard compliance
 
-Evidence: the filter accepts exactly one `[A-Za-z0-9._-]{1,128}` value and
-replaces control-character, oversized, or multi-valued input without logging
-the rejected value. Tests cover those cases. Documentation prohibits secrets,
-tokens, full authentication/cookie headers, credentials, payloads, KYC, and
-sensitive documents in logs. Secret/private-key/token pattern scans passed.
-Dependency-tree review found no exporter, and configuration disables OTLP and
-Zipkin export. Request ID is explicitly not identity or authorization.
+Evidence checked: `.gitignore`, `.env.example`, base/test/prod YAML, Compose,
+Kubernetes Secret references, logging standards, catalog, test source, and
+credential/private-key/token scans excluding `.git`, ignored build output, and
+the protected archive. No Secret value or unsafe production default was added.
+The test uses a runtime-generated synthetic value and asserts it is absent from
+the diagnostic. Documentation prohibits logging or reviewing values. Actuator
+`env`/`configprops` remain unexposed. No remote configuration/Secret product,
+authentication token, or full authorization header handling was introduced.
 
 ### Auditability compliance
 
-Evidence: Q-005 has no critical business action, decision, state transition, or
-Audit module, so no audit persistence is required. Request ID and Trace ID make
-engineering failures correlatable but are explicitly prohibited from becoming
-audit actor/ownership. Future critical actions still require who/when/what/
-target/before/after/reason/source under Phase 0.6 standards.
+Evidence: Q-006 creates no critical action, mutable policy, runtime
+administration, business decision, state transition, command execution, or
+Audit module, so no new audit persistence is required. Startup configuration is
+explicitly immutable. Dynamic or administrable configuration remains excluded
+because it would require actor, reason, before/after, timestamp, approval,
+rollback, and consistency design under a later Requirement.
 
 ### Skill compliance
 
-Evidence: `docs/skills/development-standards.md` governed preflight and review.
-New `docs/skills/observability-correlation.md` captures reusable header,
-filter-order, W3C, MDC ownership, logging, exporter-boundary, dependency-review,
-and genuine-concurrency test patterns. `docs/skills/README.md` indexes it, and
-the Q-005 lesson records actual issues without inventing incidents.
-
-## Test and Concurrency Review
-
-`RequestCorrelationIntegrationTests` enables real observability and uses a
-test-only filter after production correlation. Its barrier makes four requests
-overlap. Each request sees its own Request ID, real 32-hex Trace ID, and 16-hex
-Span ID; all keys are absent on the worker after completion. A known inbound
-W3C Trace ID is preserved while the server Span ID differs from the parent,
-demonstrating continuation rather than superficial copying.
+Evidence: `docs/skills/development-standards.md` governed preflight and closure.
+`docs/skills/configuration-management.md` captures the actual ownership test,
+YAGNI rule, catalog contract, startup/Secret rules, deterministic host-source
+isolation, source-derived alias coverage, common mistakes, and validation
+checklist. It is indexed by `docs/skills/README.md`. The Q-006 lesson records
+the actual host-environment determinism review finding and retest rather than an
+invented incident.
 
 ## Technical Debt and Recommendations
 
-- Blocking: execute `scripts/verify-infrastructure.sh` for the current Q-005
-  revision on Docker-capable CI and update the Review before PASS.
-- Non-blocking: local Maven runs on Java 23 while compiling release 21; Mockito
-  warns about future dynamic-agent restrictions.
-- Deferred by scope: async, scheduled, outbound HTTP, Kafka propagation,
-  exporter/backends, sampling policy, and telemetry retention/access control.
+- Blocking for final PASS: execute the existing Docker infrastructure gate on
+  the current Q-006 revision, locally or through the approved GitHub Actions
+  path, then refresh the Review with immutable run/commit evidence.
+- Non-blocking: local Maven runs on Java 23 while compiling release 21; CI must
+  continue verifying Java 21.
+- Non-blocking: Mockito/Byte Buddy reports its known future dynamic-agent warning
+  during tests; no test fails.
+- Operational risk: correct production behavior still depends on explicit
+  `prod` profile activation. Q-006 documents/tests the contract but does not
+  invent environment admission or authorization.
+- Deferred: a first application-owned properties type, Secret provider,
+  dynamic configuration, and business policy configuration require a real
+  approved Requirement and appropriate architecture/ADR review.
 
-Do not begin a new Requirement until the runtime gate passes and the architect
-reviews the completed Q-005 package.
+Do not interpret deferred candidates as approved Q-007 scope. Q-006 is ready
+for architect review of implementation and must remain PARTIAL until its runtime
+gate is evidenced.

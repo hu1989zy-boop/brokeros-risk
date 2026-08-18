@@ -1,41 +1,38 @@
-Command: git status
+Q-006 Git status snapshot
+Command: git status --short --branch
+Captured after implementation and Review generation on 2026-08-18.
 
-On branch main
-Your branch is up to date with 'origin/main'.
+## main...origin/main
+ M README.md
+ M backend/README.md
+ M docs/lessons/2026-08-11-q-004-ci-integration-verification.md
+ M docs/skills/README.md
+ M review/ArchitectureReview.md
+ M review/GitDiffStat.txt
+ M review/GitStatus.txt
+ M review/OutstandingItems.md
+ M review/PhaseReviewIndex.md
+ M review/ProjectTree.txt
+ M review/Q-004-Patch-01.md
+ M review/Summary.md
+ M review/Verification.md
+?? backend/src/test/java/com/brokeros/risk/config/
+?? docs/adr/ADR-008-configuration-management-foundation.md
+?? docs/architecture/q-006-configuration-management-foundation-design.md
+?? docs/configuration/
+?? docs/lessons/2026-08-18-q-006-configuration-management-foundation.md
+?? docs/requirements/Q-006-Requirement.md
+?? docs/skills/configuration-management.md
+?? review/LessonsLearnedReview.md
+?? review/RequirementReview.md
+?? review/SkillReview.md
+?? review/archive/q-005/
+?? review/q-006-design/
+?? review/review-history/
 
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   README.md
-	modified:   backend/README.md
-	modified:   backend/pom.xml
-	modified:   backend/src/main/resources/application-test.yml
-	modified:   backend/src/main/resources/application.yml
-	modified:   docs/lessons/2026-08-11-q-004-ci-integration-verification.md
-	modified:   docs/skills/README.md
-	modified:   review/ArchitectureReview.md
-	modified:   review/GitDiffStat.txt
-	modified:   review/GitStatus.txt
-	modified:   review/OutstandingItems.md
-	modified:   review/PhaseReviewIndex.md
-	modified:   review/ProjectTree.txt
-	modified:   review/Q-004-Patch-01.md
-	modified:   review/Summary.md
-	modified:   review/Verification.md
+Q-006 ownership note: the modified Q-004 lesson and
+`review/Q-004-Patch-01.md` predate Q-006. The Q-005 root package was preserved
+under `review/archive/q-005/`. The user-owned `review/review-history/` directory
+is protected and was not read, modified, deleted, staged, or committed.
 
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	backend/src/main/java/com/brokeros/risk/observability/
-	backend/src/test/java/com/brokeros/risk/observability/
-	docs/adr/ADR-007-micrometer-w3c-tracing.md
-	docs/architecture/q-005-foundation-hardening-observability.md
-	docs/lessons/2026-08-13-q-005-foundation-hardening-observability.md
-	docs/requirements/Q-005-Requirement.md
-	docs/skills/observability-correlation.md
-	review/review-history/
-
-no changes added to commit (use "git add" and/or "git commit -a")
-
-Review note: `review/review-history/` is a user-owned protected archive. Q-005
-did not read, modify, delete, stage, or commit it. The modified Q-004 lesson and
-Q-004 Patch-01 file predate Q-005 and remain preserved in the working tree.
+No file was staged, committed, or pushed by Q-006.

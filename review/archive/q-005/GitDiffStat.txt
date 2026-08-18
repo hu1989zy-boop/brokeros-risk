@@ -1,0 +1,17 @@
+Command: git diff --stat
+
+ ...2026-08-11-q-004-ci-integration-verification.md | 32 ++++++++---
+ review/ArchitectureReview.md                       | 21 ++++----
+ review/GitDiffStat.txt                             | 33 +++++-------
+ review/GitStatus.txt                               | 21 ++------
+ review/OutstandingItems.md                         | 24 +++------
+ review/PhaseReviewIndex.md                         | 11 ++--
+ review/Q-004-Patch-01.md                           | 23 ++++----
+ review/Summary.md                                  | 43 ++++++++++------
+ review/Verification.md                             | 62 ++++++++++++++--------
+ 9 files changed, 148 insertions(+), 122 deletions(-)
+
+This bounded statistic includes the Q-005 Review closure edits and the
+pre-existing uncommitted Q-004 documentation. Git does not include the untracked
+protected `review/review-history/` archive in `git diff --stat`; it was not read.
+No complete Git diff is included in this package.

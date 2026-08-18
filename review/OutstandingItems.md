@@ -1,58 +1,67 @@
-# Q-005 Outstanding Items
+# Q-006 Outstanding Items
 
-## Remaining Work Before PASS
+## Blocking Before Final PASS
 
-1. Run the current Q-005 revision through
-   `sh scripts/verify-infrastructure.sh` on a Docker-capable approved host or the
-   existing GitHub Actions workflow.
-2. Confirm Compose config/startup, backend image/health, MySQL/Flyway, Redis,
-   Kafka, fatal-log scan, and isolated cleanup all PASS without creating a
-   business table, Redis business key, or Kafka business topic.
-3. Update `review/Verification.md`, `review/Summary.md`,
-   `review/ArchitectureReview.md`, Git status/diff statistics, and this file
-   with that evidence.
-4. Obtain architect review before starting another Requirement.
+1. Create a Q-006 commit only after explicit user authorization.
+2. Push that revision only after explicit user authorization.
+3. Confirm the existing GitHub Actions workflow passes for the exact Q-006
+   commit, including Compose config, isolated startup, MySQL/Flyway, Redis,
+   Kafka, backend health, fatal-log scan, and cleanup.
+4. Refresh the root Review with immutable commit/run/job evidence and obtain
+   Architect Final Review.
 
-These are closure gates, not optional enhancements. Until they pass, Q-005
-Review status remains PARTIAL.
+The local Docker tool is absent, so the runtime gate cannot be completed on this
+host. This is the only blocker to final Q-006 PASS.
 
 ## Known Non-Blocking Issues
 
 - Local Maven runs on Java 23 while compiling release 21. The project and CI
   target remain Java 21.
-- Mockito/Byte Buddy warns that dynamic agent attachment will be disabled by a
-  future JDK. It did not fail any of the 19 tests.
-- The user-owned untracked `review/review-history/*.zip` remains outside Q-005.
-  It was not read, modified, deleted, staged, or included in verification.
-- Pre-existing uncommitted Q-004 closure documentation remains visible in the
-  working tree and should be reviewed separately when preparing a commit.
+- Mockito/Byte Buddy emits a future dynamic-agent warning during tests. All 26
+  tests pass.
+- Production correctness depends on explicitly activating the `prod` profile.
+  Q-006 documents and tests the contract but does not turn profile selection
+  into authorization or environment admission.
+- The working tree contains pre-existing Q-004 documentation changes. They are
+  preserved and not claimed as Q-006 implementation.
+- The user-owned `review/review-history/` archive remains outside Q-006. It was
+  not read, modified, deleted, staged, committed, or included in the tree scan.
+
+## Intentionally Not Implemented (YAGNI)
+
+- No production `@ConfigurationProperties` class because no real BrokerOS-owned
+  setting currently exists.
+- No wrapper around datasource/Hikari, Redis, Kafka, Flyway, server,
+  management, logging, tracing, or SpringDoc properties.
+- No empty `BrokerProperties`, `Mt4Properties`, or `Mt5Properties` container.
+- No custom validator because no application-owned invariant exists.
+- No remote configuration/Secret system or dynamic refresh.
+- No runtime configuration API/UI, persistence, approval, rollback, or audit
+  workflow.
 
 ## Deferred Work
 
-- Trace export, Jaeger, Zipkin, OTLP Collector, telemetry SaaS, dashboards,
-  metrics backends, sampling/retention/access-control strategy.
-- Outbound HTTP, async executor, scheduler, Kafka, or adapter trace propagation.
-- Authentication, authorization/RBAC, Audit Module, Workflow, Risk Case, Rule
-  Engine, Account Control, and all business modules.
-- Business tables/migrations, Kafka topics/events, Redis business keys/caches,
-  and real MT4/MT5/CRM integrations.
-- Package/DDD restructuring, microservices, service mesh, Flink, Python,
-  Elasticsearch, Prometheus, and Grafana.
+The following are possible subjects for a future formally approved Requirement;
+they are not automatically authorized Q-007 scope:
 
-Deferred items are outside Q-005 and are not implementation defects.
+- Introduce the first immutable validated BrokerOS-owned properties type only
+  alongside a concrete approved consuming capability.
+- Evaluate stronger production environment admission only if operations define
+  a real requirement beyond explicit profile activation.
+- Select a Secret provider only with requirements for authentication,
+  authorization, rotation, availability, failure, and incident response.
+- Design dynamic/business configuration only with versioning, audit, approval,
+  rollout, rollback, and multi-instance consistency semantics.
+- Address the Mockito future agent-attachment warning in a dedicated test-
+  foundation task if/when the supported JDK requires it.
 
-## Residual Risks
+Business modules, business tables, Redis business state, Kafka topics/events,
+MT4/MT5 Manager SDKs, Audit Module, RBAC, microservices, and prohibited
+technologies remain outside Q-006.
 
-- Filter-order changes in a future Spring Boot upgrade could affect when trace
-  MDC is available; retain the W3C and in-scope MDC integration tests.
-- Caller-provided Request IDs remain untrusted. Future code must not promote
-  them to identity, permissions, audit ownership, idempotency, or business keys.
-- Future async or messaging code will not inherit servlet MDC automatically
-  unless an approved context-propagation design is added.
-- A future exporter can leak sensitive span attributes or create network/cost
-  failure modes unless governed by a new Requirement and ADR.
+## Recommendation for Q-007
 
-## Recommendation
-
-Do not start Q-006 or a business Requirement yet. First close the Docker-capable
-Q-005 runtime gate, refresh the Review Package, and obtain architect approval.
+Do not infer or implement Q-007 from this Review. After Q-006 final PASS, define
+Q-007 through a formal Requirement and architecture review. If Q-007 introduces
+the first real BrokerOS-owned configuration, apply ADR-008 and the new skill;
+otherwise keep the current no-properties-class boundary.

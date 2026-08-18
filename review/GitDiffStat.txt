@@ -1,22 +1,27 @@
+Q-006 bounded Git diff statistic
 Command: git diff --stat
 
- README.md                                          |  20 +-
- backend/README.md                                  |  18 +-
- backend/pom.xml                                    |   4 +
- backend/src/main/resources/application-test.yml    |   5 +
- backend/src/main/resources/application.yml         |  20 ++
+ README.md                                          |  22 ++-
+ backend/README.md                                  |  13 ++
  ...2026-08-11-q-004-ci-integration-verification.md |  32 ++-
  docs/skills/README.md                              |   3 +
- review/ArchitectureReview.md                       | 230 ++++++++++----------
- review/GitDiffStat.txt                             |  29 ++-
- review/GitStatus.txt                               |  30 ++-
- review/OutstandingItems.md                         | 103 ++++-----
- review/PhaseReviewIndex.md                         |  19 +-
- review/ProjectTree.txt                             | 218 ++++++++++---------
- review/Q-004-Patch-01.md                           |  23 +-
- review/Summary.md                                  | 156 ++++++++------
- review/Verification.md                             | 237 +++++++++------------
- 16 files changed, 635 insertions(+), 512 deletions(-)
+ review/ArchitectureReview.md                       | 219 ++++++++++++---------
+ review/GitDiffStat.txt                             |  39 ++--
+ review/GitStatus.txt                               |  73 ++++---
+ review/OutstandingItems.md                         | 103 +++++-----
+ review/PhaseReviewIndex.md                         |  20 +-
+ review/ProjectTree.txt                             |  92 ++++-----
+ review/Q-004-Patch-01.md                           |  23 ++-
+ review/Summary.md                                  | 182 +++++++++--------
+ review/Verification.md                             | 160 ++++++++-------
+ 13 files changed, 549 insertions(+), 432 deletions(-)
 
-`git diff --stat` does not include untracked Q-005 files. Their exact paths are
-recorded in `GitStatus.txt`; no complete diff is included in this package.
+This statistic was captured after regenerating the two self-referential Git
+snapshot files. A subsequent content-only refresh of this file can affect only
+its own textual diff representation; it does not change implementation scope.
+
+Git does not include untracked files in `git diff --stat`. Q-006 untracked
+artifacts are listed in `review/GitStatus.txt` and summarized in
+`review/Summary.md`. This output also contains pre-existing Q-004 documentation
+changes; those are preserved and not claimed by Q-006. No complete Git diff is
+included. The protected `review/review-history/` archive was not read.

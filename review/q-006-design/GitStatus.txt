@@ -1,0 +1,31 @@
+Command: git status
+
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   docs/lessons/2026-08-11-q-004-ci-integration-verification.md
+	modified:   review/ArchitectureReview.md
+	modified:   review/GitDiffStat.txt
+	modified:   review/GitStatus.txt
+	modified:   review/OutstandingItems.md
+	modified:   review/PhaseReviewIndex.md
+	modified:   review/Q-004-Patch-01.md
+	modified:   review/Summary.md
+	modified:   review/Verification.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	docs/architecture/q-006-configuration-management-foundation-design.md
+	docs/requirements/Q-006-Requirement.md
+	review/q-006-design/
+	review/review-history/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Q-006 ownership note: only the two Q-006 docs and `review/q-006-design/`
+belong to this Design Only task. All listed modified files existed before Q-006.
+The protected `review/review-history/` archive is user-owned and was not read,
+modified, deleted, staged, or committed.

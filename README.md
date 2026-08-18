@@ -3,10 +3,11 @@
 BrokerOS Risk is an independent, broker-neutral trading risk management
 platform for Forex/CFD brokers.
 
-This repository currently contains the Q-005 hardened engineering and inbound
-HTTP observability foundation. It follows the Phase 1 architecture constraints:
-a Java 21/Spring Boot modular monolith, MySQL, Redis, Kafka, Docker, and
-Kubernetes. Formal risk-management features have not been implemented yet.
+This repository currently contains the Q-006 engineering, observability, and
+configuration-management foundation. It follows the Phase 1 architecture
+constraints: a Java 21/Spring Boot modular monolith, MySQL, Redis, Kafka,
+Docker, and Kubernetes. Formal risk-management features have not been
+implemented yet.
 
 ## Repository layout
 
@@ -89,11 +90,18 @@ The tracked `.env.example` contains no credential values. Kubernetes database
 credentials must be supplied through the deployment environment's approved
 Secret-management process.
 
+The authoritative configuration catalog, profile contract, validation strategy,
+override rules, and Secret convention are in
+`docs/configuration/README.md`. Spring Boot Externalized Configuration remains
+the only configuration mechanism. Current settings are framework-owned, so
+Q-006 intentionally adds no production `@ConfigurationProperties` wrapper.
+
 ## Current scope
 
-Q-005 adds request/trace correlation and logging hardening only. It adds no
-business functionality, business table, production topic, production Redis key,
-external integration, telemetry exporter, or observability infrastructure.
+Q-006 adds configuration governance, documentation, and contract verification
+only. It adds no business functionality, business table, production topic,
+production Redis key, external integration, dynamic configuration service,
+telemetry exporter, or observability infrastructure.
 
 ## Mandatory development sequence
 

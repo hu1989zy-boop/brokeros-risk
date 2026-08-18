@@ -5,6 +5,9 @@ task-specific skills extracted from completed work.
 
 Available engineering knowledge:
 
+- `configuration-management.md` — configuration ownership, native versus
+  application binding, catalog/alias compatibility, startup validation,
+  secret/profile rules, deterministic contract tests, and YAGNI boundaries.
 - `ci-integration-verification.md` — evidence matrices, blocking CI checks,
   isolated Compose verification, real MySQL/Flyway assertions, Redis/Kafka
   connectivity boundaries, Kustomize rendering, and reuse guidance.
