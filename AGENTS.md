@@ -82,6 +82,33 @@ If a referenced document, SDK, requirement, or decision is missing, do not
 invent its contents. State the gap and resolve it before making a choice that
 would materially change product behavior or architecture.
 
+## Prompt Delivery Policy
+
+Whenever an Architect review or recommendation results in work that must be
+executed by Codex, the Architect must always provide a complete, ready-to-use
+Codex Prompt. The workflow must never require the Product Owner to ask for the
+Prompt separately.
+
+Every recommendation requiring implementation must end with:
+
+```text
+====================================
+Codex Prompt
+====================================
+```
+
+The prompt must be directly executable without additional interpretation. This
+policy applies to:
+
+- Design Phase;
+- Implementation Phase;
+- Review Fix;
+- Git / CI;
+- Final Closure.
+
+The Product Owner should only need to copy and paste the Prompt into Codex. This
+policy is a permanent part of the BrokerOS Risk engineering workflow.
+
 ## Requirements Discipline
 
 - Requirements use stable IDs in the form `Q-001`, `Q-002`, `Q-003`, and so on.
