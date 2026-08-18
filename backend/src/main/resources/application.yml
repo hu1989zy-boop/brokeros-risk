@@ -48,6 +48,26 @@ management:
       probes:
         enabled: true
       show-details: never
+  tracing:
+    baggage:
+      enabled: false
+    propagation:
+      type: w3c
+    sampling:
+      probability: ${TRACING_SAMPLING_PROBABILITY:0.1}
+  otlp:
+    tracing:
+      export:
+        enabled: false
+  zipkin:
+    tracing:
+      export:
+        enabled: false
+
+logging:
+  include-application-name: false
+  pattern:
+    correlation: "[${spring.application.name:},requestId=%X{requestId:--},traceId=%X{traceId:--},spanId=%X{spanId:--}] "
 
 springdoc:
   api-docs:

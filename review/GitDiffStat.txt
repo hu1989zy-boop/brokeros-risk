@@ -1,13 +1,22 @@
 Command: git diff --stat
 
- ...2026-08-11-q-004-ci-integration-verification.md | 13 ++++++--
- review/ArchitectureReview.md                       | 13 +++++---
- review/OutstandingItems.md                         | 21 ++++++------
- review/Summary.md                                  | 12 +++++--
- review/Verification.md                             | 37 ++++++++++++++++++++--
- 5 files changed, 74 insertions(+), 22 deletions(-)
+ README.md                                          |  20 +-
+ backend/README.md                                  |  18 +-
+ backend/pom.xml                                    |   4 +
+ backend/src/main/resources/application-test.yml    |   5 +
+ backend/src/main/resources/application.yml         |  20 ++
+ ...2026-08-11-q-004-ci-integration-verification.md |  32 ++-
+ docs/skills/README.md                              |   3 +
+ review/ArchitectureReview.md                       | 230 ++++++++++----------
+ review/GitDiffStat.txt                             |  29 ++-
+ review/GitStatus.txt                               |  30 ++-
+ review/OutstandingItems.md                         | 103 ++++-----
+ review/PhaseReviewIndex.md                         |  19 +-
+ review/ProjectTree.txt                             | 218 ++++++++++---------
+ review/Q-004-Patch-01.md                           |  23 +-
+ review/Summary.md                                  | 156 ++++++++------
+ review/Verification.md                             | 237 +++++++++------------
+ 16 files changed, 635 insertions(+), 512 deletions(-)
 
-Snapshot note: captured after local Q-004 commit 33e0e48 and before updating
-GitStatus.txt/GitDiffStat.txt themselves. Q-004 implementation changes are in
-that local commit; this stat records only the final evidence correction caused
-by the unavailable GitHub write credentials.
+`git diff --stat` does not include untracked Q-005 files. Their exact paths are
+recorded in `GitStatus.txt`; no complete diff is included in this package.

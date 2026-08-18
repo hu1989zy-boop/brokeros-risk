@@ -1,17 +1,41 @@
 Command: git status
 
 On branch main
+Your branch is up to date with 'origin/main'.
+
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+	modified:   backend/README.md
+	modified:   backend/pom.xml
+	modified:   backend/src/main/resources/application-test.yml
+	modified:   backend/src/main/resources/application.yml
 	modified:   docs/lessons/2026-08-11-q-004-ci-integration-verification.md
+	modified:   docs/skills/README.md
 	modified:   review/ArchitectureReview.md
+	modified:   review/GitDiffStat.txt
+	modified:   review/GitStatus.txt
 	modified:   review/OutstandingItems.md
+	modified:   review/PhaseReviewIndex.md
+	modified:   review/ProjectTree.txt
+	modified:   review/Q-004-Patch-01.md
 	modified:   review/Summary.md
 	modified:   review/Verification.md
 
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	backend/src/main/java/com/brokeros/risk/observability/
+	backend/src/test/java/com/brokeros/risk/observability/
+	docs/adr/ADR-007-micrometer-w3c-tracing.md
+	docs/architecture/q-005-foundation-hardening-observability.md
+	docs/lessons/2026-08-13-q-005-foundation-hardening-observability.md
+	docs/requirements/Q-005-Requirement.md
+	docs/skills/observability-correlation.md
+	review/review-history/
+
 no changes added to commit (use "git add" and/or "git commit -a")
 
-Snapshot note: captured after local Q-004 commit 33e0e48 and before updating
-GitStatus.txt/GitDiffStat.txt themselves. No upstream is configured because the
-authorized push failed before upload; origin/main does not exist.
+Review note: `review/review-history/` is a user-owned protected archive. Q-005
+did not read, modify, delete, stage, or commit it. The modified Q-004 lesson and
+Q-004 Patch-01 file predate Q-005 and remain preserved in the working tree.

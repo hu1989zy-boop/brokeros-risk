@@ -1,6 +1,6 @@
 # BrokerOS Risk Backend
 
-Phase 0.5 Spring Boot engineering foundation for BrokerOS Risk.
+Spring Boot engineering foundation for BrokerOS Risk.
 
 ## Technology
 
@@ -11,6 +11,7 @@ Phase 0.5 Spring Boot engineering foundation for BrokerOS Risk.
 - Redis
 - Kafka
 - Spring Boot Actuator
+- Micrometer Tracing with W3C Trace Context
 - Flyway
 - Jakarta Bean Validation
 - SpringDoc OpenAPI and Swagger UI
@@ -22,6 +23,21 @@ translated by `GlobalExceptionHandler`, and request DTOs must use Jakarta Bean
 Validation at REST boundaries.
 
 Actuator and OpenAPI endpoints keep their framework-defined response formats.
+
+## Request and trace correlation
+
+Every backend HTTP response includes `X-Request-ID`. The backend preserves one
+inbound value only when it matches `[A-Za-z0-9._-]{1,128}`; otherwise it returns
+a generated UUID. Treat this value as untrusted correlation metadata, not as
+identity, authorization, audit ownership, idempotency, or a business key.
+
+Micrometer Tracing creates or continues W3C `traceparent` context. Request ID,
+Trace ID, and Span ID are separate log fields and are cleared from MDC after
+request processing. No trace exporter or observability backend is configured.
+
+Do not log passwords, secrets, tokens, full authentication or cookie headers,
+connection credentials, request/response bodies by default, KYC documents, or
+sensitive personal-document data.
 
 ## Database migrations
 

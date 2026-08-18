@@ -1,51 +1,58 @@
-# Q-004 Outstanding Items
+# Q-005 Outstanding Items
 
-## Remaining Work
+## Remaining Work Before PASS
 
-- Configure an approved GitHub HTTPS credential or SSH key for the existing
-  `origin`, push local commit `33e0e48`, and run `.github/workflows/ci.yml` on a
-  Docker-capable GitHub runner; alternatively execute
-  `scripts/verify-infrastructure.sh` on an equivalent isolated host.
-- Capture actual MySQL health and `flyway_schema_history` evidence, including V1
-  checksum/success and post-restart row count.
-- Capture Redis PONG/empty-keyspace and Kafka broker API evidence.
-- Regenerate the Q-004 Review Package after those checks and obtain architect
-  review of Q-004 and ADR-006.
+1. Run the current Q-005 revision through
+   `sh scripts/verify-infrastructure.sh` on a Docker-capable approved host or the
+   existing GitHub Actions workflow.
+2. Confirm Compose config/startup, backend image/health, MySQL/Flyway, Redis,
+   Kafka, fatal-log scan, and isolated cleanup all PASS without creating a
+   business table, Redis business key, or Kafka business topic.
+3. Update `review/Verification.md`, `review/Summary.md`,
+   `review/ArchitectureReview.md`, Git status/diff statistics, and this file
+   with that evidence.
+4. Obtain architect review before starting another Requirement.
 
-## Known Issues
+These are closure gates, not optional enhancements. Until they pass, Q-005
+Review status remains PARTIAL.
 
-- This host has no Docker CLI/daemon. A standalone Compose binary can validate
-  semantics but cannot start containers.
-- The configured GitHub `origin` is readable but cannot be written with the
-  available credentials. HTTPS push cannot obtain a username and GitHub rejects
-  the available SSH identity. No remote branch or Actions run was created.
-- Maven runs on local Java 23 with `--release 21`; Mockito warns that dynamic
-  agent loading will be restricted in a future JDK.
+## Known Non-Blocking Issues
+
+- Local Maven runs on Java 23 while compiling release 21. The project and CI
+  target remain Java 21.
+- Mockito/Byte Buddy warns that dynamic agent attachment will be disabled by a
+  future JDK. It did not fail any of the 19 tests.
+- The user-owned untracked `review/review-history/*.zip` remains outside Q-005.
+  It was not read, modified, deleted, staged, or included in verification.
+- Pre-existing uncommitted Q-004 closure documentation remains visible in the
+  working tree and should be reviewed separately when preparing a commit.
 
 ## Deferred Work
 
-- CI performance optimization or job splitting; first obtain one successful
-  end-to-end run.
-- CD and production deployment automation.
-- Shared BrokerOS framework extraction; current patterns have one consumer.
-- Authentication, authorization, API versioning, business ResultCodes, all risk
-  modules, formal Audit, business tables, topics, Redis keys, and adapters.
+- Trace export, Jaeger, Zipkin, OTLP Collector, telemetry SaaS, dashboards,
+  metrics backends, sampling/retention/access-control strategy.
+- Outbound HTTP, async executor, scheduler, Kafka, or adapter trace propagation.
+- Authentication, authorization/RBAC, Audit Module, Workflow, Risk Case, Rule
+  Engine, Account Control, and all business modules.
+- Business tables/migrations, Kafka topics/events, Redis business keys/caches,
+  and real MT4/MT5/CRM integrations.
+- Package/DDD restructuring, microservices, service mesh, Flink, Python,
+  Elasticsearch, Prometheus, and Grafana.
 
-## Risks
+Deferred items are outside Q-005 and are not implementation defects.
 
-- Q-004 runtime acceptance is incomplete until real MySQL/Flyway, Redis, and
-  Kafka checks pass.
-- A first business migration could still fail on MySQL despite unit/static
-  success.
-- Pinned Actions and kubectl versions require maintenance as runner support and
-  security releases evolve.
+## Residual Risks
 
-DO NOT START FIRST BUSINESS MIGRATION.
+- Filter-order changes in a future Spring Boot upgrade could affect when trace
+  MDC is available; retain the W3C and in-scope MDC integration tests.
+- Caller-provided Request IDs remain untrusted. Future code must not promote
+  them to identity, permissions, audit ownership, idempotency, or business keys.
+- Future async or messaging code will not inherit servlet MDC automatically
+  unless an approved context-propagation design is added.
+- A future exporter can leak sensitive span attributes or create network/cost
+  failure modes unless governed by a new Requirement and ADR.
 
-## Suggested Next Step
+## Recommendation
 
-Provide approved write authentication for the configured GitHub remote and push
-`33e0e48` to run the Q-004 workflow, or run the infrastructure script on an
-approved local/test host. Resolve any runtime failure, regenerate evidence, and
-request architect approval. Do not start Phase 1 business work before that gate
-passes.
+Do not start Q-006 or a business Requirement yet. First close the Docker-capable
+Q-005 runtime gate, refresh the Review Package, and obtain architect approval.

@@ -13,3 +13,8 @@ logging:
   level:
     root: INFO
     com.brokeros.risk: DEBUG
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0

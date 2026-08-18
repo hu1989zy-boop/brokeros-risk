@@ -1,154 +1,146 @@
-# Q-004 Architecture Review
+# Q-005 Architecture Review
 
 ## Review Result
 
-PARTIAL — DO NOT MARK PASS. No unresolved development-standards violation was
-found in the implementation, but Q-004 acceptance requires real
-MySQL/Flyway/Redis/Kafka verification. Those checks and the selected CI run are
-NOT EXECUTED because this host has no Docker daemon and the configured GitHub
-remote cannot be written with the available HTTPS or SSH credentials. The
-first business migration remains blocked.
+PARTIAL — ARCHITECTURE AND STANDARDS REVIEW PASS; RUNTIME GATE PENDING
+
+No architecture or development-standards violation was found. Overall Q-005
+cannot be marked PASS because the Docker-capable infrastructure verification
+has not executed against the current changes.
 
 ## Architecture Decision
 
-ADR required: YES. ADR-006 is Accepted and records GitHub Actions plus
-repository-owned POSIX verification scripts as the durable CI mechanism. This
-is a cross-cutting decision affecting all future Requirements. ADR-001 through
-ADR-005 remain unchanged.
+ADR required: YES.
 
-The runtime architecture remains one Java/Spring Boot modular-monolith
-deployable with MySQL, Redis, and Kafka infrastructure. Docker Compose remains
-the local/test stack, the backend remains in its optional `app` profile, and
-Kustomize base/test/prod remains the Kubernetes layout.
+Accepted ADR-007 records Micrometer Tracing through the OpenTelemetry bridge,
+W3C-only Trace Context, separate Request ID, MDC ownership, Spring Boot Logback,
+and the explicit absence of exporters or observability infrastructure.
+
+The application remains one Java/Spring Boot feature-first modular-monolith
+deployable. Q-005 adds one narrowly owned platform package,
+`com.brokeros.risk.observability`; it does not move existing packages or create
+horizontal `interfaces/application/domain/infrastructure` layers.
+
+## Why These Decisions Were Made
+
+Spring MVC and Actuator already provide the HTTP server observation lifecycle.
+Reusing it avoids a duplicate server span and produces a real Micrometer Trace
+ID that can continue W3C `traceparent`. A small inner filter is still necessary
+because Request ID is an application HTTP contract rather than a Trace ID or
+W3C baggage concern.
+
+Strict single-value, character, and length validation permits safe opaque
+correlation without trusting caller metadata or logging rejected input.
+Component-owned cleanup prevents the application from disrupting Micrometer's
+trace scope while ensuring servlet-thread reuse cannot retain MDC state.
+
+No exporter is needed to satisfy inbound correlation. Adding one would require
+unapproved decisions about destination, authentication, encryption, sampling,
+retention, sensitive attributes, access control, cost, and failure handling.
+
+## Architecture Impact
+
+| Area | Impact |
+|---|---|
+| Runtime | One managed tracing bridge inside the existing backend JAR; no new process or network destination. |
+| HTTP | Adds `X-Request-ID` response/header behavior; no endpoint or response-body change. |
+| Logging | Existing Logback correlation pattern now contains safe request/trace/span fields. |
+| Packages | Adds only `com.brokeros.risk.observability`; no package move or feature/DDD restructure. |
+| Database/Flyway | No impact; unchanged V1 remains the only migration. |
+| Redis | No impact; no key, TTL, cache, or data access. |
+| Kafka | No impact; no topic, event, producer, consumer, or auto-creation. |
+| Kubernetes/Docker | No topology/config change; dependency packages in the existing backend image. |
+| External systems | No MT4, MT5, CRM, BrokerPilot, oneZero, or other adapter behavior. |
+| Risk business | No Risk Case, Rule Engine, Workflow, Account Control, Audit Module, or RBAC. |
 
 ## Development Standards Compliance
 
 ### AGENTS.md compliance
 
-Evidence: `AGENTS.md`, Q-001 through Q-003, architecture documents, ADR-001
-through ADR-005, `docs/skills/development-standards.md`, and the Phase 0.6
-lesson were read before Q-004 implementation. Q-004 followed Requirement →
-Architecture → ADR → Implementation → Verification → Skill → Lesson → Review.
-No prohibited technology or business module was added.
+Evidence checked: root `AGENTS.md`, approved Q-005, Phase 0.5/0.6 and Q-004
+architecture documents, ADR-001 through ADR-007, the development-standards
+skill, and recent Q-004 lessons. The sequence was Requirement approval → Q-005
+architecture/ADR → implementation → tests → skill/lesson → Review. The only
+production package added is the authorized observability capability; no
+prohibited business or technology scope appears in code or dependencies.
 
 ### Architecture compliance
 
-Evidence: production Java source is unchanged and still contains only the
-application, API foundation, configuration, exception boundary, and health
-endpoint. `backend/pom.xml` is unchanged. No service split, repository split,
-new runtime dependency, vendor adapter, or speculative framework exists.
-
-Impact check: Risk Case — none; Rule Engine — none; Account Control — none;
-formal Audit — none; MT4/MT5/BrokerPilot/oneZero/CRM — none. Kafka and Redis
-changes are verification-only. The application API and runtime module layout do
-not change.
+Evidence: `backend/src/main/java/com/brokeros/risk/observability` contains one
+filter inside the existing deployable. `backend/pom.xml` retains Spring Boot,
+Java 21, MySQL, Redis, Kafka, Flyway, Docker, and Kubernetes direction. No
+module/package relocation, repository split, service mesh, external database
+access, vendor SDK, or microservice exists. Risk detection/action separation is
+unaffected because neither is implemented.
 
 ### ADR compliance
 
-Evidence: ADR-001's approved stack and modular monolith, ADR-002's adapter and
-external-data isolation, ADR-003's Flyway/API foundation, ADR-004's optional
-Compose backend and Kustomize layout, and ADR-005's governance gate are all
-preserved. ADR-006 explicitly records the new CI provider and validation
-strategy; no durable decision is left implicit.
+Evidence: ADR-001 modular monolith/stack, ADR-002 isolation, ADR-003
+API/Flyway/Logback standards, ADR-004 local/deployment layout, ADR-005 durable
+standards, and ADR-006 CI gates remain unchanged. ADR-007 contains Context,
+Decision, Alternatives, and Consequences and explicitly authorizes the new
+bridge, W3C propagation, filter order, MDC ownership, and no-exporter boundary.
+The implementation and configuration match ADR-007.
 
 ### API standard compliance
 
-Evidence: no controller, DTO, `ApiResponse`, `ErrorResponse`, `ResultCode`,
-`BusinessException`, or `GlobalExceptionHandler` source changed. The existing
-12 tests, including application API, Actuator, OpenAPI, and error-envelope
-coverage, pass. Framework-native Actuator/OpenAPI formats remain unchanged.
+Evidence: no controller, endpoint, DTO, `ApiResponse`, `ErrorResponse`,
+`ResultCode`, `BusinessException`, or `GlobalExceptionHandler` changed. The
+existing health success/404 error contract tests still pass. The only external
+HTTP addition is `X-Request-ID`; success and standardized error tests prove the
+header without changing body formats. Actuator/OpenAPI remain framework-native.
 
 ### Database standard compliance
 
-Evidence: `V1__initial_schema.sql` remains the sole migration, contains no
-business DDL, and the static script blocks additional foundation migrations,
-business DDL, and Hibernate schema-generation settings. No table, column,
-index, migration, or datasource behavior was added. Real MySQL/Flyway execution
-is NOT EXECUTED, so this category cannot supply Q-004's required runtime PASS.
+Evidence: `git diff --exit-code -- backend/src/main/resources/db/migration`
+passed; the directory still contains only unchanged
+`V1__initial_schema.sql`. Static verification found no business DDL and no
+Hibernate schema generation. Q-005 introduces no entity, repository, SQL, DDL,
+DML, table, column, index, constraint, lock, or data migration.
 
 ### Security standard compliance
 
-Evidence: CI permissions are only `contents: read`; checkout sets
-`persist-credentials: false`; external Actions are pinned to full commit SHAs;
-there is no deployment step or production Secret input. Compose verification
-generates passwords in memory without shell tracing or output, uses a unique
-project name, and targets only its own volumes. Local ports bind to
-`127.0.0.1`. Kubernetes commits only the external
-`brokeros-risk-secrets/db-password` reference. Repository-wide secret patterns
-and sensitive filenames were rechecked; no credential value or private key was
-found.
+Evidence: the filter accepts exactly one `[A-Za-z0-9._-]{1,128}` value and
+replaces control-character, oversized, or multi-valued input without logging
+the rejected value. Tests cover those cases. Documentation prohibits secrets,
+tokens, full authentication/cookie headers, credentials, payloads, KYC, and
+sensitive documents in logs. Secret/private-key/token pattern scans passed.
+Dependency-tree review found no exporter, and configuration disables OTLP and
+Zipkin export. Request ID is explicitly not identity or authorization.
 
 ### Auditability compliance
 
-Evidence: no critical risk action or business transition was implemented, so
-no runtime Audit record is required. Engineering traceability improved through
-initial commit `8bf42bc`, local Q-004 commit `33e0e48`, range-aware diff checks,
-explicit command evidence, component statuses, and preserved Review Packages.
-Generated credentials are intentionally excluded from logs.
+Evidence: Q-005 has no critical business action, decision, state transition, or
+Audit module, so no audit persistence is required. Request ID and Trace ID make
+engineering failures correlatable but are explicitly prohibited from becoming
+audit actor/ownership. Future critical actions still require who/when/what/
+target/before/after/reason/source under Phase 0.6 standards.
 
 ### Skill compliance
 
-Evidence: the existing development-standards skill guided preflight and Review.
-`docs/skills/ci-integration-verification.md` now provides reusable verification
-matrices, isolation, Flyway, Redis/Kafka, Kustomize, CI blocking, evidence, and
-reuse guidance. The skills index and Q-004 lesson were updated. The skill does
-not act as a changelog or invent framework code.
+Evidence: `docs/skills/development-standards.md` governed preflight and review.
+New `docs/skills/observability-correlation.md` captures reusable header,
+filter-order, W3C, MDC ownership, logging, exporter-boundary, dependency-review,
+and genuine-concurrency test patterns. `docs/skills/README.md` indexes it, and
+the Q-005 lesson records actual issues without inventing incidents.
 
-## Infrastructure Verification Impact
+## Test and Concurrency Review
 
-- CI changes: one GitHub Actions workflow for push/pull request, Java 21,
-  Maven cache, static checks, Kustomize, Compose, and isolated integration
-  verification. It has no CD capability.
-- Docker changes: host ports now bind to loopback; normal infrastructure-only
-  development and the optional `app` profile remain. The script uses an
-  isolated project and ephemeral credentials.
-- MySQL changes: configuration/schema are unchanged; the script will assert
-  health, V1 row metadata/checksum, no business table, and restart idempotence.
-- Redis changes: configuration is unchanged apart from loopback host binding;
-  the script will assert PONG and empty keyspace without creating a key.
-- Kafka changes: configuration is unchanged apart from loopback host binding;
-  the script will call broker API versions without creating a topic or event.
-- Kubernetes changes: manifests are unchanged; all base/test/prod renders and
-  expected resource/profile/Secret contracts pass.
-- Runtime behavior changes: none in the application. Local network exposure is
-  reduced to loopback.
-- Compatibility impact: application/API/database contracts are unchanged.
-  Developers connecting from another host can no longer use Compose-published
-  ports, which is an intentional local security boundary.
-
-## Reusability Review
-
-### Platform-Reusable
-
-- Requirement-first CI pattern with blocking Maven and deployment checks.
-- Commit-range whitespace validation and evidence matrix.
-- SHA-pinned, read-only, verification-only workflow posture.
-- Unique Compose project plus ephemeral credential isolation.
-- Flyway history/checksum/idempotence and no-business-table assertions.
-- Kustomize base/overlay render pattern and Review/Verification structure.
-
-### Risk-Specific
-
-- `brokeros-risk` image/resource/config/Secret names.
-- `brokeros_risk` schema, application endpoints, service names, ports, and
-  Spring profiles.
-- Current Compose images and health commands.
-
-### Not Ready To Extract
-
-The platform-reusable patterns have only BrokerOS Risk as a real consumer.
-There is no proven cross-repository duplication and no approved framework
-Requirement. No `brokeros-framework`, `brokeros-common`, `brokeros-starter`, or
-`brokeros-core` was created. Discover reuse first; extract second.
+`RequestCorrelationIntegrationTests` enables real observability and uses a
+test-only filter after production correlation. Its barrier makes four requests
+overlap. Each request sees its own Request ID, real 32-hex Trace ID, and 16-hex
+Span ID; all keys are absent on the worker after completion. A known inbound
+W3C Trace ID is preserved while the server Span ID differs from the parent,
+demonstrating continuation rather than superficial copying.
 
 ## Technical Debt and Recommendations
 
-- Execute the workflow on a Docker-capable GitHub runner or run
-  `scripts/verify-infrastructure.sh` on an equivalent host.
-- Configure an approved GitHub HTTPS credential or SSH key for the existing
-  `origin`, then push local commit `33e0e48` to trigger the workflow.
-- Capture the real `flyway_schema_history` row and repeat the Review gate.
-- Do not approve Q-004 or start the first business migration until Docker,
-  MySQL/Flyway, Redis, and Kafka rows are PASS.
-- Align the local Maven runtime to Java 21 and address Mockito's future
-  dynamic-agent restriction before it becomes a build failure.
+- Blocking: execute `scripts/verify-infrastructure.sh` for the current Q-005
+  revision on Docker-capable CI and update the Review before PASS.
+- Non-blocking: local Maven runs on Java 23 while compiling release 21; Mockito
+  warns about future dynamic-agent restrictions.
+- Deferred by scope: async, scheduled, outbound HTTP, Kafka propagation,
+  exporter/backends, sampling policy, and telemetry retention/access control.
+
+Do not begin a new Requirement until the runtime gate passes and the architect
+reviews the completed Q-005 package.

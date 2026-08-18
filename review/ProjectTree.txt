@@ -1,115 +1,143 @@
+Command: tree -a -L 4 -I '.git|target|.DS_Store|review-history' --noreport
+Protected review/review-history archives are intentionally omitted and were not read.
+
 .
 ├── .editorconfig
 ├── .env.example
 ├── .github
-│   └── workflows
-│       └── ci.yml
+│   └── workflows
+│       └── ci.yml
 ├── .gitignore
 ├── AGENTS.md
 ├── README.md
 ├── adapters
-│   ├── mt4
-│   │   └── README.md
-│   └── mt5
-│       └── README.md
+│   ├── mt4
+│   │   └── README.md
+│   └── mt5
+│       └── README.md
 ├── backend
-│   ├── .dockerignore
-│   ├── Dockerfile
-│   ├── README.md
-│   ├── pom.xml
-│   └── src
-│       ├── main
-│       │   ├── java
-│       │   └── resources
-│       └── test
-│           └── java
+│   ├── .dockerignore
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   └── resources
+│       └── test
+│           └── java
 ├── deploy
-│   ├── docker
-│   │   └── README.md
-│   └── kubernetes
-│       ├── README.md
-│       ├── base
-│       │   ├── configmap.yaml
-│       │   ├── deployment.yaml
-│       │   ├── kustomization.yaml
-│       │   └── service.yaml
-│       ├── prod
-│       │   ├── configmap-patch.yaml
-│       │   ├── deployment-patch.yaml
-│       │   └── kustomization.yaml
-│       └── test
-│           ├── configmap-patch.yaml
-│           ├── deployment-patch.yaml
-│           └── kustomization.yaml
+│   ├── docker
+│   │   └── README.md
+│   └── kubernetes
+│       ├── README.md
+│       ├── base
+│       │   ├── configmap.yaml
+│       │   ├── deployment.yaml
+│       │   ├── kustomization.yaml
+│       │   └── service.yaml
+│       ├── prod
+│       │   ├── configmap-patch.yaml
+│       │   ├── deployment-patch.yaml
+│       │   └── kustomization.yaml
+│       └── test
+│           ├── configmap-patch.yaml
+│           ├── deployment-patch.yaml
+│           └── kustomization.yaml
 ├── docker-compose.yml
 ├── docs
-│   ├── adr
-│   │   ├── ADR-001-technology-roadmap.md
-│   │   ├── ADR-002-system-isolation.md
-│   │   ├── ADR-003-engineering-foundation-standards.md
-│   │   ├── ADR-004-local-development-and-deployment-layout.md
-│   │   ├── ADR-005-development-standards.md
-│   │   └── ADR-006-ci-and-integration-verification.md
-│   ├── architecture
-│   │   ├── phase-0-foundation.md
-│   │   ├── phase-0.5-engineering-foundation.md
-│   │   ├── phase-0.6-development-standards.md
-│   │   └── q-004-ci-integration-verification-foundation.md
-│   ├── lessons
-│   │   ├── 2026-08-11-phase-0.6.md
-│   │   ├── 2026-08-11-q-004-ci-integration-verification.md
-│   │   └── README.md
-│   ├── requirements
-│   │   ├── Q-001-phase-0-project-foundation.md
-│   │   ├── Q-002-phase-0.5-engineering-foundation.md
-│   │   ├── Q-003-phase-0.6-development-standards.md
-│   │   └── Q-004-ci-integration-verification-foundation.md
-│   └── skills
-│       ├── README.md
-│       ├── ci-integration-verification.md
-│       ├── development-standards.md
-│       └── phase-0.5-engineering-foundation.md
+│   ├── adr
+│   │   ├── ADR-001-technology-roadmap.md
+│   │   ├── ADR-002-system-isolation.md
+│   │   ├── ADR-003-engineering-foundation-standards.md
+│   │   ├── ADR-004-local-development-and-deployment-layout.md
+│   │   ├── ADR-005-development-standards.md
+│   │   ├── ADR-006-ci-and-integration-verification.md
+│   │   └── ADR-007-micrometer-w3c-tracing.md
+│   ├── architecture
+│   │   ├── phase-0-foundation.md
+│   │   ├── phase-0.5-engineering-foundation.md
+│   │   ├── phase-0.6-development-standards.md
+│   │   ├── q-004-ci-integration-verification-foundation.md
+│   │   └── q-005-foundation-hardening-observability.md
+│   ├── lessons
+│   │   ├── 2026-08-11-phase-0.6.md
+│   │   ├── 2026-08-11-q-004-ci-integration-verification.md
+│   │   ├── 2026-08-13-q-005-foundation-hardening-observability.md
+│   │   └── README.md
+│   ├── requirements
+│   │   ├── Q-001-phase-0-project-foundation.md
+│   │   ├── Q-002-phase-0.5-engineering-foundation.md
+│   │   ├── Q-003-phase-0.6-development-standards.md
+│   │   ├── Q-004-ci-integration-verification-foundation.md
+│   │   └── Q-005-Requirement.md
+│   └── skills
+│       ├── README.md
+│       ├── ci-integration-verification.md
+│       ├── development-standards.md
+│       ├── observability-correlation.md
+│       └── phase-0.5-engineering-foundation.md
 ├── frontend
-│   └── README.md
+│   └── README.md
 ├── review
-│   ├── ArchitectureReview.md
-│   ├── GitDiffStat.txt
-│   ├── GitStatus.txt
-│   ├── InitialBaselineCheck.md
-│   ├── OutstandingItems.md
-│   ├── PhaseReviewIndex.md
-│   ├── ProjectTree.txt
-│   ├── Summary.md
-│   ├── Verification.md
-│   └── archive
-│       ├── phase-0
-│       │   ├── ArchitectureReview.md
-│       │   ├── GitDiffStat.txt
-│       │   ├── GitStatus.txt
-│       │   ├── OutstandingItems.md
-│       │   ├── ProjectTree.txt
-│       │   ├── Summary.md
-│       │   └── Verification.md
-│       ├── phase-0.5
-│       │   ├── ArchitectureReview.md
-│       │   ├── GitDiffStat.txt
-│       │   ├── GitStatus.txt
-│       │   ├── OutstandingItems.md
-│       │   ├── ProjectTree.txt
-│       │   ├── Summary.md
-│       │   └── Verification.md
-│       └── phase-0.6
-│           ├── ArchitectureReview.md
-│           ├── GitDiffStat.txt
-│           ├── GitStatus.txt
-│           ├── OutstandingItems.md
-│           ├── ProjectTree.txt
-│           ├── Summary.md
-│           └── Verification.md
+│   ├── ArchitectureReview.md
+│   ├── GitDiffStat.txt
+│   ├── GitStatus.txt
+│   ├── InitialBaselineCheck.md
+│   ├── OutstandingItems.md
+│   ├── PhaseReviewIndex.md
+│   ├── ProjectTree.txt
+│   ├── Q-004-Patch-01.md
+│   ├── Summary.md
+│   ├── Verification.md
+│   └── archive
+│       ├── phase-0
+│       ├── phase-0.5
+│       └── phase-0.6
 └── scripts
     ├── README.md
     ├── verify-infrastructure.sh
     ├── verify-kustomize.sh
     └── verify-static.sh
 
-32 directories, 81 files
+Backend source detail:
+Command: tree -a -L 8 -I '.DS_Store' --noreport backend/src
+
+backend/src
+├── main
+│   ├── java
+│   │   └── com
+│   │       └── brokeros
+│   │           └── risk
+│   │               ├── BrokerOsRiskApplication.java
+│   │               ├── api
+│   │               │   ├── ApiResponse.java
+│   │               │   ├── ErrorResponse.java
+│   │               │   └── ResultCode.java
+│   │               ├── config
+│   │               │   └── OpenApiConfiguration.java
+│   │               ├── exception
+│   │               │   ├── BusinessException.java
+│   │               │   └── GlobalExceptionHandler.java
+│   │               ├── health
+│   │               │   └── HealthController.java
+│   │               └── observability
+│   │                   └── RequestCorrelationFilter.java
+│   └── resources
+│       ├── application-prod.yml
+│       ├── application-test.yml
+│       ├── application.yml
+│       └── db
+│           └── migration
+│               └── V1__initial_schema.sql
+└── test
+    └── java
+        └── com
+            └── brokeros
+                └── risk
+                    ├── BrokerOsRiskApplicationTests.java
+                    ├── FlywayMigrationTests.java
+                    ├── exception
+                    │   └── GlobalExceptionHandlerTests.java
+                    └── observability
+                        └── RequestCorrelationIntegrationTests.java

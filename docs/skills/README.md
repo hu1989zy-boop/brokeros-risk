@@ -10,6 +10,9 @@ Available engineering knowledge:
   connectivity boundaries, Kustomize rendering, and reuse guidance.
 - `development-standards.md` — mandatory preflight, architecture, API, database,
   security, auditability, review, and completion rules for every future task.
+- `observability-correlation.md` — separate Request ID and W3C Trace ID
+  contracts, safe header validation, Micrometer/MDC lifecycle, logging rules,
+  concurrency tests, and exporter boundaries.
 - `phase-0.5-engineering-foundation.md` — Flyway, API envelopes, validation,
   exception handling, API documentation, and local development checks.
 

@@ -1,179 +1,142 @@
-# Q-004 Verification
+# Q-005 Verification
+
+## Final Verdict
+
+PARTIAL
+
+Implementation, Maven, dependency, static, security, and Kubernetes checks
+pass. Docker/Compose and real MySQL/Flyway/Redis/Kafka/backend runtime checks are
+`NOT EXECUTED` because the local host has no Docker CLI or daemon. Existing
+Q-004 CI success proves the gate itself, not the uncommitted Q-005 revision.
+
+## Environment
+
+- Date: 2026-08-13 (Asia/Shanghai)
+- Branch: `main`
+- Baseline HEAD: `77229a2`
+- Project target: Java 21
+- Local Maven runtime: Java 23.0.2, compiling with `release 21`
+- Docker: unavailable
+- Local kubectl: unavailable; temporary official v1.36.3 binary was downloaded,
+  SHA-256 verified, used, and removed
 
 ## Verification Matrix
 
 | Component | Status | Evidence |
 |---|---|---|
-| Git Baseline | PASS | Root commit `8bf42bc` exists; post-commit `git status --short` contained no unignored path. |
-| Maven Build | PASS | `mvn package` exited 0 and produced the ignored executable JAR; package lifecycle ran all 12 tests. |
-| Unit Tests | PASS | `mvn test`: 12 tests, 0 failures, 0 errors, 0 skipped. |
-| CI | PARTIAL | Workflow exists, uses Java 21/read-only SHA-pinned Actions, and actionlint 1.7.12 exits 0. `origin` is readable, but HTTPS and SSH push authentication failed before upload; no remote runner execution exists. |
-| Docker Compose Config | PASS | Checksum-verified Docker Compose v5.4.0 standalone `config --quiet` exited 0 and listed redis, kafka, mysql, backend. |
-| Docker Startup | NOT EXECUTED | No Docker CLI/daemon is installed locally; infrastructure script exits 1 at its prerequisite check. |
-| MySQL | NOT EXECUTED | Requires the unavailable isolated Docker runtime. |
-| Flyway | NOT EXECUTED | Real MySQL history/checksum/restart assertions are implemented but have not run. |
-| Redis | NOT EXECUTED | Runtime PING/DBSIZE assertions are implemented but have not run. |
-| Kafka | NOT EXECUTED | Broker API connectivity assertion is implemented but has not run. |
-| Kubernetes Base Render | PASS | Checksum-verified kubectl v1.36.3 / Kustomize v5.8.1 rendered base and contract checks passed. |
-| Kubernetes Test Render | PASS | The same verified tool rendered test; test profile/resource/Secret checks passed. |
-| Kubernetes Prod Render | PASS | The same verified tool rendered prod; prod profile/resource/Secret checks passed. |
-| Static Checks | PASS | Range-aware `git diff --check`, shell syntax, migration boundary, YAML/POM parsing, secret scan, and actionlint passed. |
+| Compilation | PASS | `mvn package` compiled 9 production and 4 test source files for Java 21. |
+| Maven tests | PASS | 19 tests, 0 failures, 0 errors, 0 skipped. |
+| Maven package | PASS | Executable `brokeros-risk-backend-0.1.0-SNAPSHOT.jar` produced under ignored `backend/target/`. |
+| Request ID | PASS | Generation, valid preservation, malformed/control, oversized, multi-value, success, and error cases passed. |
+| W3C Trace Context | PASS | Known inbound Trace ID continued with a distinct server Span ID. |
+| MDC cleanup/isolation | PASS | Sequential and barrier-backed 4-request concurrency tests passed; worker MDC values were null after completion. |
+| Dependency boundary | PASS | One `micrometer-tracing-bridge-otel:1.5.12`; no Zipkin/Jaeger/OTLP/exporter/ELK/Prometheus/Grafana dependency. |
+| API regression | PASS | Existing unified API/error, Actuator, OpenAPI, and Swagger tests passed unchanged. |
+| Flyway static boundary | PASS | Unchanged V1 is still the only migration and contains no business DDL. |
+| Static checks | PASS | Repository whitespace, untracked-text, shell syntax, migration, and Hibernate checks passed. |
+| Secret scan | PASS | Private-key, token, literal-password, and credential-pattern checks found no introduced Secret. |
+| Kubernetes base | PASS | Render/resource/Secret-reference contract passed. |
+| Kubernetes test | PASS | Render/profile/resource/Secret-reference contract passed. |
+| Kubernetes prod | PASS | Render/profile/resource/Secret-reference contract passed. |
+| Docker Compose config | NOT EXECUTED | Docker CLI is not installed. |
+| Docker startup/backend image | NOT EXECUTED | Docker CLI/daemon is unavailable. |
+| Real MySQL/Flyway | NOT EXECUTED | Requires the isolated Docker gate for the Q-005 image. |
+| Real Redis/Kafka | NOT EXECUTED | Requires the isolated Docker gate for the Q-005 image. |
+| Q-005 GitHub Actions | NOT EXECUTED | No commit/push was requested or performed. |
 
-## Build Result
+## Commands Executed
 
-PASS
-
-Executed:
+### Maven tests
 
 ```bash
 cd backend
-mvn test
-mvn package
+mvn --batch-mode --no-transfer-progress test
 ```
 
-Both commands exited 0. Each run reported 12 tests, 0 failures, 0 errors, and 0
-skipped. `mvn package` created
-`backend/target/brokeros-risk-backend-0.1.0-SNAPSHOT.jar`; `target/` remains
-ignored.
+Result: PASS — 19 tests, 0 failures, 0 errors, 0 skipped; BUILD SUCCESS.
 
-The first pre-baseline sandboxed `mvn test` failed because the environment
-blocked Mockito/Byte Buddy JVM attachment and Surefire temporary files. The
-unchanged command passed outside that sandbox. This is retained as environment
-evidence, not recorded as a product-code defect.
-
-## Initial Git Baseline
-
-PASS
-
-Executed before Q-004 implementation:
+### Maven package
 
 ```bash
-git status --short --ignored
+cd backend
+mvn --batch-mode --no-transfer-progress package
+```
+
+Result: PASS — 19 tests passed; executable JAR produced; BUILD SUCCESS.
+
+### Dependency and exporter boundary
+
+```bash
+cd backend
+mvn --batch-mode --no-transfer-progress dependency:tree \
+  -Dincludes=io.micrometer:micrometer-tracing-bridge-otel,io.micrometer:micrometer-tracing,io.opentelemetry
+mvn --batch-mode --no-transfer-progress dependency:tree | \
+  rg -i 'zipkin|jaeger|otlp|opentelemetry-exporter|logstash|elasticsearch|prometheus|grafana'
+```
+
+Result: PASS. Resolved bridge/tracing version is 1.5.12 with OpenTelemetry 1.49.0
+API/SDK context components. The prohibited exporter/backend scan returned no
+match.
+
+### Static checks
+
+```bash
+GIT_CONFIG_COUNT=1 \
+GIT_CONFIG_KEY_0=core.excludesFile \
+GIT_CONFIG_VALUE_0=/private/tmp/brokeros-risk-q005-git-excludes \
+sh scripts/verify-static.sh
 git diff --check
-git diff --cached --check
-git commit -m "chore: establish BrokerOS Risk project baseline"
-git status --short --ignored
-git log -1 --oneline
-git diff --stat
 ```
 
-Result: `8bf42bc chore: establish BrokerOS Risk project baseline`. Ignored
-`.DS_Store` files and `backend/target/` stayed outside the commit. The baseline
-contains no detected credential, local environment file, IDE state, or build
-artifact.
+Result: PASS. The temporary exclude contained only
+`review/review-history/`, ensuring the user-owned zip archive was not read by
+the untracked-text check. The archive itself was not inspected or changed.
 
-## CI Validation
-
-PARTIAL
-
-Executed locally:
+Additional migration/dependency/secret checks passed:
 
 ```bash
-actionlint .github/workflows/ci.yml
-sh scripts/verify-static.sh 8bf42bc
+git diff --exit-code -- backend/src/main/resources/db/migration
+rg <prohibited-observability-artifact-patterns> backend/pom.xml
+rg <private-key-token-credential-patterns> <repository excluding .git, target, review-history>
 ```
 
-The checksum-verified actionlint 1.7.12 binary exited 0. Static/range/shell and
-migration-boundary checks pass. Local commit `33e0e48` contains the Q-004
-implementation. The configured `origin` was reachable for read, but both
-available write paths failed before upload:
+### Kubernetes rendering
 
 ```bash
-git ls-remote --heads origin
-git push -u origin main
-ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new -T git@github.com
+# Official darwin/arm64 kubectl v1.36.3 plus kubectl.sha256 downloaded to /private/tmp
+shasum -a 256 <temporary-kubectl>
+PATH=<verified-temporary-kubectl-directory>:$PATH sh scripts/verify-kustomize.sh
 ```
 
-`git ls-remote` exited 0 with no remote branch. HTTPS push exited 128 with
-`could not read Username for 'https://github.com'`; the SSH authentication
-check exited 255 with `Permission denied (publickey)`. No commit was uploaded,
-no workflow was dispatched, and CI remains PARTIAL.
+Result: PASS — checksum verification plus base, test, prod, and contract renders
+all passed. Temporary files were removed.
 
-## Docker Validation
-
-Semantic config: PASS. Runtime: NOT EXECUTED.
-
-Executed with a checksum-verified official Docker Compose v5.4.0 standalone
-binary because the host has no Docker installation:
+### Infrastructure gate
 
 ```bash
-docker-compose --profile app -f docker-compose.yml config --quiet
-docker-compose --profile app -f docker-compose.yml config --services
 sh scripts/verify-infrastructure.sh
 ```
 
-The config command exited 0 and reported `redis`, `kafka`, `mysql`, and
-`backend`. The infrastructure script exited 1 with `Docker with Compose v2 is
-required.` before generating credentials or changing external state. Container
-startup, health, volumes, logs, and restart behavior are NOT EXECUTED.
+Result: NOT EXECUTED. Preflight emitted
+`FAIL [preflight] Docker with Compose v2 is required.` and exited 1 before any
+resource was created. This is an environment limitation, not a product test
+failure and not a PASS.
 
-## MySQL and Flyway Validation
+## Test Inventory
 
-NOT EXECUTED — no local Docker daemon or real isolated MySQL instance is
-available. The script contains blocking queries for version, description, type,
-script, checksum, installed time, success, exactly one V1, no business table,
-and exactly one V1 after backend restart. These assertions are not evidence
-until executed.
+- `RequestCorrelationIntegrationTests`: 7
+- `BrokerOsRiskApplicationTests`: 7
+- `FlywayMigrationTests`: 1
+- `GlobalExceptionHandlerTests`: 4
+- Total: 19
 
-DO NOT START FIRST BUSINESS MIGRATION.
+The known Mockito/Byte Buddy dynamic-agent warning is non-blocking but remains
+technical debt for a future test-foundation task.
 
-## Redis and Kafka Validation
+## Closure Condition
 
-NOT EXECUTED — both require the unavailable isolated Docker runtime. The script
-contains blocking Redis PING/empty-keyspace and Kafka broker API assertions and
-creates no business key/topic/event.
-
-## Kubernetes Validation
-
-PASS for render; no cluster deployment was requested or attempted.
-
-Executed:
-
-```bash
-kubectl version --client
-sh scripts/verify-kustomize.sh
-```
-
-Official kubectl v1.36.3 was downloaded to `/private/tmp`, checked against the
-official SHA256, and reported Kustomize v5.8.1. Base, test, and prod rendered and
-all resource, profile, label, and Secret-reference assertions passed.
-
-## Static Configuration and Security Checks
-
-PASS for executable checks.
-
-Executed:
-
-```bash
-git diff --check
-sh -n scripts/*.sh
-ruby -e '<parse all repository YAML files>'
-ruby -e '<parse backend/pom.xml>'
-rg '<secret/private-key/provider-token patterns>'
-find '<local environment/certificate/private-key/build-artifact patterns>'
-actionlint .github/workflows/ci.yml
-```
-
-Results: 15 YAML files and the POM parse; scripts are syntactically valid; no
-business DDL or Hibernate schema generation is present; no committed credential
-value/private key/certificate is detected. `gitleaks` and `trufflehog` are not
-installed, so their scans were not executed.
-
-## Final Local Reverification
-
-PASS for all locally executable gates on 2026-08-12.
-
-```bash
-cd backend && mvn test
-cd backend && mvn package
-sh scripts/verify-static.sh 8bf42bc
-git diff --check
-actionlint .github/workflows/ci.yml
-docker-compose --profile app -f docker-compose.yml config --quiet
-sh scripts/verify-kustomize.sh
-```
-
-Both Maven lifecycles passed with 12 tests and no failure/error/skip. Static,
-actionlint, Compose semantic config, and base/test/prod Kustomize checks passed.
-The temporary verified tool locations and versions are recorded above; they do
-not alter repository dependencies.
+Run the existing GitHub Actions workflow or the same repository scripts on a
+Docker-capable approved host for the current Q-005 revision. Required PASS
+evidence includes Compose config/startup, backend image/health, MySQL/Flyway V1
+and no-business-table checks, Redis empty-keyspace check, Kafka broker API
+connectivity without topic creation, fatal-log scan, and isolated cleanup.

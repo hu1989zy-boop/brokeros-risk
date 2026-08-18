@@ -1,80 +1,75 @@
-# Q-004 Review Summary
+# Q-005 Review Summary
 
 ## Review Status
 
-PARTIAL — implementation and all locally executable checks pass, but the
-selected CI workflow has not run and this host has no Docker daemon. The
-configured GitHub remote is reachable, but HTTPS and SSH write authentication
-are unavailable, so commit `33e0e48` could not be pushed. Real MySQL/Flyway,
-Redis, Kafka, backend-container, and restart-idempotence evidence is therefore
-NOT EXECUTED. Q-004 is not ready for architect approval.
+PARTIAL — IMPLEMENTATION COMPLETE; DOCKER RUNTIME VERIFICATION PENDING
+
+The Q-005 code, automated tests, package build, dependency review, static
+checks, and base/test/prod Kubernetes renders pass. The local host has no Docker
+CLI or daemon, so Q-005's isolated Compose/MySQL/Flyway/Redis/Kafka/backend
+runtime gate is `NOT EXECUTED`. This Review must not be marked PASS until the
+current Q-005 changes pass `scripts/verify-infrastructure.sh` on a
+Docker-capable runner.
 
 ## Current Phase / Requirement
 
-Q-004 — CI and Integration Verification Foundation
+- Architecture phase: Phase 1
+- Requirement: Q-005 — Foundation Hardening & Observability Baseline
+- Requirement status: Approved on 2026-08-12
+- Review date: 2026-08-13
+- Branch / baseline: `main` / `77229a2`
 
 ## Objective
 
-Establish a trustworthy Git baseline and the smallest repeatable CI and
-infrastructure-verification loop before any business migration or module.
-
-Q-004 introduces CI and infrastructure verification only.
-
-No business functionality was implemented.
-
-No business database table was introduced.
-
-No production Kafka topic was introduced.
-
-No production Redis business key was introduced.
-
-No production external integration was introduced.
-
-Initial Git baseline status: PASS — commit `8bf42bc`.
+Add the minimum inbound HTTP correlation and logging baseline without changing
+the feature-first modular monolith or introducing business behavior. Request ID
+and Trace ID remain distinct; W3C `traceparent` supplies real trace context; MDC
+must be isolated and cleared; no exporter or observability infrastructure is
+introduced.
 
 ## Completed Tasks
 
-- Audited the repository for secrets, local files, IDE state, OS metadata,
-  build artifacts, generated output, certificates, and private keys.
-- Externalized historical local password defaults and strengthened
-  `.gitignore`/`.dockerignore` before the baseline.
-- Confirmed Phase 0, Phase 0.5, and Phase 0.6 Approved requirements and Review
-  evidence; added an explicitly retrospective Phase 0 package.
-- Created and verified initial commit `8bf42bc`.
-- Created local Q-004 implementation commit `33e0e48`; verified the configured
-  GitHub remote is readable and recorded the unavailable write credentials.
-- Created Q-004, its architecture document, and Accepted ADR-006.
-- Added one read-only, SHA-pinned GitHub Actions workflow for Java 21, Maven,
-  static, Kustomize, Compose, and integration verification.
-- Added static, Kustomize, and isolated Compose verification scripts.
-- Bound Compose host ports to loopback.
-- Passed Maven test/package, Git whitespace/shell checks, YAML/POM checks,
-  actionlint, Compose semantic validation, and all three Kustomize renders.
-- Added the reusable CI/integration skill and an honest Lessons Learned entry.
-- Archived the Phase 0.6 Review Package.
+- Approved and recorded Q-005 with explicit scope and non-goals.
+- Added Accepted ADR-007 and the Q-005 architecture analysis.
+- Added Spring Boot-managed Micrometer Tracing through the OpenTelemetry bridge
+  with W3C-only propagation and no exporter.
+- Added `RequestCorrelationFilter` for bounded, single-valued
+  `X-Request-ID` validation/generation, response propagation, and `requestId`
+  MDC lifecycle.
+- Added log correlation fields for application, Request ID, Trace ID, and Span
+  ID while retaining Spring Boot Logback and production `INFO` logging.
+- Added 7 observability integration tests for generation, preservation,
+  malformed/oversized/multi-value replacement, error response headers, W3C
+  parent continuation, sequential cleanup, and genuinely concurrent isolation.
+- Preserved all 12 foundation tests; the complete suite now has 19 tests.
+- Added reusable observability guidance and an honest Q-005 Lessons Learned
+  entry.
+- Updated root/backend documentation and this Review Package.
 
 ## Files Created
 
-- `.github/workflows/ci.yml`
-- `docs/requirements/Q-004-ci-integration-verification-foundation.md`
-- `docs/architecture/q-004-ci-integration-verification-foundation.md`
-- `docs/adr/ADR-006-ci-and-integration-verification.md`
-- `docs/skills/ci-integration-verification.md`
-- `docs/lessons/2026-08-11-q-004-ci-integration-verification.md`
-- `scripts/verify-static.sh`
-- `scripts/verify-kustomize.sh`
-- `scripts/verify-infrastructure.sh`
-- Seven preserved files under `review/archive/phase-0.6/`
+- `backend/src/main/java/com/brokeros/risk/observability/RequestCorrelationFilter.java`
+- `backend/src/test/java/com/brokeros/risk/observability/RequestCorrelationIntegrationTests.java`
+- `docs/requirements/Q-005-Requirement.md`
+- `docs/architecture/q-005-foundation-hardening-observability.md`
+- `docs/adr/ADR-007-micrometer-w3c-tracing.md`
+- `docs/skills/observability-correlation.md`
+- `docs/lessons/2026-08-13-q-005-foundation-hardening-observability.md`
 
 ## Files Modified
 
 - `README.md`
-- `docker-compose.yml`
-- `deploy/docker/README.md`
-- `deploy/kubernetes/README.md`
+- `backend/README.md`
+- `backend/pom.xml`
+- `backend/src/main/resources/application.yml`
+- `backend/src/main/resources/application-test.yml`
 - `docs/skills/README.md`
-- `scripts/README.md`
-- The seven root Review Package files were regenerated for Q-004.
+- The seven root Review Package files and `review/PhaseReviewIndex.md`
+
+Pre-existing uncommitted Q-004 closure changes remain visible in Git status,
+including the Q-004 lesson and Patch-01/review history. They were not claimed as
+Q-005 implementation. The user-owned `review/review-history/*.zip` archive was
+not read, modified, deleted, or staged.
 
 ## Files Deleted
 
@@ -82,14 +77,39 @@ None.
 
 ## Important Design Decisions
 
-- GitHub Actions is the initial CI provider; ADR-006 records the durable choice.
-- Core CI checks are blocking and CI performs verification only, never CD.
-- External Actions are pinned to reviewed commit SHAs and checkout credentials
-  are not persisted.
-- Compose verification generates ephemeral credentials, owns a unique project,
-  and cleans only that project's resources.
-- Compose config and runtime evidence are tracked separately.
-- Remote reachability, authenticated push, workflow dispatch, and successful
-  workflow execution are treated as separate CI evidence levels.
-- Potentially reusable verification remains repository-local and Not Ready To
-  Extract because there is only one real consumer.
+- ADR-007 selects `micrometer-tracing-bridge-otel` and W3C-only propagation.
+- Spring MVC's existing server observation creates/continues the real trace;
+  application code does not create a second server span or synthetic Trace ID.
+- The Request ID filter runs immediately inside the observation filter at
+  `Ordered.HIGHEST_PRECEDENCE + 2`.
+- Micrometer owns `traceId`/`spanId`; the application owns only `requestId` and
+  removes it in `finally`.
+- One inbound Request ID is accepted only if it matches
+  `[A-Za-z0-9._-]{1,128}`; all other input is replaced without logging the raw
+  value.
+- Request ID is untrusted correlation metadata, not identity, authorization,
+  audit actor, idempotency, or business identity.
+- OTLP and Zipkin export are disabled and no exporter dependency, collector,
+  dashboard, or observability backend is present.
+
+## Scope Preserved
+
+No Risk Case, Rule Engine, Workflow, Account Control, Audit Module, RBAC,
+business endpoint, ResultCode, business table/migration, Kafka topic/event,
+Redis business key, adapter implementation, package restructure, DDD
+restructure, microservice, Flink, Python, Elasticsearch, Prometheus, Grafana,
+Jaeger, Zipkin, or OTLP Collector was introduced.
+
+## Verification Summary
+
+- Maven test: PASS — 19/19.
+- Maven package: PASS — executable JAR produced, 19/19 tests.
+- Dependency/exporter review: PASS.
+- Static and `git diff --check`: PASS.
+- Kubernetes base/test/prod rendering: PASS with checksum-verified kubectl
+  v1.36.3.
+- Docker/Compose/infrastructure runtime: NOT EXECUTED — Docker unavailable.
+
+The next action is not a new Requirement. First run the current Q-005 changes
+through the existing Docker-capable CI gate, update this package with that
+evidence, and obtain architect review.

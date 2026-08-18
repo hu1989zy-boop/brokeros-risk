@@ -3,10 +3,10 @@
 BrokerOS Risk is an independent, broker-neutral trading risk management
 platform for Forex/CFD brokers.
 
-This repository currently contains the Q-004 CI and integration-verification
-foundation. It follows the Phase 1 architecture constraints: a Java 21/Spring
-Boot modular monolith, MySQL, Redis, Kafka, Docker, and Kubernetes. Formal
-risk-management features have not been implemented yet.
+This repository currently contains the Q-005 hardened engineering and inbound
+HTTP observability foundation. It follows the Phase 1 architecture constraints:
+a Java 21/Spring Boot modular monolith, MySQL, Redis, Kafka, Docker, and
+Kubernetes. Formal risk-management features have not been implemented yet.
 
 ## Repository layout
 
@@ -78,6 +78,12 @@ Local endpoints and ports:
 
 All Compose host ports bind to loopback only.
 
+Every backend HTTP response includes `X-Request-ID`. One safe inbound value is
+preserved; otherwise the backend generates a UUID. Micrometer Tracing continues
+or creates W3C `traceparent` context, and logs correlate the separate Request ID,
+Trace ID, and Span ID. Q-005 configures no trace exporter or observability
+backend.
+
 Docker Compose reads local database passwords from the ignored `.env` file.
 The tracked `.env.example` contains no credential values. Kubernetes database
 credentials must be supplied through the deployment environment's approved
@@ -85,9 +91,9 @@ Secret-management process.
 
 ## Current scope
 
-Q-004 adds CI and infrastructure verification only. It adds no business
-functionality, business table, production topic, production Redis key, or
-external integration.
+Q-005 adds request/trace correlation and logging hardening only. It adds no
+business functionality, business table, production topic, production Redis key,
+external integration, telemetry exporter, or observability infrastructure.
 
 ## Mandatory development sequence
 
