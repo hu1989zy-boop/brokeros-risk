@@ -1,27 +1,51 @@
-Q-006 bounded Git diff statistic
-Command: git diff --stat
+Q-007 Final Closure staged diff statistic
+Command: git diff --cached --stat
 
- README.md                                          |  22 ++-
- backend/README.md                                  |  13 ++
- ...2026-08-11-q-004-ci-integration-verification.md |  32 ++-
+ README.md                                          |  18 +-
+ .../adr/ADR-009-brokeros-risk-core-domain-model.md | 159 ++++++++++++
+ .../q-007-brokeros-domain-foundation-design.md     | 155 +++++++++++
+ .../2026-08-23-q-007-brokeros-domain-foundation.md |  67 +++++
+ docs/lessons/README.md                             |   6 +
+ docs/requirements/Q-007-Requirement.md             | 211 +++++++++++++++
  docs/skills/README.md                              |   3 +
- review/ArchitectureReview.md                       | 219 ++++++++++++---------
- review/GitDiffStat.txt                             |  39 ++--
- review/GitStatus.txt                               |  73 ++++---
- review/OutstandingItems.md                         | 103 +++++-----
- review/PhaseReviewIndex.md                         |  20 +-
- review/ProjectTree.txt                             |  92 ++++-----
- review/Q-004-Patch-01.md                           |  23 ++-
- review/Summary.md                                  | 182 +++++++++--------
- review/Verification.md                             | 160 ++++++++-------
- 13 files changed, 549 insertions(+), 432 deletions(-)
+ docs/skills/brokeros-risk-core-domain.md           |  43 ++++
+ review/ArchitectureReview.md                       | 229 +++++++----------
+ review/GitDiffStat.txt                             |  72 ++++--
+ review/GitStatus.txt                               |  79 +++---
+ review/InitialBaselineCheck.md                     | 115 ++-------
+ review/LessonsLearnedReview.md                     |  28 +-
+ review/OutstandingItems.md                         | 108 ++++----
+ review/PhaseReviewIndex.md                         |  18 +-
+ review/ProjectTree.txt                             | 282 +++++++++++++--------
+ review/RequirementReview.md                        |  55 ++--
+ review/SkillReview.md                              |  36 ++-
+ review/Summary.md                                  | 176 +++++--------
+ review/Verification.md                             | 198 +++++++--------
+ review/archive/q-007/LessonsLearned.md             |  38 +++
+ review/archive/q-007/README.md                     |   9 +
+ .../archive/q-007/review-v1-design/ADRDecision.md  |  39 +++
+ .../q-007/review-v1-design/ArchitectureReview.md   | 155 +++++++++++
+ .../q-007/review-v1-design/BoundedContext.md       |  42 +++
+ .../archive/q-007/review-v1-design/ContextMap.md   |  53 ++++
+ .../q-007/review-v1-design/CoreDomainDefinition.md |  48 ++++
+ .../q-007/review-v1-design/DomainLifecycle.md      |  55 ++++
+ .../review-v1-design/DomainObjectRelationship.md   |  69 +++++
+ .../archive/q-007/review-v1-design/GitDiffStat.txt |  26 ++
+ .../archive/q-007/review-v1-design/GitStatus.txt   |  30 +++
+ .../q-007/review-v1-design/InitialBaselineCheck.md |  61 +++++
+ .../q-007/review-v1-design/OutstandingItems.md     |  82 ++++++
+ .../archive/q-007/review-v1-design/ProjectTree.txt | 188 ++++++++++++++
+ .../q-007/review-v1-design/RequirementReview.md    |  53 ++++
+ review/archive/q-007/review-v1-design/Summary.md   |  80 ++++++
+ .../q-007/review-v1-design/UbiquitousLanguage.md   |  77 ++++++
+ .../archive/q-007/review-v1-design/Verification.md |  66 +++++
+ 38 files changed, 2482 insertions(+), 747 deletions(-)
 
-This statistic was captured after regenerating the two self-referential Git
-snapshot files. A subsequent content-only refresh of this file can affect only
-its own textual diff representation; it does not change implementation scope.
-
-Git does not include untracked files in `git diff --stat`. Q-006 untracked
-artifacts are listed in `review/GitStatus.txt` and summarized in
-`review/Summary.md`. This output also contains pre-existing Q-004 documentation
-changes; those are preserved and not claimed by Q-006. No complete Git diff is
-included. The protected `review/review-history/` archive was not read.
+Scope notes:
+- This is a bounded statistic, not a complete diff.
+- All staged files are Q-007 Requirement/ADR/architecture/Skill/Lessons/Review
+  documentation or repository indexes synchronized to the Q-007 baseline.
+- No Java, test, runtime configuration, API, data, messaging, adapter, CI,
+  Docker, or Kubernetes path is present.
+- The protected review/review-history/ directory and recoverable pre-Q-007
+  stash are excluded.

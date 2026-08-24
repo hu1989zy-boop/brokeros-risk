@@ -1,0 +1,30 @@
+Q-007 Review V1 Design historical working-tree snapshot
+Command: git status --short --branch
+
+## main...origin/main
+ M docs/lessons/2026-08-11-q-004-ci-integration-verification.md
+ M review/ArchitectureReview.md
+ M review/GitDiffStat.txt
+ M review/GitStatus.txt
+ D review/LessonsLearnedReview.md
+ M review/OutstandingItems.md
+ M review/PhaseReviewIndex.md
+ M review/ProjectTree.txt
+ M review/Q-004-Patch-01.md
+ D review/RequirementReview.md
+ D review/SkillReview.md
+ M review/Summary.md
+ M review/Verification.md
+?? docs/architecture/q-007-brokeros-domain-foundation-design.md
+?? docs/requirements/Q-007-Requirement.md
+?? review/archive/q-006/
+?? review/q-007/
+?? review/review-history/
+
+Scope notes:
+- Q-007 Design owns the two q-007 documents and review/q-007/ only.
+- review/archive/q-006/ preserves the prior complete Q-006 root Review Package.
+- The Q-004 lesson and root Review changes pre-dated Q-007 and are not claimed.
+- review/review-history/ is protected and was not read, modified, staged, or
+  committed.
+- Nothing is staged. No commit or push was performed.

@@ -1,24 +1,20 @@
-# Q-006 Lessons Learned Review
+# Q-007 Lessons Learned Review
 
 ## Result
 
 PASS
 
-`docs/lessons/2026-08-18-q-006-configuration-management-foundation.md` records
-events from the actual implementation.
+## Evidence
 
-## Evidence Checked
+- Durable entry:
+  `docs/lessons/2026-08-23-q-007-brokeros-domain-foundation.md`
+- Required archive entry: `review/archive/q-007/LessonsLearned.md`
 
-- It states exactly what was implemented and what was intentionally omitted.
-- It records an actual review finding: an initially passing missing-property
-  test could depend on host `DB_PASSWORD`; host system property sources were
-  removed and the seven focused tests were rerun successfully.
-- It records the actual catalog-drift response: aliases are extracted from
-  repository deployment sources rather than maintained in a duplicate test
-  list.
-- It explains rejected wrappers, empty properties, fake test properties, and
-  remote/dynamic systems without claiming incidents that did not occur.
-- It distinguishes current risks from authorized future work.
+The entries explain why Evidence starts the model, why Decision is Core Domain,
+why Action differs from Execution, why Risk Case is downstream, and how the
+Decision-layer boundary supports future AI explainability. They also honestly
+record the real design correction from V1 rather than inventing an
+implementation incident.
 
-No invented production incident, database problem, deployment failure, or
-business lesson appears in the entry.
+No business implementation lesson is claimed because Q-007 changed documents
+only.

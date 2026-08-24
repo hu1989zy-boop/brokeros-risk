@@ -1,35 +1,32 @@
-# Q-006 Requirement Review
+# Q-007 Final Requirement Review
 
 ## Result
 
-PARTIAL — IMPLEMENTATION ACCEPTANCE CRITERIA SATISFIED EXCEPT CURRENT-REVISION
-DOCKER/CI RUNTIME EVIDENCE
+PASS
 
-## Acceptance Criteria Evidence
+## Acceptance Review
 
-| AC | Result | Evidence |
+| Acceptance area | Result | Evidence |
 | --- | --- | --- |
-| 1–5 Design approval gate | PASS | Dedicated `review/q-006-design/` package, approved Requirement/design/Gap Analysis/plan, and Accepted ADR-008. |
-| 6 Spring Boot-only mechanism | PASS | No configuration-system dependency or runtime mechanism added; ADR-008 and catalog define Spring Boot Externalized Configuration as sole mechanism. |
-| 7 Native framework properties | PASS | No production wrapper class exists; datasource, Hikari, Redis, Kafka, Flyway, server, management, logging, and SpringDoc retain native keys. |
-| 8 BrokerOS-owned typed groups | PASS / NOT APPLICABLE | No real BrokerOS-owned group exists, so the approved YAGNI decision correctly adds no speculative production class. Future groups are governed by ADR-008. |
-| 9 Startup validation | PASS / NOT APPLICABLE FOR APPLICATION GROUPS | No application-owned group exists. Tests prove missing required placeholders and invalid native typed values are rejected deterministically; no fake group was invented. |
-| 10 Configuration catalog | PASS | Catalog contains every required field and a test extracts aliases from actual YAML, Compose, and Kubernetes sources and verifies documentation coverage. |
-| 11 Secret handling | PASS | No committed production value/default; ignored local files and external Kubernetes Secret reference remain unchanged; runtime-generated synthetic values test diagnostic safety. |
-| 12 Profiles and precedence | PASS | Base/test/prod behavior and alias priority are documented and tested; profiles are explicitly not treated as authorization. |
-| 13 Actuator/API boundary | PASS | Test confirms exposure remains `health,info`; no API/controller/response contract changed. |
-| 14 Prohibited scope | PASS | No business module, schema, topic/event, Redis key, adapter, package restructure, deployment split, or prohibited technology was added. |
-| 15 Verification | PARTIAL | Maven test/package, diff/static, and Kustomize pass. Docker is unavailable locally and no Q-006 CI revision exists yet. |
-| 16 ADR/docs/skill/lesson/review | PASS | ADR-008, catalog, architecture outcome, skill, honest lesson, design snapshot, and final root Review exist. |
+| Canonical model | PASS | ADR-009 defines Evidence → Decision → Action → Risk Case. |
+| Core Domain | PASS | Decision is explicitly the Core Domain. |
+| Explainability | PASS | Evidence provenance is mandatory architecture guidance. |
+| Action boundary | PASS | Action is business intent and not Execution. |
+| Risk Case boundary | PASS | Optional downstream bounded context. |
+| Rule Engine | PASS | Future Decision engine only; no implementation. |
+| Adapter isolation | PASS | External execution remains downstream. |
+| AI boundary | PASS | Future Decision-layer consideration only. |
+| Trading Data | PASS | Current name retained; Observation deferred. |
+| Non-implementation | PASS | No source, runtime, API, data, messaging, or deployment change. |
+| ADR/Skill/Lessons | PASS | ADR-009, Skill, and Lessons Learned exist. |
+| Final Review | PASS | Complete root Review Package generated. |
 
-## Requirement Meaning
+## Scope Discipline
 
-The approved meaning was preserved. Status and implementation authorization
-were recorded without broadening Q-006 into business configuration, a Secret
-product, dynamic refresh, production policy, or framework-wrapper work.
+The final Architect direction explicitly supersedes the provisional Design V1
+canonical sequence. Requirement and active architecture documents were updated
+together and point to ADR-009, preventing two approved meanings. Historical V1
+material is archived and labeled non-authoritative.
 
-## Final Requirement Gate
-
-Q-006 remains PARTIAL solely because acceptance criterion 15 requires the
-unavailable local infrastructure check to pass through the approved CI path
-before final PASS. No Requirement change is proposed.
+No Q-008 behavior or business implementation has been inferred from the
+accepted design. Implementation remains Deferred.

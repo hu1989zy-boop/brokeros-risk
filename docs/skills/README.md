@@ -5,6 +5,9 @@ task-specific skills extracted from completed work.
 
 Available engineering knowledge:
 
+- `brokeros-risk-core-domain.md` — the Evidence → Decision → Action → Risk Case
+  baseline, Decision Core Domain, Action/Execution separation, downstream Risk
+  Case, adapter isolation, and future Rule Engine/AI boundaries.
 - `configuration-management.md` — configuration ownership, native versus
   application binding, catalog/alias compatibility, startup validation,
   secret/profile rules, deterministic contract tests, and YAGNI boundaries.

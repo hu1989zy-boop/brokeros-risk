@@ -1,0 +1,26 @@
+Q-007 Review V1 Design historical bounded tracked diff statistic
+Command: git diff --stat
+
+ ...2026-08-11-q-004-ci-integration-verification.md |  32 ++-
+ review/ArchitectureReview.md                       | 221 ++++++++-------------
+ review/GitDiffStat.txt                             |  43 ++--
+ review/GitStatus.txt                               |  40 ++--
+ review/LessonsLearnedReview.md                     |  24 ---
+ review/OutstandingItems.md                         | 111 ++++++-----
+ review/PhaseReviewIndex.md                         |  19 +-
+ review/ProjectTree.txt                             |  21 +-
+ review/Q-004-Patch-01.md                           |  23 ++-
+ review/RequirementReview.md                        |  35 ----
+ review/SkillReview.md                              |  27 ---
+ review/Summary.md                                  | 192 +++++++-----------
+ review/Verification.md                             | 193 +++++++-----------
+ 13 files changed, 391 insertions(+), 590 deletions(-)
+
+Notes:
+- `git diff --stat` reports tracked changes only. The Q-007 Requirement,
+  Architecture Design, and dedicated Review Package are untracked and therefore
+  appear in GitStatus.txt rather than this statistic.
+- The tracked changes shown above existed before Q-007, except for preserving
+  the previous Q-006 root package in review/archive/q-006/ and updating the
+  Review index. They are not Q-007 business or runtime changes.
+- No complete Git diff is included.

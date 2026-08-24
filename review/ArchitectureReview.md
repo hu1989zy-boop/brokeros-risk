@@ -1,175 +1,132 @@
-# Q-006 Architecture Review
+# Q-007 Final Architecture Review
 
 ## Review Result
 
-PARTIAL — ARCHITECTURE AND DEVELOPMENT STANDARDS PASS; CURRENT-REVISION
-DOCKER/CI RUNTIME GATE PENDING
+APPROVED — PASS
 
-No architecture or standards violation was found. The only incomplete item is
-operational evidence: the local host has no Docker CLI and no committed Q-006
-revision exists for the approved GitHub Actions fallback.
+ADR-009 establishes the accepted BrokerOS Risk baseline:
 
-## Architecture Decision
+```text
+Evidence → Decision → Action → Risk Case
+```
 
-ADR required: YES.
+Decision is the Core Domain, Action represents business intent only, Execution
+belongs to downstream adapters, and Risk Case is an optional downstream bounded
+context. Implementation remains Deferred.
 
-Accepted ADR-008 records the durable cross-module and deployment contract:
-Spring Boot Externalized Configuration is the sole mechanism, framework-owned
-properties remain native, real BrokerOS-owned settings use
-`brokeros.risk.<capability>` with immutable typed startup validation,
-configuration is startup-bound, and Secret values remain external and
-unexposed.
+## Decision Rationale
 
-The application remains one Java/Spring Boot feature-first modular-monolith
-deployable. Q-006 adds no production package or runtime component.
+Evidence must precede a risk conclusion so that future decisions remain
+explainable. Decision is the domain center because converting Evidence into a
+meaningful risk conclusion is the differentiating BrokerOS capability. Action
+and Risk Case are consequences/supporting collaboration rather than owners of
+risk truth.
 
-## Why These Decisions Were Made
-
-The repository already delegates datasource, Redis, Kafka, Flyway, server,
-management, logging, tracing, and SpringDoc configuration to Spring Boot and
-library binders. Wrapping them would duplicate ownership and create contracts
-BrokerOS does not own.
-
-Repository inspection found no real BrokerOS-owned runtime setting. Creating an
-empty `BrokerProperties` or a fake test group would add abstraction without a
-consumer. The approved YAGNI decision therefore establishes rules, catalog, and
-verification now, while deferring the first production properties type until a
-concrete approved capability needs it.
-
-Startup-bound configuration fits the current deployment model. Dynamic refresh
-would require authorization, auditing, rollout, rollback, atomicity, failure,
-and multi-instance consistency decisions absent from Q-006.
+Separating Action from Execution protects the Core Domain from MT4/MT5 Manager,
+CRM, Kafka, Email, transport, vendor, retry, and failure semantics. Positioning
+future Rule Engine and AI capability at Decision preserves a clear extension
+point while granting no implementation authorization.
 
 ## Architecture Impact
 
-| Area | Impact |
+| Area | Result and evidence |
 | --- | --- |
-| Runtime | No production Java, dependency, runtime property, or new process. |
-| Packages | One test-only `com.brokeros.risk.config` package; no production package or restructure. |
-| Configuration | Existing keys/values/profiles/aliases unchanged; their contract is cataloged and tested. |
-| API | No endpoint, response, header, ResultCode, exception, validation DTO, OpenAPI, or Actuator format change. |
-| Database/Flyway | No migration, schema, entity, repository, SQL, DDL, or DML change. |
-| Redis | No key, TTL, cache, business data, or connectivity behavior change. |
-| Kafka | No topic, event, producer, consumer, or auto-creation change. |
-| Logging/tracing | Existing Logback, Request ID, W3C tracing, MDC, and sensitive-log rules unchanged. |
-| Docker/Kubernetes | Existing sources inspected and rendered; no image, manifest, overlay, Secret object, or topology change. |
-| CI | Existing workflow and scripts reused; no workflow or gate change. |
-| External systems | No MT4, MT5, CRM, database, SDK, or adapter implementation. |
-| Risk business | No Risk Case, Rule Engine, Workflow, Account Control, Audit Module, or RBAC. |
+| Product boundary | Broker/CRM/trading-platform neutrality retained; external names appear only as adapter examples. |
+| Core Domain | Decision formally selected as Core Domain in ADR-009. |
+| Contexts | Trading Data remains supporting upstream; Decision is core; Action and Risk Case are downstream. |
+| Modular monolith | No service, repository, deployment, or package split. |
+| Action execution | Explicit downstream adapter boundary; no SDK or execution contract invented. |
+| Rule Engine | Future Decision mechanism only; no engine, syntax, runtime, or module. |
+| AI | Future integration consideration at Decision only; no model, metadata contract, or automation. |
+| API/data/messaging | No endpoint, table, migration, Redis key, Kafka topic/event, or contract. |
+| Operations | No dependency, configuration, CI, Docker, or Kubernetes change. |
 
-## Implementation Review
+## ADR Review
 
-The new integration test uses Spring Boot's existing test foundation and
-`ConfigDataApplicationContextInitializer` to resolve the repository's actual
-base/test/prod files. It deliberately does not start the full application or
-external services. Host environment and system-property sources are removed in
-the isolated runner so missing/invalid cases cannot depend on a developer's
-shell.
+ADR-009 is necessary because the core-domain center, canonical model, bounded
+context direction, Action/Execution separation, and future Rule Engine/AI
+integration boundary govern multiple future Requirements. It contains Context,
+Decision, Alternatives, Consequences, and clearly deferred Future
+Considerations.
 
-The catalog-coverage test extracts environment placeholders from the actual
-application YAML and Compose file, plus environment names from Kubernetes YAML,
-then requires every alias to appear in the catalog. A runtime-generated
-synthetic sensitive value verifies that an unrelated typed-conversion failure
-does not include the value, without committing credential-like test data.
+Active Q-007 architecture material references ADR-009 as authoritative. The V1
+proposal is retained only in the historical Review archive and is explicitly
+non-authoritative where it differs from ADR-009.
+
+## Technical Debt and Risks
+
+- No implementation debt is introduced because Q-007 is documentation only.
+- Future code must avoid a giant undifferentiated Decision service.
+- Evidence provenance, rule versioning, AI governance, Action authorization,
+  execution failure policy, and Risk Case lifecycle still need formal future
+  Requirements.
+- Observation, Evidence Chain, and Decision Metadata are candidates only; they
+  cannot be adopted directly from ADR-009 Future Considerations.
 
 ## Development Standards Compliance
 
 ### AGENTS.md compliance
 
-Evidence checked: root `AGENTS.md`, approved Q-006 Requirement, Q-006
-architecture/Gap Analysis/plan, ADR-001 through ADR-008, architecture documents,
-development standards, applicable repository skills, recent Q-004/Q-005
-lessons, production/test source, deployment sources, and the final change set.
-The sequence was design approval → Accepted ADR-008 → smallest implementation →
-tests/docs/skill/lesson → Review. No formal business behavior was inferred from
-chat, and no prohibited Phase 1 technology or module was introduced.
-
-The protected `review/review-history/` archive was excluded from static and tree
-generation and was not read, modified, deleted, staged, or committed.
+Inspected root `AGENTS.md`, including product boundary, Phase 1 architecture,
+requirements discipline, review package, Definition of Done, and Prompt
+Delivery Policy. Q-007 has an approved Requirement, Accepted ADR, Skill,
+Lessons Learned, complete root Review, and a ready-to-use Git/CI prompt. It adds
+no unapproved implementation or future Requirement.
 
 ### Architecture compliance
 
-Evidence: `git diff --exit-code` over production Java, runtime resources,
-`backend/pom.xml`, Compose, Kubernetes, CI, scripts, and Flyway reports no Q-006
-change. The only Java addition is a focused integration test. The feature-first
-modular monolith, one deployable, approved Java/Spring/MySQL/Redis/Kafka/Docker/
-Kubernetes stack, adapter isolation, and risk detection/action boundary remain
-unchanged. Scans found no Flink, Python, Elasticsearch, microservice, service
-mesh, horizontal package restructure, or external database access.
+Inspected the Q-007 Requirement/design and Phase 1 architecture constraints.
+The accepted model remains broker-neutral and inside one feature-first modular
+monolith. Trading Data stays upstream; vendor execution stays behind adapters;
+Decision and Action Execution remain separated. No microservice, repository,
+package, technology, or deployment change exists.
 
 ### ADR compliance
 
-Evidence: ADR-001 modular monolith/stack, ADR-002 system isolation, ADR-003 API/
-Flyway/Logback foundation, ADR-004 deployment layout, ADR-005 standards
-authority, ADR-006 CI gates, and ADR-007 tracing remain unchanged. ADR-008 has
-Status Accepted and contains Context, Decision, Alternatives, and Consequences.
-The implementation matches it: no parallel configuration system, no native-key
-wrapper, no empty application group, startup-bound semantics, external Secrets,
-and unexposed Actuator configuration endpoints.
+Inspected accepted ADR-001 through ADR-008 and new ADR-009. ADR-009 is
+compatible with the modular-monolith roadmap and strengthens ADR-002's
+detection/decision versus execution boundary. It changes the provisional Q-007
+V1 model through an explicit Architect decision rather than silently. No other
+accepted ADR is modified.
 
 ### API standard compliance
 
-Evidence: no production controller, DTO, `ApiResponse`, `ErrorResponse`,
-`ResultCode`, `BusinessException`, `GlobalExceptionHandler`, OpenAPI, or Actuator
-contract changed. Existing API/exception/health/OpenAPI tests are included in
-the 26-test PASS. The configuration test confirms Actuator exposure remains
-exactly `health,info`, so framework-managed `env` and `configprops` remain
-unavailable over HTTP.
+Inspected candidate paths and backend status. No controller, DTO, endpoint,
+`ApiResponse`, ResultCode, exception, validation, OpenAPI, or Actuator file is
+changed. Therefore no application-owned REST contract is introduced or
+excluded from the unified API standard.
 
 ### Database standard compliance
 
-Evidence: `git diff --exit-code -- backend/src/main/resources/db/migration`
-passes; unchanged `V1__initial_schema.sql` remains the only migration and has no
-business DDL. No entity, repository, SQL, table, column, index, constraint,
-data migration, Hibernate schema setting, or direct external database operation
-was added. Framework-owned datasource and Flyway properties remain unwrapped.
+Inspected `backend/src/main/resources/db/migration` scope and candidate Git
+paths. No SQL, Flyway migration, entity, repository, table, column, index,
+Redis key/data, or Kafka topic/event is changed. Future diagram/context terms
+are conceptual and create no persistence contract.
 
 ### Security standard compliance
 
-Evidence checked: `.gitignore`, `.env.example`, base/test/prod YAML, Compose,
-Kubernetes Secret references, logging standards, catalog, test source, and
-credential/private-key/token scans excluding `.git`, ignored build output, and
-the protected archive. No Secret value or unsafe production default was added.
-The test uses a runtime-generated synthetic value and asserts it is absent from
-the diagnostic. Documentation prohibits logging or reviewing values. Actuator
-`env`/`configprops` remain unexposed. No remote configuration/Secret product,
-authentication token, or full authorization header handling was introduced.
+Inspected Q-007 files and candidate scope for credentials, tokens, private
+keys, authentication headers, personal data, secret values, or new data
+exposure. None is present. Q-007 adds no endpoint, logging, external call, AI
+data flow, authorization decision, or secret handling behavior.
 
 ### Auditability compliance
 
-Evidence: Q-006 creates no critical action, mutable policy, runtime
-administration, business decision, state transition, command execution, or
-Audit module, so no new audit persistence is required. Startup configuration is
-explicitly immutable. Dynamic or administrable configuration remains excluded
-because it would require actor, reason, before/after, timestamp, approval,
-rollback, and consistency design under a later Requirement.
+ADR-009 and the Skill require Evidence provenance and preserve the originating
+Decision across Action and future Execution. This is an architecture invariant,
+not an Audit module. Actor, authorization, before/after state, attempt/outcome,
+retention, and audit storage remain explicitly deferred.
 
 ### Skill compliance
 
-Evidence: `docs/skills/development-standards.md` governed preflight and closure.
-`docs/skills/configuration-management.md` captures the actual ownership test,
-YAGNI rule, catalog contract, startup/Secret rules, deterministic host-source
-isolation, source-derived alias coverage, common mistakes, and validation
-checklist. It is indexed by `docs/skills/README.md`. The Q-006 lesson records
-the actual host-environment determinism review finding and retest rather than an
-invented incident.
+Applied `docs/skills/development-standards.md` and created
+`docs/skills/brokeros-risk-core-domain.md` as reusable future-Requirement
+guidance rather than a changelog. The Skill references ADR-009 as authoritative
+and covers Evidence, Decision, Action, Risk Case, Rule Engine, AI, and adapter
+boundaries without inventing implementation.
 
-## Technical Debt and Recommendations
+## Conclusion
 
-- Blocking for final PASS: execute the existing Docker infrastructure gate on
-  the current Q-006 revision, locally or through the approved GitHub Actions
-  path, then refresh the Review with immutable run/commit evidence.
-- Non-blocking: local Maven runs on Java 23 while compiling release 21; CI must
-  continue verifying Java 21.
-- Non-blocking: Mockito/Byte Buddy reports its known future dynamic-agent warning
-  during tests; no test fails.
-- Operational risk: correct production behavior still depends on explicit
-  `prod` profile activation. Q-006 documents/tests the contract but does not
-  invent environment admission or authorization.
-- Deferred: a first application-owned properties type, Secret provider,
-  dynamic configuration, and business policy configuration require a real
-  approved Requirement and appropriate architecture/ADR review.
-
-Do not interpret deferred candidates as approved Q-007 scope. Q-006 is ready
-for architect review of implementation and must remain PARTIAL until its runtime
-gate is evidenced.
+No unresolved architecture or standards violation exists in the Q-007 closure
+scope. Architecture Review is Approved and PASS. Q-007 is an official design
+baseline with implementation Deferred.

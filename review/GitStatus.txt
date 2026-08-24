@@ -1,38 +1,51 @@
-Q-006 Git status snapshot
+Q-007 Final Closure Git status snapshot
 Command: git status --short --branch
-Captured after implementation and Review generation on 2026-08-18.
 
 ## main...origin/main
- M README.md
- M backend/README.md
- M docs/lessons/2026-08-11-q-004-ci-integration-verification.md
- M docs/skills/README.md
- M review/ArchitectureReview.md
- M review/GitDiffStat.txt
- M review/GitStatus.txt
- M review/OutstandingItems.md
- M review/PhaseReviewIndex.md
- M review/ProjectTree.txt
- M review/Q-004-Patch-01.md
- M review/Summary.md
- M review/Verification.md
-?? backend/src/test/java/com/brokeros/risk/config/
-?? docs/adr/ADR-008-configuration-management-foundation.md
-?? docs/architecture/q-006-configuration-management-foundation-design.md
-?? docs/configuration/
-?? docs/lessons/2026-08-18-q-006-configuration-management-foundation.md
-?? docs/requirements/Q-006-Requirement.md
-?? docs/skills/configuration-management.md
-?? review/LessonsLearnedReview.md
-?? review/RequirementReview.md
-?? review/SkillReview.md
-?? review/archive/q-005/
-?? review/q-006-design/
+M  README.md
+A  docs/adr/ADR-009-brokeros-risk-core-domain-model.md
+A  docs/architecture/q-007-brokeros-domain-foundation-design.md
+A  docs/lessons/2026-08-23-q-007-brokeros-domain-foundation.md
+M  docs/lessons/README.md
+A  docs/requirements/Q-007-Requirement.md
+M  docs/skills/README.md
+A  docs/skills/brokeros-risk-core-domain.md
+M  review/ArchitectureReview.md
+M  review/GitDiffStat.txt
+M  review/GitStatus.txt
+M  review/InitialBaselineCheck.md
+M  review/LessonsLearnedReview.md
+M  review/OutstandingItems.md
+M  review/PhaseReviewIndex.md
+M  review/ProjectTree.txt
+M  review/RequirementReview.md
+M  review/SkillReview.md
+M  review/Summary.md
+M  review/Verification.md
+A  review/archive/q-007/LessonsLearned.md
+A  review/archive/q-007/README.md
+A  review/archive/q-007/review-v1-design/ADRDecision.md
+A  review/archive/q-007/review-v1-design/ArchitectureReview.md
+A  review/archive/q-007/review-v1-design/BoundedContext.md
+A  review/archive/q-007/review-v1-design/ContextMap.md
+A  review/archive/q-007/review-v1-design/CoreDomainDefinition.md
+A  review/archive/q-007/review-v1-design/DomainLifecycle.md
+A  review/archive/q-007/review-v1-design/DomainObjectRelationship.md
+A  review/archive/q-007/review-v1-design/GitDiffStat.txt
+A  review/archive/q-007/review-v1-design/GitStatus.txt
+A  review/archive/q-007/review-v1-design/InitialBaselineCheck.md
+A  review/archive/q-007/review-v1-design/OutstandingItems.md
+A  review/archive/q-007/review-v1-design/ProjectTree.txt
+A  review/archive/q-007/review-v1-design/RequirementReview.md
+A  review/archive/q-007/review-v1-design/Summary.md
+A  review/archive/q-007/review-v1-design/UbiquitousLanguage.md
+A  review/archive/q-007/review-v1-design/Verification.md
 ?? review/review-history/
 
-Q-006 ownership note: the modified Q-004 lesson and
-`review/Q-004-Patch-01.md` predate Q-006. The Q-005 root package was preserved
-under `review/archive/q-005/`. The user-owned `review/review-history/` directory
-is protected and was not read, modified, deleted, staged, or committed.
-
-No file was staged, committed, or pushed by Q-006.
+Interpretation:
+- Every M/A entry above is staged and belongs to the Q-007 documentation candidate.
+- No unstaged tracked change remains.
+- review/review-history/ is protected, untracked, and intentionally unstaged.
+- Pre-Q-007 unrelated changes remain in recoverable stash
+  "pre-q-007 unrelated review work" and are not candidate content.
+- No commit or push was performed.

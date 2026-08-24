@@ -21,3 +21,9 @@ problem occurred, write `No significant implementation issue encountered.`
 
 Lessons Learned records experience from completed work. Durable instructions
 belong in `AGENTS.md`, architecture documents, accepted ADRs, or `docs/skills`.
+
+Completed Requirement entries include:
+
+- `2026-08-23-q-007-brokeros-domain-foundation.md` — aligning the final
+  Evidence/Decision/Action/Risk Case baseline, separating Action from Execution,
+  and preserving explainability for future AI work.

@@ -1,158 +1,130 @@
-# Q-006 Verification
+# Q-007 Final Verification
 
 ## Final Verdict
 
-PARTIAL
+PASS
 
-Implementation, Maven, configuration-contract, static, scope, security, and
-Kubernetes checks pass. Docker is unavailable locally and no commit/push is
-authorized, so the approved CI runtime fallback has not yet executed against
-the Q-006 revision. This is an evidence gap, not a code or architecture failure.
+Q-007 is a documentation-only architecture closure. Active design contracts,
+candidate Git scope, repository static checks, backend tests/package, and
+cleanup checks pass. Implementation remains Deferred.
 
 ## Environment
 
-- Date: 2026-08-18 (Asia/Shanghai)
+- Date: 2026-08-23 (Asia/Shanghai)
 - Branch: `main`
-- Baseline commit: `f693128eb381564bc8f5f1fed02f2d933e9f2822`
-- Project target: Java 21
-- Local Maven runtime: Java 23.0.2, compiling with `release 21`
-- Docker: unavailable
-- Local kubectl: unavailable; temporary official v1.36.3 darwin/arm64 binary
-  was downloaded, SHA-256 verified, used, and removed
-- GitHub Actions for current Q-006 revision: not available because no
-  commit/push was authorized
+- Baseline HEAD/origin: `acf4e5a90a24e6954a05cff8d7a15a432db85d85`
+- Baseline GitHub Actions: run `32140020346`, job `95720215792`, PASS on Java 21
+- Local Maven runtime: Java 23.0.2 because Java 21 is not installed locally
+- Protected archive: `review/review-history/` excluded and uninspected
 
 ## Verification Matrix
 
-| Component | Status | Evidence |
+| Check | Result | Evidence |
 | --- | --- | --- |
-| Focused configuration tests | PASS | 7 tests, 0 failures/errors/skips; run before and after host property-source isolation. |
+| Requirement status | PASS | Requirement/Architecture/Design Review/Design Approved PASS; Implementation Deferred. |
+| ADR-009 | PASS | Accepted with Context, Decision, Alternatives, Consequences, Future Considerations. |
+| Canonical model | PASS | Active documents use Evidence → Decision → Action → Risk Case. |
+| Core Domain | PASS | Decision consistently identified as Core Domain. |
+| Action/Execution | PASS | Active design and Skill keep business intent separate from downstream adapters. |
+| Risk Case | PASS | Optional downstream bounded context. |
+| Future candidates | PASS | Observation, Evidence Chain, Decision Metadata explicitly deferred. |
+| Q-008/business scope | PASS | No Q-008 or domain implementation path changed. |
 | Maven test | PASS | 26 tests, 0 failures, 0 errors, 0 skipped. |
-| Maven package | PASS | 26 tests passed and executable backend JAR was produced under ignored `backend/target/`. |
-| Profile loading | PASS | Test and prod overlays resolve expected datasource/Kafka/logging/Hikari values. |
-| Missing required property | PASS | Isolated prod Config Data has no host sources; required datasource password lookup rejects missing `DB_PASSWORD`. |
-| Invalid property | PASS | Typed integer resolution rejects a non-integer Hikari pool size. |
-| Override priority | PASS | Deployment alias overrides the packaged test default. |
-| Secret-safe diagnostics | PASS | Diagnostic excludes a runtime-generated synthetic sensitive value. |
-| Actuator exposure | PASS | Contract remains exactly `health,info`; `env` and `configprops` are absent. |
-| Catalog contract | PASS | Required columns exist and all aliases derived from YAML/Compose/Kubernetes appear in the catalog. |
-| Production/runtime source boundary | PASS | No change to production Java, Maven dependencies, runtime resources, Flyway, CI, scripts, Docker, or Kubernetes. |
-| Static and whitespace | PASS | Repository script and `git diff --check` pass with protected archive excluded. |
-| Prohibited configuration technology | PASS | No Apollo, Nacos, Spring Cloud Config, Vault, Consul, dynamic refresh, or wrapper dependency/code added. |
-| Business/data/messaging scope | PASS | No business module, Flyway change, business table, Redis key/data, Kafka topic/event, or adapter implementation. |
-| Secret scan | PASS | No private key, token credential, or committed secret-like value introduced in inspected scope. |
-| Kubernetes base/test/prod | PASS | Checksum-verified kubectl renders Deployment, Service, ConfigMap, external Secret reference, and profile overlays. |
-| Docker Compose config | NOT EXECUTED | Docker CLI unavailable locally. |
-| Docker infrastructure gate | NOT EXECUTED | Script preflight exited 1 before creating resources because Docker with Compose v2 is unavailable. |
-| Current-revision CI fallback | NOT EXECUTED | No Q-006 commit or push was authorized; previous Q-005 CI is not reused as Q-006 evidence. |
+| Maven package | PASS | BUILD SUCCESS; 26 tests passed during package. |
+| Static verification | PASS | Repository script completed successfully. |
+| Whitespace | PASS | `git diff --check`. |
+| Runtime path scope | PASS | No backend, frontend, adapter, deploy, script, CI, Compose, or runtime change. |
+| Secret scan | PASS | No credential assignment or private-key literal in Q-007 candidate documents. |
+| Artifact cleanup | PASS | No candidate `.DS_Store`, zip, target, IDE, or local environment file. |
+| Docker/Kubernetes runtime | NOT APPLICABLE | No infrastructure/runtime change; local Docker/kubectl/kustomize unavailable. |
 
 ## Commands Executed
 
-### Focused configuration tests
+### Backend test and package
 
 ```bash
 cd backend
-mvn --batch-mode --no-transfer-progress \
-  -Dtest=ConfigurationContractIntegrationTests test
+TMPDIR=/private/tmp/brokeros-q007-maven-tmp \
+MAVEN_OPTS='-Djava.io.tmpdir=/private/tmp/brokeros-q007-maven-tmp -Djdk.attach.allowAttachSelf=true -XX:+EnableDynamicAgentLoading' \
+mvn test
+
+TMPDIR=/private/tmp/brokeros-q007-maven-tmp \
+MAVEN_OPTS='-Djava.io.tmpdir=/private/tmp/brokeros-q007-maven-tmp -Djdk.attach.allowAttachSelf=true -XX:+EnableDynamicAgentLoading' \
+mvn package
 ```
 
-Result: PASS — 7 tests. The command was run after initial implementation and
-again after removing host environment/system-property sources from the runner;
-both executions passed.
+Result: PASS. Each lifecycle executed 26 tests with zero failures/errors/skips;
+package produced BUILD SUCCESS. The generated `backend/target/` directory was
+then moved outside the repository and is not candidate content.
 
-### Full Maven tests
+The first sandboxed `mvn test` attempt failed before valid test execution
+because the local Maven runtime used JDK 23, Mockito/Byte Buddy could not attach
+an agent under sandbox process restrictions, and Surefire could not create its
+system temporary directory. The permitted retry used a writable task-specific
+temporary directory and agent settings and passed without changing source or
+test logic. The committed baseline also passed GitHub Actions on required Java
+21; Q-007 changes documentation only.
 
-```bash
-cd backend
-mvn --batch-mode --no-transfer-progress test
-```
-
-Result: PASS — 26 tests, 0 failures, 0 errors, 0 skipped; BUILD SUCCESS.
-
-### Maven package
-
-```bash
-cd backend
-mvn --batch-mode --no-transfer-progress package
-```
-
-Result: PASS — 26 tests passed; executable
-`brokeros-risk-backend-0.1.0-SNAPSHOT.jar` produced; BUILD SUCCESS.
-
-### Static and change-boundary verification
+### Static and design-contract checks
 
 ```bash
-GIT_CONFIG_COUNT=1 \
-GIT_CONFIG_KEY_0=core.excludesFile \
-GIT_CONFIG_VALUE_0=/private/tmp/brokeros-risk-q006-git-excludes \
-sh scripts/verify-static.sh
-
 git diff --check
 
-git diff --exit-code -- \
-  backend/pom.xml backend/src/main/java backend/src/main/resources \
-  docker-compose.yml deploy .github scripts
+GIT_CONFIG_COUNT=1 \
+GIT_CONFIG_KEY_0=core.excludesFile \
+GIT_CONFIG_VALUE_0=/private/tmp/brokeros-q007-protected.exclude \
+sh scripts/verify-static.sh
 
-rg -n '@Value|@ConfigurationProperties|ConfigurationPropertiesScan|Environment|System\\.getenv|System\\.getProperty' \
-  backend/src/main/java
+git diff --exit-code HEAD -- \
+  backend frontend adapters deploy scripts .github docker-compose.yml
 
-rg -n -i 'apollo|nacos|spring-cloud-config|spring-cloud-starter-vault|consul|refreshscope' \
-  backend/pom.xml backend/src/main
+git status --short -- \
+  backend frontend adapters deploy scripts .github docker-compose.yml
 ```
 
-Result: PASS. The expected `rg` no-match commands returned exit 1 and were
-handled explicitly as successful absence checks. The temporary Git excludes
-file contained only `review/review-history/`, so the user-owned protected
-archive was not enumerated or inspected.
+Result: PASS. Static verification printed `Static verification PASS`; runtime
+scope commands produced no changes. The temporary excludes file prevented the
+static untracked-file enumeration from reading the protected archive.
 
-Additional scans for private-key markers, token/client-secret assignments,
-business implementation, new topics, and migration changes returned no
-introduced violation. Only key names and documented placeholders are present;
-no Secret value was printed into verification evidence.
+Additional `rg` checks verified:
 
-The first combined verification command had a shell-quoting parse error before
-any check ran. After simplifying the expression, static/scope/technology checks
-passed but the initial Secret regex conservatively matched the safe
-`$MYSQL_PASSWORD` variable reference in the existing infrastructure script.
-The regex was corrected to exclude variable placeholders and rerun; the final
-Secret scan passed. Neither correction changed repository files.
+- accepted status matrix;
+- canonical model and Decision Core Domain language;
+- all three ADR-009 Future Considerations;
+- absence of the obsolete six-stage sequence from active documents;
+- absence of secret assignments/private-key literals;
+- no Q-008 or business implementation authorization.
 
-### Kubernetes rendering
+Expected no-match results were handled explicitly and not left to fail under
+`set -e` semantics.
+
+### Tool availability and infrastructure
 
 ```bash
-# Official kubectl v1.36.3 and kubectl.sha256 downloaded to a mktemp directory
-# SHA-256 compared before execution
-PATH=<verified-temporary-kubectl-directory>:$PATH \
-  sh scripts/verify-kustomize.sh
+command -v docker
+command -v kubectl
+command -v kustomize
 ```
 
-Result: PASS — base, test, prod, and the repository Kustomize contract all
-passed. The temporary directory was removed by the command trap.
+Result: all unavailable locally. Docker and Kustomize runtime validation is NOT
+APPLICABLE to Q-007 because the candidate contains no infrastructure, runtime,
+or code change. Baseline CI evidence remains PASS but is not claimed as Q-007
+runtime evidence.
 
-### Docker verification
+### Cleanup and Git candidate scope
 
-```bash
-sh scripts/verify-infrastructure.sh
-docker compose config
-```
+Executed bounded searches for `.DS_Store`, `*.zip`, `.idea`, `target`, and
+local-only artifacts. Discovered ignored artifacts were moved to
+`/private/tmp/brokeros-q007-excluded-artifacts/`; unrelated pre-Q-007 working
+tree changes were preserved in the recoverable stash named
+`pre-q-007 unrelated review work`.
 
-Local result: NOT EXECUTED. Infrastructure preflight emitted
-`FAIL [preflight] Docker with Compose v2 is required.` and exited 1 before any
-resource or credential was created. `docker compose config` was not invoked
-because `docker` is absent.
+Final candidate verification records staged name/status, staged diff check,
+bounded diff statistics, project tree, and working-tree status in the adjacent
+Review files. The protected `review/review-history/` remains unstaged.
 
-## Test Inventory
+## Conclusion
 
-- `ConfigurationContractIntegrationTests`: 7
-- `RequestCorrelationIntegrationTests`: 7
-- `BrokerOsRiskApplicationTests`: 7
-- `FlywayMigrationTests`: 1
-- `GlobalExceptionHandlerTests`: 4
-- Total: 26
-
-## Closure Condition
-
-After an explicitly authorized commit/push, the existing GitHub Actions
-workflow must pass Maven, Kustomize, and the isolated Docker/MySQL/Flyway/Redis/
-Kafka/backend gate for that exact Q-006 commit. Then record the run ID, job ID,
-commit SHA, stage results, and cleanup result here before changing Q-006 to PASS.
+Verification is PASS for Q-007 Final Closure. The candidate is suitable for one
+Q-007 documentation commit after Architect approval. No Q-008 work is
+authorized.

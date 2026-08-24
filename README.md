@@ -3,8 +3,8 @@
 BrokerOS Risk is an independent, broker-neutral trading risk management
 platform for Forex/CFD brokers.
 
-This repository currently contains the Q-006 engineering, observability, and
-configuration-management foundation. It follows the Phase 1 architecture
+This repository currently contains the Q-007 engineering and approved domain
+design foundation. It follows the Phase 1 architecture
 constraints: a Java 21/Spring Boot modular monolith, MySQL, Redis, Kafka,
 Docker, and Kubernetes. Formal risk-management features have not been
 implemented yet.
@@ -96,12 +96,16 @@ override rules, and Secret convention are in
 the only configuration mechanism. Current settings are framework-owned, so
 Q-006 intentionally adds no production `@ConfigurationProperties` wrapper.
 
-## Current scope
+## Current domain baseline
 
-Q-006 adds configuration governance, documentation, and contract verification
-only. It adds no business functionality, business table, production topic,
-production Redis key, external integration, dynamic configuration service,
-telemetry exporter, or observability infrastructure.
+Q-007 establishes the documentation-only canonical model
+`Evidence → Decision → Action → Risk Case`. Decision is the Core Domain,
+Action is business intent rather than external execution, and Risk Case is an
+optional downstream bounded context. ADR-009 is authoritative and the reusable
+implementation guidance is in `docs/skills/brokeros-risk-core-domain.md`.
+
+No Evidence, Decision, Action, Risk Case, Rule Engine, AI, business table,
+production topic/key, or external execution capability has been implemented.
 
 ## Mandatory development sequence
 
