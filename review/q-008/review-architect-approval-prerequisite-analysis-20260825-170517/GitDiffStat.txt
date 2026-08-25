@@ -1,0 +1,43 @@
+Q-008 Architect Approval and Prerequisite Analysis bounded diff statistic
+
+Tracked working-tree diff:
+(empty — Q-008 files remain untracked relative to HEAD)
+
+Staged diff:
+(empty — no file is staged)
+
+Bounded current task and approval-source line counts:
+    159 docs/adr/ADR-009-brokeros-risk-core-domain-model.md
+    266 docs/adr/ADR-010-risk-case-foundation.md
+    155 docs/architecture/q-007-brokeros-domain-foundation-design.md
+    992 docs/architecture/q-008-risk-case-foundation-implementation-design.md
+     67 docs/lessons/2026-08-25-q-008-architect-approval-prerequisite-analysis.md
+    211 docs/requirements/Q-007-Requirement.md
+    832 docs/requirements/Q-008-Requirement.md
+     43 docs/skills/brokeros-risk-core-domain.md
+     69 review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/ArchitectApproval.md
+    159 review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/ArchitectureReview.md
+     43 review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/GitDiffStat.txt
+     47 review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/GitStatus.txt
+    104 review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/OutstandingItems.md
+     63 review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/PhaseReviewIndex.md
+    283 review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/PrerequisiteAnalysis.md
+     61 review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/ProjectTree.txt
+     78 review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/Summary.md
+     93 review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/Verification.md
+   3725 total text lines
+
+Binary package:
+
+- review/q-008/review-q-008-architect-approval-prerequisite-analysis-20260825-170517.zip
+
+Scope notes:
+
+- This is a bounded statistic, not a full repository diff.
+- Accepted ADR-009/ADR-010 and approved V4 Design are counted as source
+  evidence but remain unchanged.
+- Authorized changes are the Q-008 gate synchronization, phase Lesson, new
+  approval/prerequisite Review, and new ZIP.
+- No Java, test, dependency, runtime configuration, migration, SQL, API, Kafka,
+  Redis, adapter, frontend, deployment, CI, Q-009 draft, Design V5, Q-007,
+  Q-008 V1–V4, or review-history content changed.

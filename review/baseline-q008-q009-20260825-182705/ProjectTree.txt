@@ -1,0 +1,33 @@
+APPROVED BASELINE — BOUNDED TREE
+
+docs/
+  adr/
+    ADR-010-risk-case-foundation.md                         [INCLUDE]
+  architecture/
+    q-008-risk-case-foundation-implementation-design.md    [INCLUDE]
+  lessons/
+    2026-08-25-q-008-architect-approval-prerequisite-analysis.md [INCLUDE]
+    2026-08-25-q-008-risk-case-implementation-design.md    [INCLUDE]
+    2026-08-25-q-009-trusted-actor-authorization-requirement.md [INCLUDE]
+  requirements/
+    Q-008-Requirement.md                                  [INCLUDE]
+    Q-009-Requirement.md                                  [INCLUDE]
+review/
+  baseline-q008-q009-20260825-182705/                     [INCLUDE: 13 text files]
+  q-008/
+    review-v1-requirement/                                [INCLUDE: historical text]
+    review-v2-architecture/                               [INCLUDE: historical text]
+    review-v3-architecture-approved/                      [INCLUDE: approved text]
+    review-v4-implementation-design/                      [INCLUDE: historical text]
+    review-architect-approval-prerequisite-analysis-20260825-170517/
+                                                              [INCLUDE: approved text]
+    *.zip                                                 [EXCLUDE: generated]
+  q-009/
+    review-v1-requirement-20260825-180019/                [INCLUDE: historical text]
+    *.zip                                                 [EXCLUDE: generated]
+  q-007/                                                  [EXCLUDE: unrelated]
+  review-history/*.zip                                   [EXCLUDE: generated]
+  review-baseline-q008-q009-20260825-182705.zip           [EXCLUDE: generated]
+
+Tracked backend, frontend, adapters, deploy, scripts, README, AGENTS, and other
+Q-XXX artifacts are unchanged and outside the proposed commit.

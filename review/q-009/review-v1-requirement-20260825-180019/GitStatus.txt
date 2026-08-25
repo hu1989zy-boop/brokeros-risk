@@ -1,0 +1,35 @@
+Q-009 REQUIREMENT DISCOVERY GIT STATUS
+Captured: 2026-08-25 after Q-009 packaging
+
+Branch: main
+HEAD: 87f7553d3da145e1179f61fbc06c001a21808c7a
+
+Staged changes:
+  none
+
+Tracked unstaged changes:
+  none
+
+Untracked Q-009 artifacts:
+  docs/requirements/Q-009-Requirement.md
+  docs/lessons/2026-08-25-q-009-trusted-actor-authorization-requirement.md
+  review/q-009/review-v1-requirement-20260825-180019/
+  review/q-009/review-q-009-v1-requirement-20260825-180019.zip (after packaging)
+
+Existing untracked artifacts preserved from earlier approved work:
+  docs/adr/ADR-010-risk-case-foundation.md
+  docs/architecture/q-008-risk-case-foundation-implementation-design.md
+  docs/lessons/2026-08-25-q-008-architect-approval-prerequisite-analysis.md
+  docs/lessons/2026-08-25-q-008-risk-case-implementation-design.md
+  docs/requirements/Q-008-Requirement.md
+  review/q-007/
+  review/q-008/
+  review/review-history/
+
+Final classification:
+  staged: none
+  tracked unstaged: none
+  untracked: existing Q-007/Q-008/history artifacts plus the new Q-009
+             Requirement, Lesson, Review directory, and ZIP listed above
+
+No git add, commit, push, reset, or clean was performed.

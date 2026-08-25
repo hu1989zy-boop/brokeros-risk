@@ -1,0 +1,61 @@
+brokeros-risk/  (bounded Q-008 approval/prerequisite view)
+├── docs/
+│   ├── adr/
+│   │   ├── ADR-009-brokeros-risk-core-domain-model.md        [unchanged]
+│   │   └── ADR-010-risk-case-foundation.md                   [unchanged]
+│   ├── architecture/
+│   │   ├── q-007-brokeros-domain-foundation-design.md        [unchanged]
+│   │   └── q-008-risk-case-foundation-implementation-design.md [V4 approved/unchanged]
+│   ├── lessons/
+│   │   └── 2026-08-25-q-008-architect-approval-prerequisite-analysis.md [new]
+│   ├── requirements/
+│   │   ├── Q-007-Requirement.md                              [unchanged]
+│   │   └── Q-008-Requirement.md                              [gate synchronized]
+│   └── skills/
+│       └── brokeros-risk-core-domain.md                      [unchanged]
+└── review/
+    └── q-008/
+        ├── review-v1-requirement/                            [preserved]
+        ├── review-v2-architecture/                           [preserved]
+        ├── review-v3-architecture-approved/                  [preserved]
+        ├── review-v4-implementation-design/                  [preserved]
+        ├── review-architect-approval-prerequisite-analysis-20260825-170517/ [new]
+        │   ├── ArchitectApproval.md
+        │   ├── ArchitectureReview.md
+        │   ├── GitDiffStat.txt
+        │   ├── GitStatus.txt
+        │   ├── OutstandingItems.md
+        │   ├── PhaseReviewIndex.md
+        │   ├── PrerequisiteAnalysis.md
+        │   ├── ProjectTree.txt
+        │   ├── Summary.md
+        │   └── Verification.md
+        ├── review-q-008-v1-requirement-20260824-164535.zip
+        ├── review-q-008-v2-architecture-20260824-170858.zip
+        ├── review-q-008-v3-architecture-approved-20260825-132359.zip
+        ├── review-q-008-v4-implementation-design-20260825-142122.zip
+        └── review-q-008-architect-approval-prerequisite-analysis-20260825-170517.zip [new]
+
+New ZIP manifest (directory markers excluded):
+docs/adr/ADR-009-brokeros-risk-core-domain-model.md
+docs/adr/ADR-010-risk-case-foundation.md
+docs/architecture/q-007-brokeros-domain-foundation-design.md
+docs/architecture/q-008-risk-case-foundation-implementation-design.md
+docs/lessons/2026-08-25-q-008-architect-approval-prerequisite-analysis.md
+docs/requirements/Q-007-Requirement.md
+docs/requirements/Q-008-Requirement.md
+docs/skills/brokeros-risk-core-domain.md
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/ArchitectApproval.md
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/ArchitectureReview.md
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/GitDiffStat.txt
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/GitStatus.txt
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/OutstandingItems.md
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/PhaseReviewIndex.md
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/PrerequisiteAnalysis.md
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/ProjectTree.txt
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/Summary.md
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/Verification.md
+
+Excluded: .git, backend/target, Java/test source, migrations/SQL, configuration,
+dependencies, APIs, Kafka/Redis, adapters, frontend/deploy/CI, Q-007 Review,
+Q-008 V1–V4 Review content/ZIPs, and review-history content.

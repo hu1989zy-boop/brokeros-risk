@@ -1,0 +1,55 @@
+brokeros-risk/  (bounded Q-008 Final Architecture Approval view)
+├── docs/
+│   ├── adr/
+│   │   ├── ADR-009-brokeros-risk-core-domain-model.md  [unchanged authority]
+│   │   └── ADR-010-risk-case-foundation.md             [Accepted]
+│   └── requirements/
+│       └── Q-008-Requirement.md                        [Approved]
+└── review/
+    └── q-008/
+        ├── review-v1-requirement/                      [preserved]
+        │   ├── ArchitectureReview.md
+        │   ├── GitDiffStat.txt
+        │   ├── GitStatus.txt
+        │   ├── OutstandingItems.md
+        │   ├── PhaseReviewIndex.md
+        │   ├── ProjectTree.txt
+        │   ├── Summary.md
+        │   └── Verification.md
+        ├── review-v2-architecture/                     [preserved]
+        │   ├── ArchitectureReview.md
+        │   ├── GitDiffStat.txt
+        │   ├── GitStatus.txt
+        │   ├── OutstandingItems.md
+        │   ├── PhaseReviewIndex.md
+        │   ├── ProjectTree.txt
+        │   ├── Summary.md
+        │   └── Verification.md
+        ├── review-v3-architecture-approved/            [new]
+        │   ├── ArchitectureReview.md
+        │   ├── GitDiffStat.txt
+        │   ├── GitStatus.txt
+        │   ├── OutstandingItems.md
+        │   ├── PhaseReviewIndex.md
+        │   ├── ProjectTree.txt
+        │   ├── Summary.md
+        │   └── Verification.md
+        ├── review-q-008-v1-requirement-20260824-164535.zip
+        ├── review-q-008-v2-architecture-20260824-170858.zip
+        └── review-q-008-v3-architecture-approved-20260825-132359.zip
+
+V3 ZIP file manifest (directory markers excluded):
+docs/adr/ADR-010-risk-case-foundation.md
+docs/requirements/Q-008-Requirement.md
+review/q-008/review-v3-architecture-approved/ArchitectureReview.md
+review/q-008/review-v3-architecture-approved/GitDiffStat.txt
+review/q-008/review-v3-architecture-approved/GitStatus.txt
+review/q-008/review-v3-architecture-approved/OutstandingItems.md
+review/q-008/review-v3-architecture-approved/PhaseReviewIndex.md
+review/q-008/review-v3-architecture-approved/ProjectTree.txt
+review/q-008/review-v3-architecture-approved/Summary.md
+review/q-008/review-v3-architecture-approved/Verification.md
+
+Excluded from this bounded view/package: application source, tests, migrations,
+build output, IDE metadata, Q-007 Review, Q-008 V1/V2 contents, and
+review/review-history contents.

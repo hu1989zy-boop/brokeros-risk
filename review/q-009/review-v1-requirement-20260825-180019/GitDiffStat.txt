@@ -1,0 +1,24 @@
+Q-009 REQUIREMENT DISCOVERY DIFF SUMMARY
+Captured: 2026-08-25 after Q-009 Review finalization
+
+git diff --stat:
+  empty (no tracked unstaged changes)
+
+git diff --cached --stat:
+  empty (no staged changes)
+
+New untracked Q-009 text artifacts:
+  docs/requirements/Q-009-Requirement.md
+  docs/lessons/2026-08-25-q-009-trusted-actor-authorization-requirement.md
+  review/q-009/review-v1-requirement-20260825-180019/ (10 files)
+
+Binary package:
+  review/q-009/review-q-009-v1-requirement-20260825-180019.zip
+
+Bounded line counts:
+  637  docs/requirements/Q-009-Requirement.md
+   58  docs/lessons/2026-08-25-q-009-trusted-actor-authorization-requirement.md
+  695  Q-009 Requirement + Lesson subtotal
+  493  review/q-009/review-v1-requirement-20260825-180019/ subtotal
+
+No full Git diff is included.

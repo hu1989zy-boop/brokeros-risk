@@ -1,0 +1,48 @@
+Q-008 Implementation Design Review V4 Git status snapshot
+
+Branch status:
+## main...origin/main
+
+Tracked working-tree changes:
+(none)
+
+Staged changes:
+(none)
+
+Current Q-008 Design paths (expanded untracked view):
+?? docs/adr/ADR-010-risk-case-foundation.md
+?? docs/architecture/q-008-risk-case-foundation-implementation-design.md
+?? docs/lessons/2026-08-25-q-008-risk-case-implementation-design.md
+?? docs/requirements/Q-008-Requirement.md
+?? review/q-008/review-q-008-v4-implementation-design-20260825-142122.zip
+?? review/q-008/review-v4-implementation-design/ArchitectureReview.md
+?? review/q-008/review-v4-implementation-design/GitDiffStat.txt
+?? review/q-008/review-v4-implementation-design/GitStatus.txt
+?? review/q-008/review-v4-implementation-design/OutstandingItems.md
+?? review/q-008/review-v4-implementation-design/PhaseReviewIndex.md
+?? review/q-008/review-v4-implementation-design/ProjectTree.txt
+?? review/q-008/review-v4-implementation-design/Summary.md
+?? review/q-008/review-v4-implementation-design/Verification.md
+
+Protected pre-existing untracked paths:
+- review/q-007/
+- review/q-008/review-v1-requirement/
+- review/q-008/review-v2-architecture/
+- review/q-008/review-v3-architecture-approved/
+- review/q-008/review-q-008-v1-requirement-20260824-164535.zip
+- review/q-008/review-q-008-v2-architecture-20260824-170858.zip
+- review/q-008/review-q-008-v3-architecture-approved-20260825-132359.zip
+- review/review-history/
+
+Interpretation:
+- Staged files: none.
+- Unstaged tracked files: none.
+- Q-008 Requirement/ADR remain untracked relative to HEAD; Requirement gate
+  text is synchronized in this task, while Accepted ADR-010 is unchanged.
+- Formal Design, phase Lessons Learned, eight V4 Review files, and one V4 ZIP
+  are new.
+- Q-007, Q-008 V1/V2/V3, AGENTS.md, ADR-009/010, and review-history remain
+  unmodified and unstaged.
+- HEAD and origin/main both resolve to
+  87f7553d3da145e1179f61fbc06c001a21808c7a.
+- No commit or push was performed.

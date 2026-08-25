@@ -1,0 +1,7 @@
+docs: record approved Q-008 design and Q-009 auth requirement
+
+Rationale:
+- uses the repository's required `<type>: <description>` convention;
+- describes documentation/governance work rather than implementation;
+- covers the approved Q-008 V4/prerequisite baseline and approved Q-009
+  Requirement V1 without implying Q-009 Architecture or implementation.

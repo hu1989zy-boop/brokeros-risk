@@ -1,0 +1,31 @@
+Q-008 Final Architecture Approval V3 bounded diff statistic
+
+Tracked working-tree diff:
+(empty — Q-008 source/review files remain untracked relative to HEAD)
+
+Staged diff:
+(empty — no file is staged)
+
+Bounded V3 source and Review line counts:
+    266 docs/adr/ADR-010-risk-case-foundation.md
+    804 docs/requirements/Q-008-Requirement.md
+    137 review/q-008/review-v3-architecture-approved/ArchitectureReview.md
+     31 review/q-008/review-v3-architecture-approved/GitDiffStat.txt
+     42 review/q-008/review-v3-architecture-approved/GitStatus.txt
+     84 review/q-008/review-v3-architecture-approved/OutstandingItems.md
+     49 review/q-008/review-v3-architecture-approved/PhaseReviewIndex.md
+     55 review/q-008/review-v3-architecture-approved/ProjectTree.txt
+     92 review/q-008/review-v3-architecture-approved/Summary.md
+     85 review/q-008/review-v3-architecture-approved/Verification.md
+   1645 total text lines
+
+Binary package:
+- review/q-008/review-q-008-v3-architecture-approved-20260825-132359.zip
+
+Scope notes:
+- This is a bounded statistic, not a complete repository diff.
+- The ZIP is binary and is recorded separately from text line counts.
+- Authorized scope contains approved Q-008 Requirement, Accepted ADR-010, V3
+  Review, and one new ZIP only.
+- No application, API, schema, migration, Kafka, Redis, adapter, CI, Docker,
+  Kubernetes, Q-007, Q-008 V1/V2, or review-history content is included.

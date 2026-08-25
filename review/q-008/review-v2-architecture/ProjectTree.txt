@@ -1,0 +1,41 @@
+Q-008 Architect Review V2 bounded project tree
+
+.
+├── docs
+│   ├── adr
+│   │   ├── ADR-009-brokeros-risk-core-domain-model.md
+│   │   └── ADR-010-risk-case-foundation.md
+│   └── requirements
+│       ├── Q-007-Requirement.md
+│       └── Q-008-Requirement.md
+└── review
+    └── q-008
+        ├── review-q-008-v1-requirement-20260824-164535.zip
+        ├── review-q-008-v2-architecture-20260824-170858.zip
+        ├── review-v1-requirement
+        │   ├── ArchitectureReview.md
+        │   ├── GitDiffStat.txt
+        │   ├── GitStatus.txt
+        │   ├── OutstandingItems.md
+        │   ├── PhaseReviewIndex.md
+        │   ├── ProjectTree.txt
+        │   ├── Summary.md
+        │   └── Verification.md
+        └── review-v2-architecture
+            ├── ArchitectureReview.md
+            ├── GitDiffStat.txt
+            ├── GitStatus.txt
+            ├── OutstandingItems.md
+            ├── PhaseReviewIndex.md
+            ├── ProjectTree.txt
+            ├── Summary.md
+            └── Verification.md
+
+The V2 self-contained ZIP includes only:
+- docs/requirements/Q-008-Requirement.md;
+- docs/adr/ADR-010-risk-case-foundation.md;
+- review/q-008/review-v2-architecture/*.
+
+Excluded from this bounded tree/evidence: Git metadata, application/runtime
+source, build/target artifacts, IDE files, Q-007 standalone Review contents,
+and review/review-history contents. No excluded path was deleted or modified.

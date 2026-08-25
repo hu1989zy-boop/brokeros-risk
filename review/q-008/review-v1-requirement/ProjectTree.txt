@@ -1,0 +1,39 @@
+Q-008 Requirement Review V1 bounded project tree
+
+.
+├── docs
+│   ├── adr
+│   │   ├── ADR-001-technology-roadmap.md
+│   │   ├── ADR-002-system-isolation.md
+│   │   ├── ADR-003-engineering-foundation-standards.md
+│   │   ├── ADR-004-local-development-and-deployment-layout.md
+│   │   ├── ADR-005-development-standards.md
+│   │   ├── ADR-006-ci-and-integration-verification.md
+│   │   ├── ADR-007-micrometer-w3c-tracing.md
+│   │   ├── ADR-008-configuration-management-foundation.md
+│   │   ├── ADR-009-brokeros-risk-core-domain-model.md
+│   │   └── ADR-010-risk-case-foundation.md
+│   └── requirements
+│       ├── Q-001-phase-0-project-foundation.md
+│       ├── Q-002-phase-0.5-engineering-foundation.md
+│       ├── Q-003-phase-0.6-development-standards.md
+│       ├── Q-004-ci-integration-verification-foundation.md
+│       ├── Q-005-Requirement.md
+│       ├── Q-006-Requirement.md
+│       ├── Q-007-Requirement.md
+│       └── Q-008-Requirement.md
+└── review
+    └── q-008
+        └── review-v1-requirement
+            ├── ArchitectureReview.md
+            ├── GitDiffStat.txt
+            ├── GitStatus.txt
+            ├── OutstandingItems.md
+            ├── ProjectTree.txt
+            ├── Summary.md
+            └── Verification.md
+
+Excluded from this bounded tree: application/runtime paths, Git metadata,
+build artifacts, and pre-existing untracked review/q-007/ and
+review/review-history/ artifacts. Exclusion is for bounded evidence only; no
+excluded path was deleted or modified.

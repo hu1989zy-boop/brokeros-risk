@@ -1,0 +1,44 @@
+APPROVED BASELINE COMMIT PREPARATION — FINAL GIT STATUS
+Captured: 2026-08-25 Asia/Shanghai
+
+Branch: main
+HEAD: 87f7553d3da145e1179f61fbc06c001a21808c7a
+Upstream: origin/main (+0 / -0)
+
+Staged:
+  none
+
+Tracked unstaged:
+  none
+
+Untracked proposed Include:
+  docs/adr/ADR-010-risk-case-foundation.md
+  docs/architecture/q-008-risk-case-foundation-implementation-design.md
+  docs/lessons/2026-08-25-q-008-architect-approval-prerequisite-analysis.md
+  docs/lessons/2026-08-25-q-008-risk-case-implementation-design.md
+  docs/lessons/2026-08-25-q-009-trusted-actor-authorization-requirement.md
+  docs/requirements/Q-008-Requirement.md
+  docs/requirements/Q-009-Requirement.md
+  review/q-008/ (42 selected text files; ZIPs excluded)
+  review/q-009/ (10 selected text files; ZIP excluded)
+  review/baseline-q008-q009-20260825-182705/ (13 text files)
+
+Untracked Exclude:
+  review/q-007/
+  review/review-history/
+  review/q-008/*.zip
+  review/q-009/*.zip
+  review/review-baseline-q008-q009-20260825-182705.zip
+
+Ignored Exclude:
+  backend/target/
+  review/.DS_Store
+  review/q-008/.DS_Store
+
+Classification:
+  staged: none
+  unstaged tracked: none
+  untracked: approved/governance Include plus explicit generated/unrelated Exclude
+
+No Git staging, commit, push, reset, clean, restore, stash, or checkout was
+performed.

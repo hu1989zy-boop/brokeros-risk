@@ -1,0 +1,27 @@
+Q-008 Requirement Review V1 bounded diff statistic
+
+Tracked working-tree diff:
+(empty — all Q-008 candidate files are new and untracked)
+
+Staged diff:
+(empty — no file is staged)
+
+Bounded Q-008 candidate line counts:
+    188 docs/adr/ADR-010-risk-case-foundation.md
+    675 docs/requirements/Q-008-Requirement.md
+    255 review/q-008/review-v1-requirement/ArchitectureReview.md
+     27 review/q-008/review-v1-requirement/GitDiffStat.txt
+     31 review/q-008/review-v1-requirement/GitStatus.txt
+    106 review/q-008/review-v1-requirement/OutstandingItems.md
+     39 review/q-008/review-v1-requirement/ProjectTree.txt
+    146 review/q-008/review-v1-requirement/Summary.md
+    121 review/q-008/review-v1-requirement/Verification.md
+   1588 total
+
+Scope notes:
+- This is a bounded candidate statistic rather than a full repository diff.
+- Every Q-008 candidate path is Requirement, Draft ADR, or Review documentation.
+- No Java, test, runtime configuration, API, migration, Redis, Kafka, adapter,
+  CI, Docker, or Kubernetes path is included.
+- Existing untracked review/q-007/ and review/review-history/ are excluded from
+  this statistic and remain unstaged.

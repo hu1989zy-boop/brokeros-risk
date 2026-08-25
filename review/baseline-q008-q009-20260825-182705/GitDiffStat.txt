@@ -1,0 +1,29 @@
+APPROVED BASELINE COMMIT PREPARATION — BOUNDED DIFF STAT
+Captured: 2026-08-25 Asia/Shanghai
+
+git diff --stat:
+  empty — no tracked unstaged changes
+
+git diff --cached --stat:
+  empty — no staged changes
+
+Proposed manual commit scope:
+  72 text files
+   7 approved source/Lessons files
+  42 Q-008 Review Markdown/TXT files
+  10 Q-009 Review Markdown/TXT files
+  13 current baseline Review files
+   0 ZIP files
+
+Bounded line counts:
+  2947 docs approved source/Lessons subtotal
+  3613 Q-008 selected Review subtotal
+   486 Q-009 selected Review subtotal
+   744 current baseline Review subtotal
+
+Excluded binary/generated archives:
+  all existing review ZIPs
+  review/review-baseline-q008-q009-20260825-182705.zip
+
+No full Git diff is included. Untracked files do not appear in ordinary
+`git diff --stat`; `CommitScope.md` is the authoritative exact inventory.

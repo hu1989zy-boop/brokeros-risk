@@ -1,0 +1,42 @@
+Q-008 Final Architecture Approval V3 Git status snapshot
+
+Branch status:
+## main...origin/main
+
+Tracked working-tree changes:
+(none)
+
+Staged changes:
+(none)
+
+Q-008 approval-recording paths (expanded untracked view):
+?? docs/adr/ADR-010-risk-case-foundation.md
+?? docs/requirements/Q-008-Requirement.md
+?? review/q-008/review-q-008-v3-architecture-approved-20260825-132359.zip
+?? review/q-008/review-v3-architecture-approved/ArchitectureReview.md
+?? review/q-008/review-v3-architecture-approved/GitDiffStat.txt
+?? review/q-008/review-v3-architecture-approved/GitStatus.txt
+?? review/q-008/review-v3-architecture-approved/OutstandingItems.md
+?? review/q-008/review-v3-architecture-approved/PhaseReviewIndex.md
+?? review/q-008/review-v3-architecture-approved/ProjectTree.txt
+?? review/q-008/review-v3-architecture-approved/Summary.md
+?? review/q-008/review-v3-architecture-approved/Verification.md
+
+Protected pre-existing untracked paths:
+- review/q-007/
+- review/q-008/review-v1-requirement/
+- review/q-008/review-v2-architecture/
+- review/q-008/review-q-008-v1-requirement-20260824-164535.zip
+- review/q-008/review-q-008-v2-architecture-20260824-170858.zip
+- review/review-history/
+
+Interpretation:
+- Staged files: none.
+- Unstaged tracked files: none.
+- Q-008 Requirement and ADR-010 are untracked relative to HEAD but modified in
+  this task from their V2 working-tree versions.
+- V3 adds eight Review files and one new timestamped ZIP.
+- Q-007, Q-008 V1/V2, and review-history remain unmodified and unstaged.
+- HEAD and origin/main both resolve to
+  87f7553d3da145e1179f61fbc06c001a21808c7a.
+- No commit or push was performed.

@@ -1,0 +1,44 @@
+Q-009 REQUIREMENT DISCOVERY — BOUNDED PACKAGE TREE
+
+AGENTS.md
+docs/
+  adr/
+    ADR-007-micrometer-w3c-tracing.md
+    ADR-009-brokeros-risk-core-domain-model.md
+    ADR-010-risk-case-foundation.md
+  architecture/
+    phase-0.6-development-standards.md
+    q-008-risk-case-foundation-implementation-design.md
+  lessons/
+    2026-08-25-q-009-trusted-actor-authorization-requirement.md
+  requirements/
+    Q-003-phase-0.6-development-standards.md
+    Q-005-Requirement.md
+    Q-007-Requirement.md
+    Q-008-Requirement.md
+    Q-009-Requirement.md
+  skills/
+    brokeros-risk-core-domain.md
+    development-standards.md
+    observability-correlation.md
+review/
+  q-008/
+    review-architect-approval-prerequisite-analysis-20260825-170517/
+      ArchitectApproval.md
+      PrerequisiteAnalysis.md
+  q-009/
+    review-v1-requirement-20260825-180019/
+      ArchitectureReview.md
+      GapAnalysis.md
+      GitDiffStat.txt
+      GitStatus.txt
+      OutstandingItems.md
+      PhaseReviewIndex.md
+      ProjectTree.txt
+      RequirementReview.md
+      Summary.md
+      Verification.md
+    review-q-009-v1-requirement-20260825-180019.zip
+
+Excluded from ZIP: .git, backend/source, target/build artifacts, IDE files,
+historical Review directories/ZIPs, and unrelated source code.

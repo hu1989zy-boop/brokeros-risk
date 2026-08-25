@@ -1,0 +1,31 @@
+Q-008 Requirement Review V1 Git status snapshot
+
+Branch status:
+## main...origin/main
+
+Overall short status:
+?? docs/adr/ADR-010-risk-case-foundation.md
+?? docs/requirements/Q-008-Requirement.md
+?? review/q-007/
+?? review/q-008/
+?? review/review-history/
+
+Q-008 candidate status (expanded only within authorized Q-008 paths):
+?? docs/adr/ADR-010-risk-case-foundation.md
+?? docs/requirements/Q-008-Requirement.md
+?? review/q-008/review-v1-requirement/ArchitectureReview.md
+?? review/q-008/review-v1-requirement/GitDiffStat.txt
+?? review/q-008/review-v1-requirement/GitStatus.txt
+?? review/q-008/review-v1-requirement/OutstandingItems.md
+?? review/q-008/review-v1-requirement/ProjectTree.txt
+?? review/q-008/review-v1-requirement/Summary.md
+?? review/q-008/review-v1-requirement/Verification.md
+
+Interpretation:
+- Staged files: none.
+- Unstaged tracked files: none.
+- Q-008 untracked files: nine documentation/review files listed above.
+- Pre-existing untracked paths: review/q-007/ and review/review-history/.
+- Pre-existing paths were preserved, unmodified, and unstaged.
+- HEAD and origin/main both resolve to 87f7553d3da145e1179f61fbc06c001a21808c7a.
+- No commit or push was performed.

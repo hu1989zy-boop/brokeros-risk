@@ -1,0 +1,90 @@
+# Run from repository root.
+# These commands stage only the exact approved/governance text inventory.
+# They do not stage ZIPs, Q-007 untracked delivery artifacts, or build output.
+
+git add -- 'docs/requirements/Q-008-Requirement.md'
+git add -- 'docs/adr/ADR-010-risk-case-foundation.md'
+git add -- 'docs/architecture/q-008-risk-case-foundation-implementation-design.md'
+git add -- 'docs/lessons/2026-08-25-q-008-risk-case-implementation-design.md'
+git add -- 'docs/lessons/2026-08-25-q-008-architect-approval-prerequisite-analysis.md'
+git add -- 'docs/requirements/Q-009-Requirement.md'
+git add -- 'docs/lessons/2026-08-25-q-009-trusted-actor-authorization-requirement.md'
+git add -- 'review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/ArchitectApproval.md'
+git add -- 'review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/ArchitectureReview.md'
+git add -- 'review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/GitDiffStat.txt'
+git add -- 'review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/GitStatus.txt'
+git add -- 'review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/OutstandingItems.md'
+git add -- 'review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/PhaseReviewIndex.md'
+git add -- 'review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/PrerequisiteAnalysis.md'
+git add -- 'review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/ProjectTree.txt'
+git add -- 'review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/Summary.md'
+git add -- 'review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/Verification.md'
+git add -- 'review/q-008/review-v1-requirement/ArchitectureReview.md'
+git add -- 'review/q-008/review-v1-requirement/GitDiffStat.txt'
+git add -- 'review/q-008/review-v1-requirement/GitStatus.txt'
+git add -- 'review/q-008/review-v1-requirement/OutstandingItems.md'
+git add -- 'review/q-008/review-v1-requirement/PhaseReviewIndex.md'
+git add -- 'review/q-008/review-v1-requirement/ProjectTree.txt'
+git add -- 'review/q-008/review-v1-requirement/Summary.md'
+git add -- 'review/q-008/review-v1-requirement/Verification.md'
+git add -- 'review/q-008/review-v2-architecture/ArchitectureReview.md'
+git add -- 'review/q-008/review-v2-architecture/GitDiffStat.txt'
+git add -- 'review/q-008/review-v2-architecture/GitStatus.txt'
+git add -- 'review/q-008/review-v2-architecture/OutstandingItems.md'
+git add -- 'review/q-008/review-v2-architecture/PhaseReviewIndex.md'
+git add -- 'review/q-008/review-v2-architecture/ProjectTree.txt'
+git add -- 'review/q-008/review-v2-architecture/Summary.md'
+git add -- 'review/q-008/review-v2-architecture/Verification.md'
+git add -- 'review/q-008/review-v3-architecture-approved/ArchitectureReview.md'
+git add -- 'review/q-008/review-v3-architecture-approved/GitDiffStat.txt'
+git add -- 'review/q-008/review-v3-architecture-approved/GitStatus.txt'
+git add -- 'review/q-008/review-v3-architecture-approved/OutstandingItems.md'
+git add -- 'review/q-008/review-v3-architecture-approved/PhaseReviewIndex.md'
+git add -- 'review/q-008/review-v3-architecture-approved/ProjectTree.txt'
+git add -- 'review/q-008/review-v3-architecture-approved/Summary.md'
+git add -- 'review/q-008/review-v3-architecture-approved/Verification.md'
+git add -- 'review/q-008/review-v4-implementation-design/ArchitectureReview.md'
+git add -- 'review/q-008/review-v4-implementation-design/GitDiffStat.txt'
+git add -- 'review/q-008/review-v4-implementation-design/GitStatus.txt'
+git add -- 'review/q-008/review-v4-implementation-design/OutstandingItems.md'
+git add -- 'review/q-008/review-v4-implementation-design/PhaseReviewIndex.md'
+git add -- 'review/q-008/review-v4-implementation-design/ProjectTree.txt'
+git add -- 'review/q-008/review-v4-implementation-design/Summary.md'
+git add -- 'review/q-008/review-v4-implementation-design/Verification.md'
+git add -- 'review/q-009/review-v1-requirement-20260825-180019/ArchitectureReview.md'
+git add -- 'review/q-009/review-v1-requirement-20260825-180019/GapAnalysis.md'
+git add -- 'review/q-009/review-v1-requirement-20260825-180019/GitDiffStat.txt'
+git add -- 'review/q-009/review-v1-requirement-20260825-180019/GitStatus.txt'
+git add -- 'review/q-009/review-v1-requirement-20260825-180019/OutstandingItems.md'
+git add -- 'review/q-009/review-v1-requirement-20260825-180019/PhaseReviewIndex.md'
+git add -- 'review/q-009/review-v1-requirement-20260825-180019/ProjectTree.txt'
+git add -- 'review/q-009/review-v1-requirement-20260825-180019/RequirementReview.md'
+git add -- 'review/q-009/review-v1-requirement-20260825-180019/Summary.md'
+git add -- 'review/q-009/review-v1-requirement-20260825-180019/Verification.md'
+git add -- 'review/baseline-q008-q009-20260825-182705/Summary.md'
+git add -- 'review/baseline-q008-q009-20260825-182705/ApprovedArtifactInventory.md'
+git add -- 'review/baseline-q008-q009-20260825-182705/CommitScope.md'
+git add -- 'review/baseline-q008-q009-20260825-182705/ExcludedArtifacts.md'
+git add -- 'review/baseline-q008-q009-20260825-182705/ArchitectureReview.md'
+git add -- 'review/baseline-q008-q009-20260825-182705/Verification.md'
+git add -- 'review/baseline-q008-q009-20260825-182705/OutstandingItems.md'
+git add -- 'review/baseline-q008-q009-20260825-182705/GitStatus.txt'
+git add -- 'review/baseline-q008-q009-20260825-182705/GitDiffStat.txt'
+git add -- 'review/baseline-q008-q009-20260825-182705/ProposedStagingCommands.txt'
+git add -- 'review/baseline-q008-q009-20260825-182705/ProposedCommitMessage.txt'
+git add -- 'review/baseline-q008-q009-20260825-182705/PhaseReviewIndex.md'
+git add -- 'review/baseline-q008-q009-20260825-182705/ProjectTree.txt'
+
+# Required inspection before any commit:
+git diff --cached --check
+git diff --cached --name-status
+git diff --cached --stat
+
+# Suggested commit (manual; not executed by Codex):
+git commit -m 'docs: record approved Q-008 design and Q-009 auth requirement'
+
+# Post-commit verification:
+git status --short
+git show --stat --oneline --decorate HEAD
+git show --name-status --format='' HEAD
+git diff HEAD^..HEAD --check

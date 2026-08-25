@@ -1,0 +1,31 @@
+Q-008 Architect Review V2 bounded diff statistic
+
+Tracked working-tree diff:
+(empty — Q-008 source/review files remain untracked relative to HEAD)
+
+Staged diff:
+(empty — no file is staged)
+
+Bounded V2 source and Review line counts:
+    250 docs/adr/ADR-010-risk-case-foundation.md
+    791 docs/requirements/Q-008-Requirement.md
+    222 review/q-008/review-v2-architecture/ArchitectureReview.md
+     31 review/q-008/review-v2-architecture/GitDiffStat.txt
+     41 review/q-008/review-v2-architecture/GitStatus.txt
+     90 review/q-008/review-v2-architecture/OutstandingItems.md
+     50 review/q-008/review-v2-architecture/PhaseReviewIndex.md
+     41 review/q-008/review-v2-architecture/ProjectTree.txt
+     93 review/q-008/review-v2-architecture/Summary.md
+     78 review/q-008/review-v2-architecture/Verification.md
+   1687 total text lines
+
+Binary package:
+- review/q-008/review-q-008-v2-architecture-20260824-170858.zip
+
+Scope notes:
+- This is a bounded statistic, not a complete repository diff.
+- The ZIP is binary and is recorded separately from text line counts.
+- Authorized scope contains revised Q-008 Requirement/ADR Draft, V2 Review,
+  and one new ZIP only.
+- No application, API, schema, migration, Kafka, Redis, adapter, CI, Docker,
+  Kubernetes, Q-007, Q-008 V1, or review-history content is included.

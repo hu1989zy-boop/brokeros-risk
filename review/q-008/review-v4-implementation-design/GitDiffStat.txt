@@ -1,0 +1,35 @@
+Q-008 Implementation Design Review V4 bounded diff statistic
+
+Tracked working-tree diff:
+(empty — Q-008 files remain untracked relative to HEAD)
+
+Staged diff:
+(empty — no file is staged)
+
+Bounded V4 source and Review line counts:
+    266 docs/adr/ADR-010-risk-case-foundation.md
+    992 docs/architecture/q-008-risk-case-foundation-implementation-design.md
+     83 docs/lessons/2026-08-25-q-008-risk-case-implementation-design.md
+    816 docs/requirements/Q-008-Requirement.md
+    177 review/q-008/review-v4-implementation-design/ArchitectureReview.md
+     35 review/q-008/review-v4-implementation-design/GitDiffStat.txt
+     48 review/q-008/review-v4-implementation-design/GitStatus.txt
+     96 review/q-008/review-v4-implementation-design/OutstandingItems.md
+     50 review/q-008/review-v4-implementation-design/PhaseReviewIndex.md
+     47 review/q-008/review-v4-implementation-design/ProjectTree.txt
+    100 review/q-008/review-v4-implementation-design/Summary.md
+     71 review/q-008/review-v4-implementation-design/Verification.md
+   2781 total text lines
+
+Binary package:
+- review/q-008/review-q-008-v4-implementation-design-20260825-142122.zip
+
+Scope notes:
+- This is a bounded statistic, not a complete repository diff.
+- The ZIP is binary and recorded separately from text line counts.
+- Authorized task changes are Requirement gate synchronization, formal Design,
+  phase Lessons Learned, V4 Review, and one new ZIP.
+- Accepted ADR-010 is included as a source snapshot but unchanged.
+- No Java, test, API implementation, migration, SQL, Kafka, Redis, adapter,
+  frontend, Docker, Kubernetes, CI, Q-007, Q-008 V1/V2/V3, or review-history
+  content is included.

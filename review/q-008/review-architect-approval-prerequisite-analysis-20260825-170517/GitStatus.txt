@@ -1,0 +1,47 @@
+Q-008 Architect Approval and Prerequisite Analysis Git status snapshot
+
+Branch status:
+## main...origin/main
+
+HEAD and origin/main:
+87f7553d3da145e1179f61fbc06c001a21808c7a
+
+Tracked working-tree changes:
+(none)
+
+Staged changes:
+(none)
+
+Files changed or created by this governance task remain untracked relative to
+HEAD because the whole Q-008 document/review line is currently untracked:
+
+- docs/requirements/Q-008-Requirement.md [gate synchronized]
+- docs/lessons/2026-08-25-q-008-architect-approval-prerequisite-analysis.md [new]
+- review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/ [new, ten files]
+- review/q-008/review-q-008-architect-approval-prerequisite-analysis-20260825-170517.zip [new]
+
+Pre-existing untracked Q-008 sources/history preserved:
+
+- docs/adr/ADR-010-risk-case-foundation.md
+- docs/architecture/q-008-risk-case-foundation-implementation-design.md
+- docs/lessons/2026-08-25-q-008-risk-case-implementation-design.md
+- review/q-008/review-v1-requirement/
+- review/q-008/review-v2-architecture/
+- review/q-008/review-v3-architecture-approved/
+- review/q-008/review-v4-implementation-design/
+- all Q-008 V1–V4 ZIPs
+
+Other protected pre-existing untracked paths preserved:
+
+- review/q-007/
+- review/review-history/
+
+Interpretation:
+
+- staged: none;
+- unstaged tracked: none;
+- untracked: pre-existing Q-007/Q-008 history plus bounded current
+  documentation/Review/ZIP artifacts;
+- backend/target is a Maven build artifact ignored by Git and excluded from
+  Review ZIP;
+- no commit, push, reset, clean, or historical deletion was performed.
