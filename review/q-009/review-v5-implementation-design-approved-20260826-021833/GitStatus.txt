@@ -1,0 +1,22 @@
+Command: git status
+Baseline HEAD: 51cea89 docs: approve Q-009 architecture and ADR-011
+Branch: main, up to date with origin/main
+Staged changes: none
+
+Tracked unstaged approval metadata:
+  docs/requirements/Q-009-Requirement.md
+  docs/architecture/q-009-trusted-actor-authorization-architecture.md
+  docs/adr/ADR-011-trusted-actor-capability-authorization-architecture.md
+
+New Q-009 Design/approval artifacts are untracked:
+  docs/architecture/q-009-trusted-actor-authorization-implementation-design.md
+  docs/lessons/2026-08-26-q-009-trusted-actor-authorization-implementation-design.md
+  review/q-009/review-v4-implementation-design-20260826-020339/
+  review/q-009/review-q-009-v4-implementation-design-20260826-020339.zip
+  review/q-009/review-v5-implementation-design-approved-20260826-021833/
+  review/q-009/review-q-009-v5-implementation-design-approved-20260826-021833.zip
+
+Known pre-existing Q-007/Q-008/Review-history transfer artifacts remain
+untracked and preserved.
+
+No git add, commit, push, reset, clean, or stash was performed.

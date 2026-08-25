@@ -8,7 +8,8 @@
 - Architect decision: APPROVED — external decision confirmed 2026-08-26
 - ADR: ADR-011 — Accepted
 - Architecture V3 required: No
-- Implementation Design: Not started
+- Implementation Design: V1 — APPROVED — external decision confirmed 2026-08-26
+- Implementation Design V2 required: No
 - Implementation authorized: No
 - Last updated: 2026-08-26
 
@@ -496,8 +497,13 @@ No tests or implementation are created in this architecture phase.
 
 ## 23. Open Decisions Before Implementation
 
-The following remain intentionally open and require architect/provider or
-Implementation Design decisions:
+This section records the inputs that were open at the Architecture V2 gate.
+Approved Implementation Design V1 resolved the Foundation runtime, service
+identity, persistence, provisioning, cache, failure, and wiring decisions. The
+concrete provider remains an open deployment input; organization and
+asynchronous/delegation concerns remain deferred outside the Foundation.
+
+The Architecture V2 inputs were:
 
 1. concrete identity provider and deployment ownership;
 2. issuer, audience, token form, validation, revocation, and key-rotation model;
@@ -520,8 +526,9 @@ None of these gaps authorizes a provider-specific assumption.
 | ADR-011 accepted | YES |
 | Concrete identity provider selected | NO — OPEN |
 | Implementation Design ready | YES |
-| Implementation Design status | NOT STARTED |
-| Implementation Design authorized | NO |
+| Implementation Design status | V1 — APPROVED — external Architect decision confirmed 2026-08-26 |
+| Implementation Design V2 required | NO |
+| Implementation ready for Authorization Gate | YES |
 | Implementation authorized | NO |
 | Q-008 implementation authorized | NO |
 
@@ -547,9 +554,10 @@ None of these gaps authorizes a provider-specific assumption.
   supplied by the Product Owner
 - Decision recorded: 2026-08-26
 - No Q-009 Architecture V3 is required.
-- Deferred provider and runtime decisions are Implementation Design inputs, not
-  Architecture approval blockers.
-- Q-009 Implementation Design: NOT STARTED
+- The concrete provider remains an open deployment/environment input; approved
+  Implementation Design V1 resolves the Foundation runtime decisions.
+- Q-009 Implementation Design V1: APPROVED
+- Q-009 Implementation Design V2 Required: NO
 - Q-009 Implementation: NOT STARTED
 - Q-009 Implementation Authorized: NO
 - Q-008 Implementation Authorized: NO

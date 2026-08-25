@@ -1,0 +1,13 @@
+Command: git diff --stat
+
+(no output)
+
+Tracked unstaged diff is empty. The Q-009 Implementation Design, Lessons
+Learned, V4 Review directory, and independent ZIP are new untracked artifacts
+and therefore are not included by plain git diff --stat.
+
+Command: git diff --cached --stat
+
+(no output)
+
+The index is empty; nothing was staged.

@@ -1,0 +1,16 @@
+Command: git diff --stat
+
+ ...-actor-capability-authorization-architecture.md | 15 +++++++-------
+ ...009-trusted-actor-authorization-architecture.md | 24 ++++++++++++++--------
+ docs/requirements/Q-009-Requirement.md             | 18 +++++++++-------
+ 3 files changed, 35 insertions(+), 22 deletions(-)
+
+The tracked diff contains approval/gate metadata only. The approved Design V1,
+design Lessons Learned, V4/V5 Review directories, and transfer ZIPs are
+untracked and therefore are not included by plain `git diff --stat`.
+
+Command: git diff --cached --stat
+
+(no output)
+
+Nothing is staged.

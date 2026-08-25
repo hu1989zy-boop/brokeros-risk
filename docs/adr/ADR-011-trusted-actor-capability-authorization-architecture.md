@@ -9,8 +9,9 @@
 - Depends on: ADR-009 and ADR-010
 
 This ADR was accepted through the explicit external Architect Review decision
-recorded on 2026-08-26. Acceptance does not authorize Implementation Design or
-Implementation.
+recorded on 2026-08-26. Q-009 Implementation Design V1 was subsequently
+approved through a separate external Architect decision. Implementation remains
+not started and unauthorized.
 
 ## Context
 
@@ -220,8 +221,8 @@ architecture review.
 ## Approval Boundary
 
 ADR-011 is **Accepted**. No Q-009 Architecture V3 is required. Q-009
-Implementation Design and Implementation remain not started, and ADR acceptance
-alone grants no implementation permission. The concrete identity provider,
-runtime authentication details, service credential mechanism, actor/policy
-persistence, provisioning, caching/invalidation, and runtime wiring remain
-Implementation Design inputs.
+Implementation Design V1 is **APPROVED**, and Implementation Design V2 is not
+required. Q-009 Implementation remains not started and unauthorized. The
+concrete identity provider remains an open deployment/environment input; the
+approved Implementation Design V1 records the runtime, service identity,
+actor/policy persistence, provisioning, cache, and wiring decisions.

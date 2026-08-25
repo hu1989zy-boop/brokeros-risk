@@ -11,7 +11,7 @@
 | Requirement Approval | APPROVED — V1 |
 | Architecture | APPROVED — V2 — external Architect decision confirmed 2026-08-26 |
 | ADR | ADR-011 ACCEPTED — external Architect decision confirmed 2026-08-26 |
-| Implementation Design | NOT STARTED |
+| Implementation Design | APPROVED — V1 — external Architect decision confirmed 2026-08-26 |
 | Implementation | NOT STARTED |
 | Implementation Allowed | NO |
 
@@ -24,6 +24,8 @@
   `review/q-009/review-v1-requirement-20260825-180019/`
 - Architecture approval review reference:
   `review/q-009/review-v3-architecture-approved-20260826-012814/`
+- Implementation Design approval review reference:
+  `review/q-009/review-v5-implementation-design-approved-20260826-021833/`
 - Architecture phase: Phase 1
 - Change type: cross-capability trusted actor and authorization foundation
 - Prerequisite for: Q-008 Risk Case Foundation implementation
@@ -645,13 +647,15 @@ Q-009, create Q-010/Q-011/Q-012, or assign any Requirement ID.
   2026-08-26**
 - Architecture V3 Required: **NO**
 - ADR status: **ADR-011 ACCEPTED — external decision confirmed 2026-08-26**
-- Implementation Design status: **NOT STARTED**
-- Ready for Implementation Design Gate: **YES**
+- Implementation Design status: **APPROVED — V1 — external Architect decision
+  confirmed 2026-08-26**
+- Implementation Design V2 Required: **NO**
+- Ready for Implementation Authorization Gate: **YES**
 - Implementation status: **NOT STARTED**
 - Implementation Allowed: **NO**
 
-The Requirement and Architecture gates are complete. Earlier sections retain
-their approved Requirement Discovery evidence and gate-time acceptance criteria
-as historical snapshots; the metadata above is the current governance status.
-Architecture/ADR approval does not start Implementation Design or
+The Requirement, Architecture, and Implementation Design gates are complete.
+Earlier sections retain their approved Requirement Discovery evidence and
+gate-time acceptance criteria as historical snapshots; the metadata above is
+the current governance status. Implementation Design approval does not start
 Implementation and grants no implementation permission.

@@ -1,0 +1,10 @@
+Q-009 V6 approved-design baseline tracked diff stat
+
+ ...-actor-capability-authorization-architecture.md | 15 +++++++-------
+ ...009-trusted-actor-authorization-architecture.md | 24 ++++++++++++++--------
+ docs/requirements/Q-009-Requirement.md             | 18 +++++++++-------
+ 3 files changed, 35 insertions(+), 22 deletions(-)
+
+Untracked proposed text artifacts are inventoried individually in
+BaselineScope.md and ProposedStagingCommands.txt. ZIP transfer artifacts are
+not part of the proposed Git diff.

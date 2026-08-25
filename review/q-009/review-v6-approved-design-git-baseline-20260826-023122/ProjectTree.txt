@@ -1,0 +1,22 @@
+BrokerOS Risk — bounded Q-009 approved design baseline tree
+
+docs/
+├── requirements/
+│   └── Q-009-Requirement.md
+├── architecture/
+│   ├── q-009-trusted-actor-authorization-architecture.md
+│   └── q-009-trusted-actor-authorization-implementation-design.md
+├── adr/
+│   └── ADR-011-trusted-actor-capability-authorization-architecture.md
+└── lessons/
+    └── 2026-08-26-q-009-trusted-actor-authorization-implementation-design.md
+
+review/q-009/
+├── review-v4-implementation-design-20260826-020339/ (13 text files)
+├── review-v5-implementation-design-approved-20260826-021833/ (12 text files)
+├── review-v6-approved-design-git-baseline-20260826-023122/ (13 text files)
+└── review-q-009-v6-approved-design-git-baseline-20260826-023122.zip (transfer only; do not stage)
+
+Excluded historical directories and transfer ZIPs are intentionally omitted.
+No source, build output, dependency, configuration, database, deployment, or
+frontend path belongs to this baseline tree.

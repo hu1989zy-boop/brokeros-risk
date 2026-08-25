@@ -1,0 +1,40 @@
+Bounded Q-009 Implementation Design approval tree
+
+docs/
+├── requirements/
+│   ├── Q-008-Requirement.md
+│   └── Q-009-Requirement.md
+├── architecture/
+│   ├── q-008-risk-case-foundation-implementation-design.md
+│   ├── q-009-trusted-actor-authorization-architecture.md
+│   └── q-009-trusted-actor-authorization-implementation-design.md
+├── adr/
+│   ├── ADR-009-brokeros-risk-core-domain-model.md
+│   ├── ADR-010-risk-case-foundation.md
+│   └── ADR-011-trusted-actor-capability-authorization-architecture.md
+└── lessons/
+    ├── 2026-08-26-q-009-trusted-actor-authorization-architecture.md
+    └── 2026-08-26-q-009-trusted-actor-authorization-implementation-design.md
+
+review/q-009/
+├── review-v1-requirement-20260825-180019/
+├── review-v2-architecture-20260826-011212/
+├── review-v3-architecture-approved-20260826-012814/
+├── review-v4-implementation-design-20260826-020339/
+├── review-v5-implementation-design-approved-20260826-021833/
+│   ├── ArchitectApproval.md
+│   ├── ArchitectureReview.md
+│   ├── DesignIntegrityCheck.md
+│   ├── GateStatus.md
+│   ├── GitDiffStat.txt
+│   ├── GitStatus.txt
+│   ├── ImplementationDesignApproval.md
+│   ├── OutstandingItems.md
+│   ├── PhaseReviewIndex.md
+│   ├── ProjectTree.txt
+│   ├── Summary.md
+│   └── Verification.md
+└── review-q-009-v5-implementation-design-approved-20260826-021833.zip
+
+Backend source/resources, infrastructure, frontend, transfer history, and
+unrelated project trees are intentionally omitted from this bounded view.

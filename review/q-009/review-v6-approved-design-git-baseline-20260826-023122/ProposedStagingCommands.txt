@@ -1,0 +1,55 @@
+# Execute manually only after Architect approval of the V6 baseline review.
+# These commands stage exactly 43 text artifacts and no ZIP.
+
+git add -- 'docs/requirements/Q-009-Requirement.md'
+git add -- 'docs/architecture/q-009-trusted-actor-authorization-architecture.md'
+git add -- 'docs/adr/ADR-011-trusted-actor-capability-authorization-architecture.md'
+git add -- 'docs/architecture/q-009-trusted-actor-authorization-implementation-design.md'
+git add -- 'docs/lessons/2026-08-26-q-009-trusted-actor-authorization-implementation-design.md'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/ArchitectureCompliance.md'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/ArchitectureReview.md'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/GitDiffStat.txt'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/GitStatus.txt'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/ImplementationDesignReview.md'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/OutstandingItems.md'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/PersistenceDesignReview.md'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/PhaseReviewIndex.md'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/ProjectTree.txt'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/RequirementTraceability.md'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/SecurityDesignReview.md'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/Summary.md'
+git add -- 'review/q-009/review-v4-implementation-design-20260826-020339/Verification.md'
+git add -- 'review/q-009/review-v5-implementation-design-approved-20260826-021833/ArchitectApproval.md'
+git add -- 'review/q-009/review-v5-implementation-design-approved-20260826-021833/ArchitectureReview.md'
+git add -- 'review/q-009/review-v5-implementation-design-approved-20260826-021833/DesignIntegrityCheck.md'
+git add -- 'review/q-009/review-v5-implementation-design-approved-20260826-021833/GateStatus.md'
+git add -- 'review/q-009/review-v5-implementation-design-approved-20260826-021833/GitDiffStat.txt'
+git add -- 'review/q-009/review-v5-implementation-design-approved-20260826-021833/GitStatus.txt'
+git add -- 'review/q-009/review-v5-implementation-design-approved-20260826-021833/ImplementationDesignApproval.md'
+git add -- 'review/q-009/review-v5-implementation-design-approved-20260826-021833/OutstandingItems.md'
+git add -- 'review/q-009/review-v5-implementation-design-approved-20260826-021833/PhaseReviewIndex.md'
+git add -- 'review/q-009/review-v5-implementation-design-approved-20260826-021833/ProjectTree.txt'
+git add -- 'review/q-009/review-v5-implementation-design-approved-20260826-021833/Summary.md'
+git add -- 'review/q-009/review-v5-implementation-design-approved-20260826-021833/Verification.md'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/Summary.md'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/BaselineScope.md'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/ArchitectureReview.md'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/DesignIntegrityCheck.md'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/GitStatus.txt'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/GitDiffStat.txt'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/Verification.md'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/OutstandingItems.md'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/GateStatus.md'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/PhaseReviewIndex.md'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/ProjectTree.txt'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/ProposedStagingCommands.txt'
+git add -- 'review/q-009/review-v6-approved-design-git-baseline-20260826-023122/ProposedCommitMessage.txt'
+
+git diff --cached --check
+git diff --cached --name-status
+git diff --cached --stat
+git status --short
+
+# Verify 43 staged files, 0 ZIPs, 0 source/runtime files, and no unexpected file.
+# Suggested manual commit only after the verification passes:
+git commit -m "docs: establish approved Q-009 implementation design baseline"

@@ -1,0 +1,31 @@
+Q-009 V6 approved-design baseline pre-commit Git status
+Captured on branch: main
+HEAD: 51cea893f22f41062d6ca69a27ed57a790aa71a9
+origin/main: 51cea893f22f41062d6ca69a27ed57a790aa71a9
+
+Staged files: 0
+Git add: NOT PERFORMED
+Git commit: NOT PERFORMED
+Git push: NOT PERFORMED
+
+Tracked modified files proposed for baseline:
+ M docs/adr/ADR-011-trusted-actor-capability-authorization-architecture.md
+ M docs/architecture/q-009-trusted-actor-authorization-architecture.md
+ M docs/requirements/Q-009-Requirement.md
+
+Untracked text paths proposed for baseline:
+?? docs/architecture/q-009-trusted-actor-authorization-implementation-design.md
+?? docs/lessons/2026-08-26-q-009-trusted-actor-authorization-implementation-design.md
+?? review/q-009/review-v4-implementation-design-20260826-020339/
+?? review/q-009/review-v5-implementation-design-approved-20260826-021833/
+?? review/q-009/review-v6-approved-design-git-baseline-20260826-023122/
+
+Preserved untracked exclusions include:
+- review/q-006-design/Q-009-V6-Approved-Design-Git-Baseline-Prompt.md
+- review/q-007/
+- Q-008 transfer ZIPs
+- Q-009 transfer ZIPs, including the new V6 ZIP
+- review/review-history/
+- review/review-baseline-q008-q009-20260825-182705.zip
+
+No runtime/source path is modified or proposed.

@@ -1,0 +1,43 @@
+Bounded Q-009 design review tree
+
+docs/
+├── requirements/
+│   ├── Q-007-Requirement.md
+│   ├── Q-008-Requirement.md
+│   └── Q-009-Requirement.md
+├── architecture/
+│   ├── q-007-brokeros-domain-foundation-design.md
+│   ├── q-008-risk-case-foundation-implementation-design.md
+│   ├── q-009-trusted-actor-authorization-architecture.md
+│   └── q-009-trusted-actor-authorization-implementation-design.md
+├── adr/
+│   ├── ADR-009-brokeros-risk-core-domain-model.md
+│   ├── ADR-010-risk-case-foundation.md
+│   └── ADR-011-trusted-actor-capability-authorization-architecture.md
+└── lessons/
+    ├── 2026-08-25-q-008-risk-case-implementation-design.md
+    ├── 2026-08-26-q-009-trusted-actor-authorization-architecture.md
+    └── 2026-08-26-q-009-trusted-actor-authorization-implementation-design.md
+
+review/q-009/
+├── review-v1-requirement-20260825-180019/
+├── review-v2-architecture-20260826-011212/
+├── review-v3-architecture-approved-20260826-012814/
+├── review-v4-implementation-design-20260826-020339/
+│   ├── ArchitectureCompliance.md
+│   ├── ArchitectureReview.md
+│   ├── GitDiffStat.txt
+│   ├── GitStatus.txt
+│   ├── ImplementationDesignReview.md
+│   ├── OutstandingItems.md
+│   ├── PersistenceDesignReview.md
+│   ├── PhaseReviewIndex.md
+│   ├── ProjectTree.txt
+│   ├── RequirementTraceability.md
+│   ├── SecurityDesignReview.md
+│   ├── Summary.md
+│   └── Verification.md
+└── review-q-009-v4-implementation-design-20260826-020339.zip
+
+Production backend, infrastructure, frontend, Q-007/Q-008 Review history, and
+unrelated source trees are intentionally omitted from this bounded view.
