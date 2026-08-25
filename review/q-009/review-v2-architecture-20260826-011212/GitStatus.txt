@@ -1,0 +1,15 @@
+Q-009 Architecture Review Git Status
+Captured: final package state (expected after ZIP generation)
+
+Staged files: 0
+Tracked modifications: 0
+
+New untracked Q-009 architecture artifacts:
+?? docs/adr/ADR-011-trusted-actor-capability-authorization-architecture.md
+?? docs/architecture/q-009-trusted-actor-authorization-architecture.md
+?? docs/lessons/2026-08-26-q-009-trusted-actor-authorization-architecture.md
+?? review/q-009/review-q-009-v2-architecture-20260826-011212.zip
+?? review/q-009/review-v2-architecture-20260826-011212/
+
+Pre-existing untracked Review/history artifacts remain present and untouched.
+No git add, commit, push, reset, clean, or stash was performed.

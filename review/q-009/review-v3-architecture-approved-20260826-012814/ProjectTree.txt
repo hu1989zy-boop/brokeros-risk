@@ -1,0 +1,32 @@
+Q-009 Architecture Approval Recording Bounded Project Tree
+
+docs/
+├── requirements/
+│   └── Q-009-Requirement.md                         [APPROVED V1]
+├── architecture/
+│   └── q-009-trusted-actor-authorization-architecture.md [APPROVED V2]
+├── adr/
+│   └── ADR-011-trusted-actor-capability-authorization-architecture.md [ACCEPTED]
+└── lessons/
+    └── 2026-08-26-q-009-trusted-actor-authorization-architecture.md
+
+review/q-009/
+├── review-v1-requirement-20260825-180019/           [preserved]
+├── review-q-009-v1-requirement-20260825-180019.zip  [preserved]
+├── review-v2-architecture-20260826-011212/           [preserved pre-approval evidence]
+├── review-q-009-v2-architecture-20260826-011212.zip  [preserved]
+├── review-v3-architecture-approved-20260826-012814/
+│   ├── ADRApproval.md
+│   ├── ArchitectApproval.md
+│   ├── ArchitectureReview.md
+│   ├── GateStatus.md
+│   ├── GitDiffStat.txt
+│   ├── GitStatus.txt
+│   ├── OutstandingItems.md
+│   ├── PhaseReviewIndex.md
+│   ├── ProjectTree.txt
+│   ├── Summary.md
+│   └── Verification.md
+└── review-q-009-v3-architecture-approved-20260826-012814.zip
+
+Review package v3 is not Architecture V3.

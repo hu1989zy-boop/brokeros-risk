@@ -1,0 +1,15 @@
+Q-009 Architecture Review Git Diff Stat
+
+Tracked git diff --stat: empty
+Tracked git diff --cached --stat: empty
+
+Reason: all Q-009 Architecture/ADR/Lessons/Review deliverables are new,
+untracked artifacts. They have not been staged.
+
+Bounded new text artifact line counts before final Review evidence update:
+  533 docs/architecture/q-009-trusted-actor-authorization-architecture.md
+  228 docs/adr/ADR-011-trusted-actor-capability-authorization-architecture.md
+   79 docs/lessons/2026-08-26-q-009-trusted-actor-authorization-architecture.md
+
+No source, dependency, Requirement, configuration, migration, or approved
+Q-007/Q-008 document appears in a tracked diff.

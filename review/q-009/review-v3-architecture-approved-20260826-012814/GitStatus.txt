@@ -1,0 +1,17 @@
+Q-009 Architecture Approval Recording Git Status
+
+Expected final scoped state:
+- staged files: 0
+- Q-009 tracked metadata modification:
+  docs/requirements/Q-009-Requirement.md
+- new/untracked Q-009 governance artifacts:
+  docs/architecture/q-009-trusted-actor-authorization-architecture.md
+  docs/adr/ADR-011-trusted-actor-capability-authorization-architecture.md
+  docs/lessons/2026-08-26-q-009-trusted-actor-authorization-architecture.md
+  review/q-009/review-v2-architecture-20260826-011212/
+  review/q-009/review-q-009-v2-architecture-20260826-011212.zip
+  review/q-009/review-v3-architecture-approved-20260826-012814/
+  review/q-009/review-q-009-v3-architecture-approved-20260826-012814.zip
+
+Pre-existing untracked Q-007/Q-008/Review-history artifacts remain untouched.
+No git add, commit, push, reset, clean, or stash was performed.

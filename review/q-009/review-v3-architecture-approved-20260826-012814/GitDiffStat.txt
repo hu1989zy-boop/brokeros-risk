@@ -1,0 +1,18 @@
+Q-009 Architecture Approval Recording Git Diff Stat
+
+Tracked metadata diff:
+ docs/requirements/Q-009-Requirement.md | current gate/status metadata only
+
+Untracked approval metadata changes:
+ docs/architecture/q-009-trusted-actor-authorization-architecture.md
+ docs/adr/ADR-011-trusted-actor-capability-authorization-architecture.md
+
+New untracked approval Review artifacts:
+ review/q-009/review-v3-architecture-approved-20260826-012814/
+ review/q-009/review-q-009-v3-architecture-approved-20260826-012814.zip
+
+No backend, dependency, configuration, database, migration, API, security
+implementation, infrastructure, frontend, or Q-008 implementation path changed.
+
+The final bounded `git diff --stat` result and Review line counts are recorded in
+Verification.md.

@@ -1,0 +1,30 @@
+Q-009 Architecture Review Bounded Project Tree
+
+docs/
+├── requirements/
+│   └── Q-009-Requirement.md
+├── architecture/
+│   └── q-009-trusted-actor-authorization-architecture.md
+├── adr/
+│   └── ADR-011-trusted-actor-capability-authorization-architecture.md
+└── lessons/
+    └── 2026-08-26-q-009-trusted-actor-authorization-architecture.md
+
+review/q-009/
+├── review-q-009-v1-requirement-20260825-180019.zip  [pre-existing]
+├── review-v2-architecture-20260826-011212/
+│   ├── ADRReview.md
+│   ├── ArchitectureReview.md
+│   ├── GapAnalysis.md
+│   ├── GitDiffStat.txt
+│   ├── GitStatus.txt
+│   ├── OutstandingItems.md
+│   ├── PhaseReviewIndex.md
+│   ├── ProjectTree.txt
+│   ├── SecurityAnalysis.md
+│   ├── Summary.md
+│   └── Verification.md
+└── review-q-009-v2-architecture-20260826-011212.zip  [generated after review finalization]
+
+Evidence documents packaged from approved/current repository authorities are
+listed in the ZIP manifest recorded by Verification.md.

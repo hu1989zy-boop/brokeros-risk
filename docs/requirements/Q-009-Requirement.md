@@ -9,8 +9,8 @@
 | Requirement Discovery | COMPLETE |
 | Requirement Review | PASS / APPROVED — external Architect decision confirmed 2026-08-25 |
 | Requirement Approval | APPROVED — V1 |
-| Architecture | NOT STARTED |
-| ADR | REQUIRED — NOT CREATED |
+| Architecture | APPROVED — V2 — external Architect decision confirmed 2026-08-26 |
+| ADR | ADR-011 ACCEPTED — external Architect decision confirmed 2026-08-26 |
 | Implementation Design | NOT STARTED |
 | Implementation | NOT STARTED |
 | Implementation Allowed | NO |
@@ -22,16 +22,18 @@
   Product Owner during Approved Baseline Commit Preparation
 - Approval review reference:
   `review/q-009/review-v1-requirement-20260825-180019/`
+- Architecture approval review reference:
+  `review/q-009/review-v3-architecture-approved-20260826-012814/`
 - Architecture phase: Phase 1
 - Change type: cross-capability trusted actor and authorization foundation
 - Prerequisite for: Q-008 Risk Case Foundation implementation
-- Identity Authority: **OPEN DECISION**
+- Identity Authority architecture: **APPROVED — PLUGGABLE-HYBRID**
+- Concrete Identity Provider: **OPEN**
 - Authorization direction: capability-based server-side enforcement; any
   future role/group mapping remains an upstream policy input, not direct
   authorization proof
-- ADR Required: **YES**
-- Recommended ADR topic: Trusted Identity Boundary, ActorContext Ownership, and
-  Capability Authorization Model
+- ADR Required: **YES — SATISFIED BY ACCEPTED ADR-011**
+- Architecture V3 Required: **NO**
 
 This approved Requirement V1 records business/security needs only. Approval
 does not choose Spring Security, JWT, OAuth2, OIDC, session, API Gateway,
@@ -632,19 +634,24 @@ Q-009, create Q-010/Q-011/Q-012, or assign any Requirement ID.
 - [x] No Architecture, Design, implementation, dependency, migration, API,
       configuration, stage, commit, or push performed.
 
-## 23. Requirement Gate
+## 23. Current Governance Gate Status
 
 - Requirement Discovery: COMPLETE
 - Requirement status: **APPROVED — V1**
 - Architect Requirement Review: **PASS / APPROVED — external decision
   confirmed 2026-08-25**
-- Ready for Architecture Gate: YES
-- Architecture status: **NOT STARTED**
-- Architecture Allowed in baseline preparation: **NO**
-- ADR status: **REQUIRED — NOT CREATED**
-- ADR creation/acceptance Allowed in baseline preparation: **NO**
+- Architecture Gate: **COMPLETE**
+- Architecture status: **APPROVED — V2 — external decision confirmed
+  2026-08-26**
+- Architecture V3 Required: **NO**
+- ADR status: **ADR-011 ACCEPTED — external decision confirmed 2026-08-26**
+- Implementation Design status: **NOT STARTED**
+- Ready for Implementation Design Gate: **YES**
+- Implementation status: **NOT STARTED**
 - Implementation Allowed: **NO**
 
-The Requirement Gate is complete. Q-009 Architecture/ADR analysis requires a
-separate explicitly authorized task; this approval and baseline preparation do
-not start Architecture, ADR, Design, or implementation.
+The Requirement and Architecture gates are complete. Earlier sections retain
+their approved Requirement Discovery evidence and gate-time acceptance criteria
+as historical snapshots; the metadata above is the current governance status.
+Architecture/ADR approval does not start Implementation Design or
+Implementation and grants no implementation permission.
