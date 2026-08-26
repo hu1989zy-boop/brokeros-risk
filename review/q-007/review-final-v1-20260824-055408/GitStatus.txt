@@ -1,0 +1,50 @@
+$ git status
+
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   README.md
+	new file:   docs/adr/ADR-009-brokeros-risk-core-domain-model.md
+	new file:   docs/architecture/q-007-brokeros-domain-foundation-design.md
+	new file:   docs/lessons/2026-08-23-q-007-brokeros-domain-foundation.md
+	modified:   docs/lessons/README.md
+	new file:   docs/requirements/Q-007-Requirement.md
+	modified:   docs/skills/README.md
+	new file:   docs/skills/brokeros-risk-core-domain.md
+	modified:   review/ArchitectureReview.md
+	modified:   review/GitDiffStat.txt
+	modified:   review/GitStatus.txt
+	modified:   review/InitialBaselineCheck.md
+	modified:   review/LessonsLearnedReview.md
+	modified:   review/OutstandingItems.md
+	modified:   review/PhaseReviewIndex.md
+	modified:   review/ProjectTree.txt
+	modified:   review/RequirementReview.md
+	modified:   review/SkillReview.md
+	modified:   review/Summary.md
+	modified:   review/Verification.md
+	new file:   review/archive/q-007/LessonsLearned.md
+	new file:   review/archive/q-007/README.md
+	new file:   review/archive/q-007/review-v1-design/ADRDecision.md
+	new file:   review/archive/q-007/review-v1-design/ArchitectureReview.md
+	new file:   review/archive/q-007/review-v1-design/BoundedContext.md
+	new file:   review/archive/q-007/review-v1-design/ContextMap.md
+	new file:   review/archive/q-007/review-v1-design/CoreDomainDefinition.md
+	new file:   review/archive/q-007/review-v1-design/DomainLifecycle.md
+	new file:   review/archive/q-007/review-v1-design/DomainObjectRelationship.md
+	new file:   review/archive/q-007/review-v1-design/GitDiffStat.txt
+	new file:   review/archive/q-007/review-v1-design/GitStatus.txt
+	new file:   review/archive/q-007/review-v1-design/InitialBaselineCheck.md
+	new file:   review/archive/q-007/review-v1-design/OutstandingItems.md
+	new file:   review/archive/q-007/review-v1-design/ProjectTree.txt
+	new file:   review/archive/q-007/review-v1-design/RequirementReview.md
+	new file:   review/archive/q-007/review-v1-design/Summary.md
+	new file:   review/archive/q-007/review-v1-design/UbiquitousLanguage.md
+	new file:   review/archive/q-007/review-v1-design/Verification.md
+
+Untracked files:
+	(use "git add <file>..." to include in what will be committed)
+	review/q-007/
+	review/review-history/

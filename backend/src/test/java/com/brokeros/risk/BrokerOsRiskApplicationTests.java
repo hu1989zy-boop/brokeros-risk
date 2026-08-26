@@ -3,7 +3,6 @@ package com.brokeros.risk;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -47,25 +46,24 @@ class BrokerOsRiskApplicationTests {
     }
 
     @Test
-    void openApiDocumentIsAvailable() throws Exception {
+    void openApiDocumentRequiresAuthentication() throws Exception {
         mockMvc.perform(get("/v3/api-docs"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.info.title").value("BrokerOS Risk API"))
-                .andExpect(jsonPath("$.paths['/api/health']").exists());
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("AUTHENTICATION_REQUIRED"));
     }
 
     @Test
-    void swaggerUiIsAvailable() throws Exception {
+    void swaggerUiRequiresAuthentication() throws Exception {
         mockMvc.perform(get("/swagger-ui.html"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/swagger-ui/index.html"));
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("AUTHENTICATION_REQUIRED"));
     }
 
     @Test
-    void unknownApiPathUsesStandardErrorResponse() throws Exception {
+    void unknownApiPathFailsClosedBeforeRouting() throws Exception {
         mockMvc.perform(get("/api/missing"))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.code").value("NOT_FOUND"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("AUTHENTICATION_REQUIRED"))
                 .andExpect(jsonPath("$.data.path").value("/api/missing"));
     }
 

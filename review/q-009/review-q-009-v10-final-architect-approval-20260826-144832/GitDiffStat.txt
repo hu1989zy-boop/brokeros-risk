@@ -1,0 +1,25 @@
+Command: git diff --stat
+
+ backend/pom.xml                                    | 13 +++++++
+ .../java/com/brokeros/risk/api/ResultCode.java     | 24 +++++++++++++
+ .../brokeros/risk/exception/BusinessException.java |  6 +++-
+ backend/src/main/resources/application-prod.yml    |  6 ++++
+ backend/src/main/resources/application-test.yml    |  7 ++++
+ backend/src/main/resources/application.yml         | 13 +++++++
+ .../risk/BrokerOsRiskApplicationTests.java         | 20 +++++------
+ .../com/brokeros/risk/FlywayMigrationTests.java    | 41 ++++++++++++++++++++++
+ .../RequestCorrelationIntegrationTests.java        |  2 +-
+ ...-actor-capability-authorization-architecture.md | 16 +++++----
+ ...009-trusted-actor-authorization-architecture.md | 27 +++++++++++---
+ ...ed-actor-authorization-implementation-design.md | 41 +++++++++++++++-------
+ docs/configuration/README.md                       | 24 ++++++++-----
+ ...ed-actor-authorization-implementation-design.md | 25 +++++++------
+ docs/lessons/README.md                             |  4 +++
+ docs/requirements/Q-009-Requirement.md             | 39 ++++++++++++++------
+ docs/skills/README.md                              |  4 +++
+ scripts/verify-infrastructure.sh                   | 32 ++++++++++++-----
+ scripts/verify-static.sh                           | 14 ++++++--
+ 19 files changed, 282 insertions(+), 76 deletions(-)
+
+Note: git diff --stat does not include untracked implementation or review
+artifacts. ChangedFiles.txt and GitStatus.txt record those categories.

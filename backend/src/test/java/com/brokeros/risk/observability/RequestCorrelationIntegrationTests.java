@@ -140,7 +140,7 @@ class RequestCorrelationIntegrationTests {
 
         mockMvc.perform(get("/api/missing")
                         .header(RequestCorrelationFilter.REQUEST_ID_HEADER, requestId))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isUnauthorized())
                 .andExpect(header().string(RequestCorrelationFilter.REQUEST_ID_HEADER, requestId));
 
         assertActiveCorrelation(requestId);

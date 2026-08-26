@@ -1,0 +1,38 @@
+Q-009 V9 changed-file inventory
+================================
+
+Verified test correction made during V9:
+backend/src/test/java/com/brokeros/risk/security/infrastructure/persistence/Q009MySqlIntegrationTests.java
+
+Production Java changes made during V9: NONE
+Configuration/migration changes made during V9: NONE
+Requirement/Architecture/ADR/Design changes made during V9: NONE
+Q-008 changes made during V9: NONE
+
+New V9 review evidence:
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/ArchitectureConformance.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/ArchitectureReview.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/ChangedFiles.txt
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/DockerComposeVerification.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/EnvironmentCapabilities.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/GateStatus.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/GitDiffStat.txt
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/GitStatus.txt
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/ImplementationFix.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/KustomizeVerification.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/MySql84Verification.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/OutstandingItems.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/PhaseReviewIndex.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/ProjectTree.txt
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/RegressionVerification.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/SecurityReview.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/Summary.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/TestCoverage.md
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/Verification.md
+
+New transfer artifact outside the review directory:
+review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014.zip
+
+Temporary Compose override and kubectl files were removed. Disposable runtime
+containers, volumes, and networks were removed. The ZIP remains untracked and
+must not be staged.

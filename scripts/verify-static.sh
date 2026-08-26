@@ -47,11 +47,21 @@ find scripts -type f -name '*.sh' -exec sh -n {} \;
 
 migration_count=$(find backend/src/main/resources/db/migration -maxdepth 1 \
     -type f -name 'V*__*.sql' | wc -l | tr -d '[:space:]')
-test "$migration_count" = "1"
+test "$migration_count" = "2"
 
 if grep -Eiq 'create[[:space:]]+table|alter[[:space:]]+table|drop[[:space:]]+table|truncate[[:space:]]+table' \
-    backend/src/main/resources/db/migration/*.sql; then
+    backend/src/main/resources/db/migration/V1__initial_schema.sql; then
     printf '%s\n' "Business DDL is not allowed in the foundation migration." >&2
+    exit 1
+fi
+
+q009_create_count=$(grep -Eic '^[[:space:]]*create[[:space:]]+table' \
+    backend/src/main/resources/db/migration/V2__create_security_actor_foundation.sql)
+test "$q009_create_count" = "3"
+
+if grep -Eiq '^[[:space:]]*(drop|truncate|alter|delete|update)[[:space:]]' \
+    backend/src/main/resources/db/migration/V2__create_security_actor_foundation.sql; then
+    printf '%s\n' "Q-009 migration must remain forward-only and additive." >&2
     exit 1
 fi
 

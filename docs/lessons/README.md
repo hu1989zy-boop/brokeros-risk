@@ -27,3 +27,7 @@ Completed Requirement entries include:
 - `2026-08-23-q-007-brokeros-domain-foundation.md` — aligning the final
   Evidence/Decision/Action/Risk Case baseline, separating Action from Execution,
   and preserving explainability for future AI work.
+- `2026-08-26-q-009-trusted-actor-authorization-implementation.md` — preserving
+  authentication/mapping/authorization separation, validating the signed-JWT
+  filter boundary, keeping MySQL verification honest, and avoiding implicit
+  privilege paths.

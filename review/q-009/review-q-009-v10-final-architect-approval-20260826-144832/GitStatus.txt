@@ -1,0 +1,68 @@
+Q-009 V10 final packaging status
+================================
+
+Branch: main
+HEAD: 57e0db7a311be799bafe8744e870a2dcf5f8b21c
+origin/main: 57e0db7a311be799bafe8744e870a2dcf5f8b21c
+Staged files: 0
+git diff --cached --check: PASS
+git diff --check: PASS
+
+git status --short captured after V10 review-directory creation:
+
+ M backend/pom.xml
+ M backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+ M backend/src/main/java/com/brokeros/risk/exception/BusinessException.java
+ M backend/src/main/resources/application-prod.yml
+ M backend/src/main/resources/application-test.yml
+ M backend/src/main/resources/application.yml
+ M backend/src/test/java/com/brokeros/risk/BrokerOsRiskApplicationTests.java
+ M backend/src/test/java/com/brokeros/risk/FlywayMigrationTests.java
+ M backend/src/test/java/com/brokeros/risk/observability/RequestCorrelationIntegrationTests.java
+ M docs/adr/ADR-011-trusted-actor-capability-authorization-architecture.md
+ M docs/architecture/q-009-trusted-actor-authorization-architecture.md
+ M docs/architecture/q-009-trusted-actor-authorization-implementation-design.md
+ M docs/configuration/README.md
+ M docs/lessons/2026-08-26-q-009-trusted-actor-authorization-implementation-design.md
+ M docs/lessons/README.md
+ M docs/requirements/Q-009-Requirement.md
+ M docs/skills/README.md
+ M scripts/verify-infrastructure.sh
+ M scripts/verify-static.sh
+?? backend/src/main/java/com/brokeros/risk/security/
+?? backend/src/main/resources/db/migration/V2__create_security_actor_foundation.sql
+?? backend/src/test/java/com/brokeros/risk/security/
+?? docs/lessons/2026-08-26-q-009-trusted-actor-authorization-implementation.md
+?? docs/skills/trusted-actor-authorization.md
+?? prompts/
+?? review/q-006-design/Q-009-Implementation-Authorization-Prompt.md
+?? review/q-006-design/Q-009-V6-Approved-Design-Git-Baseline-Prompt.md
+?? review/q-007/
+?? review/q-008/review-q-008-architect-approval-prerequisite-analysis-20260825-170517.zip
+?? review/q-008/review-q-008-v1-requirement-20260824-164535.zip
+?? review/q-008/review-q-008-v2-architecture-20260824-170858.zip
+?? review/q-008/review-q-008-v3-architecture-approved-20260825-132359.zip
+?? review/q-008/review-q-008-v4-implementation-design-20260825-142122.zip
+?? review/q-009/review-q-009-v1-requirement-20260825-180019.zip
+?? review/q-009/review-q-009-v10-final-architect-approval-20260826-144832/
+?? review/q-009/review-q-009-v2-architecture-20260826-011212.zip
+?? review/q-009/review-q-009-v3-architecture-approved-20260826-012814.zip
+?? review/q-009/review-q-009-v4-implementation-design-20260826-020339.zip
+?? review/q-009/review-q-009-v5-implementation-design-approved-20260826-021833.zip
+?? review/q-009/review-q-009-v6-approved-design-git-baseline-20260826-023122.zip
+?? review/q-009/review-q-009-v7-implementation-20260826-032317.zip
+?? review/q-009/review-q-009-v8-mandatory-runtime-verification-20260826-034847.zip
+?? review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014.zip
+?? review/q-009/review-q-009-v9-runtime-gate-closure-20260826-134014/
+?? review/q-009/review-v7-implementation-20260826-032317/
+?? review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/
+?? review/review-baseline-q008-q009-20260825-182705.zip
+?? review/review-history/
+
+ZIP creation adds exactly this additional untracked transfer artifact:
+
+?? review/q-009/review-q-009-v10-final-architect-approval-20260826-144832.zip
+
+The existing V7–V9 packages and historical Q-007/Q-008 content remain present.
+No staging, commit, push, reset, clean, stash, checkout/discard, or history
+rewrite was performed.

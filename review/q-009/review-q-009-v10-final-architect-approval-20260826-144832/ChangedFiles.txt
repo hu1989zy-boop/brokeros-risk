@@ -1,0 +1,23 @@
+Q-009 V10 final-approval changes
+
+Modified governance authorities:
+M docs/requirements/Q-009-Requirement.md
+M docs/architecture/q-009-trusted-actor-authorization-architecture.md
+M docs/architecture/q-009-trusted-actor-authorization-implementation-design.md
+M docs/adr/ADR-011-trusted-actor-capability-authorization-architecture.md
+M docs/lessons/2026-08-26-q-009-trusted-actor-authorization-implementation.md
+M docs/skills/trusted-actor-authorization.md
+
+Added V10 review package:
+A review/q-009/review-q-009-v10-final-architect-approval-20260826-144832/
+A review/q-009/review-q-009-v10-final-architect-approval-20260826-144832.zip
+
+Production source/config changes in V10: NONE
+Test source changes in V10: NONE
+Flyway changes in V10: NONE
+Q-008 changes in V10: NONE
+Git staging/commit/push in V10: NONE
+
+The working tree also contains the previously reviewed Q-009 implementation
+baseline and historical untracked Review transfer artifacts. Those are not new
+V10 implementation changes.

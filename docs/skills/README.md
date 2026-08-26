@@ -21,6 +21,10 @@ Available engineering knowledge:
   concurrency tests, and exporter boundaries.
 - `phase-0.5-engineering-foundation.md` — Flyway, API envelopes, validation,
   exception handling, API documentation, and local development checks.
+- `trusted-actor-authorization.md` — signed human JWT trust, authoritative
+  ActorRef mapping, purpose-specific service identity, immutable ActorContext,
+  explicit capabilities, fail-closed provisioning/persistence, safe errors,
+  and signed-JWT plus real-MySQL verification.
 
 Future skills must remain consistent with `AGENTS.md`, approved requirements,
 and accepted ADRs.

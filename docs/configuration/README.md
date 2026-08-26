@@ -19,9 +19,9 @@ Spring Cloud Config, Vault, Consul, and dynamic refresh are not supported.
 | BrokerOS Risk capability | Use `brokeros.risk.<capability>` only when an approved capability owns real settings. Bind one cohesive immutable `@ConfigurationProperties` type and validate it at startup. |
 | Deployment environment | Supplies non-secret aliases through environment variables/ConfigMap and sensitive values through ignored local `.env` or an externally managed Secret. |
 
-There is currently no real BrokerOS Risk-owned configuration group. Therefore
-Q-006 intentionally adds no production `@ConfigurationProperties` class. An
-empty or example class would violate YAGNI and ADR-008.
+Q-009 adds the first approved BrokerOS-owned configuration group:
+`brokeros.risk.security.jwt`. It owns only BrokerOS clock-skew tolerance.
+Issuer, audience, and JWK settings remain in Spring Security's native namespace.
 
 ## Configuration Catalog
 
@@ -39,6 +39,10 @@ not make that value an approved production default. `Sensitivity` is
 | HikariCP | `spring.datasource.hikari.minimum-idle` | `DB_POOL_MIN_IDLE` | Integer | `1` base; `5` prod | No | base/prod | Internal | Integer binding plus Hikari validation | YAML, environment, prod ConfigMap | Yes | Must remain compatible with maximum pool size |
 | HikariCP | `spring.datasource.hikari.connection-timeout` | `DB_CONNECTION_TIMEOUT_MS` | Long milliseconds | `30000` | No | all | Internal | Long binding plus Hikari validation | YAML, environment | Yes | Unit is milliseconds and cannot change silently |
 | Flyway | `spring.flyway.enabled` | `FLYWAY_ENABLED` | Boolean | `true` | No | all | Internal | Boolean binding | YAML, environment | Yes | Disabling does not authorize manual schema changes |
+| Spring Security Resource Server | `spring.security.oauth2.resourceserver.jwt.issuer-uri` | `SECURITY_JWT_ISSUER_URI` | HTTPS/URI | Test uses reserved `.test` issuer; no production default | Yes for web runtime | all | Internal | Nonblank exact trusted issuer; decoder validates `iss` | YAML and external environment | Yes | Q-009/ADR-011 trust contract; provider remains replaceable |
+| Spring Security Resource Server | `spring.security.oauth2.resourceserver.jwt.audiences` | `SECURITY_JWT_AUDIENCES` | String list | Test uses `brokeros-risk-test`; no production default | Yes for web runtime | all | Internal | At least one nonblank exact audience | YAML and external environment | Yes | Audience values are deployment trust contracts |
+| Spring Security Resource Server | `spring.security.oauth2.resourceserver.jwt.jwk-set-uri` | `SECURITY_JWT_JWK_SET_URI` | HTTPS/URI | Empty | No when issuer discovery is available | all | Internal | Framework JWK decoder; issuer validation remains mandatory | YAML and external environment | Yes | Explicit URI may replace discovery without changing issuer semantics |
+| BrokerOS Q-009 Security | `brokeros.risk.security.jwt.clock-skew` | `SECURITY_JWT_CLOCK_SKEW` | Duration | `60s` | No | all | Internal | Immutable duration from `0s` through `300s` | YAML and external environment | Yes | Q-009-owned trust tolerance; range cannot be weakened silently |
 | Spring Data Redis | `spring.data.redis.host` | `REDIS_HOST` | Hostname | `localhost` | No | all | Internal | Host resolved by Redis client | YAML, environment, Compose, ConfigMap | Yes | Alias is a deployment contract |
 | Spring Data Redis | `spring.data.redis.port` | `REDIS_PORT` | Integer port | `6379` | No | all | Internal | Integer/port binding | YAML, environment, Compose, ConfigMap | Yes | Alias/type are stable |
 | Spring Data Redis | `spring.data.redis.password` | `REDIS_PASSWORD` | String | Empty | Only when the selected Redis requires authentication | all | Secret | Bound by Spring Data Redis; never log value | environment or future approved Secret reference | Yes | Adding a production source requires deployment review |
@@ -58,16 +62,20 @@ not make that value an approved production default. `Sensitivity` is
 | Spring Boot tracing export | `management.zipkin.tracing.export.enabled` | None | Boolean | `false` | Yes | all | Internal | Boolean binding | packaged base YAML | Yes | Exporter requires a future Requirement/ADR |
 | SpringDoc | `springdoc.api-docs.path` | None | HTTP path | `/v3/api-docs` | Yes | all | Public | Existing endpoint tests | packaged base YAML | Yes | API documentation contract |
 | SpringDoc | `springdoc.swagger-ui.path` | None | HTTP path | `/swagger-ui.html` | Yes | all | Public | Existing endpoint tests | packaged base YAML | Yes | UI path compatibility contract |
+| SpringDoc | `springdoc.api-docs.enabled` | None | Boolean | `true` base/test; `false` prod | Yes | all | Internal | Production profile disables API docs | packaged base/prod YAML | Yes | Q-009 operational endpoint policy |
+| SpringDoc | `springdoc.swagger-ui.enabled` | None | Boolean | `true` base/test; `false` prod | Yes | all | Internal | Production profile disables Swagger UI | packaged base/prod YAML | Yes | Q-009 operational endpoint policy |
 
 ## Profile Contract
 
-- Base configuration contains the approved common runtime foundation and local
-  defaults.
+- Base configuration contains the approved common runtime foundation. Q-009
+  requires externally supplied issuer and audience for a web runtime and has no
+  permissive security-off mode.
 - `test` selects the test database schema, test Kafka consumer-group name,
-  non-blocking local datasource initialization, full trace sampling, and DEBUG
-  application logging.
+  non-blocking local datasource initialization, reserved test issuer/audience/
+  JWK locations, full trace sampling, and DEBUG application logging.
 - `prod` requires externally supplied database username/password, uses fail-fast
-  datasource initialization, larger Hikari defaults, and INFO logging.
+  datasource initialization, larger Hikari defaults, disables OpenAPI/Swagger,
+  and uses INFO logging.
 - Docker Compose's optional backend profile selects Spring profile `test`.
 - Kubernetes test/prod overlays select the matching Spring profile.
 

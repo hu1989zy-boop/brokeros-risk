@@ -1,0 +1,28 @@
+Q-009 V8 changed-file inventory
+================================
+
+Production/source/configuration/governance changes made by V8: NONE
+
+New V8 review evidence:
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/ArchitectureConformance.md
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/ArchitectureReview.md
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/ChangedFiles.txt
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/DockerComposeVerification.md
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/EnvironmentCapabilities.md
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/GateStatus.md
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/GitDiffStat.txt
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/GitStatus.txt
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/KustomizeVerification.md
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/MySql84Verification.md
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/OutstandingItems.md
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/PhaseReviewIndex.md
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/ProjectTree.txt
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/RegressionVerification.md
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/SecurityReview.md
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/Summary.md
+review/q-009/review-v8-mandatory-runtime-verification-20260826-034847/Verification.md
+
+New transfer artifact outside the review directory:
+review/q-009/review-q-009-v8-mandatory-runtime-verification-20260826-034847.zip
+
+The transfer ZIP is intentionally untracked and unstaged.

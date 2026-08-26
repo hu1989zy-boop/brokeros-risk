@@ -13,7 +13,11 @@ public class BusinessException extends RuntimeException {
     }
 
     public BusinessException(ResultCode resultCode, String message) {
-        super(message);
+        this(resultCode, message, null);
+    }
+
+    public BusinessException(ResultCode resultCode, String message, Throwable cause) {
+        super(message, cause);
         this.resultCode = Objects.requireNonNull(resultCode, "resultCode must not be null");
     }
 

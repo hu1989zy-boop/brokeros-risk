@@ -1,0 +1,202 @@
+$ tree -a -L 5 -I '.git|target|review-history|*.zip|.DS_Store|.idea'
+
+# Protected review/review-history and external ZIP files are intentionally excluded.
+
+.
+├── .editorconfig
+├── .env.example
+├── .github
+│   └── workflows
+│       └── ci.yml
+├── .gitignore
+├── AGENTS.md
+├── README.md
+├── adapters
+│   ├── mt4
+│   │   └── README.md
+│   └── mt5
+│       └── README.md
+├── backend
+│   ├── .dockerignore
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   └── resources
+│       │       ├── application-prod.yml
+│       │       ├── application-test.yml
+│       │       ├── application.yml
+│       │       └── db
+│       └── test
+│           └── java
+│               └── com
+├── deploy
+│   ├── docker
+│   │   └── README.md
+│   └── kubernetes
+│       ├── README.md
+│       ├── base
+│       │   ├── configmap.yaml
+│       │   ├── deployment.yaml
+│       │   ├── kustomization.yaml
+│       │   └── service.yaml
+│       ├── prod
+│       │   ├── configmap-patch.yaml
+│       │   ├── deployment-patch.yaml
+│       │   └── kustomization.yaml
+│       └── test
+│           ├── configmap-patch.yaml
+│           ├── deployment-patch.yaml
+│           └── kustomization.yaml
+├── docker-compose.yml
+├── docs
+│   ├── adr
+│   │   ├── ADR-001-technology-roadmap.md
+│   │   ├── ADR-002-system-isolation.md
+│   │   ├── ADR-003-engineering-foundation-standards.md
+│   │   ├── ADR-004-local-development-and-deployment-layout.md
+│   │   ├── ADR-005-development-standards.md
+│   │   ├── ADR-006-ci-and-integration-verification.md
+│   │   ├── ADR-007-micrometer-w3c-tracing.md
+│   │   ├── ADR-008-configuration-management-foundation.md
+│   │   └── ADR-009-brokeros-risk-core-domain-model.md
+│   ├── architecture
+│   │   ├── phase-0-foundation.md
+│   │   ├── phase-0.5-engineering-foundation.md
+│   │   ├── phase-0.6-development-standards.md
+│   │   ├── q-004-ci-integration-verification-foundation.md
+│   │   ├── q-005-foundation-hardening-observability.md
+│   │   ├── q-006-configuration-management-foundation-design.md
+│   │   └── q-007-brokeros-domain-foundation-design.md
+│   ├── configuration
+│   │   └── README.md
+│   ├── lessons
+│   │   ├── 2026-08-11-phase-0.6.md
+│   │   ├── 2026-08-11-q-004-ci-integration-verification.md
+│   │   ├── 2026-08-13-q-005-foundation-hardening-observability.md
+│   │   ├── 2026-08-18-q-006-configuration-management-foundation.md
+│   │   ├── 2026-08-23-q-007-brokeros-domain-foundation.md
+│   │   └── README.md
+│   ├── requirements
+│   │   ├── Q-001-phase-0-project-foundation.md
+│   │   ├── Q-002-phase-0.5-engineering-foundation.md
+│   │   ├── Q-003-phase-0.6-development-standards.md
+│   │   ├── Q-004-ci-integration-verification-foundation.md
+│   │   ├── Q-005-Requirement.md
+│   │   ├── Q-006-Requirement.md
+│   │   └── Q-007-Requirement.md
+│   └── skills
+│       ├── README.md
+│       ├── brokeros-risk-core-domain.md
+│       ├── ci-integration-verification.md
+│       ├── configuration-management.md
+│       ├── development-standards.md
+│       ├── observability-correlation.md
+│       └── phase-0.5-engineering-foundation.md
+├── frontend
+│   └── README.md
+├── review
+│   ├── ArchitectureReview.md
+│   ├── GitDiffStat.txt
+│   ├── GitStatus.txt
+│   ├── InitialBaselineCheck.md
+│   ├── LessonsLearnedReview.md
+│   ├── OutstandingItems.md
+│   ├── PhaseReviewIndex.md
+│   ├── ProjectTree.txt
+│   ├── Q-004-Patch-01.md
+│   ├── RequirementReview.md
+│   ├── SkillReview.md
+│   ├── Summary.md
+│   ├── Verification.md
+│   ├── archive
+│   │   ├── phase-0
+│   │   │   ├── ArchitectureReview.md
+│   │   │   ├── GitDiffStat.txt
+│   │   │   ├── GitStatus.txt
+│   │   │   ├── OutstandingItems.md
+│   │   │   ├── ProjectTree.txt
+│   │   │   ├── Summary.md
+│   │   │   └── Verification.md
+│   │   ├── phase-0.5
+│   │   │   ├── ArchitectureReview.md
+│   │   │   ├── GitDiffStat.txt
+│   │   │   ├── GitStatus.txt
+│   │   │   ├── OutstandingItems.md
+│   │   │   ├── ProjectTree.txt
+│   │   │   ├── Summary.md
+│   │   │   └── Verification.md
+│   │   ├── phase-0.6
+│   │   │   ├── ArchitectureReview.md
+│   │   │   ├── GitDiffStat.txt
+│   │   │   ├── GitStatus.txt
+│   │   │   ├── OutstandingItems.md
+│   │   │   ├── ProjectTree.txt
+│   │   │   ├── Summary.md
+│   │   │   └── Verification.md
+│   │   ├── q-005
+│   │   │   ├── ArchitectureReview.md
+│   │   │   ├── GitDiffStat.txt
+│   │   │   ├── GitStatus.txt
+│   │   │   ├── OutstandingItems.md
+│   │   │   ├── ProjectTree.txt
+│   │   │   ├── Summary.md
+│   │   │   └── Verification.md
+│   │   └── q-007
+│   │       ├── LessonsLearned.md
+│   │       ├── README.md
+│   │       └── review-v1-design
+│   │           ├── ADRDecision.md
+│   │           ├── ArchitectureReview.md
+│   │           ├── BoundedContext.md
+│   │           ├── ContextMap.md
+│   │           ├── CoreDomainDefinition.md
+│   │           ├── DomainLifecycle.md
+│   │           ├── DomainObjectRelationship.md
+│   │           ├── GitDiffStat.txt
+│   │           ├── GitStatus.txt
+│   │           ├── InitialBaselineCheck.md
+│   │           ├── OutstandingItems.md
+│   │           ├── ProjectTree.txt
+│   │           ├── RequirementReview.md
+│   │           ├── Summary.md
+│   │           ├── UbiquitousLanguage.md
+│   │           └── Verification.md
+│   ├── q-006-design
+│   │   ├── ADRDecision.md
+│   │   ├── ArchitectureReview.md
+│   │   ├── GapAnalysis.md
+│   │   ├── GitDiffStat.txt
+│   │   ├── GitStatus.txt
+│   │   ├── ImplementationPlan.md
+│   │   ├── InitialBaselineCheck.md
+│   │   ├── LessonsLearnedAnalysis.md
+│   │   ├── OutstandingItems.md
+│   │   ├── ProjectTree.txt
+│   │   ├── RequirementReview.md
+│   │   ├── SkillAnalysis.md
+│   │   ├── Summary.md
+│   │   └── Verification.md
+│   └── q-007
+│       └── review-final-v1-20260824-055408
+│           ├── ArchitectureReview.md
+│           ├── GitDiffStat.txt
+│           ├── GitStagedNameStatus.txt
+│           ├── GitStatus.txt
+│           ├── OutstandingItems.md
+│           ├── PhaseReviewIndex.md
+│           ├── ProjectTree.txt
+│           ├── RepositoryCleanup.md
+│           ├── RequirementReview.md
+│           ├── Summary.md
+│           └── Verification.md
+└── scripts
+    ├── README.md
+    ├── verify-infrastructure.sh
+    ├── verify-kustomize.sh
+    └── verify-static.sh
+
+42 directories, 154 files

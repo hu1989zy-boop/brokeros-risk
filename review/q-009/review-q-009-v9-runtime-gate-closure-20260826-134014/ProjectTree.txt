@@ -1,0 +1,46 @@
+Q-009 V9 bounded review tree
+============================
+
+review/q-009/
+├── review-v7-implementation-20260826-032317/                 (preserved)
+├── review-q-009-v7-implementation-20260826-032317.zip       (preserved)
+├── review-v8-mandatory-runtime-verification-20260826-034847/ (preserved)
+├── review-q-009-v8-mandatory-runtime-verification-20260826-034847.zip (preserved)
+├── review-q-009-v9-runtime-gate-closure-20260826-134014/
+│   ├── ArchitectureConformance.md
+│   ├── ArchitectureReview.md
+│   ├── ChangedFiles.txt
+│   ├── DockerComposeVerification.md
+│   ├── EnvironmentCapabilities.md
+│   ├── GateStatus.md
+│   ├── GitDiffStat.txt
+│   ├── GitStatus.txt
+│   ├── ImplementationFix.md
+│   ├── KustomizeVerification.md
+│   ├── MySql84Verification.md
+│   ├── OutstandingItems.md
+│   ├── PhaseReviewIndex.md
+│   ├── ProjectTree.txt
+│   ├── RegressionVerification.md
+│   ├── SecurityReview.md
+│   ├── Summary.md
+│   ├── TestCoverage.md
+│   └── Verification.md
+└── review-q-009-v9-runtime-gate-closure-20260826-134014.zip
+
+V9 verified/changed implementation scope:
+
+backend/src/main/java/com/brokeros/risk/security/                  (verified)
+backend/src/main/resources/db/migration/V2__create_security_actor_foundation.sql (verified)
+backend/src/test/java/com/brokeros/risk/security/                  (verified)
+backend/src/test/java/com/brokeros/risk/security/infrastructure/persistence/
+└── Q009MySqlIntegrationTests.java                                (test fix)
+docker-compose.yml                                                (verified, unchanged)
+deploy/kubernetes/base/                                           (verified, unchanged)
+deploy/kubernetes/test/                                           (verified, unchanged)
+deploy/kubernetes/prod/                                           (verified, unchanged)
+scripts/verify-infrastructure.sh                                  (verified, unchanged in V9)
+scripts/verify-kustomize.sh                                       (verified, unchanged)
+
+The tree is intentionally bounded and excludes build outputs and unrelated
+historical review content.

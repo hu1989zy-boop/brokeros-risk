@@ -1,0 +1,72 @@
+Q-009 V7 bounded implementation tree
+
+backend/
+├── pom.xml
+└── src/
+    ├── main/
+    │   ├── java/com/brokeros/risk/
+    │   │   ├── api/ResultCode.java
+    │   │   ├── exception/BusinessException.java
+    │   │   └── security/
+    │   │       ├── application/ (12 types)
+    │   │       │   └── port/ (4 ports)
+    │   │       ├── domain/ (15 immutable values/enums)
+    │   │       ├── infrastructure/
+    │   │       │   ├── authentication/ (7 adapters/handlers)
+    │   │       │   ├── configuration/ (4 configuration types)
+    │   │       │   └── persistence/ (3 JDBC adapters)
+    │   │       └── interfaces/bootstrap/ (1 one-shot command)
+    │   └── resources/
+    │       ├── application.yml
+    │       ├── application-test.yml
+    │       ├── application-prod.yml
+    │       └── db/migration/
+    │           ├── V1__initial_schema.sql
+    │           └── V2__create_security_actor_foundation.sql
+    └── test/java/com/brokeros/risk/
+        ├── BrokerOsRiskApplicationTests.java
+        ├── FlywayMigrationTests.java
+        ├── observability/RequestCorrelationIntegrationTests.java
+        └── security/
+            ├── SecurityArchitectureTests.java
+            ├── application/SecurityApplicationTests.java
+            ├── domain/SecurityDomainTests.java
+            ├── infrastructure/authentication/SecurityBoundaryIntegrationTests.java
+            ├── infrastructure/configuration/SecurityConfigurationTests.java
+            ├── infrastructure/persistence/Q009MySqlIntegrationTests.java
+            └── interfaces/bootstrap/SecurityBootstrapCommandTests.java
+
+docs/
+├── requirements/Q-009-Requirement.md
+├── architecture/
+│   ├── q-009-trusted-actor-authorization-architecture.md
+│   └── q-009-trusted-actor-authorization-implementation-design.md
+├── adr/ADR-011-trusted-actor-capability-authorization-architecture.md
+├── configuration/README.md
+├── lessons/
+│   ├── 2026-08-26-q-009-trusted-actor-authorization-implementation-design.md
+│   ├── 2026-08-26-q-009-trusted-actor-authorization-implementation.md
+│   └── README.md
+└── skills/
+    ├── trusted-actor-authorization.md
+    └── README.md
+
+scripts/
+├── verify-infrastructure.sh
+└── verify-static.sh
+
+review/q-009/review-v7-implementation-20260826-032317/
+├── ArchitectureConformance.md
+├── ArchitectureReview.md
+├── ChangedFiles.txt
+├── GateStatus.md
+├── GitDiffStat.txt
+├── GitStatus.txt
+├── ImplementationScope.md
+├── OutstandingItems.md
+├── PhaseReviewIndex.md
+├── ProjectTree.txt
+├── SecurityReview.md
+├── Summary.md
+├── TestCoverage.md
+└── Verification.md

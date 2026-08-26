@@ -10,8 +10,10 @@
 
 This ADR was accepted through the explicit external Architect Review decision
 recorded on 2026-08-26. Q-009 Implementation Design V1 was subsequently
-approved through a separate external Architect decision. Implementation remains
-not started and unauthorized.
+approved through a separate external Architect decision. Q-009 implementation
+was explicitly authorized on 2026-08-26, verified on disposable MySQL 8.4.11
+with the complete zero-skip regression and infrastructure gates in V9, and
+received final Architect implementation approval in V10 on 2026-08-26.
 
 ## Context
 
@@ -222,7 +224,9 @@ architecture review.
 
 ADR-011 is **Accepted**. No Q-009 Architecture V3 is required. Q-009
 Implementation Design V1 is **APPROVED**, and Implementation Design V2 is not
-required. Q-009 Implementation remains not started and unauthorized. The
-concrete identity provider remains an open deployment/environment input; the
-approved Implementation Design V1 records the runtime, service identity,
-actor/policy persistence, provisioning, cache, and wiring decisions.
+required. Q-009 Implementation is authorized and implemented in the worktree,
+with mandatory runtime verification and final Architect Implementation Review
+complete. Q-009 is technically ready for Git commit; no commit is recorded by
+this ADR. The concrete identity provider remains an open deployment/environment
+input; the approved Implementation Design V1 records the runtime, service
+identity, actor/policy persistence, provisioning, cache, and wiring decisions.

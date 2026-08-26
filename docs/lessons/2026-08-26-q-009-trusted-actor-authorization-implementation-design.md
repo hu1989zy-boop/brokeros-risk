@@ -5,14 +5,17 @@
 - Implementation Design: V1 — APPROVED
 - Architect decision: APPROVED — external decision confirmed 2026-08-26
 - Implementation Design V2 required: No
-- Implementation: Not started
-- Implementation authorized: No
+- Design-phase snapshot: Implementation was not started or authorized when this
+  lesson was recorded
+- Current follow-up: Implementation authorized and present in the worktree;
+  disposable MySQL 8.4 verification remains pending
 
 ## Scope
 
-This lesson records design-phase findings only. Q-009 production implementation
-has not started, no framework dependency or configuration has been added, and
-none of the proposed runtime behavior has been validated in code.
+This lesson records design-phase findings only. At the time it was written,
+Q-009 production implementation had not started, no framework dependency or
+configuration had been added, and none of the proposed runtime behavior had
+been validated in code. Later implementation evidence is recorded separately.
 
 ## What Was Designed
 
@@ -97,14 +100,16 @@ empty-database behavior.
 
 ## Honest Limitations and Future Risks
 
-- No implementation or executable test yet proves the proposed Spring Security
-  filter ordering, MySQL constraints, startup validation, or failure mapping.
+- At design time, no implementation or executable test proved the proposed
+  Spring Security filter ordering, MySQL constraints, startup validation, or
+  failure mapping. The later implementation verifies the non-database security
+  path; real MySQL 8.4 verification remains pending.
 - The concrete identity provider and environment trust values remain open and
   must be supplied before rollout.
 - Actual service identities and capabilities cannot be provisioned until their
   owning Requirements are approved.
 - Q-008 still requires its upstream provider prerequisites and a final exact
   capability-to-use-case mapping before implementation.
-- A reusable repository skill is not updated in this phase because the pattern
-  has not yet been validated in production code and tests. Skill extraction
-  must be reevaluated after successful implementation.
+- A reusable repository skill was intentionally deferred in this design phase.
+  The later implementation extracts only the portions validated by executable
+  tests and retains the real-MySQL verification requirement.

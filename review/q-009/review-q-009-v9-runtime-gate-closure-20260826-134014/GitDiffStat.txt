@@ -1,0 +1,32 @@
+Baseline HEAD: 57e0db7a311be799bafe8744e870a2dcf5f8b21c
+Baseline origin/main: 57e0db7a311be799bafe8744e870a2dcf5f8b21c
+
+Tracked working-tree diff at V9 packaging time:
+
+ backend/pom.xml                                    | 13 +++++++
+ .../java/com/brokeros/risk/api/ResultCode.java     | 24 +++++++++++++
+ .../brokeros/risk/exception/BusinessException.java |  6 +++-
+ backend/src/main/resources/application-prod.yml    |  6 ++++
+ backend/src/main/resources/application-test.yml    |  7 ++++
+ backend/src/main/resources/application.yml         | 13 +++++++
+ .../risk/BrokerOsRiskApplicationTests.java         | 20 +++++------
+ .../com/brokeros/risk/FlywayMigrationTests.java    | 41 +++++++++++++++++++++
+ .../RequestCorrelationIntegrationTests.java        |  2 +-
+ ...-actor-capability-authorization-architecture.md |  9 +++--
+ ...009-trusted-actor-authorization-architecture.md | 19 +++++++---
+ ...ed-actor-authorization-implementation-design.md | 36 ++++++++++++-------
+ docs/configuration/README.md                       | 24 ++++++++-----
+ ...ed-actor-authorization-implementation-design.md | 25 +++++++------
+ docs/lessons/README.md                             |  4 +++
+ docs/requirements/Q-009-Requirement.md             | 30 ++++++++++------
+ docs/skills/README.md                              |  4 +++
+ scripts/verify-infrastructure.sh                   | 32 ++++++++++++-----
+ scripts/verify-static.sh                           | 14 ++++++--
+ 19 files changed, 256 insertions(+), 73 deletions(-)
+
+The Q-009 security source/test directories are untracked and are not represented
+by `git diff --stat`. V9 changed one file within the existing untracked test
+directory, as identified in ChangedFiles.txt.
+
+Cached diff: EMPTY
+Cached whitespace check: PASS

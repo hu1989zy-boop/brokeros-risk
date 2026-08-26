@@ -16,6 +16,13 @@ spring:
     clean-disabled: true
     validate-on-migrate: true
     out-of-order: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${SECURITY_JWT_ISSUER_URI}
+          audiences: ${SECURITY_JWT_AUDIENCES}
+          jwk-set-uri: ${SECURITY_JWT_JWK_SET_URI:}
   data:
     redis:
       host: ${REDIS_HOST:localhost}
@@ -78,3 +85,9 @@ springdoc:
     path: /swagger-ui.html
     operations-sorter: method
     tags-sorter: alpha
+
+brokeros:
+  risk:
+    security:
+      jwt:
+        clock-skew: ${SECURITY_JWT_CLOCK_SKEW:60s}
