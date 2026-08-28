@@ -1,0 +1,29 @@
+Q-010 V4 Architecture + ADR-012 Approval Recording ZIP Manifest
+
+The ZIP contains exactly this new Review directory with 15 non-empty files:
+
+ADRApproval.md
+ArchitectApproval.md
+ArchitectureReview.md
+ChangedFiles.txt
+GateStatus.md
+GitDiffStat.txt
+GitStatus.txt
+LessonsLearned.md
+NextStepPrompt.md
+OutstandingItems.md
+PackageManifest.txt
+PhaseReviewIndex.md
+ProjectTree.txt
+Summary.md
+Verification.md
+
+Excluded:
+- production source, tests, migrations, SQL, configuration, and dependencies;
+- `.git`, build/target, IDE, Docker/Kubernetes, and generated runtime artifacts;
+- prompts outside this V4 Review directory;
+- V1/V2/V3 Review directories and all prior ZIPs;
+- unrelated Q-007/Q-008/Q-009 Reviews and review history; and
+- the generated V4 ZIP itself.
+
+The ZIP is a transfer artifact and must not be staged.

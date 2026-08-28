@@ -1,0 +1,24 @@
+Q-010 V3 Architecture + ADR Analysis Git Status
+Captured: 2026-08-27
+
+Branch: main
+HEAD: fa1b3d7656006146affa842a98adc0b0d833e05d
+origin/main: fa1b3d7656006146affa842a98adc0b0d833e05d
+Staged files: 0
+Git commit performed: NO
+Git push performed: NO
+
+Expected untracked scope at package capture:
+?? docs/adr/ADR-012-trading-account-reference-authority-foundation.md
+?? docs/architecture/q-010-trading-account-reference-authority-architecture.md
+?? docs/lessons/2026-08-26-q-010-requirement-architect-review.md
+?? docs/lessons/2026-08-26-q-010-requirement-candidate-analysis.md
+?? docs/lessons/2026-08-27-q-010-trading-account-reference-authority-architecture.md
+?? docs/requirements/Q-010-Trading-Account-Reference-Authority-Foundation.md
+?? prompts/NextStepPrompt.md
+?? prompts/Q-010-V1-Requirement-Candidate-Analysis-Prompt.md
+?? prompts/Q-010-V3-Architecture-ADR-Analysis-Prompt.md
+?? review/q-010/
+
+No tracked source, test, Flyway, SQL, dependency, configuration, Q-008, or
+Q-009 artifact changed. The cached index is empty.

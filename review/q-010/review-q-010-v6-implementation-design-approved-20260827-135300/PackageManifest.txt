@@ -1,0 +1,28 @@
+Q-010 V6 Review ZIP manifest
+Archive root: review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/
+Expected files: 18
+
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/ArchitectureReview.md
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/ArtifactHashes.txt
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/ChangedFiles.txt
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/DesignApproval.md
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/DesignReview.md
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/GateStatus.md
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/GitDiffStat.txt
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/GitStatus.txt
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/ImplementationDesignSnapshot.md
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/ImplementationDesignV5ReviewedSnapshot.md
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/LessonsLearned.md
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/NextStepPrompt.md
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/OutstandingItems.md
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/PackageManifest.txt
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/PhaseReviewIndex.md
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/ProjectTree.txt
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/Summary.md
+review/q-010/review-q-010-v6-implementation-design-approved-20260827-135300/Verification.md
+
+Forbidden archive content: nested ZIP, .git, source, target/build artifacts,
+IDE files, historical Review directories, review-history, and unrelated files.
+
+Snapshot authority rule: both ImplementationDesign snapshots are immutable
+Review evidence only. The authoritative source remains under docs/architecture/.

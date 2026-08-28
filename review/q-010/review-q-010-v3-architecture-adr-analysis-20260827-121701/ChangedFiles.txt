@@ -1,0 +1,21 @@
+Q-010 V3 architecture-phase files
+
+Governance status update:
+docs/requirements/Q-010-Trading-Account-Reference-Authority-Foundation.md
+
+New Architecture / ADR / Lessons:
+docs/architecture/q-010-trading-account-reference-authority-architecture.md
+docs/adr/ADR-012-trading-account-reference-authority-foundation.md
+docs/lessons/2026-08-27-q-010-trading-account-reference-authority-architecture.md
+
+New Review directory:
+review/q-010/review-q-010-v3-architecture-adr-analysis-20260827-121701/
+
+Generated transfer artifact:
+review/q-010/review-q-010-v3-architecture-adr-analysis-20260827-121701.zip
+
+User-supplied execution Prompt observed but not modified:
+prompts/Q-010-V3-Architecture-ADR-Analysis-Prompt.md
+
+Production Java/test/Flyway/SQL/API/config/dependency/Kafka/Redis/adapter/
+Docker/Kubernetes/Q-008 changes: NONE

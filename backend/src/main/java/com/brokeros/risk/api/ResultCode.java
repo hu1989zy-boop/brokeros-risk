@@ -34,6 +34,36 @@ public enum ResultCode {
             "SECURITY_PROVISIONING_CONFLICT",
             "Security provisioning conflicts with existing state",
             HttpStatus.CONFLICT),
+    TRADING_ACCOUNT_REFERENCE_INVALID(
+            "TRADING_ACCOUNT_REFERENCE_INVALID", "Trading account reference is invalid", HttpStatus.BAD_REQUEST),
+    ACCOUNT_AUTHORITY_SCOPE_INVALID(
+            "ACCOUNT_AUTHORITY_SCOPE_INVALID", "Account authority scope is invalid", HttpStatus.BAD_REQUEST),
+    SOURCE_NAMESPACE_INVALID(
+            "SOURCE_NAMESPACE_INVALID", "Source namespace is invalid", HttpStatus.BAD_REQUEST),
+    EXTERNAL_ACCOUNT_KEY_INVALID(
+            "EXTERNAL_ACCOUNT_KEY_INVALID", "External account key is invalid", HttpStatus.BAD_REQUEST),
+    TRADING_ACCOUNT_MANIFEST_INVALID(
+            "TRADING_ACCOUNT_MANIFEST_INVALID", "Trading account manifest is invalid", HttpStatus.BAD_REQUEST),
+    TRADING_ACCOUNT_MANIFEST_SCHEMA_UNSUPPORTED(
+            "TRADING_ACCOUNT_MANIFEST_SCHEMA_UNSUPPORTED", "Trading account manifest schema is unsupported", HttpStatus.BAD_REQUEST),
+    TRADING_ACCOUNT_ATTESTATION_INVALID(
+            "TRADING_ACCOUNT_ATTESTATION_INVALID", "Trading account attestation is invalid", HttpStatus.UNPROCESSABLE_ENTITY),
+    TRADING_ACCOUNT_IDEMPOTENCY_CONFLICT(
+            "TRADING_ACCOUNT_IDEMPOTENCY_CONFLICT", "Trading account operation conflicts with a prior operation", HttpStatus.CONFLICT),
+    TRADING_ACCOUNT_MAPPING_CONFLICT(
+            "TRADING_ACCOUNT_MAPPING_CONFLICT", "Trading account mapping conflicts with existing state", HttpStatus.CONFLICT),
+    ACCOUNT_AUTHORITY_SCOPE_NOT_FOUND(
+            "ACCOUNT_AUTHORITY_SCOPE_NOT_FOUND", "Account authority scope was not found", HttpStatus.NOT_FOUND),
+    TRADING_ACCOUNT_REFERENCE_NOT_FOUND(
+            "TRADING_ACCOUNT_REFERENCE_NOT_FOUND", "Trading account reference was not found", HttpStatus.NOT_FOUND),
+    ACCOUNT_AUTHORITY_SCOPE_NOT_ELIGIBLE(
+            "ACCOUNT_AUTHORITY_SCOPE_NOT_ELIGIBLE", "Account authority scope is not eligible", HttpStatus.UNPROCESSABLE_ENTITY),
+    TRADING_ACCOUNT_VERSION_CONFLICT(
+            "TRADING_ACCOUNT_VERSION_CONFLICT", "Trading account version conflicts with existing state", HttpStatus.CONFLICT),
+    TRADING_ACCOUNT_INVALID_TRANSITION(
+            "TRADING_ACCOUNT_INVALID_TRANSITION", "Trading account lifecycle transition is invalid", HttpStatus.UNPROCESSABLE_ENTITY),
+    TRADING_ACCOUNT_AUTHORITY_UNAVAILABLE(
+            "TRADING_ACCOUNT_AUTHORITY_UNAVAILABLE", "Trading account authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
     INTERNAL_ERROR("INTERNAL_ERROR", "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final String code;

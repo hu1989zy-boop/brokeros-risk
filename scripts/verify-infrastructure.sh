@@ -179,7 +179,7 @@ for service_name in mysql redis kafka backend; do
 done
 
 CURRENT_STAGE="mysql-flyway"
-log_info "mysql-flyway" "Checking Flyway metadata and the Q-009 security schema boundary."
+log_info "mysql-flyway" "Checking Flyway metadata through the Q-010 authority schema boundary."
 if ! flyway_evidence=$(compose exec -T -e MYSQL_PWD="$MYSQL_PASSWORD" mysql \
     mysql --user=brokeros --database=brokeros_risk --batch --raw \
     --execute "SELECT version, description, type, script, checksum, installed_on, success FROM flyway_schema_history ORDER BY installed_rank;"); then
@@ -206,6 +206,15 @@ if [ "$flyway_v2_count" != "1" ]; then
     exit 1
 fi
 
+if ! flyway_v3_count=$(mysql_query "SELECT COUNT(*) FROM flyway_schema_history WHERE version = '3' AND script = 'V3__create_trading_account_reference_authority.sql' AND type = 'SQL' AND checksum IS NOT NULL AND success = 1;"); then
+    log_fail "mysql-flyway" "Could not validate the V3 Flyway row."
+    exit 1
+fi
+if [ "$flyway_v3_count" != "1" ]; then
+    log_fail "mysql-flyway" "Expected exactly one successful V3 Flyway row; found ${flyway_v3_count}."
+    exit 1
+fi
+
 if ! application_table_names=$(mysql_query "SELECT table_name FROM information_schema.tables WHERE table_schema = 'brokeros_risk' AND table_name <> 'flyway_schema_history' ORDER BY table_name;"); then
     log_fail "mysql-flyway" "Could not inspect application-owned tables."
     exit 1
@@ -213,13 +222,17 @@ fi
 expected_table_names=$(printf '%s\n' \
     security_actor \
     security_actor_capability \
-    security_principal_mapping)
+    security_principal_mapping \
+    trading_account_authority_history \
+    trading_account_authority_operation \
+    trading_account_authority_scope \
+    trading_account_reference)
 if [ "$application_table_names" != "$expected_table_names" ]; then
-    log_fail "mysql-flyway" "Application tables differ from the approved Q-009 three-table schema."
+    log_fail "mysql-flyway" "Application tables differ from the approved Q-009 plus Q-010 seven-table schema."
     printf '%s\n' "$application_table_names" >&2
     exit 1
 fi
-log_pass "mysql-flyway" "V1 and V2 are successful and only the approved Q-009 security tables exist."
+log_pass "mysql-flyway" "V1/V2/V3 are successful and only the approved Q-009 plus Q-010 tables exist."
 
 CURRENT_STAGE="flyway-restart"
 log_info "flyway-restart" "Restarting the backend to verify Flyway idempotence."
@@ -231,15 +244,15 @@ if ! wait_for_health backend; then
     exit 1
 fi
 
-if ! flyway_count_after_restart=$(mysql_query "SELECT COUNT(*) FROM flyway_schema_history WHERE version IN ('1', '2') AND success = 1;"); then
+if ! flyway_count_after_restart=$(mysql_query "SELECT COUNT(*) FROM flyway_schema_history WHERE version IN ('1', '2', '3') AND success = 1;"); then
     log_fail "flyway-restart" "Could not query Flyway history after restart."
     exit 1
 fi
-if [ "$flyway_count_after_restart" != "2" ]; then
-    log_fail "flyway-restart" "Expected one V1 and one V2 row after restart; found ${flyway_count_after_restart} successful rows."
+if [ "$flyway_count_after_restart" != "3" ]; then
+    log_fail "flyway-restart" "Expected one V1, V2, and V3 row after restart; found ${flyway_count_after_restart} successful rows."
     exit 1
 fi
-log_pass "flyway-restart" "V1/V2 Flyway history remains idempotent after restart."
+log_pass "flyway-restart" "V1/V2/V3 Flyway history remains idempotent after restart."
 
 CURRENT_STAGE="redis"
 log_info "redis" "Checking connectivity and empty keyspace."

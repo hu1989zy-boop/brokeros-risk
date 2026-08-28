@@ -1,0 +1,31 @@
+Q-010 V6 authoritative artifact and Review-evidence SHA-256 manifest
+
+Hash algorithm: SHA-256
+Generated: 2026-08-27
+
+Pre-recording V5 reviewed Design evidence:
+4d2c9ab64b480538311e9df1f434b3a6e02f8c4bb6922d59103f6858d068df83  ImplementationDesignV5ReviewedSnapshot.md
+4d2c9ab64b480538311e9df1f434b3a6e02f8c4bb6922d59103f6858d068df83  V5 preflight authoritative Implementation Design before V6 metadata edits
+f2ff5d9ad4bcdac543754d874860c6a77206307c773170cd8c9167b5c77c98cb  review/q-010/review-q-010-v5-implementation-design-20260827-132854.zip
+
+Current authoritative Q-010 governance artifacts after V6 recording:
+7e3936da2a1ce4b530ecd41433343a942063c5fa970caf98d3e02314c60a48ba  docs/requirements/Q-010-Trading-Account-Reference-Authority-Foundation.md
+2ca3da1153fe466272f20cf79d7f6437275150e14d1f2f0b1f9baf95de789faf  docs/architecture/q-010-trading-account-reference-authority-architecture.md
+bf311c162af944fdb59a3d871d3e356c9faa3891e29bc5473ec010613d402e9f  docs/adr/ADR-012-trading-account-reference-authority-foundation.md
+b70d6a98bd9fb0ee377c5a539367b0df1c61134fbbd7c774963d83503fb20a0e  docs/architecture/q-010-trading-account-reference-authority-implementation-design.md
+
+Current Design packaged evidence:
+b70d6a98bd9fb0ee377c5a539367b0df1c61134fbbd7c774963d83503fb20a0e  ImplementationDesignSnapshot.md
+
+Supporting Lessons after V6 recording:
+066a1c1dc38f15bb37e022da36c6bec89121551aafe57b630df402866f89ec73  docs/lessons/2026-08-27-q-010-trading-account-reference-authority-implementation-design.md
+4f77176c12b05dba8e94126ead4592362eac6988357ec658b06f91436d62b1db  docs/lessons/2026-08-27-q-010-trading-account-reference-authority-implementation-design-approval.md
+
+Evidence rules:
+- ImplementationDesignV5ReviewedSnapshot.md is the exact 1217-line Design
+  captured before approval metadata recording.
+- ImplementationDesignSnapshot.md is byte-identical to the current 1224-line
+  authoritative Design under docs/architecture/.
+- Review snapshots are non-authoritative evidence and must not be edited as
+  source design documents.
+- The repository docs/architecture Design remains the single authority.

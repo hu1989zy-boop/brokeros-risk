@@ -1,0 +1,41 @@
+Q-010 V3 bounded project tree
+
+docs/
+├── adr/
+│   └── ADR-012-trading-account-reference-authority-foundation.md
+├── architecture/
+│   └── q-010-trading-account-reference-authority-architecture.md
+├── lessons/
+│   ├── 2026-08-26-q-010-requirement-candidate-analysis.md
+│   ├── 2026-08-26-q-010-requirement-architect-review.md
+│   └── 2026-08-27-q-010-trading-account-reference-authority-architecture.md
+└── requirements/
+    └── Q-010-Trading-Account-Reference-Authority-Foundation.md
+review/q-010/
+├── review-q-010-v1-requirement-candidate-analysis-20260826-154640/
+├── review-q-010-v1-requirement-candidate-analysis-20260826-154640.zip
+├── review-q-010-v2-requirement-architect-review-20260826-203315/
+├── review-q-010-v2-requirement-architect-review-20260826-203315.zip
+├── review-q-010-v3-architecture-adr-analysis-20260827-121701.zip
+└── review-q-010-v3-architecture-adr-analysis-20260827-121701/
+    ├── ADRReview.md
+    ├── ArchitectureQuestions.md
+    ├── ArchitectureReview.md
+    ├── ChangedFiles.txt
+    ├── DataIntegrityReview.md
+    ├── GitDiffStat.txt
+    ├── GitStatus.txt
+    ├── NextStepPrompt.md
+    ├── OutstandingItems.md
+    ├── PackageManifest.txt
+    ├── PhaseReviewIndex.md
+    ├── ProjectTree.txt
+    ├── Q008DependencyReview.md
+    ├── RequirementTraceability.md
+    ├── SecurityThreatAnalysis.md
+    ├── Summary.md
+    └── Verification.md
+
+Excluded: backend source/tests/target, migrations, runtime configuration,
+dependencies, historical unrelated Reviews, `.git`, IDE files, and build
+artifacts.

@@ -1,0 +1,36 @@
+Q-010 V8 TEST INVENTORY
+
+Q-010 tests: 27
+
+TradingAccountDomainTests: 6
+TradingAccountApplicationTests: 5
+TradingAccountArchitectureTests: 2
+TradingAccountAuthorityBootstrapCommandTests: 3
+Q010MySqlIntegrationTests: 10
+Q010BootstrapMySqlIntegrationTests: 1
+
+Real MySQL 8.4.11 tests executed: 11
+Failures: 0
+Errors: 0
+Skipped: 0
+
+Real MySQL method inventory:
+- concurrentIdenticalRegistrationConvergesToOneMappingAndCompleteHistory
+- migrationCreatesExactShapeConstraintsAndRestartsCleanly
+- concurrentLifecycleCasPreventsLostUpdateAndRetainsHistoricalResolution
+- historyFailureRollsBackStateAndOperation
+- registrationReplayCompatibleDuplicateAndMappingConflictAreDurable
+- concurrentDuplicateOperationDeliveryReturnsOneDurableReplayResult
+- operationOutcomeFailureRollsBackCurrentState
+- changedReplayLifecycleCasAndRetiredTerminalStateFailClosed
+- generatedReferenceCollisionRetriesOnlyThreeTimesAndNeverSplitsIdentity
+- mysqlCheckEnforcementUsesExactVendorError
+- controlledCommandUsesTrustedServiceAuthorizationAndExactReplay
+
+Full Java 21 repository suite:
+- Tests run: 86
+- Failures: 0
+- Errors: 0
+- Skipped: 12 environment-gated MySQL tests
+
+The mandatory Q-010 MySQL subset was executed separately with zero skips.

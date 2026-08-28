@@ -1,0 +1,36 @@
+Q-010 V8 FINAL CLOSURE PACKAGE MANIFEST
+Review ID: Q-010-V8-FINAL-CLOSURE-20260828-121846
+Expected files: 28
+
+ArchitectureReview.md
+ArtifactHashes.txt
+AuthoritativeGovernanceSnapshot.md
+ConcurrencyReview.md
+DesignTraceability.md
+DriftReview.md
+FinalClosureReview.md
+GitDiffStat.txt
+GitFileClassification.md
+GitStatus.txt
+ImplementationApproval.md
+ImplementationFiles.txt
+ImplementationManifest.sha256
+ImplementationReview.md
+LessonsLearned.md
+MigrationSnapshot.sql
+NextStepPrompt.md
+OutstandingItems.md
+PackageManifest.txt
+PersistenceReview.md
+PhaseReviewIndex.md
+ProjectTree.txt
+Q008BoundaryReview.md
+RequirementTraceability.md
+SecurityReview.md
+Summary.md
+TestInventory.txt
+Verification.md
+
+The ZIP must contain exactly this directory and these 28 non-empty files. It
+must contain no source tree, build output, .git, IDE file, historical Review,
+runtime manifest, credential, token, secret, database data, or nested ZIP.

@@ -1,0 +1,59 @@
+BrokerOS Risk — bounded Q-010 candidate-analysis tree
+
+AGENTS.md
+backend/
+  pom.xml
+  src/main/java/com/brokeros/risk/
+    api/
+    config/
+    exception/
+    health/
+    observability/
+    security/
+  src/main/resources/db/migration/
+    V1__initial_schema.sql
+    V2__create_security_actor_foundation.sql
+
+docs/
+  requirements/
+    Q-001...Q-009 [authoritative existing Requirements]
+    Q-010-Trading-Account-Reference-Authority-Foundation.md [new, Proposed]
+  architecture/
+    q-007-brokeros-domain-foundation-design.md
+    q-008-risk-case-foundation-implementation-design.md
+    q-009-trusted-actor-authorization-architecture.md
+    q-009-trusted-actor-authorization-implementation-design.md
+  adr/
+    ADR-001...ADR-011
+  skills/
+    development-standards.md
+    brokeros-risk-core-domain.md
+    trusted-actor-authorization.md
+  lessons/
+    2026-08-25-q-008-architect-approval-prerequisite-analysis.md
+    2026-08-26-q-009-trusted-actor-authorization-implementation.md
+    2026-08-26-q-010-requirement-candidate-analysis.md [new]
+
+review/
+  q-007/review-final-v1-20260824-055408/
+  q-008/review-architect-approval-prerequisite-analysis-20260825-170517/
+  q-009/review-q-009-v10-final-architect-approval-20260826-144832/
+  q-010/
+    review-q-010-v1-requirement-candidate-analysis-20260826-154640/
+      ArchitectureReview.md
+      CapabilityGapMap.md
+      GitDiffStat.txt
+      GitStatus.txt
+      NextStepPrompt.md
+      OutstandingItems.md
+      PackageManifest.txt
+      PhaseReviewIndex.md
+      ProjectTree.txt
+      RecommendationDecision.md
+      RequirementCandidateAnalysis.md
+      Summary.md
+      Verification.md
+    review-q-010-v1-requirement-candidate-analysis-20260826-154640.zip
+
+prompts/
+  Q-010-V1-Requirement-Candidate-Analysis-Prompt.md [pre-existing untracked input]

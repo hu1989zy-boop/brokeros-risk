@@ -1,0 +1,12 @@
+Q-010 V4 Architecture + ADR-012 Approval Recording Git Diff Stat
+
+`git diff --stat`:
+(empty — Q-010 artifacts remain untracked)
+
+`git diff --cached --stat`:
+(empty — nothing staged)
+
+The approval-recording delta was verified against preflight snapshots because
+the Q-010 governance documents are untracked. Only governance/status/history
+content in the four files listed by `ChangedFiles.txt` changed. Production
+source/test/schema/configuration/dependency diff: none.

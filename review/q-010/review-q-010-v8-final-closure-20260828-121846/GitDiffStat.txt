@@ -1,0 +1,19 @@
+Q-010 V8 FINAL GIT DIFF STAT SNAPSHOT
+Captured: 2026-08-28
+
+Tracked unstaged diff:
+
+ backend/src/main/java/com/brokeros/risk/api/ResultCode.java | 30 ++++++++++++++++++
+ backend/src/main/java/com/brokeros/risk/security/infrastructure/configuration/SecurityModuleConfiguration.java | 4 +--
+ backend/src/test/java/com/brokeros/risk/FlywayMigrationTests.java | 36 ++++++++++++++++++++++
+ scripts/verify-infrastructure.sh | 29 ++++++++++++-----
+ scripts/verify-static.sh | 18 ++++++++++-
+
+5 files changed, 106 insertions(+), 11 deletions(-)
+
+Cached diff:
+0 files; index is empty.
+
+Untracked files are intentionally absent from `git diff --stat`; the exact
+Q-010 implementation inventory is in ImplementationFiles.txt and its current
+per-file hashes are in ImplementationManifest.sha256.

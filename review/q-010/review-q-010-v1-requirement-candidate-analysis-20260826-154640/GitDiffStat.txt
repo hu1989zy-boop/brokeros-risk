@@ -1,0 +1,8 @@
+Command: git diff --stat
+
+(no tracked-file diff output)
+
+The Q-010 Prompt, Proposed Requirement, candidate-analysis lesson, Review
+directory, and ZIP are untracked planning/governance artifacts. Git diff does
+not include untracked files. No production source, test, migration, runtime
+configuration, dependency, or infrastructure file changed.

@@ -60,4 +60,40 @@ class FlywayMigrationTests {
                 "security_principal_mapping",
                 "security_actor_capability");
     }
+
+    @Test
+    void q010MigrationIsAdditiveAndCreatesExactlyFourAuthorityTables() throws IOException {
+        ClassPathResource migration = new ClassPathResource(
+                "db/migration/V3__create_trading_account_reference_authority.sql");
+        String sql = migration.getContentAsString(UTF_8);
+
+        assertThat(migration.exists()).isTrue();
+        assertThat(sql)
+                .contains(
+                        "CREATE TABLE trading_account_authority_scope",
+                        "CREATE TABLE trading_account_reference",
+                        "CREATE TABLE trading_account_authority_operation",
+                        "CREATE TABLE trading_account_authority_history",
+                        "VARBINARY(512)",
+                        "uk_trading_account_reference_external_identity",
+                        "uk_ta_authority_operation_id",
+                        "uk_ta_authority_history_operation",
+                        "ON DELETE RESTRICT")
+                .doesNotContainIgnoringCase(
+                        "DROP TABLE", "TRUNCATE TABLE", "ALTER TABLE",
+                        "INSERT INTO", "DELETE FROM", "UPDATE ");
+
+        Matcher matcher = Pattern.compile(
+                        "(?im)^\\s*CREATE\\s+TABLE\\s+([a-z0-9_]+)")
+                .matcher(sql);
+        java.util.Set<String> tables = new java.util.LinkedHashSet<>();
+        while (matcher.find()) {
+            tables.add(matcher.group(1));
+        }
+        assertThat(tables).containsExactly(
+                "trading_account_authority_scope",
+                "trading_account_reference",
+                "trading_account_authority_operation",
+                "trading_account_authority_history");
+    }
 }

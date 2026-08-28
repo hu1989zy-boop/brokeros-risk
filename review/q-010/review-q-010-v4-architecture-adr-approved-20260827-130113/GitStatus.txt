@@ -1,0 +1,29 @@
+Q-010 V4 Architecture + ADR-012 Approval Recording Git Status
+Captured: 2026-08-27
+
+Branch: main
+HEAD: fa1b3d7656006146affa842a98adc0b0d833e05d
+origin/main: fa1b3d7656006146affa842a98adc0b0d833e05d
+Staged files: 0
+Tracked working-tree diff: 0 files
+Git commit performed: NO
+Git push performed: NO
+
+Expected final top-level untracked scope:
+?? docs/adr/ADR-012-trading-account-reference-authority-foundation.md
+?? docs/architecture/q-010-trading-account-reference-authority-architecture.md
+?? docs/lessons/2026-08-26-q-010-requirement-architect-review.md
+?? docs/lessons/2026-08-26-q-010-requirement-candidate-analysis.md
+?? docs/lessons/2026-08-27-q-010-trading-account-reference-authority-architecture.md
+?? docs/requirements/Q-010-Trading-Account-Reference-Authority-Foundation.md
+?? prompts/NextStepPrompt.md
+?? prompts/Q-010-V1-Requirement-Candidate-Analysis-Prompt.md
+?? prompts/Q-010-V3-Architecture-ADR-Analysis-Prompt.md
+?? prompts/Q-010-V4-Architecture-ADR-012-Approval-Recording-Prompt.md
+?? review/q-010/
+
+The V1/V2/V3 Q-010 Review artifacts, their ZIPs, earlier Q-010 Requirement
+work, and the Prompt files were pre-existing untracked work and remain
+preserved. V4 updates four Q-010 governance documents and adds only its new
+Review directory/ZIP. No production/source/test/migration/configuration file is
+staged or tracked-modified.

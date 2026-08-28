@@ -1,0 +1,23 @@
+Q-010 V5 Review ZIP manifest
+Archive root: review/q-010/review-q-010-v5-implementation-design-20260827-132854/
+Expected files: 16
+
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/ArchitectureReview.md
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/ChangedFiles.txt
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/GitDiffStat.txt
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/GitStatus.txt
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/ImplementationDesignReview.md
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/LessonsLearned.md
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/NextStepPrompt.md
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/OutstandingItems.md
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/PackageManifest.txt
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/PersistenceDesignReview.md
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/PhaseReviewIndex.md
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/ProjectTree.txt
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/RequirementTraceability.md
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/SecurityDesignReview.md
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/Summary.md
+review/q-010/review-q-010-v5-implementation-design-20260827-132854/Verification.md
+
+Forbidden archive content: nested ZIP, .git, source, target/build artifacts,
+IDE files, historical Review directories, review-history, and unrelated files.

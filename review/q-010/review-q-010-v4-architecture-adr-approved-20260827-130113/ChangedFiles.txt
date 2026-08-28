@@ -1,0 +1,19 @@
+Q-010 V4 Architecture + ADR-012 Approval Recording changed files
+
+Governance metadata / approval history synchronized:
+docs/requirements/Q-010-Trading-Account-Reference-Authority-Foundation.md
+docs/architecture/q-010-trading-account-reference-authority-architecture.md
+docs/adr/ADR-012-trading-account-reference-authority-foundation.md
+docs/lessons/2026-08-27-q-010-trading-account-reference-authority-architecture.md
+
+New Review directory:
+review/q-010/review-q-010-v4-architecture-adr-approved-20260827-130113/
+
+Generated transfer artifact (not staged):
+review/q-010/review-q-010-v4-architecture-adr-approved-20260827-130113.zip
+
+User-supplied execution Prompt observed but not modified:
+prompts/Q-010-V4-Architecture-ADR-012-Approval-Recording-Prompt.md
+
+Production Java/test/Flyway/SQL/API/configuration/dependency/Kafka/Redis/
+adapter/Docker/Kubernetes/Q-008/Q-009 runtime changes: NONE

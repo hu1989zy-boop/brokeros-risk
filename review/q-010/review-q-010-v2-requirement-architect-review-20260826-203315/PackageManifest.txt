@@ -1,0 +1,28 @@
+Q-010 V2 Requirement Architect Review Package Manifest
+
+Package intent: self-contained Requirement Architect Review evidence.
+
+Included authority groups:
+- repository AGENTS.md;
+- Q-007, Q-008, Q-009, and approved Q-010 Requirements;
+- applicable Q-007/Q-008/Q-009 architecture documents;
+- ADR-009, ADR-010, and ADR-011;
+- development, Core Domain, and trusted-actor Skills;
+- applicable Q-008/Q-009/Q-010 Lessons Learned;
+- Q-008 approval/prerequisite decision evidence;
+- Q-009 V10 final closure evidence;
+- the complete Q-010 V1 candidate-analysis Review directory; and
+- every file in this Q-010 V2 Review directory.
+
+Explicit exclusions:
+- `.git/`;
+- backend source and tests;
+- Maven `target/` and other build artifacts;
+- IDE files;
+- prompts outside this Review directory;
+- prior ZIP files and the generated ZIP itself;
+- `review/review-history/` and unrelated historical Reviews;
+- migrations, runtime configuration, dependencies, Docker/Kubernetes source;
+- Q-008 implementation artifacts.
+
+The ZIP is a transfer artifact and must not be staged.

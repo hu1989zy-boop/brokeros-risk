@@ -1,0 +1,19 @@
+Q-010 V8 AUTHORITATIVE ARTIFACT HASHES
+Algorithm: SHA-256
+Generated: 2026-08-28
+
+dddb50425d13934706d76805983d856b446681cf94ff392d0d66117770bc0c48  docs/requirements/Q-010-Trading-Account-Reference-Authority-Foundation.md
+ba989322dd1e9c1f92899b9689147f790adc13bb10a1c832e295a2f848d714f0  docs/architecture/q-010-trading-account-reference-authority-architecture.md
+908174e4d211fec9d26e16e661192657f5cb3b98ea4ce4684bf10382f6e1a944  docs/adr/ADR-012-trading-account-reference-authority-foundation.md
+3aa97fcc0206b88c4f61739dc1a5c1561401957988cd86e21984ff340c00e943  docs/architecture/q-010-trading-account-reference-authority-implementation-design.md
+aa1246c53b4e0a34e9f98992e230c9feb1c7cf7aeafb3a4abf0aee0a17761857  backend/src/main/resources/db/migration/V3__create_trading_account_reference_authority.sql
+e25557904098e88aa5c684f0644d103c53ffaf2ce01b1e84af53485f46057eaf  review/q-010/review-q-010-v8-final-closure-20260828-121846/ImplementationManifest.sha256
+9e3ce0204784a09173698d22f734d83de16fcc5dbc7e06d388840d4c4114ad11  review/q-010/review-q-010-v7-implementation-20260827-185323/ArtifactHashes.txt
+e97cb5220abc5943bcccf1300a7693abf5bbd18a6173f2ccda120bb1bc91dbf1  review/q-010/review-q-010-v7-implementation-20260827-185323.zip
+007a1e3025e2924df540326a59ec61944cfbb73d3c0dec8dbf1d2c3fdea1c570  prompts/Q-010-V8-Implementation-Approval-Final-Closure-Prompt.md
+
+Final V8 ZIP SHA-256 is recorded after archive finalization in:
+review/q-010/review-q-010-v8-final-closure-20260828-121846.zip.sha256
+
+This sidecar placement avoids the impossible circular requirement of embedding
+an archive's final checksum inside the bytes being checksummed.

@@ -1,0 +1,25 @@
+Commands:
+  git diff --stat
+  git diff --cached --stat
+
+Tracked working-tree diff: empty
+Cached/staged diff: empty
+
+Q-010 V1-V5 artifacts are currently untracked, so git diff --stat does not
+represent their content. Scoped no-index statistics for V5 are recorded below.
+
+New Implementation Design:
+  docs/architecture/q-010-trading-account-reference-authority-implementation-design.md
+  1 file changed, 1217 insertions(+)
+
+New Design Lessons Learned:
+  docs/lessons/2026-08-27-q-010-trading-account-reference-authority-implementation-design.md
+  1 file changed, 110 insertions(+)
+
+Gate-metadata-only changes compared with the V5 preflight snapshots:
+  Requirement:   1 file changed, 9 insertions(+), 5 deletions(-)
+  Architecture:  1 file changed, 11 insertions(+), 8 deletions(-)
+  ADR-012:       1 file changed, 7 insertions(+), 5 deletions(-)
+
+The Review directory and transfer ZIP are new untracked Review artifacts and
+are intentionally excluded from tracked Git diff statistics.

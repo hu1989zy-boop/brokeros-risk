@@ -42,11 +42,11 @@ public class SecurityModuleConfiguration {
     @Bean
     ServiceActorContextFactory serviceActorContextFactory(
             ActorMappingService actorMappingService,
+            Set<RegisteredServiceDescriptor> registeredDescriptors,
             Clock securityClock) {
-        Set<RegisteredServiceDescriptor> noSpeculativeServiceIdentities = Set.of();
         return new ServiceActorContextFactory(
                 actorMappingService,
-                noSpeculativeServiceIdentities,
+                registeredDescriptors,
                 securityClock);
     }
 }

@@ -1,0 +1,26 @@
+Snapshot command: git status --short
+Snapshot point: V5 Review directory complete, before creating the independent ZIP.
+The default short format collapses the already-untracked review/q-010 tree, so
+creating its sibling ZIP does not change the displayed review/q-010/ line.
+
+?? docs/adr/ADR-012-trading-account-reference-authority-foundation.md
+?? docs/architecture/q-010-trading-account-reference-authority-architecture.md
+?? docs/architecture/q-010-trading-account-reference-authority-implementation-design.md
+?? docs/lessons/2026-08-26-q-010-requirement-architect-review.md
+?? docs/lessons/2026-08-26-q-010-requirement-candidate-analysis.md
+?? docs/lessons/2026-08-27-q-010-trading-account-reference-authority-architecture.md
+?? docs/lessons/2026-08-27-q-010-trading-account-reference-authority-implementation-design.md
+?? docs/requirements/Q-010-Trading-Account-Reference-Authority-Foundation.md
+?? prompts/NextStepPrompt.md
+?? prompts/Q-010-V1-Requirement-Candidate-Analysis-Prompt.md
+?? prompts/Q-010-V3-Architecture-ADR-Analysis-Prompt.md
+?? prompts/Q-010-V4-Architecture-ADR-012-Approval-Recording-Prompt.md
+?? prompts/Q-010-V5-Implementation-Design-Prompt.md
+?? review/q-010/
+
+Staged: 0
+Tracked unstaged: 0
+Untracked: Q-010 governance/design/prompts/reviews shown above; all V1-V4
+content predates V5 and was preserved.
+Git commit performed: NO
+Git push performed: NO

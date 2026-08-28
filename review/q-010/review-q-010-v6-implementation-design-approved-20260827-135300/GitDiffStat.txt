@@ -1,0 +1,33 @@
+Commands:
+  git diff --stat
+  git diff --cached --stat
+
+Tracked working-tree diff: empty
+Cached/staged diff: empty
+
+Q-010 V1–V6 artifacts are currently untracked, so git diff --stat does not
+represent their content. Scoped no-index statistics against V6 preflight
+snapshots are recorded below.
+
+Authoritative Implementation Design approval metadata:
+  1 file changed, 19 insertions(+), 12 deletions(-)
+  Full diff hunks: 2 (Document Status/introduction and Section 23 Design Gate)
+
+Requirement gate metadata:
+  1 file changed, 11 insertions(+), 8 deletions(-)
+
+Architecture gate/provenance metadata:
+  1 file changed, 14 insertions(+), 10 deletions(-)
+
+ADR-012 approval-boundary metadata:
+  1 file changed, 7 insertions(+), 6 deletions(-)
+
+Existing Design lesson current-gate metadata:
+  1 file changed, 8 insertions(+), 4 deletions(-)
+
+New approval-recording Lessons Learned:
+  1 file changed, 53 insertions(+)
+
+The V6 Review directory, its two full Design snapshots, and transfer ZIP are
+new untracked Review evidence and are intentionally excluded from tracked Git
+diff statistics.

@@ -1,0 +1,30 @@
+Q-010 V2 bounded project tree
+
+docs/
+├── requirements/
+│   └── Q-010-Trading-Account-Reference-Authority-Foundation.md
+└── lessons/
+    ├── 2026-08-26-q-010-requirement-candidate-analysis.md
+    └── 2026-08-26-q-010-requirement-architect-review.md
+review/q-010/
+├── review-q-010-v1-requirement-candidate-analysis-20260826-154640/
+├── review-q-010-v1-requirement-candidate-analysis-20260826-154640.zip
+├── review-q-010-v2-requirement-architect-review-20260826-203315.zip
+└── review-q-010-v2-requirement-architect-review-20260826-203315/
+    ├── ADRDetermination.md
+    ├── ArchitectureReview.md
+    ├── GitDiffStat.txt
+    ├── GitStatus.txt
+    ├── NextStepPrompt.md
+    ├── OutstandingItems.md
+    ├── PackageManifest.txt
+    ├── PhaseReviewIndex.md
+    ├── ProjectTree.txt
+    ├── Q008GovernanceDecision.md
+    ├── RequirementDecision.md
+    ├── RequirementReview.md
+    ├── Summary.md
+    └── Verification.md
+
+Excluded from this bounded tree: backend source/tests/target, unrelated
+historical Reviews, `.git`, IDE files, and build artifacts.

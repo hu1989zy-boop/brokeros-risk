@@ -1,0 +1,10 @@
+ .../java/com/brokeros/risk/api/ResultCode.java     | 30 ++++++++++++++++++
+ .../configuration/SecurityModuleConfiguration.java |  4 +--
+ .../com/brokeros/risk/FlywayMigrationTests.java    | 36 ++++++++++++++++++++++
+ scripts/verify-infrastructure.sh                   | 29 ++++++++++++-----
+ scripts/verify-static.sh                           | 18 ++++++++++-
+ 5 files changed, 106 insertions(+), 11 deletions(-)
+
+Untracked Q-010 implementation/governance file count: 65
+Review directory: review/q-010/review-q-010-v7-implementation-20260827-185323
+Note: git diff --stat does not include untracked files.

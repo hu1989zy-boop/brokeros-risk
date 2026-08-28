@@ -1,0 +1,33 @@
+ M backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+ M backend/src/main/java/com/brokeros/risk/security/infrastructure/configuration/SecurityModuleConfiguration.java
+ M backend/src/test/java/com/brokeros/risk/FlywayMigrationTests.java
+ M scripts/verify-infrastructure.sh
+ M scripts/verify-static.sh
+?? backend/src/main/java/com/brokeros/risk/tradingaccount/
+?? backend/src/main/resources/db/migration/V3__create_trading_account_reference_authority.sql
+?? backend/src/test/java/com/brokeros/risk/tradingaccount/
+?? docs/adr/ADR-012-trading-account-reference-authority-foundation.md
+?? docs/architecture/q-010-trading-account-reference-authority-architecture.md
+?? docs/architecture/q-010-trading-account-reference-authority-implementation-design.md
+?? docs/lessons/2026-08-26-q-010-requirement-architect-review.md
+?? docs/lessons/2026-08-26-q-010-requirement-candidate-analysis.md
+?? docs/lessons/2026-08-27-q-010-trading-account-reference-authority-architecture.md
+?? docs/lessons/2026-08-27-q-010-trading-account-reference-authority-implementation-design-approval.md
+?? docs/lessons/2026-08-27-q-010-trading-account-reference-authority-implementation-design.md
+?? docs/lessons/2026-08-27-q-010-trading-account-reference-authority-implementation.md
+?? docs/requirements/Q-010-Trading-Account-Reference-Authority-Foundation.md
+?? docs/skills/trading-account-reference-authority.md
+?? prompts/NextStepPrompt.md
+?? prompts/Q-010-V1-Requirement-Candidate-Analysis-Prompt.md
+?? prompts/Q-010-V3-Architecture-ADR-Analysis-Prompt.md
+?? prompts/Q-010-V4-Architecture-ADR-012-Approval-Recording-Prompt.md
+?? prompts/Q-010-V5-Implementation-Design-Prompt.md
+?? prompts/Q-010-V6-Implementation-Design-Approval-Recording-Prompt.md
+?? prompts/Q-010-V7-Implementation-Prompt.md
+?? review/q-010/
+
+Staged: none
+Unstaged tracked files: 5
+Untracked: Q-010 governance baseline, 65 implementation/skill/lesson artifacts, prompts, and review artifacts shown above
+Git commit: NOT PERFORMED
+Git push: NOT PERFORMED

@@ -1,0 +1,43 @@
+Q-010 V1 self-contained ZIP manifest
+
+Governance and proposed Requirement:
+AGENTS.md
+docs/requirements/Q-007-Requirement.md
+docs/requirements/Q-008-Requirement.md
+docs/requirements/Q-009-Requirement.md
+docs/requirements/Q-010-Trading-Account-Reference-Authority-Foundation.md
+
+Architecture and ADR authority:
+docs/architecture/q-007-brokeros-domain-foundation-design.md
+docs/architecture/q-008-risk-case-foundation-implementation-design.md
+docs/architecture/q-009-trusted-actor-authorization-architecture.md
+docs/architecture/q-009-trusted-actor-authorization-implementation-design.md
+docs/adr/ADR-009-brokeros-risk-core-domain-model.md
+docs/adr/ADR-010-risk-case-foundation.md
+docs/adr/ADR-011-trusted-actor-capability-authorization-architecture.md
+
+Skills and Lessons:
+docs/skills/development-standards.md
+docs/skills/brokeros-risk-core-domain.md
+docs/skills/trusted-actor-authorization.md
+docs/lessons/2026-08-25-q-008-architect-approval-prerequisite-analysis.md
+docs/lessons/2026-08-26-q-009-trusted-actor-authorization-implementation.md
+docs/lessons/2026-08-26-q-010-requirement-candidate-analysis.md
+
+Latest prerequisite/closure evidence:
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/PhaseReviewIndex.md
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/PrerequisiteAnalysis.md
+review/q-008/review-architect-approval-prerequisite-analysis-20260825-170517/OutstandingItems.md
+review/q-009/review-q-009-v10-final-architect-approval-20260826-144832/PhaseReviewIndex.md
+review/q-009/review-q-009-v10-final-architect-approval-20260826-144832/FinalArchitectApproval.md
+review/q-009/review-q-009-v10-final-architect-approval-20260826-144832/OutstandingItems.md
+
+Complete Q-010 V1 Review directory:
+review/q-010/review-q-010-v1-requirement-candidate-analysis-20260826-154640/
+
+Excluded:
+- production/test source and build artifacts
+- migrations and runtime configuration
+- historical ZIP files
+- review/review-history/
+- prompts and unrelated Review packages

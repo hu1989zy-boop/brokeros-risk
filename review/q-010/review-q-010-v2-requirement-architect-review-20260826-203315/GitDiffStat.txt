@@ -1,0 +1,9 @@
+Q-010 V2 Requirement Architect Review Git Diff Stat
+
+`git diff --stat`:
+(empty — all Q-010 candidate/review artifacts are untracked)
+
+`git diff --cached --stat`:
+(empty — nothing staged)
+
+Production/source/config/schema/dependency diff: none.

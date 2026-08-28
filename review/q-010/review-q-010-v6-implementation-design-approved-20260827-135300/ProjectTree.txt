@@ -1,0 +1,55 @@
+Bounded Q-010 V6 project tree (not a complete repository listing)
+
+brokeros-risk/
+├── backend/
+│   └── src/main/
+│       ├── java/com/brokeros/risk/security/   # existing Q-009; unchanged
+│       └── resources/db/migration/
+│           ├── V1__initial_schema.sql
+│           └── V2__create_security_actor_foundation.sql
+├── docs/
+│   ├── requirements/
+│   │   └── Q-010-Trading-Account-Reference-Authority-Foundation.md
+│   ├── architecture/
+│   │   ├── q-010-trading-account-reference-authority-architecture.md
+│   │   └── q-010-trading-account-reference-authority-implementation-design.md
+│   ├── adr/
+│   │   └── ADR-012-trading-account-reference-authority-foundation.md
+│   └── lessons/
+│       ├── 2026-08-27-q-010-trading-account-reference-authority-architecture.md
+│       ├── 2026-08-27-q-010-trading-account-reference-authority-implementation-design.md
+│       └── 2026-08-27-q-010-trading-account-reference-authority-implementation-design-approval.md
+└── review/q-010/
+    ├── review-q-010-v1-requirement-candidate-analysis-20260826-154640/
+    ├── review-q-010-v1-requirement-candidate-analysis-20260826-154640.zip
+    ├── review-q-010-v2-requirement-architect-review-20260826-203315/
+    ├── review-q-010-v2-requirement-architect-review-20260826-203315.zip
+    ├── review-q-010-v3-architecture-adr-analysis-20260827-121701/
+    ├── review-q-010-v3-architecture-adr-analysis-20260827-121701.zip
+    ├── review-q-010-v4-architecture-adr-approved-20260827-130113/
+    ├── review-q-010-v4-architecture-adr-approved-20260827-130113.zip
+    ├── review-q-010-v5-implementation-design-20260827-132854/
+    ├── review-q-010-v5-implementation-design-20260827-132854.zip
+    ├── review-q-010-v6-implementation-design-approved-20260827-135300/
+    │   ├── ArchitectureReview.md
+    │   ├── ArtifactHashes.txt
+    │   ├── ChangedFiles.txt
+    │   ├── DesignApproval.md
+    │   ├── DesignReview.md
+    │   ├── GateStatus.md
+    │   ├── GitDiffStat.txt
+    │   ├── GitStatus.txt
+    │   ├── ImplementationDesignSnapshot.md
+    │   ├── ImplementationDesignV5ReviewedSnapshot.md
+    │   ├── LessonsLearned.md
+    │   ├── NextStepPrompt.md
+    │   ├── OutstandingItems.md
+    │   ├── PackageManifest.txt
+    │   ├── PhaseReviewIndex.md
+    │   ├── ProjectTree.txt
+    │   ├── Summary.md
+    │   └── Verification.md
+    └── review-q-010-v6-implementation-design-approved-20260827-135300.zip
+
+No Q-010 Java package, Flyway V3, REST endpoint, or provisioning runtime exists
+in V6.

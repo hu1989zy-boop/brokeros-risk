@@ -1,0 +1,30 @@
+Q-010 V7 REVIEW PACKAGE MANIFEST
+Review ID: Q-010-V7-IMPLEMENTATION-20260827-185323
+Expected files: 22
+
+ArchitectureReview.md
+ArtifactHashes.txt
+ConcurrencyReview.md
+DesignTraceability.md
+GitDiffStat.txt
+GitStatus.txt
+ImplementationFiles.txt
+ImplementationReview.md
+KeyConfigurationEvidence.md
+LessonsLearned.md
+MigrationSnapshot.sql
+NextStepPrompt.md
+OutstandingItems.md
+PackageManifest.txt
+PersistenceReview.md
+PhaseReviewIndex.md
+ProjectTree.txt
+RequirementTraceability.md
+SecurityReview.md
+Summary.md
+TestInventory.txt
+Verification.md
+
+The ZIP must contain exactly this review directory and these 22 non-empty
+files. It must not contain source trees, target/build output, .git, IDE files,
+historical reviews, credentials, manifests used at runtime, or database data.

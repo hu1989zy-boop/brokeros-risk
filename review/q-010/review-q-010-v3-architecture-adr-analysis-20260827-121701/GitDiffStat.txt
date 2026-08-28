@@ -1,0 +1,10 @@
+Q-010 V3 Architecture + ADR Analysis Git Diff Stat
+
+`git diff --stat`:
+(empty — Q-010 artifacts remain untracked)
+
+`git diff --cached --stat`:
+(empty — nothing staged)
+
+Architecture-phase scope is listed in `ChangedFiles.txt`. Production/source/
+test/schema/config/dependency diff: none.

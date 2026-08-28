@@ -1,0 +1,52 @@
+Q-010 TEST INVENTORY
+
+TradingAccountDomainTests (6)
+- canonical references / UUIDv4 / prefixes
+- exact bounded namespace
+- exact UTF-8 ExternalAccountKey / redaction / defensive bytes
+- lifecycle transitions / retired terminal state
+- operation field matrix / eligibility invariants
+- semantic fingerprint golden vector / operation-ID exclusion / sensitivity
+
+TradingAccountApplicationTests (5)
+- authorization precedes mutation port and carries decision evidence
+- denied mutation has zero Q-010 interactions
+- ineligible Q-008 result is bounded and authorization-first
+- active / missing Q-008 decision mapping
+- unauthorized read performs zero Q-010 lookup
+
+TradingAccountAuthorityBootstrapCommandTests (3)
+- unknown / duplicate / trailing JSON rejection
+- typed field matrix and bounded result mapping
+- invalid invocation safe exit 2 without application startup
+
+TradingAccountArchitectureTests (2)
+- domain/application framework/JDBC/Jackson/Kafka/Redis/vendor isolation
+- no REST, delete, actor-header, role/admin, or SYSTEM bypass
+
+Q010MySqlIntegrationTests (10, mandatory real MySQL 8.4 execution)
+- migration shape/collation/constraints/Flyway restart
+- registration/replay/compatible duplicate/mapping conflict/exact bytes
+- changed replay/lifecycle stale version/terminal state
+- concurrent same identity arbitration
+- concurrent duplicate operation durable replay
+- history failure rollback
+- generated-reference collision three-attempt cap
+- concurrent lifecycle CAS and retained historical resolution
+- operation outcome failure rollback
+- CHECK enforcement exact MySQL 3819 / HY000
+
+Q010BootstrapMySqlIntegrationTests (1, mandatory real MySQL 8.4 execution)
+- real Spring non-Web command with Q-009 descriptor/mapping/grants,
+  scope+account provisioning, exact replay, safe output, grant revocation,
+  denial exit 3, and zero post-denial mutation
+
+Existing FlywayMigrationTests adds one Q-010 V3 static contract test.
+
+RESULTS
+- Focused Q-010 discovery: 27 tests, 0 failures/errors; 11 MySQL tests skipped
+  only in the environment-free invocation.
+- Mandatory disposable MySQL 8.4 run: 11 tests, 0 failures/errors/skips.
+- Full Maven verify: 86 tests, 0 failures/errors, 12 environment-gated skips;
+  those include the 11 Q-010 MySQL tests executed separately above and the
+  pre-existing Q-009 MySQL environment test.

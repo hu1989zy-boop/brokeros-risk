@@ -1,0 +1,31 @@
+Q-010 V3 Architecture + ADR Analysis ZIP Manifest
+
+The ZIP contains exactly this new Review directory with 17 non-empty files:
+
+ADRReview.md
+ArchitectureQuestions.md
+ArchitectureReview.md
+ChangedFiles.txt
+DataIntegrityReview.md
+GitDiffStat.txt
+GitStatus.txt
+NextStepPrompt.md
+OutstandingItems.md
+PackageManifest.txt
+PhaseReviewIndex.md
+ProjectTree.txt
+Q008DependencyReview.md
+RequirementTraceability.md
+SecurityThreatAnalysis.md
+Summary.md
+Verification.md
+
+Excluded:
+- source/tests/migrations/configuration/dependencies;
+- `.git`, build/target, IDE, Docker/Kubernetes artifacts;
+- prompts outside the V3 Review directory;
+- V1/V2 Review directories and all prior ZIPs;
+- review history and unrelated Q-007/Q-008/Q-009 packages;
+- the generated ZIP itself.
+
+The ZIP is a transfer artifact and must not be staged.

@@ -1,0 +1,38 @@
+Q-010 V8 FINAL GIT STATUS SNAPSHOT
+Captured: 2026-08-28
+Branch: main
+HEAD: fa1b3d7656006146affa842a98adc0b0d833e05d
+HEAD subject: feat: complete Q-009 trusted actor authorization foundation
+Upstream: origin/main — up to date
+
+Staged files: 0
+Unstaged tracked files: 5
+Untracked files: 232
+Unexpected untracked files: 0
+Git commit: NOT PERFORMED
+Git push: NOT PERFORMED
+
+Unstaged tracked:
+ M backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+ M backend/src/main/java/com/brokeros/risk/security/infrastructure/configuration/SecurityModuleConfiguration.java
+ M backend/src/test/java/com/brokeros/risk/FlywayMigrationTests.java
+ M scripts/verify-infrastructure.sh
+ M scripts/verify-static.sh
+
+Untracked path groups:
+?? backend/src/main/java/com/brokeros/risk/tradingaccount/
+?? backend/src/main/resources/db/migration/V3__create_trading_account_reference_authority.sql
+?? backend/src/test/java/com/brokeros/risk/tradingaccount/
+?? docs/adr/ADR-012-trading-account-reference-authority-foundation.md
+?? docs/architecture/q-010-trading-account-reference-authority-architecture.md
+?? docs/architecture/q-010-trading-account-reference-authority-implementation-design.md
+?? docs/lessons/2026-08-26-q-010-*.md
+?? docs/lessons/2026-08-27-q-010-*.md
+?? docs/requirements/Q-010-Trading-Account-Reference-Authority-Foundation.md
+?? docs/skills/trading-account-reference-authority.md
+?? prompts/NextStepPrompt.md
+?? prompts/Q-010-*.md
+?? review/q-010/
+
+All modified/untracked paths are explained Q-010 implementation or lifecycle
+evidence. V1–V7 history is preserved. The V8 ZIP/sidecar will remain untracked.
