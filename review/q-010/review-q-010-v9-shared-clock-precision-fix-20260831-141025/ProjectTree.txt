@@ -1,0 +1,23 @@
+Q-010 v9 shared-clock precision fix — bounded project tree
+
+backend/
+└── src/main/java/com/brokeros/risk/security/infrastructure/configuration/
+    └── SecurityModuleConfiguration.java
+
+docs/
+└── lessons/
+    ├── 2026-08-31-q-010-bootstrap-replay-timestamp-precision.md
+    └── 2026-08-31-shared-clock-microsecond-precision-fix.md
+
+prompts/
+└── Shared-Clock-Microsecond-Precision-Fix-Prompt.md
+
+review/q-010/
+└── review-q-010-v9-shared-clock-precision-fix-20260831-141025/
+    ├── ArchitectureReview.md
+    ├── GitDiffStat.txt
+    ├── GitStatus.txt
+    ├── OutstandingItems.md
+    ├── ProjectTree.txt
+    ├── Summary.md
+    └── Verification.md

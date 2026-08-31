@@ -1,6 +1,7 @@
 package com.brokeros.risk.security.infrastructure.configuration;
 
 import java.time.Clock;
+import java.time.Duration;
 import java.util.Set;
 
 import com.brokeros.risk.security.application.ActorMappingService;
@@ -19,7 +20,7 @@ public class SecurityModuleConfiguration {
 
     @Bean
     Clock securityClock() {
-        return Clock.systemUTC();
+        return Clock.tick(Clock.systemUTC(), Duration.ofNanos(1000));
     }
 
     @Bean

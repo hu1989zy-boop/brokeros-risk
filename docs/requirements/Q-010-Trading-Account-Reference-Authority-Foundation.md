@@ -451,3 +451,34 @@ Q-010 Git Commit / Push: **NOT PERFORMED**
 
 Next gate: **Independent Architect Final Review of the V8 Final Closure
 package. Only after that review may the Product Owner manually commit.**
+
+### Post-Closure Fix: Shared Clock Microsecond-Precision (2026-08-31)
+
+After V8 closure, independent Q-011 review (Claude Code, holding the
+external Architect role) discovered a pre-existing Q-010 defect during
+cross-environment test execution: `Q010BootstrapMySqlIntegrationTests`'s
+idempotent-replay assertion could fail on hosts whose JVM clock exposes
+genuine sub-microsecond precision, because the single shared `Clock` bean
+(`SecurityModuleConfiguration.securityClock()`) minted instants at full
+clock precision while the `DATETIME(6)` columns that persist them cap at
+microseconds. See
+`docs/lessons/2026-08-31-q-010-bootstrap-replay-timestamp-precision.md`.
+
+Q-010 Timestamp-Precision Fix: **AUTHORIZED — 2026-08-31 — Product Owner**,
+scoped to the single shared `Clock` bean only (`Clock.tick(Clock.systemUTC(),
+Duration.ofNanos(1000))`), so Q-009 and Q-011 are corrected identically at
+the same source.
+
+Q-010 Timestamp-Precision Fix — Independent Review: **PASS — 2026-08-31 —
+Claude Code.** Verified the diff directly (`SecurityModuleConfiguration.java`
+only, 2 insertions/1 deletion) and independently re-executed the full
+124-test real-MySQL gate in the Linux/Docker environment that had twice
+reproduced the original failure deterministically: 0 failures, 0 errors.
+Package: `review/q-010/review-q-010-v9-shared-clock-precision-fix-20260831-141025/`
+(+ `ClaudeCodeIndependentReview.md`).
+
+Q-010 Timestamp-Precision Fix: **ACCEPTED — 2026-08-31 — Product Owner.**
+
+Q-010 Git Commit / Push (post-fix): **STILL NOT PERFORMED** — accepting this
+fix does not itself authorize staging, committing, or pushing; that remains
+a separate, explicit decision.

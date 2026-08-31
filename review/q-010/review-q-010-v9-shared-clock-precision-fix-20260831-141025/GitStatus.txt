@@ -1,0 +1,48 @@
+Repository status captured after creation of the v9 review directory and before
+creation of its delivery ZIP:
+
+ M backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+ M backend/src/main/java/com/brokeros/risk/security/infrastructure/configuration/SecurityModuleConfiguration.java
+ M backend/src/test/java/com/brokeros/risk/FlywayMigrationTests.java
+ M backend/src/test/java/com/brokeros/risk/security/infrastructure/persistence/Q009MySqlIntegrationTests.java
+ M docs/skills/development-standards.md
+ M scripts/verify-static.sh
+?? backend/src/main/java/com/brokeros/risk/evidence/
+?? backend/src/main/resources/db/migration/V4__create_evidence_provenance_foundation.sql
+?? backend/src/test/java/com/brokeros/risk/evidence/
+?? docs/adr/ADR-013-evidence-provenance-foundation.md
+?? docs/architecture/q-011-evidence-provenance-foundation-architecture.md
+?? docs/architecture/q-011-evidence-provenance-foundation-implementation-design.md
+?? docs/lessons/2026-08-28-q-011-architecture-adr-analysis.md
+?? docs/lessons/2026-08-28-q-011-design-v3-consistency-audit.md
+?? docs/lessons/2026-08-28-q-011-design-v4-blocker-resolution.md
+?? docs/lessons/2026-08-28-q-011-fifth-preimplementation-governance-blocker-correction.md
+?? docs/lessons/2026-08-28-q-011-fourth-governance-consistency-correction.md
+?? docs/lessons/2026-08-28-q-011-implementation-authorization.md
+?? docs/lessons/2026-08-28-q-011-implementation-design-v2-correction.md
+?? docs/lessons/2026-08-28-q-011-requirement-architect-review.md
+?? docs/lessons/2026-08-28-q-011-requirement-candidate-analysis.md
+?? docs/lessons/2026-08-28-q-011-sixth-governance-deliverables-correction.md
+?? docs/lessons/2026-08-30-q-011-implementation.md
+?? docs/lessons/2026-08-31-q-010-bootstrap-replay-timestamp-precision.md
+?? docs/lessons/2026-08-31-q-011-ac15-closure.md
+?? docs/lessons/2026-08-31-q-011-implementation-approved.md
+?? docs/lessons/2026-08-31-shared-clock-microsecond-precision-fix.md
+?? docs/requirements/Q-011-Evidence-Provenance-Foundation.md
+?? prompts/Q-011-Fifth-Preimplementation-Governance-Blocker-Correction-Prompt.md
+?? prompts/Q-011-V11-Fourth-Governance-Consistency-Correction-Prompt.md
+?? prompts/Q-011-V13-Implementation-Resume-Prompt.md
+?? prompts/Q-011-V18-AC15-Fix-And-Closure-Prompt.md
+?? prompts/Shared-Clock-Microsecond-Precision-Fix-Prompt.md
+?? review/q-010/review-q-010-v9-shared-clock-precision-fix-20260831-141025/
+?? review/q-011/
+
+Task attribution:
+- The shared-clock task changed the tracked
+  SecurityModuleConfiguration.java file.
+- It added/updated the two timestamp-precision lesson files and created the
+  v9 review package.
+- The other listed changes were already present from earlier authorized Q-011
+  implementation/review and Q009 AC15 work and were preserved.
+- The same-name ZIP delivery artifact is created only after the review package
+  is finalized, so it is not part of the captured command output.
