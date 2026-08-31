@@ -82,6 +82,26 @@ public enum ResultCode {
             "EVIDENCE_ACTOR_TYPE_NOT_PERMITTED", "Actor type is not permitted for evidence authoring", HttpStatus.FORBIDDEN),
     EVIDENCE_AUTHORITY_UNAVAILABLE(
             "EVIDENCE_AUTHORITY_UNAVAILABLE", "Evidence authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
+    DECISION_REQUEST_INVALID(
+            "DECISION_REQUEST_INVALID", "Decision request is invalid", HttpStatus.BAD_REQUEST),
+    DECISION_CONTENT_INVALID(
+            "DECISION_CONTENT_INVALID", "Decision content is invalid", HttpStatus.BAD_REQUEST),
+    DECISION_SUBJECT_NOT_RECOGNIZED(
+            "DECISION_SUBJECT_NOT_RECOGNIZED", "Decision subject is not recognized", HttpStatus.UNPROCESSABLE_ENTITY),
+    DECISION_SUBJECT_AUTHORITY_UNAVAILABLE(
+            "DECISION_SUBJECT_AUTHORITY_UNAVAILABLE", "Decision subject authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
+    DECISION_EVIDENCE_NOT_RECOGNIZED(
+            "DECISION_EVIDENCE_NOT_RECOGNIZED", "Decision evidence is not recognized", HttpStatus.UNPROCESSABLE_ENTITY),
+    DECISION_EVIDENCE_AUTHORITY_UNAVAILABLE(
+            "DECISION_EVIDENCE_AUTHORITY_UNAVAILABLE", "Decision evidence authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
+    DECISION_IDEMPOTENCY_CONFLICT(
+            "DECISION_IDEMPOTENCY_CONFLICT", "Decision operation conflicts with a prior operation", HttpStatus.CONFLICT),
+    DECISION_NOT_FOUND(
+            "DECISION_NOT_FOUND", "Decision was not found", HttpStatus.NOT_FOUND),
+    DECISION_ACTOR_TYPE_NOT_PERMITTED(
+            "DECISION_ACTOR_TYPE_NOT_PERMITTED", "Actor type is not permitted for decision recording", HttpStatus.FORBIDDEN),
+    DECISION_AUTHORITY_UNAVAILABLE(
+            "DECISION_AUTHORITY_UNAVAILABLE", "Decision authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
     INTERNAL_ERROR("INTERNAL_ERROR", "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final String code;

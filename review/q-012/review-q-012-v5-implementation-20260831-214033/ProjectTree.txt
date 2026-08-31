@@ -1,0 +1,90 @@
+Q-012 BOUNDED PROJECT TREE
+==========================
+
+backend/src/main/java/com/brokeros/risk/
+├── api/ResultCode.java                         [modified: 10 Decision codes]
+└── decision/
+    ├── application/
+    │   ├── AuthorizedMutationContext.java
+    │   ├── AuthorizedMutationFactory.java
+    │   ├── CompletedDecisionOperation.java
+    │   ├── DecisionAuthorityUnavailableException.java
+    │   ├── DecisionCapabilities.java
+    │   ├── DecisionConflictException.java
+    │   ├── DecisionDetailReadService.java
+    │   ├── DecisionException.java
+    │   ├── DecisionFingerprintFactory.java
+    │   ├── DecisionMetricOperation.java
+    │   ├── DecisionProvenanceQueryService.java
+    │   ├── DecisionRecordingService.java
+    │   ├── RecordDecisionCommand.java
+    │   ├── RecordDecisionSpec.java
+    │   └── port/
+    │       ├── DecisionAccessLogPort.java
+    │       ├── DecisionMetricsPort.java
+    │       ├── DecisionMutationPort.java
+    │       ├── DecisionQueryPort.java
+    │       └── DecisionRefGenerator.java
+    ├── domain/
+    │   ├── ConclusionText.java
+    │   ├── DecisionOperationId.java
+    │   ├── DecisionOperationOutcome.java
+    │   ├── DecisionOperationType.java
+    │   ├── DecisionProvenanceOutcome.java
+    │   ├── DecisionProvenanceView.java
+    │   ├── DecisionRecord.java
+    │   ├── DecisionRef.java
+    │   ├── DecisionSemanticFingerprint.java
+    │   └── DecisionSource.java
+    ├── infrastructure/
+    │   ├── configuration/DecisionModuleConfiguration.java
+    │   ├── observability/DecisionMetrics.java
+    │   └── persistence/
+    │       ├── JdbcDecisionAccessLogAdapter.java
+    │       ├── JdbcDecisionMutationAdapter.java
+    │       ├── JdbcDecisionQueryAdapter.java
+    │       ├── JdbcDecisionRowMappers.java
+    │       └── MySqlDecisionConstraintClassifier.java
+    └── interfaces/rest/
+        ├── DecisionController.java
+        ├── DecisionDetailResponse.java
+        ├── DecisionRecordedResponse.java
+        └── RecordDecisionRequest.java
+
+backend/src/main/resources/db/migration/
+└── V5__create_decision_provenance_foundation.sql
+
+backend/src/test/java/com/brokeros/risk/decision/
+├── DecisionArchitectureTests.java
+├── application/DecisionApplicationTests.java
+├── domain/DecisionDomainTests.java
+├── infrastructure/
+│   ├── observability/DecisionMetricsTests.java
+│   └── persistence/
+│       ├── Q012MySqlMigrationTests.java
+│       ├── Q012MySqlPersistenceTests.java
+│       └── Q012SecurityMySqlIntegrationTests.java
+└── interfaces/rest/DecisionRestContractTests.java
+
+docs/
+├── lessons/2026-08-31-q-012-implementation.md
+└── skills/development-standards.md             [modified reusable rule]
+
+scripts/
+└── verify-static.sh                            [modified Q-012/V5 checks]
+
+review/q-012/review-q-012-v5-implementation-20260831-214033/
+├── ArchitectureReview.md
+├── DesignTraceability.md
+├── GitDiffStat.txt
+├── GitStatus.txt
+├── OutstandingItems.md
+├── ProjectTree.txt
+├── SecurityReview.md
+├── Summary.md
+├── TestInventory.txt
+└── Verification.md
+
+Intentionally omitted from this bounded tree: unchanged repository modules,
+build output under backend/target, and the pre-existing Q-012 governance/review
+documents supplied before implementation.

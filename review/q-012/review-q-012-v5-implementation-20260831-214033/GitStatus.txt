@@ -1,0 +1,25 @@
+Command: git status --short
+Captured after implementation and review-package creation; no staging/commit/push.
+
+ M backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+ M docs/skills/development-standards.md
+ M scripts/verify-static.sh
+?? backend/src/main/java/com/brokeros/risk/decision/
+?? backend/src/main/resources/db/migration/V5__create_decision_provenance_foundation.sql
+?? backend/src/test/java/com/brokeros/risk/decision/
+?? docs/adr/ADR-014-decision-provenance-foundation.md
+?? docs/architecture/q-012-decision-provenance-foundation-architecture.md
+?? docs/architecture/q-012-decision-provenance-foundation-implementation-design.md
+?? docs/lessons/2026-08-31-q-012-implementation.md
+?? docs/requirements/Q-012-Decision-Provenance-Foundation.md
+?? prompts/Q-012-Implementation-Prompt.md
+?? review/q-012/
+
+Ownership note:
+- The Q-012 Requirement, Architecture, Implementation Design, ADR-014, Prompt,
+  and review v1-v4 paths were already untracked at implementation preflight and
+  were treated as Product Owner/Architect-supplied inputs. They were read but
+  not modified by this implementation.
+- Implementation-created untracked scope is the Decision module/tests, V5,
+  lesson, and this v5 review package. The three tracked modifications are
+  ResultCodes, the reusable standards skill, and static verification.

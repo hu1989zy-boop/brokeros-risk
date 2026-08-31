@@ -88,6 +88,11 @@ com.brokeros.risk.<module>
 - Use enums with stable codes, never ordinals or magic strings.
 - Express complex transitions through named domain behavior rather than
   arbitrary status setters.
+- When an idempotency fingerprint includes an unordered multi-reference set,
+  frame every raw value, de-duplicate it, and sort it deterministically before
+  hashing. If the approved replay check precedes content validation, preserve
+  invalid raw values in that canonicalization so an exact replay cannot be
+  reinterpreted by later validation rules.
 - For critical operations, design for who/when/what/target/before/after/reason/
   source even when the Audit module is not yet implemented.
 

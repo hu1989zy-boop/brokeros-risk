@@ -1,0 +1,25 @@
+Q-012 AC11 CLOSURE FOLLOW-UP — BOUNDED TREE
+===========================================
+
+backend/src/test/java/com/brokeros/risk/evidence/infrastructure/persistence/
+└── Q011MySqlMigrationTests.java        [only authorized test-code change]
+
+docs/lessons/
+└── 2026-08-31-q011-migration-count-test-fix.md
+
+review/q-012/
+└── review-q-012-v7-full-gate-closure-20260831-225443/
+    ├── ArchitectureReview.md
+    ├── GitDiffStat.txt
+    ├── GitStatus.txt
+    ├── OutstandingItems.md
+    ├── ProjectTree.txt
+    ├── Summary.md
+    └── Verification.md
+
+Sibling delivery artifact generated after package finalization:
+review/q-012/review-q-012-v7-full-gate-closure-20260831-225443.zip
+
+Excluded from this bounded tree: unchanged product modules, migrations,
+pre-existing Q-012 implementation/governance changes, historical review
+packages v1-v6, Maven target output, and disposable verification infrastructure.

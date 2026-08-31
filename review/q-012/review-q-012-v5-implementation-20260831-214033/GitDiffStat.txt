@@ -1,0 +1,29 @@
+Q-012 BOUNDED DIFF STATISTICS
+=============================
+
+Tracked diff (`git diff --stat` before this package's snapshot files):
+
+ backend/src/main/java/com/brokeros/risk/api/ResultCode.java | 20 ++++++++++++++++++++
+ docs/skills/development-standards.md                        |  5 +++++
+ scripts/verify-static.sh                                    | 18 +++++++++++++++++-
+ 3 files changed, 42 insertions(+), 1 deletion(-)
+
+New implementation files are untracked and therefore absent from ordinary
+`git diff --stat`. Bounded line counts:
+
+- Decision main + Q-012 test Java files: 48 files, 3,731 lines total.
+- V5 migration: 1 file, 64 lines.
+- Q-012 Lessons Learned: 1 file, 54 lines.
+- New v5 review package: 10 files (this package; review evidence only).
+
+Supplied governance inputs and older review packages remain untracked but were
+present before implementation and are excluded from implementation counts:
+
+- Requirement V1
+- Architecture V1
+- Implementation Design V1
+- ADR-014
+- Q-012 Implementation Prompt
+- review/q-012 v1 through v4
+
+No complete Git diff is embedded in the review package.

@@ -1,0 +1,4 @@
+ .../main/java/com/brokeros/risk/api/ResultCode.java  | 20 ++++++++++++++++++++
+ docs/skills/development-standards.md                 |  5 +++++
+ scripts/verify-static.sh                             | 18 +++++++++++++++++-
+ 3 files changed, 42 insertions(+), 1 deletion(-)

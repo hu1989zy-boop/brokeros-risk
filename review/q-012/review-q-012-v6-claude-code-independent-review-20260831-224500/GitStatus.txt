@@ -1,0 +1,14 @@
+## main...origin/main
+ M backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+ M docs/skills/development-standards.md
+ M scripts/verify-static.sh
+?? backend/src/main/java/com/brokeros/risk/decision/
+?? backend/src/main/resources/db/migration/V5__create_decision_provenance_foundation.sql
+?? backend/src/test/java/com/brokeros/risk/decision/
+?? docs/adr/ADR-014-decision-provenance-foundation.md
+?? docs/architecture/q-012-decision-provenance-foundation-architecture.md
+?? docs/architecture/q-012-decision-provenance-foundation-implementation-design.md
+?? docs/lessons/2026-08-31-q-012-implementation.md
+?? docs/requirements/Q-012-Decision-Provenance-Foundation.md
+?? prompts/Q-012-Implementation-Prompt.md
+?? review/q-012/

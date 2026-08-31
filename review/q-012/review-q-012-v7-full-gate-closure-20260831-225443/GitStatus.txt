@@ -1,0 +1,27 @@
+Command: git status --short
+Captured after the narrow fix and v7 package creation; no stage/commit/push.
+
+ M backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+ M backend/src/test/java/com/brokeros/risk/evidence/infrastructure/persistence/Q011MySqlMigrationTests.java
+ M docs/skills/development-standards.md
+ M scripts/verify-static.sh
+?? backend/src/main/java/com/brokeros/risk/decision/
+?? backend/src/main/resources/db/migration/V5__create_decision_provenance_foundation.sql
+?? backend/src/test/java/com/brokeros/risk/decision/
+?? docs/adr/ADR-014-decision-provenance-foundation.md
+?? docs/architecture/q-012-decision-provenance-foundation-architecture.md
+?? docs/architecture/q-012-decision-provenance-foundation-implementation-design.md
+?? docs/lessons/2026-08-31-q-012-implementation.md
+?? docs/lessons/2026-08-31-q011-migration-count-test-fix.md
+?? docs/requirements/Q-012-Decision-Provenance-Foundation.md
+?? prompts/Q-011-Migration-Count-Test-Fix-Prompt.md
+?? prompts/Q-012-Implementation-Prompt.md
+?? review/q-012/
+
+Task ownership classification:
+
+- This follow-up modified only `Q011MySqlMigrationTests.java` in code/test scope.
+- This follow-up added the required Q011 migration-count lesson and new v7
+  review package/ZIP.
+- Every other listed change was present at preflight and was preserved without
+  modification by this follow-up.

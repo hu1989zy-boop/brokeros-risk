@@ -1,0 +1,68 @@
+Q-012 TEST INVENTORY
+====================
+
+Non-database tests: 22
+
+DecisionArchitectureTests (3)
+- domainAndApplicationHaveNoFrameworkPersistenceOrVendorImports
+- narrowProvenanceContractCannotExposeConclusionText
+- moduleHasNoDeleteCorrectionSupersessionOrRawContentLogging
+
+DecisionApplicationTests (9)
+- recordingUsesCanonicalOrderOwnActorDeduplicatesAndAcceptsRecognizedNotEligibleAndSuperseded
+- emptyEvidenceIsRejectedBeforeEitherExternalAuthorityCall
+- serviceActorIsRejectedBeforeReplayCheckAndExternalCalls
+- exactReplaySkipsInvalidContentQ010AndQ011WhileChangedReplayConflicts
+- subjectRejectsOnlyNotRecognizedAndMapsAuthorityUnavailability
+- evidenceRejectsOnlyNotFoundAndMapsAuthorityUnavailability
+- crossModuleCapabilityDenialsPreventDecisionMutation
+- readsAuthorizeBeforeLookupPermitServiceAndAuditBeforeDisclosure
+- deniedOrUnavailableReadNeverQueriesAndAuditFailureReturnsNoContent
+
+DecisionDomainTests (5)
+- decisionRefAndOperationIdRequireCanonicalLowercaseUuidV4
+- conclusionUsesUtf8ByteBoundsAndRejectsBlankNulAndControls
+- decisionRequiresEvidenceAndPreservesAnImmutableDistinctSet
+- provenanceFactoriesEnforceCompleteRecognizedAndEmptyNotFoundShapes
+- fingerprintsMatchGoldenVectorDeduplicateSortAndChangeWithEveryField
+
+DecisionMetricsTests (1)
+- metricsUseOnlyBoundedSafeTags
+
+DecisionRestContractTests (4)
+- controllerExposesOnlyApprovedDecisionRoutes
+- requestAndRecordingResponseExposeOnlyApprovedFields
+- beanValidationCoversOperationSubjectEvidenceAndConclusion
+- resultCodesExposeExactlyTheApprovedDecisionHttpContract
+
+Mandatory real-MySQL tests: 19
+
+Q012MySqlMigrationTests (7)
+- migrationUpgradesV4CreatesExactlyFourTablesWithoutSeedsAndValidatesOnRestart
+- metadataContainsEveryApprovedPrimaryUniqueForeignKeyCheckAndIndex
+- decisionRecordPrimaryUniqueReferenceSubjectActorSourceAndConclusionChecksAreEnforced
+- evidenceReferencePrimaryForeignKeyUniquePairAndCanonicalShapeAreEnforced
+- operationPrimaryUniqueIdSingleValueEnumsAndRecordForeignKeyAreEnforced
+- accessLogPrimaryAndRecordForeignKeyRestrictAreEnforced
+- approvedQueriesUseUniqueAndSecondaryIndexesWithoutFullScans
+
+Q012MySqlPersistenceTests (6)
+- recordReplayQueryAndAccessLogAreDurableAndConsistent
+- generatedRefCollisionRetriesExactlyThreeTimesAndNeverOverwrites
+- evidenceReferenceFailureRollsBackDecisionAndOperationAtomically
+- concurrentSameOperationReturnsOneCommitAndOneReplay
+- failedAccessLogIsIsolatedFromConcurrentUnrelatedRecording
+- malformedStoredUtf8FailsClosedInsteadOfReturningReplacementContent
+
+Q012SecurityMySqlIntegrationTests (6)
+- realQ009Q010AndQ011GrantsPermitHumanRecordingWithSameActorContext
+- realDecisionRecordDenialPreventsAllDecisionDataAccess
+- realQ010ReadDenialPreventsDecisionCreation
+- realQ011ReadDenialPreventsDecisionCreation
+- serviceActorRemainsRejectedDespiteAllRealRecordingGrants
+- authorizedServiceActorCanUseNarrowAndAuditedFullDetailReads
+
+Q-012 total: 41 tests
+Final Q-012 MySQL gate: 19 run, 0 failures, 0 errors, 0 skipped
+Mandatory all-module MySQL gate: 165 run, 1 failure, 0 errors, 0 skipped
+Sole full-gate failure: unchanged Q011MySqlMigrationTests migration-count assertion
