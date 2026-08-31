@@ -1,0 +1,24 @@
+Q-011 V18 AC15 task-scoped diff statistics
+
+Authorized implementation/test diff:
+
+ .../security/infrastructure/persistence/Q009MySqlIntegrationTests.java | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+Numstat:
+
+2  1  backend/src/test/java/com/brokeros/risk/security/infrastructure/persistence/Q009MySqlIntegrationTests.java
+
+This is exactly one touched implementation/test file. No other Q-009 file and
+no Q-010, Q-011, or migration file changed during the closure task; before/
+after hash inventories confirm those boundaries.
+
+Required generated artifacts, reported separately from the one-file test diff:
+
+- docs/lessons/2026-08-31-q-011-ac15-closure.md: 47 lines.
+- review/q-011/review-q-011-v18-ac15-closure-20260831-125801/: 7 files,
+  363 lines in the final bounded snapshot.
+
+The repository was already dirty with the Q-011 implementation and governance
+artifacts reviewed in v16/v17. Those pre-existing changes are preserved and are
+not attributed to this narrow AC15 delta. No complete Git diff is stored here.

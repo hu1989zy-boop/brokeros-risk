@@ -1,0 +1,19 @@
+Q-011 V18 AC15 closure — bounded tree
+
+backend/src/test/java/com/brokeros/risk/security/infrastructure/persistence/
+└── Q009MySqlIntegrationTests.java
+
+docs/lessons/
+└── 2026-08-31-q-011-ac15-closure.md
+
+review/q-011/review-q-011-v18-ac15-closure-20260831-125801/
+├── ArchitectureReview.md
+├── GitDiffStat.txt
+├── GitStatus.txt
+├── OutstandingItems.md
+├── ProjectTree.txt
+├── Summary.md
+└── Verification.md
+
+No Q-009 production, Q-010, Q-011, migration, dependency, configuration,
+deployment, or existing review-package file belongs to this closure delta.

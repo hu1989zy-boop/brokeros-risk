@@ -1,0 +1,9 @@
+ AGENTS.md                                          | 16 ++++++---
+ .../java/com/brokeros/risk/api/ResultCode.java     | 18 ++++++++++
+ .../configuration/SecurityModuleConfiguration.java |  3 +-
+ .../com/brokeros/risk/FlywayMigrationTests.java    | 38 ++++++++++++++++++++++
+ .../persistence/Q009MySqlIntegrationTests.java     |  3 +-
+ ...ading-Account-Reference-Authority-Foundation.md | 31 ++++++++++++++++++
+ docs/skills/development-standards.md               |  5 +++
+ scripts/verify-static.sh                           | 18 +++++++++-
+ 8 files changed, 124 insertions(+), 8 deletions(-)

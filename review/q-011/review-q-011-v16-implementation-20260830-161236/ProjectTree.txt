@@ -1,0 +1,92 @@
+Q-011 bounded implementation tree
+
+backend/src/main/java/com/brokeros/risk/
+├── api/ResultCode.java
+└── evidence/
+    ├── application/
+    │   ├── AuthorizedMutationContext.java
+    │   ├── CompletedEvidenceOperation.java
+    │   ├── CorrectEvidenceCommand.java
+    │   ├── CorrectEvidenceSpec.java
+    │   ├── EvidenceAuthorityUnavailableException.java
+    │   ├── EvidenceCapabilities.java
+    │   ├── EvidenceConflictException.java
+    │   ├── EvidenceCorrectionResult.java
+    │   ├── EvidenceCorrectionService.java
+    │   ├── EvidenceDetailReadService.java
+    │   ├── EvidenceException.java
+    │   ├── EvidenceFingerprintFactory.java
+    │   ├── EvidenceMetricOperation.java
+    │   ├── EvidenceProvenanceQueryService.java
+    │   ├── EvidenceRecordingResult.java
+    │   ├── EvidenceRecordingService.java
+    │   ├── RecordEvidenceCommand.java
+    │   ├── RecordEvidenceSpec.java
+    │   └── port/
+    │       ├── EvidenceAccessLogPort.java
+    │       ├── EvidenceMetricsPort.java
+    │       ├── EvidenceMutationPort.java
+    │       ├── EvidenceQueryPort.java
+    │       └── EvidenceRefGenerator.java
+    ├── domain/
+    │   ├── CorrectionReason.java
+    │   ├── EvidenceFingerprint.java
+    │   ├── EvidenceOperationId.java
+    │   ├── EvidenceOperationOutcome.java
+    │   ├── EvidenceOperationType.java
+    │   ├── EvidenceProvenanceOutcome.java
+    │   ├── EvidenceProvenanceView.java
+    │   ├── EvidenceRecord.java
+    │   ├── EvidenceRef.java
+    │   ├── EvidenceSource.java
+    │   ├── EvidenceStatus.java
+    │   ├── EvidenceText.java
+    │   └── ObservationText.java
+    ├── infrastructure/
+    │   ├── configuration/EvidenceModuleConfiguration.java
+    │   ├── observability/MicrometerEvidenceMetrics.java
+    │   └── persistence/
+    │       ├── JdbcEvidenceAccessLogAdapter.java
+    │       ├── JdbcEvidenceMutationAdapter.java
+    │       ├── JdbcEvidenceQueryAdapter.java
+    │       ├── JdbcEvidenceRowMappers.java
+    │       └── MySqlEvidenceConstraintClassifier.java
+    └── interfaces/rest/
+        ├── CorrectEvidenceRequest.java
+        ├── EvidenceController.java
+        ├── EvidenceDetailResponse.java
+        ├── EvidenceRecordedResponse.java
+        └── RecordEvidenceRequest.java
+
+backend/src/main/resources/db/migration/
+└── V4__create_evidence_provenance_foundation.sql
+
+backend/src/test/java/com/brokeros/risk/
+├── FlywayMigrationTests.java
+└── evidence/
+    ├── EvidenceArchitectureTests.java
+    ├── application/EvidenceApplicationTests.java
+    ├── domain/EvidenceDomainTests.java
+    ├── infrastructure/observability/EvidenceMetricsTests.java
+    ├── infrastructure/persistence/Q011MySqlMigrationTests.java
+    ├── infrastructure/persistence/Q011MySqlPersistenceTests.java
+    ├── infrastructure/persistence/Q011SecurityMySqlIntegrationTests.java
+    └── interfaces/rest/EvidenceRestContractTests.java
+
+scripts/verify-static.sh
+docs/skills/development-standards.md
+docs/lessons/2026-08-30-q-011-implementation.md
+review/q-011/review-q-011-v16-implementation-20260830-161236/
+├── ArchitectureReview.md
+├── DesignTraceability.md
+├── GitDiffStat.txt
+├── GitStatus.txt
+├── OutstandingItems.md
+├── ProjectTree.txt
+├── SecurityReview.md
+├── Summary.md
+├── TestInventory.txt
+└── Verification.md
+
+Excluded from this bounded tree: unchanged project modules, build output,
+.git internals, and pre-existing Q-011 governance/review artifacts.

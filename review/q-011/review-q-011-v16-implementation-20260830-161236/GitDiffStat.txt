@@ -1,0 +1,31 @@
+Bounded Q-011 implementation diff statistics
+
+Tracked-file diff (`git diff --stat`):
+
+ .../java/com/brokeros/risk/api/ResultCode.java     | 18 ++++++++++
+ .../com/brokeros/risk/FlywayMigrationTests.java    | 38 ++++++++++++++++++++++
+ docs/skills/development-standards.md               |  5 +++
+ scripts/verify-static.sh                           | 18 +++++++++-
+ 4 files changed, 78 insertions(+), 1 deletion(-)
+
+Tracked numstat:
+
+18  0  backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+38  0  backend/src/test/java/com/brokeros/risk/FlywayMigrationTests.java
+ 5  0  docs/skills/development-standards.md
+17  1  scripts/verify-static.sh
+
+New, currently untracked Q-011 implementation artifacts (not shown by normal
+`git diff --stat`):
+
+- Evidence main module: 48 files, 1,998 lines.
+- Evidence test module: 8 files, 1,895 lines.
+- V4 Flyway migration: 1 file, 94 lines.
+- Q-011 implementation Lessons Learned: 1 file, 62 lines.
+- v16 implementation review package: 10 files, 756 lines in the final bounded
+  snapshot.
+
+The repository also contains untracked Q-011 governance documents, prompts,
+lessons, and older review packages that pre-date this implementation. They are
+shown in GitStatus.txt but are deliberately not attributed to this bounded
+implementation diff. No complete Git diff is stored in this package.

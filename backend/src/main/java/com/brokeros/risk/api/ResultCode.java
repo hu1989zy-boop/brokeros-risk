@@ -64,6 +64,24 @@ public enum ResultCode {
             "TRADING_ACCOUNT_INVALID_TRANSITION", "Trading account lifecycle transition is invalid", HttpStatus.UNPROCESSABLE_ENTITY),
     TRADING_ACCOUNT_AUTHORITY_UNAVAILABLE(
             "TRADING_ACCOUNT_AUTHORITY_UNAVAILABLE", "Trading account authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
+    EVIDENCE_REQUEST_INVALID(
+            "EVIDENCE_REQUEST_INVALID", "Evidence request is invalid", HttpStatus.BAD_REQUEST),
+    EVIDENCE_CONTENT_INVALID(
+            "EVIDENCE_CONTENT_INVALID", "Evidence content is invalid", HttpStatus.BAD_REQUEST),
+    EVIDENCE_SUBJECT_NOT_RECOGNIZED(
+            "EVIDENCE_SUBJECT_NOT_RECOGNIZED", "Evidence subject is not recognized", HttpStatus.UNPROCESSABLE_ENTITY),
+    EVIDENCE_SUBJECT_AUTHORITY_UNAVAILABLE(
+            "EVIDENCE_SUBJECT_AUTHORITY_UNAVAILABLE", "Evidence subject authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
+    EVIDENCE_IDEMPOTENCY_CONFLICT(
+            "EVIDENCE_IDEMPOTENCY_CONFLICT", "Evidence operation conflicts with a prior operation", HttpStatus.CONFLICT),
+    EVIDENCE_NOT_FOUND(
+            "EVIDENCE_NOT_FOUND", "Evidence was not found", HttpStatus.NOT_FOUND),
+    EVIDENCE_ALREADY_SUPERSEDED(
+            "EVIDENCE_ALREADY_SUPERSEDED", "Evidence is already superseded", HttpStatus.CONFLICT),
+    EVIDENCE_ACTOR_TYPE_NOT_PERMITTED(
+            "EVIDENCE_ACTOR_TYPE_NOT_PERMITTED", "Actor type is not permitted for evidence authoring", HttpStatus.FORBIDDEN),
+    EVIDENCE_AUTHORITY_UNAVAILABLE(
+            "EVIDENCE_AUTHORITY_UNAVAILABLE", "Evidence authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
     INTERNAL_ERROR("INTERNAL_ERROR", "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final String code;

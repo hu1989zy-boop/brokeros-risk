@@ -1,0 +1,4 @@
+     711 docs/requirements/Q-011-Evidence-Provenance-Foundation.md
+     718 docs/architecture/q-011-evidence-provenance-foundation-architecture.md
+     355 docs/adr/ADR-013-evidence-provenance-foundation.md
+    1459 docs/architecture/q-011-evidence-provenance-foundation-implementation-design.md

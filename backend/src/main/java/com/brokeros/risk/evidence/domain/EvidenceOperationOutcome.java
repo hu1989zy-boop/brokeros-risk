@@ -1,0 +1,6 @@
+package com.brokeros.risk.evidence.domain;
+
+public enum EvidenceOperationOutcome {
+    CREATED,
+    CORRECTED
+}

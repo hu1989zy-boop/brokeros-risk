@@ -60,7 +60,8 @@ class Q009MySqlIntegrationTests {
                 .dataSource(url, username, password)
                 .cleanDisabled(false)
                 .load();
-        assertThat(flyway.migrate().migrationsExecuted).isEqualTo(1);
+        int pendingMigrationCount = flyway.info().pending().length;
+        assertThat(flyway.migrate().migrationsExecuted).isEqualTo(pendingMigrationCount);
         flyway.validate();
 
         Flyway restartedFlyway = Flyway.configure()

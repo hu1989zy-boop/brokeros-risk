@@ -1,0 +1,8 @@
+## main...origin/main
+?? docs/adr/ADR-013-evidence-provenance-foundation.md
+?? docs/architecture/q-011-evidence-provenance-foundation-architecture.md
+?? docs/lessons/2026-08-28-q-011-architecture-adr-analysis.md
+?? docs/lessons/2026-08-28-q-011-requirement-architect-review.md
+?? docs/lessons/2026-08-28-q-011-requirement-candidate-analysis.md
+?? docs/requirements/Q-011-Evidence-Provenance-Foundation.md
+?? review/q-011/

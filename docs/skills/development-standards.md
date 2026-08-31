@@ -68,6 +68,11 @@ com.brokeros.risk.<module>
   explicit business identifiers.
 - Review destructive DDL, constraints, indexes, data movement, compatibility,
   locks, and deployment ordering.
+- In MySQL, a `CHECK` passes when its expression is `TRUE` **or `UNKNOWN`**.
+  For nullable columns, encode both nullability directions explicitly with
+  `IS NULL`/`IS NOT NULL`; an equality such as `nullable_status = 'ACTIVE'`
+  alone does not reject `NULL`. Prove every direction against the supported
+  real MySQL version, not only by reading the DDL.
 - Mark high-risk migrations in the Review Package.
 
 ### Financial data

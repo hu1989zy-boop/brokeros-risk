@@ -1,0 +1,35 @@
+Command: git status --short
+Captured after all Q-011 implementation and v16 review-package files existed.
+No file is staged. No commit or push was performed.
+
+ M backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+ M backend/src/test/java/com/brokeros/risk/FlywayMigrationTests.java
+ M docs/skills/development-standards.md
+ M scripts/verify-static.sh
+?? backend/src/main/java/com/brokeros/risk/evidence/
+?? backend/src/main/resources/db/migration/V4__create_evidence_provenance_foundation.sql
+?? backend/src/test/java/com/brokeros/risk/evidence/
+?? docs/adr/ADR-013-evidence-provenance-foundation.md
+?? docs/architecture/q-011-evidence-provenance-foundation-architecture.md
+?? docs/architecture/q-011-evidence-provenance-foundation-implementation-design.md
+?? docs/lessons/2026-08-28-q-011-architecture-adr-analysis.md
+?? docs/lessons/2026-08-28-q-011-design-v3-consistency-audit.md
+?? docs/lessons/2026-08-28-q-011-design-v4-blocker-resolution.md
+?? docs/lessons/2026-08-28-q-011-fifth-preimplementation-governance-blocker-correction.md
+?? docs/lessons/2026-08-28-q-011-fourth-governance-consistency-correction.md
+?? docs/lessons/2026-08-28-q-011-implementation-authorization.md
+?? docs/lessons/2026-08-28-q-011-implementation-design-v2-correction.md
+?? docs/lessons/2026-08-28-q-011-requirement-architect-review.md
+?? docs/lessons/2026-08-28-q-011-requirement-candidate-analysis.md
+?? docs/lessons/2026-08-28-q-011-sixth-governance-deliverables-correction.md
+?? docs/lessons/2026-08-30-q-011-implementation.md
+?? docs/requirements/Q-011-Evidence-Provenance-Foundation.md
+?? prompts/Q-011-Fifth-Preimplementation-Governance-Blocker-Correction-Prompt.md
+?? prompts/Q-011-V11-Fourth-Governance-Consistency-Correction-Prompt.md
+?? prompts/Q-011-V13-Implementation-Resume-Prompt.md
+?? review/q-011/
+
+The pre-existing Q-011 governance documents, prompts, lessons, and prior
+review packages were already untracked before this implementation turn and
+were preserved. The new implementation package is the non-overwriting
+review/q-011/review-q-011-v16-implementation-20260830-161236/ directory.

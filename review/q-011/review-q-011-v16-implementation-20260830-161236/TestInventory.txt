@@ -1,0 +1,69 @@
+Q-011 test inventory
+
+Q-011-owned tests: 37
+Shared Flyway static test added for Q-011: 1
+
+EvidenceDomainTests (4)
+- evidenceRefAndOperationIdRequireCanonicalLowercaseUuidV4
+- contentUsesUtf8ByteBoundsAndRejectsBlankNulAndControls
+- evidenceCanOnlyTransitionFromActiveToSupersededOnce
+- fingerprintsMatchGoldenVectorsAndChangeWithEverySemanticField
+
+EvidenceApplicationTests (8)
+- recordingUsesExactOrderOwnActorAndAcceptsRecognizedNotEligible
+- recordingRejectsOnlyNotRecognizedAndMapsQ010Unavailability
+- serviceActorCannotRecordOrRetrieveMutationReplay
+- exactRecordReplaySkipsInvalidContentAndQ010ButChangedReplayConflicts
+- correctionReplayPrecedesTargetStatusAndNewCorrectionCopiesTargetSubject
+- correctionRejectsNotFoundAndAlreadySupersededWithoutMutation
+- readsAuthorizeBeforeLookupPermitServiceAndLogBeforeReturningDetail
+- readDenialAndAccessLogFailureReturnNoContent
+
+EvidenceArchitectureTests (3)
+- domainAndApplicationHaveNoFrameworkPersistenceOrVendorImports
+- narrowProvenanceContractCannotExposeSensitiveContent
+- moduleHasNoDeleteSqlBypassProviderOrRawContentLogging
+
+EvidenceRestContractTests (4)
+- controllerExposesOnlyApprovedEvidenceRoutes
+- requestDtosAcceptNoActorTimeStatusGeneratedRefOrCorrectionSubject
+- beanValidationAndDomainBoundaryFieldsArePresent
+- resultCodesExposeTheApprovedStableHttpContract
+
+EvidenceMetricsTests (1)
+- metricsUseOnlyBoundedSafeTags
+
+Q011MySqlMigrationTests (5; mandatory MySQL 8.4)
+- migrationUpgradesV3CreatesExactlyFourTablesAndValidatesOnRestart
+- metadataContainsEveryNamedPrimaryUniqueForeignKeyCheckAndIndex
+- evidenceRecordChecksUniqueSupersessionAndSelfForeignKeysAreEnforced
+- operationAndHistoryEnumsFksBijectionsReasonBoundsAndUniquenessAreEnforced
+- approvedQueriesUseUniqueAndSecondaryIndexesWithoutFullScans
+
+Q011MySqlPersistenceTests (8; mandatory MySQL 8.4)
+- recordCorrectReplayQueryAndAccessLogAreDurableAndConsistent
+- generatedRefCollisionRetriesExactlyThreeTimesAndNeverOverwrites
+- historyFailureRollsBackRecordAndOperationAtomically
+- concurrentSameRecordOperationReturnsOneCommitAndOneReplay
+- concurrentDifferentCorrectionsElectExactlyOneWinner
+- concurrentSameCorrectionOperationReturnsOneCommitAndOneReplay
+- failedAccessLogIsIsolatedFromConcurrentUnrelatedRecording
+- malformedStoredUtf8FailsClosedInsteadOfReturningReplacementContent
+
+Q011SecurityMySqlIntegrationTests (4; real Q-009/Q-010 + MySQL 8.4)
+- realQ009AndQ010GrantsPermitHumanRecordingWithSameActorContext
+- realQ009EvidenceDenialPreventsAllQ011DataAccess
+- realQ010ReadDenialPreventsEvidenceCreation
+- serviceActorRemainsRejectedDespiteBothRealCapabilityGrants
+
+FlywayMigrationTests shared addition (1)
+- q011MigrationIsAdditiveAndCreatesExactlyFourEvidenceTables
+
+Related unchanged regression classes executed
+- Q010BootstrapMySqlIntegrationTests
+- Q010MySqlIntegrationTests
+- Q009MySqlIntegrationTests (one stale migration-count assertion fails when enabled)
+- all existing non-conditional repository test classes in the 124-test suite
+
+Test lifecycle helpers named migrateDisposableDatabase are setup methods, not
+counted as tests. No mandatory Q-011 test was skipped in the Q-011 MySQL gate.

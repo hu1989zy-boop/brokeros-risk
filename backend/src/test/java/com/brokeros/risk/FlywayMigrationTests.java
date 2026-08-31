@@ -96,4 +96,42 @@ class FlywayMigrationTests {
                 "trading_account_authority_operation",
                 "trading_account_authority_history");
     }
+
+    @Test
+    void q011MigrationIsAdditiveAndCreatesExactlyFourEvidenceTables() throws IOException {
+        ClassPathResource migration = new ClassPathResource(
+                "db/migration/V4__create_evidence_provenance_foundation.sql");
+        String sql = migration.getContentAsString(UTF_8);
+
+        assertThat(migration.exists()).isTrue();
+        assertThat(sql)
+                .contains(
+                        "CREATE TABLE evidence_record",
+                        "CREATE TABLE evidence_operation",
+                        "CREATE TABLE evidence_operation_history",
+                        "CREATE TABLE evidence_access_log",
+                        "uk_evidence_record_ref",
+                        "uk_evidence_record_supersedes",
+                        "uk_evidence_operation_id",
+                        "uk_evidence_history_operation",
+                        "OCTET_LENGTH(observation_text) BETWEEN 1 AND 4000",
+                        "OCTET_LENGTH(reason) BETWEEN 1 AND 1000",
+                        "ON DELETE RESTRICT")
+                .doesNotContainIgnoringCase(
+                        "DROP TABLE", "TRUNCATE TABLE", "ALTER TABLE",
+                        "INSERT INTO", "DELETE FROM", "UPDATE ");
+
+        Matcher matcher = Pattern.compile(
+                        "(?im)^\\s*CREATE\\s+TABLE\\s+([a-z0-9_]+)")
+                .matcher(sql);
+        java.util.Set<String> tables = new java.util.LinkedHashSet<>();
+        while (matcher.find()) {
+            tables.add(matcher.group(1));
+        }
+        assertThat(tables).containsExactly(
+                "evidence_record",
+                "evidence_operation",
+                "evidence_operation_history",
+                "evidence_access_log");
+    }
 }

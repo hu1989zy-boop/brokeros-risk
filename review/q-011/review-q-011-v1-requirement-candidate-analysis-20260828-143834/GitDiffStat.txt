@@ -1,0 +1,5 @@
+No tracked file was modified by this analysis. `git diff --stat HEAD` against
+the working tree is empty. The only filesystem change is the new untracked
+directory `review/q-011/` containing this Candidate Analysis package, plus a
+matching untracked `docs/lessons/2026-08-28-q-011-requirement-candidate-analysis.md`.
+Neither is staged or committed.
