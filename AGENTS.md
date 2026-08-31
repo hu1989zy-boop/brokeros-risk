@@ -11,11 +11,17 @@ architecture, requirements, or Definition of Done constraints defined here.
 Before every Q-XXX, phase, bug fix, refactor, code review, or technical task,
 read and comply with:
 
-1. this `AGENTS.md`;
-2. the governing Requirement and applicable files in `docs/architecture`;
-3. all applicable accepted ADRs in `docs/adr`;
-4. `docs/skills/development-standards.md`;
-5. applicable repository skills and recent Lessons Learned.
+1. `docs/engineering/AI-Engineering-Execution-Protocol.md` — governs *how*
+   any task below is executed: stage-bounded work, explicit stage-boundary
+   determination before starting, no silent scope expansion, no self-declared
+   completion, and a mandatory Gate Decision (PASS / PASS WITH CONDITIONS /
+   BLOCKED / FAIL) at the end of every lifecycle stage. This applies to every
+   AI agent working in this repository, not only the session that adopted it;
+2. this `AGENTS.md`;
+3. the governing Requirement and applicable files in `docs/architecture`;
+4. all applicable accepted ADRs in `docs/adr`;
+5. `docs/skills/development-standards.md`;
+6. applicable repository skills and recent Lessons Learned.
 
 Phase 0.6 development standards remain mandatory until an explicit Requirement
 and architecture decision/ADR changes them. If a request conflicts with an
