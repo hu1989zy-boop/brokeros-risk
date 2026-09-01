@@ -68,7 +68,8 @@ class ActionRestContractTests {
     @Test
     void resultCodesExposeExactlyTheApprovedActionHttpContract() {
         assertThat(ResultCode.values())
-                .filteredOn(code -> code.name().startsWith("ACTION_"))
+                .filteredOn(code -> code.name().startsWith("ACTION_")
+                        && !code.name().startsWith("ACTION_OUTCOME_"))
                 .containsExactly(
                         ResultCode.ACTION_REQUEST_INVALID,
                         ResultCode.ACTION_CONTENT_INVALID,

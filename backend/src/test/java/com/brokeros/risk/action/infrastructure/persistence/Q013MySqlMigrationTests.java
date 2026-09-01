@@ -177,6 +177,7 @@ class Q013MySqlMigrationTests {
                 SELECT table_name
                 FROM information_schema.tables
                 WHERE table_schema = DATABASE() AND table_name LIKE 'action_%'
+                  AND table_name NOT LIKE 'action_outcome_%'
                 ORDER BY table_name
                 """, String.class);
     }
@@ -204,6 +205,7 @@ class Q013MySqlMigrationTests {
                 FROM information_schema.key_column_usage
                 WHERE table_schema = DATABASE()
                   AND table_name LIKE 'action_%'
+                  AND table_name NOT LIKE 'action_outcome_%'
                   AND referenced_table_name IS NOT NULL
                 ORDER BY table_name, column_name
                 """, String.class);
