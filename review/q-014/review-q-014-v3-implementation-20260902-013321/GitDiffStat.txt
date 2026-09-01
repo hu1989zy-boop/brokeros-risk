@@ -1,0 +1,26 @@
+BOUNDED GIT DIFF STATISTICS
+
+Tracked diff (`git diff --stat`):
+
+ backend/src/main/java/com/brokeros/risk/api/ResultCode.java | 16 +
+ docs/engineering/AI-Engineering-Execution-Protocol.md      | 43 +
+ docs/skills/development-standards.md                       |  6 +
+ scripts/verify-static.sh                                   | 38 +-
+ 4 files changed, 102 insertions(+), 1 deletion(-)
+
+Important ownership split:
+- The 43-line Execution Protocol change is concurrent and user-owned; it is not part of the Q-014 implementation patch.
+- The other tracked changes are Q-014 implementation-owned.
+
+Untracked Q-014 implementation statistics:
+- `backend/src/main/java/com/brokeros/risk/actionoutcome/`: 40 files, 1,527 lines
+- `backend/src/test/java/com/brokeros/risk/actionoutcome/`: 8 files, 1,984 lines
+- `V7__create_action_outcome_provenance_foundation.sql`: 52 lines
+- `docs/lessons/2026-09-02-q-014-implementation.md`: 50 lines
+- This timestamped v3 review package: 10 bounded evidence files
+
+Pre-existing untracked items in the status snapshot:
+- Q-014 Requirement, Architecture, ADR-016, Implementation Design, and Implementation Prompt
+- Q-014 v1/v2 review directories
+
+This package intentionally excludes the complete Git diff.

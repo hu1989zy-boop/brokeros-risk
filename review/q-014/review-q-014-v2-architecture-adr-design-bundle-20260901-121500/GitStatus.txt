@@ -1,0 +1,6 @@
+## main...origin/main
+?? docs/adr/ADR-016-action-outcome-provenance-foundation.md
+?? docs/architecture/q-014-action-outcome-provenance-foundation-architecture.md
+?? docs/architecture/q-014-action-outcome-provenance-foundation-implementation-design.md
+?? docs/requirements/Q-014-Action-Outcome-Provenance-Foundation.md
+?? review/q-014/

@@ -1,0 +1,7 @@
+ .../java/com/brokeros/risk/api/ResultCode.java     | 16 ++++++++
+ .../persistence/Q013MySqlMigrationTests.java       |  2 +
+ .../interfaces/rest/ActionRestContractTests.java   |  3 +-
+ .../AI-Engineering-Execution-Protocol.md           | 43 ++++++++++++++++++++++
+ docs/skills/development-standards.md               |  6 +++
+ scripts/verify-static.sh                           | 38 ++++++++++++++++++-
+ 6 files changed, 106 insertions(+), 2 deletions(-)

@@ -118,6 +118,22 @@ public enum ResultCode {
             "ACTION_ACTOR_TYPE_NOT_PERMITTED", "Actor type is not permitted for action recording", HttpStatus.FORBIDDEN),
     ACTION_AUTHORITY_UNAVAILABLE(
             "ACTION_AUTHORITY_UNAVAILABLE", "Action authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
+    ACTION_OUTCOME_REQUEST_INVALID(
+            "ACTION_OUTCOME_REQUEST_INVALID", "Action outcome request is invalid", HttpStatus.BAD_REQUEST),
+    ACTION_OUTCOME_CONTENT_INVALID(
+            "ACTION_OUTCOME_CONTENT_INVALID", "Action outcome content is invalid", HttpStatus.BAD_REQUEST),
+    ACTION_OUTCOME_ACTION_NOT_RECOGNIZED(
+            "ACTION_OUTCOME_ACTION_NOT_RECOGNIZED", "Action outcome action is not recognized", HttpStatus.UNPROCESSABLE_ENTITY),
+    ACTION_OUTCOME_ACTION_AUTHORITY_UNAVAILABLE(
+            "ACTION_OUTCOME_ACTION_AUTHORITY_UNAVAILABLE", "Action outcome action authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
+    ACTION_OUTCOME_IDEMPOTENCY_CONFLICT(
+            "ACTION_OUTCOME_IDEMPOTENCY_CONFLICT", "Action outcome operation conflicts with a prior operation", HttpStatus.CONFLICT),
+    ACTION_OUTCOME_NOT_FOUND(
+            "ACTION_OUTCOME_NOT_FOUND", "Action outcome was not found", HttpStatus.NOT_FOUND),
+    ACTION_OUTCOME_ACTOR_TYPE_NOT_PERMITTED(
+            "ACTION_OUTCOME_ACTOR_TYPE_NOT_PERMITTED", "Actor type is not permitted for action outcome recording", HttpStatus.FORBIDDEN),
+    ACTION_OUTCOME_AUTHORITY_UNAVAILABLE(
+            "ACTION_OUTCOME_AUTHORITY_UNAVAILABLE", "Action outcome authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
     INTERNAL_ERROR("INTERNAL_ERROR", "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final String code;

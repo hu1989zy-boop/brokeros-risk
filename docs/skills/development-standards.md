@@ -73,6 +73,12 @@ com.brokeros.risk.<module>
   `IS NULL`/`IS NOT NULL`; an equality such as `nullable_status = 'ACTIVE'`
   alone does not reject `NULL`. Prove every direction against the supported
   real MySQL version, not only by reading the DDL.
+- Scope migration-metadata and stable-contract inventory tests to exact module
+  names. Avoid broad prefix selectors such as SQL `LIKE 'action_%'` or Java
+  `startsWith("ACTION_")` when an approved sibling namespace can extend that
+  prefix (for example `action_outcome_*` / `ACTION_OUTCOME_*`). Prefer an
+  explicit table/code set or a delimiter-aware module boundary so an additive
+  sibling module does not make an older module's test claim ownership of it.
 - Mark high-risk migrations in the Review Package.
 
 ### Financial data

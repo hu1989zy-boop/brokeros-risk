@@ -1,0 +1,24 @@
+GIT STATUS SNAPSHOT
+
+ M backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+ M docs/engineering/AI-Engineering-Execution-Protocol.md
+ M docs/skills/development-standards.md
+ M scripts/verify-static.sh
+?? backend/src/main/java/com/brokeros/risk/actionoutcome/
+?? backend/src/main/resources/db/migration/V7__create_action_outcome_provenance_foundation.sql
+?? backend/src/test/java/com/brokeros/risk/actionoutcome/
+?? docs/adr/ADR-016-action-outcome-provenance-foundation.md
+?? docs/architecture/q-014-action-outcome-provenance-foundation-architecture.md
+?? docs/architecture/q-014-action-outcome-provenance-foundation-implementation-design.md
+?? docs/lessons/2026-09-02-q-014-implementation.md
+?? docs/requirements/Q-014-Action-Outcome-Provenance-Foundation.md
+?? prompts/Q-014-Implementation-Prompt.md
+?? review/q-014/
+
+Ownership notes:
+- `docs/engineering/AI-Engineering-Execution-Protocol.md` is a concurrent user-owned modification (43 added lines), preserved without Q-014 edits.
+- The Q-014 Requirement, Architecture, ADR-016, Implementation Design, Prompt, and v1/v2 review directories were already untracked when implementation began.
+- Q-014 implementation-owned changes are the actionoutcome source/tests, V7, ResultCode additions, development-standards addition, static verifier addition, Q-014 implementation lesson, and this v3 package.
+- No file under Q-009/Q-010/Q-011/Q-012/Q-013 source or tests is modified.
+- No V1–V6 migration is modified.
+- Nothing was staged, committed, or pushed.

@@ -47,7 +47,7 @@ find scripts -type f -name '*.sh' -exec sh -n {} \;
 
 migration_count=$(find backend/src/main/resources/db/migration -maxdepth 1 \
     -type f -name 'V*__*.sql' | wc -l | tr -d '[:space:]')
-test "$migration_count" = "6"
+test "$migration_count" = "7"
 
 if grep -Eiq 'create[[:space:]]+table|alter[[:space:]]+table|drop[[:space:]]+table|truncate[[:space:]]+table' \
     backend/src/main/resources/db/migration/V1__initial_schema.sql; then
@@ -133,6 +133,42 @@ grep -Fq 'flyway.info().pending().length' "$q013_migration_test"
 if grep -Eq 'flyway\.migrate\(\)\.migrationsExecuted\)\.isEqualTo\([0-9]+\)' \
     "$q013_migration_test"; then
     printf '%s\n' "Q-013 migration test must derive unrestricted migration counts dynamically." >&2
+    exit 1
+fi
+
+q014_create_count=$(grep -Eic '^[[:space:]]*create[[:space:]]+table' \
+    backend/src/main/resources/db/migration/V7__create_action_outcome_provenance_foundation.sql)
+test "$q014_create_count" = "3"
+
+if grep -Eiq '^[[:space:]]*(drop|truncate|alter|delete|update|insert)[[:space:]]' \
+    backend/src/main/resources/db/migration/V7__create_action_outcome_provenance_foundation.sql; then
+    printf '%s\n' "Q-014 migration must remain forward-only, additive, and schema-only." >&2
+    exit 1
+fi
+
+for q014_table in action_outcome_record action_outcome_operation \
+    action_outcome_access_log; do
+    grep -Eq "^[[:space:]]*CREATE TABLE ${q014_table}[[:space:]]*\\(" \
+        backend/src/main/resources/db/migration/V7__create_action_outcome_provenance_foundation.sql
+done
+
+if grep -Eiq '^[[:space:]]*status[[:space:]]' \
+    backend/src/main/resources/db/migration/V7__create_action_outcome_provenance_foundation.sql; then
+    printf '%s\n' "Q-014 must not introduce an action-outcome status column." >&2
+    exit 1
+fi
+
+if grep -Eiq 'unique[[:space:]]*\\([[:space:]]*action_ref[[:space:]]*\\)' \
+    backend/src/main/resources/db/migration/V7__create_action_outcome_provenance_foundation.sql; then
+    printf '%s\n' "Q-014 action_ref must remain many-to-one." >&2
+    exit 1
+fi
+
+q014_migration_test=backend/src/test/java/com/brokeros/risk/actionoutcome/infrastructure/persistence/Q014MySqlMigrationTests.java
+grep -Fq 'flyway.info().pending().length' "$q014_migration_test"
+if grep -Eq 'flyway\.migrate\(\)\.migrationsExecuted\)\.isEqualTo\([0-9]+\)' \
+    "$q014_migration_test"; then
+    printf '%s\n' "Q-014 migration test must derive unrestricted migration counts dynamically." >&2
     exit 1
 fi
 

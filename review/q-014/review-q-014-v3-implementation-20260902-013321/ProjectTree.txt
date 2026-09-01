@@ -1,0 +1,98 @@
+Q-014 BOUNDED PROJECT TREE
+
+backend/src/main/java/com/brokeros/risk/
+├── api/
+│   └── ResultCode.java                         [modified: 8 Q-014 codes]
+└── actionoutcome/                              [new: 40 files]
+    ├── application/
+    │   ├── ActionOutcomeAuthorityUnavailableException.java
+    │   ├── ActionOutcomeCapabilities.java
+    │   ├── ActionOutcomeConflictException.java
+    │   ├── ActionOutcomeDetailReadService.java
+    │   ├── ActionOutcomeException.java
+    │   ├── ActionOutcomeFingerprintFactory.java
+    │   ├── ActionOutcomeMetricOperation.java
+    │   ├── ActionOutcomeProvenanceQueryService.java
+    │   ├── ActionOutcomeRecordingService.java
+    │   ├── AuthorizedMutationContext.java
+    │   ├── AuthorizedMutationFactory.java
+    │   ├── RecordActionOutcomeCommand.java
+    │   ├── RecordActionOutcomeSpec.java
+    │   └── port/
+    │       ├── ActionOutcomeAccessLogPort.java
+    │       ├── ActionOutcomeMetricsPort.java
+    │       ├── ActionOutcomeMutationPort.java
+    │       ├── ActionOutcomeQueryPort.java
+    │       └── ActionOutcomeRefGenerator.java
+    ├── domain/
+    │   ├── ActionOutcomeOperationId.java
+    │   ├── ActionOutcomeOperationOutcome.java
+    │   ├── ActionOutcomeOperationType.java
+    │   ├── ActionOutcomeProvenanceOutcome.java
+    │   ├── ActionOutcomeProvenanceView.java
+    │   ├── ActionOutcomeRecord.java
+    │   ├── ActionOutcomeRef.java
+    │   ├── ActionOutcomeSemanticFingerprint.java
+    │   ├── ActionOutcomeSource.java
+    │   ├── CompletedActionOutcomeOperation.java
+    │   └── OutcomeText.java
+    ├── infrastructure/
+    │   ├── configuration/ActionOutcomeModuleConfiguration.java
+    │   ├── observability/ActionOutcomeMetrics.java
+    │   └── persistence/
+    │       ├── JdbcActionOutcomeAccessLogAdapter.java
+    │       ├── JdbcActionOutcomeMutationAdapter.java
+    │       ├── JdbcActionOutcomeQueryAdapter.java
+    │       ├── JdbcActionOutcomeRowMappers.java
+    │       └── MySqlActionOutcomeConstraintClassifier.java
+    └── interfaces/rest/
+        ├── ActionOutcomeController.java
+        ├── ActionOutcomeDetailResponse.java
+        ├── ActionOutcomeRecordedResponse.java
+        └── RecordActionOutcomeRequest.java
+
+backend/src/main/resources/db/migration/
+└── V7__create_action_outcome_provenance_foundation.sql [new]
+
+backend/src/test/java/com/brokeros/risk/actionoutcome/ [new: 8 classes]
+├── ActionOutcomeArchitectureTests.java
+├── application/ActionOutcomeApplicationTests.java
+├── domain/ActionOutcomeDomainTests.java
+├── infrastructure/observability/ActionOutcomeMetricsTests.java
+├── infrastructure/persistence/Q014MySqlMigrationTests.java
+├── infrastructure/persistence/Q014MySqlPersistenceTests.java
+├── infrastructure/persistence/Q014SecurityMySqlIntegrationTests.java
+└── interfaces/rest/ActionOutcomeRestContractTests.java
+
+docs/
+├── adr/ADR-016-action-outcome-provenance-foundation.md [pre-existing untracked governance]
+├── architecture/
+│   ├── q-014-action-outcome-provenance-foundation-architecture.md [pre-existing untracked governance]
+│   └── q-014-action-outcome-provenance-foundation-implementation-design.md [pre-existing untracked governance]
+├── engineering/AI-Engineering-Execution-Protocol.md [concurrent user-owned modification]
+├── lessons/2026-09-02-q-014-implementation.md [new]
+├── requirements/Q-014-Action-Outcome-Provenance-Foundation.md [pre-existing untracked governance]
+└── skills/development-standards.md [modified]
+
+prompts/
+└── Q-014-Implementation-Prompt.md [pre-existing untracked authority]
+
+scripts/
+└── verify-static.sh [modified]
+
+review/q-014/
+├── review-q-014-v1-requirement-candidate-analysis-20260901-120000/ [pre-existing]
+├── review-q-014-v2-architecture-adr-design-bundle-20260901-121500/ [pre-existing]
+└── review-q-014-v3-implementation-20260902-013321/ [new, this package]
+    ├── ArchitectureReview.md
+    ├── DesignTraceability.md
+    ├── GitDiffStat.txt
+    ├── GitStatus.txt
+    ├── OutstandingItems.md
+    ├── ProjectTree.txt
+    ├── SecurityReview.md
+    ├── Summary.md
+    ├── TestInventory.txt
+    └── Verification.md
+
+Excluded from this bounded tree: unchanged repository files and build output.
