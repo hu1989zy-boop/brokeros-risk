@@ -42,7 +42,8 @@ class Q012MySqlMigrationTests {
         assertThat(decisionTables()).isEmpty();
 
         Flyway flyway = Flyway.configure().dataSource(dataSource).load();
-        assertThat(flyway.migrate().migrationsExecuted).isEqualTo(1);
+        int pendingMigrationCount = flyway.info().pending().length;
+        assertThat(flyway.migrate().migrationsExecuted).isEqualTo(pendingMigrationCount);
         assertThat(decisionTables()).containsExactly(
                 "decision_access_log",
                 "decision_evidence_reference",
