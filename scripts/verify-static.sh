@@ -47,7 +47,7 @@ find scripts -type f -name '*.sh' -exec sh -n {} \;
 
 migration_count=$(find backend/src/main/resources/db/migration -maxdepth 1 \
     -type f -name 'V*__*.sql' | wc -l | tr -d '[:space:]')
-test "$migration_count" = "5"
+test "$migration_count" = "6"
 
 if grep -Eiq 'create[[:space:]]+table|alter[[:space:]]+table|drop[[:space:]]+table|truncate[[:space:]]+table' \
     backend/src/main/resources/db/migration/V1__initial_schema.sql; then
@@ -112,6 +112,29 @@ for q012_table in decision_record decision_evidence_reference \
     grep -Eq "^[[:space:]]*CREATE TABLE ${q012_table}[[:space:]]*\\(" \
         backend/src/main/resources/db/migration/V5__create_decision_provenance_foundation.sql
 done
+
+q013_create_count=$(grep -Eic '^[[:space:]]*create[[:space:]]+table' \
+    backend/src/main/resources/db/migration/V6__create_action_provenance_foundation.sql)
+test "$q013_create_count" = "3"
+
+if grep -Eiq '^[[:space:]]*(drop|truncate|alter|delete|update|insert)[[:space:]]' \
+    backend/src/main/resources/db/migration/V6__create_action_provenance_foundation.sql; then
+    printf '%s\n' "Q-013 migration must remain forward-only, additive, and schema-only." >&2
+    exit 1
+fi
+
+for q013_table in action_record action_operation action_access_log; do
+    grep -Eq "^[[:space:]]*CREATE TABLE ${q013_table}[[:space:]]*\\(" \
+        backend/src/main/resources/db/migration/V6__create_action_provenance_foundation.sql
+done
+
+q013_migration_test=backend/src/test/java/com/brokeros/risk/action/infrastructure/persistence/Q013MySqlMigrationTests.java
+grep -Fq 'flyway.info().pending().length' "$q013_migration_test"
+if grep -Eq 'flyway\.migrate\(\)\.migrationsExecuted\)\.isEqualTo\([0-9]+\)' \
+    "$q013_migration_test"; then
+    printf '%s\n' "Q-013 migration test must derive unrestricted migration counts dynamically." >&2
+    exit 1
+fi
 
 if grep -R -Eiq 'ddl-auto|hbm2ddl' backend/src/main/resources; then
     printf '%s\n' "Hibernate schema generation must remain disabled." >&2

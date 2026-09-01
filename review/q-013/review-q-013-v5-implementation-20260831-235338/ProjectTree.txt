@@ -1,0 +1,89 @@
+Q-013 IMPLEMENTATION — BOUNDED PROJECT TREE
+===========================================
+
+backend/src/main/java/com/brokeros/risk/
+├── action/
+│   ├── application/
+│   │   ├── ActionRecordingService.java
+│   │   ├── ActionProvenanceQueryService.java
+│   │   ├── ActionDetailReadService.java
+│   │   ├── ActionCapabilities.java
+│   │   ├── ActionFingerprintFactory.java
+│   │   ├── AuthorizedMutationContext.java
+│   │   ├── AuthorizedMutationFactory.java
+│   │   ├── RecordActionCommand.java
+│   │   ├── RecordActionSpec.java
+│   │   ├── exception/metric support classes
+│   │   └── port/
+│   │       ├── ActionMutationPort.java
+│   │       ├── ActionQueryPort.java
+│   │       ├── ActionAccessLogPort.java
+│   │       ├── ActionMetricsPort.java
+│   │       └── ActionRefGenerator.java
+│   ├── domain/
+│   │   ├── ActionRef.java
+│   │   ├── IntentText.java
+│   │   ├── ActionRecord.java
+│   │   ├── ActionProvenanceView.java
+│   │   ├── CompletedActionOperation.java
+│   │   └── identity/fingerprint/source/status/outcome enums and values
+│   ├── infrastructure/
+│   │   ├── configuration/ActionModuleConfiguration.java
+│   │   ├── observability/ActionMetrics.java
+│   │   └── persistence/
+│   │       ├── JdbcActionMutationAdapter.java
+│   │       ├── JdbcActionQueryAdapter.java
+│   │       ├── JdbcActionAccessLogAdapter.java
+│   │       ├── JdbcActionRowMappers.java
+│   │       └── MySqlActionConstraintClassifier.java
+│   └── interfaces/rest/
+│       ├── ActionController.java
+│       ├── RecordActionRequest.java
+│       ├── ActionRecordedResponse.java
+│       └── ActionDetailResponse.java
+└── api/ResultCode.java                 [8 additive ACTION_* codes]
+
+backend/src/main/resources/db/migration/
+└── V6__create_action_provenance_foundation.sql
+    ├── action_record
+    ├── action_operation
+    └── action_access_log
+
+backend/src/test/java/com/brokeros/risk/action/
+├── ActionArchitectureTests.java
+├── application/ActionApplicationTests.java
+├── domain/ActionDomainTests.java
+├── infrastructure/
+│   ├── observability/ActionMetricsTests.java
+│   └── persistence/
+│       ├── Q013MySqlMigrationTests.java
+│       ├── Q013MySqlPersistenceTests.java
+│       └── Q013SecurityMySqlIntegrationTests.java
+└── interfaces/rest/ActionRestContractTests.java
+
+docs/lessons/
+└── 2026-08-31-q-013-implementation.md
+
+scripts/
+└── verify-static.sh                    [Q-013/V6 checks]
+
+review/q-013/
+├── review-q-013-v1-*                   [pre-existing, unchanged]
+├── review-q-013-v2-*                   [pre-existing, unchanged]
+├── review-q-013-v3-*                   [pre-existing, unchanged]
+├── review-q-013-v4-*                   [pre-existing, unchanged]
+└── review-q-013-v5-implementation-20260831-235338/
+    ├── ArchitectureReview.md
+    ├── DesignTraceability.md
+    ├── GitDiffStat.txt
+    ├── GitStatus.txt
+    ├── OutstandingItems.md
+    ├── ProjectTree.txt
+    ├── SecurityReview.md
+    ├── Summary.md
+    ├── TestInventory.txt
+    └── Verification.md
+
+Excluded from this bounded tree: unchanged Q-008-Q-012 modules, existing V1-V5
+migrations, unchanged configuration/deployment files, historical review file
+contents, backend/target build output, and disposable database infrastructure.

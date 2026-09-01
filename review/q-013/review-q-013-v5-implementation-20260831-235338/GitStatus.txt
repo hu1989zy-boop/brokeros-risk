@@ -1,0 +1,45 @@
+Q-013 GIT STATUS SNAPSHOT
+=========================
+
+Tracked modifications made by this implementation
+------------------------------------------------
+ M backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+ M scripts/verify-static.sh
+
+Untracked implementation outputs
+--------------------------------
+?? backend/src/main/java/com/brokeros/risk/action/
+?? backend/src/main/resources/db/migration/V6__create_action_provenance_foundation.sql
+?? backend/src/test/java/com/brokeros/risk/action/
+?? docs/lessons/2026-08-31-q-013-implementation.md
+?? review/q-013/review-q-013-v5-implementation-20260831-235338/
+?? review/q-013/review-q-013-v5-implementation-20260831-235338.zip
+   [ZIP is created only after the directory is finalized]
+
+Pre-existing untracked Q-013 governance state observed before implementation
+---------------------------------------------------------------------------
+?? docs/adr/ADR-015-action-provenance-foundation.md
+?? docs/architecture/q-013-action-provenance-foundation-architecture.md
+?? docs/architecture/q-013-action-provenance-foundation-implementation-design.md
+?? docs/requirements/Q-013-Action-Provenance-Foundation.md
+?? prompts/Q-013-Implementation-Prompt.md
+?? review/q-013/review-q-013-v1-requirement-candidate-analysis-20260831-233000/
+?? review/q-013/review-q-013-v2-architecture-analysis-20260901-000500/
+?? review/q-013/review-q-013-v3-adr-015-drafted-20260901-001500/
+?? review/q-013/review-q-013-v4-implementation-design-20260901-003000/
+
+Scope proof
+-----------
+- No modified file under com.brokeros.risk.security.
+- No modified file under com.brokeros.risk.tradingaccount.
+- No modified file under com.brokeros.risk.evidence.
+- No modified file under com.brokeros.risk.decision.
+- No modified Q-008 file or package.
+- No modified V1-V5 migration.
+- backend/pom.xml unchanged.
+- No deletion or rename.
+- No Git staging, commit, push, branch, reset, or checkout operation occurred.
+
+git status groups the entire untracked review/q-013 tree as one entry; the
+ownership classification above is based on the pre-implementation snapshot and
+the newly created v5 path.

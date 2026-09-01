@@ -1,0 +1,47 @@
+Q-013 BOUNDED DIFF STATISTICS
+=============================
+
+Tracked implementation diff
+---------------------------
+backend/src/main/java/com/brokeros/risk/api/ResultCode.java | 16 insertions
+scripts/verify-static.sh                                   | 24 insertions, 1 deletion
+
+Tracked total: 2 files changed, 40 insertions, 1 deletion.
+
+Untracked implementation inventory
+----------------------------------
+Action production Java:
+- 41 files
+- 1,520 lines
+
+Action test Java:
+- 8 files
+- 1,803 lines
+- 39 tests
+
+Migration:
+- backend/src/main/resources/db/migration/V6__create_action_provenance_foundation.sql
+- 52 lines
+- exactly 3 CREATE TABLE statements
+
+Lesson:
+- docs/lessons/2026-08-31-q-013-implementation.md
+- 59 lines
+
+Review output:
+- one new non-overwriting v5 directory
+- ten required review files
+- sibling ZIP generated only after final validation
+
+Preserved pre-existing state
+----------------------------
+The Q-013 Requirement, Architecture, ADR-015, Implementation Design, Prompt, and
+review packages v1-v4 were already untracked at task start and were not edited
+by this implementation.
+
+Excluded
+--------
+This is a bounded statistic, not a complete Git diff. It excludes unchanged
+files, historical review contents, backend/target output, temporary logs, and
+the final ZIP's compressed byte count. No full source diff is embedded in this
+review package.

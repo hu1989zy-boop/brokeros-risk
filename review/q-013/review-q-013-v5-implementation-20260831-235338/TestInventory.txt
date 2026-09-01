@@ -1,0 +1,86 @@
+Q-013 TEST INVENTORY
+====================
+
+Summary
+-------
+Test files: 8
+Q-013 tests: 39
+Q-013 pass/fail/error/skip: 39 / 0 / 0 / 0
+Repository-wide gate: 204 / 1 failure / 0 errors / 0 skipped
+Repository failure owner: unchanged Q012MySqlMigrationTests
+
+ActionArchitectureTests — 4 PASS
+--------------------------------
+1. domainAndApplicationHaveNoFrameworkPersistenceOrVendorImports
+2. narrowProvenanceContractCannotExposeIntentText
+3. moduleHasNoTransitionDeleteExecutionVendorOrRawContentBehavior
+4. futureRiskCaseBoundaryDoesNotImportActionPersistence
+
+ActionApplicationTests — 8 PASS
+-------------------------------
+1. recordingUsesCanonicalOrderAndPassesOwnActorToDecisionAuthority
+2. exactReplayDoesNotCallDecisionPortSecondTimeAndChangedReplayConflicts
+3. serviceActorIsRejectedBeforeReplayContentAndDecisionChecks
+4. unrecognizedDecisionIsRejectedBeforeAnyActionWrite
+5. decisionAuthorityFailureIsMappedAndDecisionReadDenialPreventsWrites
+6. actionAuthorizationDenialPrecedesEveryActionPort
+7. readsAuthorizeBeforeLookupPermitServiceAndAuditBeforeDisclosure
+8. deniedOrUnavailableReadsNeverQueryAndAuditFailureDisclosesNoContent
+
+ActionDomainTests — 5 PASS
+--------------------------
+1. actionRefAndOperationIdRequireCanonicalLowercaseUuidV4
+2. intentUsesUtf8ByteBoundsAndRejectsBlankNulAndControls
+3. actionIsManualProposedAndReferencesExactlyOneDecision
+4. provenanceFactoriesEnforceCompleteRecognizedAndEmptyNotFoundShapes
+5. fingerprintsMatchGoldenVectorAndChangeWithEachRawField
+
+ActionMetricsTests — 1 PASS
+---------------------------
+1. metricsUseOnlyBoundedSafeTags
+
+ActionRestContractTests — 4 PASS
+--------------------------------
+1. controllerExposesOnlyApprovedActionRoutes
+2. requestAndRecordingResponseExposeOnlyApprovedFields
+3. beanValidationCoversOperationDecisionAndIntent
+4. resultCodesExposeExactlyTheApprovedActionHttpContract
+
+Q013MySqlMigrationTests — 6 PASS on MySQL 8.4.11
+-------------------------------------------------
+1. migrationUpgradesV5CreatesExactlyThreeTablesWithoutSeedsAndValidatesOnRestart
+2. metadataContainsEveryApprovedPrimaryUniqueForeignKeyCheckAndIndex
+3. actionRecordPrimaryUniqueReferenceDecisionActorSourceStatusAndIntentChecksAreEnforced
+4. operationPrimaryUniqueIdSingleValueEnumsAndRecordForeignKeyAreEnforced
+5. accessLogPrimaryAndRecordForeignKeyRestrictAreEnforced
+6. approvedQueriesUseUniqueAndSecondaryIndexesWithoutFullScans
+
+Q013MySqlPersistenceTests — 6 PASS on MySQL 8.4.11
+---------------------------------------------------
+1. recordReplayQueryAndAccessLogAreDurableAndConsistent
+2. generatedRefCollisionRetriesExactlyThreeTimesAndNeverOverwrites
+3. operationFailureRollsBackActionAndLedgerAtomically
+4. concurrentSameOperationReturnsOneCommitAndOneReplay
+5. failedAccessLogIsIsolatedFromConcurrentUnrelatedRecording
+6. malformedStoredUtf8FailsClosedInsteadOfReturningReplacementContent
+
+Q013SecurityMySqlIntegrationTests — 5 PASS on MySQL 8.4.11
+-----------------------------------------------------------
+1. realQ009AndQ012GrantsPermitHumanRecordingWithSameActorContext
+2. realActionRecordDenialPreventsAllActionDataAccess
+3. realDecisionReadDenialPreventsActionCreation
+4. serviceActorRemainsRejectedDespiteAllRealRecordingGrants
+5. authorizedServiceActorCanUseNarrowAndAuditedFullDetailReads
+
+Explicit Prompt proofs
+----------------------
+- Replay does not call Q-012 a second time: ActionApplicationTests #2.
+- SERVICE recording rejected before replay: ActionApplicationTests #3.
+- Unrecognized DecisionRef rejected before write: ActionApplicationTests #4.
+- SERVICE narrow/full reads succeed: ActionApplicationTests #7 and
+  Q013SecurityMySqlIntegrationTests #5.
+- Every Design §8.4 row: Q013MySqlMigrationTests #2-#5, mapped in
+  DesignTraceability.md.
+- Dynamic migration count: Q013MySqlMigrationTests #1 plus static gate.
+
+No mandatory Q-013 test was skipped.

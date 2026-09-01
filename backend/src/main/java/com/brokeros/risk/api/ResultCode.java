@@ -102,6 +102,22 @@ public enum ResultCode {
             "DECISION_ACTOR_TYPE_NOT_PERMITTED", "Actor type is not permitted for decision recording", HttpStatus.FORBIDDEN),
     DECISION_AUTHORITY_UNAVAILABLE(
             "DECISION_AUTHORITY_UNAVAILABLE", "Decision authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
+    ACTION_REQUEST_INVALID(
+            "ACTION_REQUEST_INVALID", "Action request is invalid", HttpStatus.BAD_REQUEST),
+    ACTION_CONTENT_INVALID(
+            "ACTION_CONTENT_INVALID", "Action content is invalid", HttpStatus.BAD_REQUEST),
+    ACTION_DECISION_NOT_RECOGNIZED(
+            "ACTION_DECISION_NOT_RECOGNIZED", "Action decision is not recognized", HttpStatus.UNPROCESSABLE_ENTITY),
+    ACTION_DECISION_AUTHORITY_UNAVAILABLE(
+            "ACTION_DECISION_AUTHORITY_UNAVAILABLE", "Action decision authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
+    ACTION_IDEMPOTENCY_CONFLICT(
+            "ACTION_IDEMPOTENCY_CONFLICT", "Action operation conflicts with a prior operation", HttpStatus.CONFLICT),
+    ACTION_NOT_FOUND(
+            "ACTION_NOT_FOUND", "Action was not found", HttpStatus.NOT_FOUND),
+    ACTION_ACTOR_TYPE_NOT_PERMITTED(
+            "ACTION_ACTOR_TYPE_NOT_PERMITTED", "Actor type is not permitted for action recording", HttpStatus.FORBIDDEN),
+    ACTION_AUTHORITY_UNAVAILABLE(
+            "ACTION_AUTHORITY_UNAVAILABLE", "Action authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
     INTERNAL_ERROR("INTERNAL_ERROR", "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final String code;
