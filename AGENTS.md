@@ -17,11 +17,22 @@ read and comply with:
    completion, and a mandatory Gate Decision (PASS / PASS WITH CONDITIONS /
    BLOCKED / FAIL) at the end of every lifecycle stage. This applies to every
    AI agent working in this repository, not only the session that adopted it;
-2. this `AGENTS.md`;
-3. the governing Requirement and applicable files in `docs/architecture`;
-4. all applicable accepted ADRs in `docs/adr`;
-5. `docs/skills/development-standards.md`;
-6. applicable repository skills and recent Lessons Learned.
+2. `docs/engineering/Architecture-and-Design-Decision-Principles.md` — governs
+   *how technical decisions are made and weighed*: the objective priority
+   order (Stability > Data Integrity > Security > Maintainability > Scalability
+   > Observability > Testability > Operability > Performance > Development
+   Speed), the WHAT/WHY-vs-HOW authority split (Claude Code holds Technical
+   Decision Authority and must analyze/choose/record a recommendation for
+   pure-technical questions rather than bouncing them back, escalating only
+   business/regulatory/risk/product decisions), the design-review checklist,
+   and the decision-output format. Complementary to item 1: gate advancement
+   and deliverable acceptance remain Product Owner decisions; technical HOW
+   within a stage is Claude Code's to decide;
+3. this `AGENTS.md`;
+4. the governing Requirement and applicable files in `docs/architecture`;
+5. all applicable accepted ADRs in `docs/adr`;
+6. `docs/skills/development-standards.md`;
+7. applicable repository skills and recent Lessons Learned.
 
 Phase 0.6 development standards remain mandatory until an explicit Requirement
 and architecture decision/ADR changes them. If a request conflicts with an
