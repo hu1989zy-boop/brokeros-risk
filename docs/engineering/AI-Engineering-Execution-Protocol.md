@@ -319,3 +319,46 @@ When choosing between "finish more work" and "preserve correctness and
 traceability," always choose correctness and traceability.
 
 Small verified steps are preferred over large autonomous execution.
+
+## 16. Governance-Document Status Consistency (mandatory)
+
+A recurring real defect (Q-011, and again Q-014): when a governance
+document's gate status is advanced (draft → approved → accepted →
+authorized), the status is updated in one location but a mirror location
+in the same document — or a sibling document — is left stating the old
+status, so the document contradicts itself and an implementer (Codex)
+correctly halts. Writing a passive "be thorough" lesson did not stop the
+recurrence. These two rules are therefore mandatory and mechanical.
+
+### 16.1 Single live-status source
+
+Each governance document (Requirement, Architecture, ADR, Implementation
+Design) declares its **live** gate status in exactly ONE section — its
+Gate / Current-Gate section (Requirement §17, Architecture §24,
+Implementation Design §21, or an ADR's Status line + Approval Boundary).
+Every other mention of status in that same document — including the
+top-of-file Document Status / Status header — must **point to that one
+section as authoritative and must not independently restate the live
+PASS / APPROVED / ACCEPTED / AUTHORIZED / PENDING value.** A header may
+carry a one-line current summary only if it explicitly defers ("see §N,
+authoritative if this disagrees"); it must never be a second
+independently-maintained copy of the value. Single source → drift is
+structurally impossible.
+
+### 16.2 Pre-completion status sweep
+
+Before declaring any gate-status change complete (approval, acceptance,
+authorization, or a correction of one), run a literal search of the
+changed document — and every sibling governance document that references
+it — for the **prior** status token (e.g. `DRAFT`, `PENDING`, `NOT
+AUTHORIZED`, `not yet approved`, `Proposed`, `Allowed: **NO`) and confirm
+zero stale live occurrences remain. This is a verification step, not a
+judgement call: the search must actually be run, and its clean result is
+part of the evidence that the status change is complete. A single §N Gate
+section may also accumulate contradictory lines across successive edits
+(an old `Allowed: NO` beside a new `Allowed: YES`); the sweep must catch
+and collapse these into one coherent progression too.
+
+These two rules bind Claude Code directly and are not optional politeness;
+skipping the §16.2 sweep is the specific omission that caused Codex to
+halt on Q-014.
