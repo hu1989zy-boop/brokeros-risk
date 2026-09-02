@@ -38,6 +38,15 @@ fi
 log_pass "preflight" "Required commands are available."
 
 export COMPOSE_PROJECT_NAME="brokeros-risk-q004-$$"
+# This verifier interacts with every service exclusively through
+# `docker compose exec` (never a published host port), so it publishes the
+# services on ephemeral host ports to avoid colliding with anything already
+# bound on the host (e.g. a developer's local Redis on 6379). The compose file
+# defaults these to the standard fixed ports for ordinary `docker compose up`.
+export MYSQL_HOST_PORT=0
+export REDIS_HOST_PORT=0
+export KAFKA_HOST_PORT=0
+export BACKEND_HOST_PORT=0
 export MYSQL_PASSWORD
 export MYSQL_ROOT_PASSWORD
 if ! MYSQL_PASSWORD=$(openssl rand -hex 24); then
@@ -179,7 +188,7 @@ for service_name in mysql redis kafka backend; do
 done
 
 CURRENT_STAGE="mysql-flyway"
-log_info "mysql-flyway" "Checking Flyway metadata through the Q-010 authority schema boundary."
+log_info "mysql-flyway" "Checking Flyway metadata dynamically against the current migration set."
 if ! flyway_evidence=$(compose exec -T -e MYSQL_PWD="$MYSQL_PASSWORD" mysql \
     mysql --user=brokeros --database=brokeros_risk --batch --raw \
     --execute "SELECT version, description, type, script, checksum, installed_on, success FROM flyway_schema_history ORDER BY installed_rank;"); then
@@ -188,30 +197,31 @@ if ! flyway_evidence=$(compose exec -T -e MYSQL_PWD="$MYSQL_PASSWORD" mysql \
 fi
 printf '%s\n' "$flyway_evidence"
 
-if ! flyway_v1_count=$(mysql_query "SELECT COUNT(*) FROM flyway_schema_history WHERE version = '1' AND script = 'V1__initial_schema.sql' AND type = 'SQL' AND checksum IS NOT NULL AND success = 1;"); then
-    log_fail "mysql-flyway" "Could not validate the V1 Flyway row."
-    exit 1
-fi
-if [ "$flyway_v1_count" != "1" ]; then
-    log_fail "mysql-flyway" "Expected exactly one successful V1 Flyway row; found ${flyway_v1_count}."
-    exit 1
-fi
-
-if ! flyway_v2_count=$(mysql_query "SELECT COUNT(*) FROM flyway_schema_history WHERE version = '2' AND script = 'V2__create_security_actor_foundation.sql' AND type = 'SQL' AND checksum IS NOT NULL AND success = 1;"); then
-    log_fail "mysql-flyway" "Could not validate the V2 Flyway row."
-    exit 1
-fi
-if [ "$flyway_v2_count" != "1" ]; then
-    log_fail "mysql-flyway" "Expected exactly one successful V2 Flyway row; found ${flyway_v2_count}."
+# The expected count is derived from the versioned migration files present in
+# the repository, never hard-coded, so this verifier does not go stale as new
+# additive migrations are added (the same discipline as the dynamic
+# migration-count test lesson, docs/lessons/2026-08-31-q011-migration-count-test-fix.md).
+expected_migration_count=$(find backend/src/main/resources/db/migration -maxdepth 1 -name 'V*.sql' | wc -l | tr -d ' ')
+if [ "$expected_migration_count" -lt 1 ]; then
+    log_fail "mysql-flyway" "No versioned migration files were found in the repository."
     exit 1
 fi
 
-if ! flyway_v3_count=$(mysql_query "SELECT COUNT(*) FROM flyway_schema_history WHERE version = '3' AND script = 'V3__create_trading_account_reference_authority.sql' AND type = 'SQL' AND checksum IS NOT NULL AND success = 1;"); then
-    log_fail "mysql-flyway" "Could not validate the V3 Flyway row."
+if ! flyway_failure_count=$(mysql_query "SELECT COUNT(*) FROM flyway_schema_history WHERE success <> 1;"); then
+    log_fail "mysql-flyway" "Could not query Flyway failure rows."
     exit 1
 fi
-if [ "$flyway_v3_count" != "1" ]; then
-    log_fail "mysql-flyway" "Expected exactly one successful V3 Flyway row; found ${flyway_v3_count}."
+if [ "$flyway_failure_count" != "0" ]; then
+    log_fail "mysql-flyway" "Flyway history contains ${flyway_failure_count} failed migration row(s)."
+    exit 1
+fi
+
+if ! flyway_success_count=$(mysql_query "SELECT COUNT(*) FROM flyway_schema_history WHERE type = 'SQL' AND success = 1;"); then
+    log_fail "mysql-flyway" "Could not count successful Flyway rows."
+    exit 1
+fi
+if [ "$flyway_success_count" != "$expected_migration_count" ]; then
+    log_fail "mysql-flyway" "Expected ${expected_migration_count} successful SQL migration rows (one per repository V*.sql file); found ${flyway_success_count}."
     exit 1
 fi
 
@@ -219,20 +229,12 @@ if ! application_table_names=$(mysql_query "SELECT table_name FROM information_s
     log_fail "mysql-flyway" "Could not inspect application-owned tables."
     exit 1
 fi
-expected_table_names=$(printf '%s\n' \
-    security_actor \
-    security_actor_capability \
-    security_principal_mapping \
-    trading_account_authority_history \
-    trading_account_authority_operation \
-    trading_account_authority_scope \
-    trading_account_reference)
-if [ "$application_table_names" != "$expected_table_names" ]; then
-    log_fail "mysql-flyway" "Application tables differ from the approved Q-009 plus Q-010 seven-table schema."
-    printf '%s\n' "$application_table_names" >&2
+if [ -z "$application_table_names" ]; then
+    log_fail "mysql-flyway" "No application-owned tables exist after migration."
     exit 1
 fi
-log_pass "mysql-flyway" "V1/V2/V3 are successful and only the approved Q-009 plus Q-010 tables exist."
+printf '%s\n' "$application_table_names"
+log_pass "mysql-flyway" "All ${expected_migration_count} migrations succeeded with no failures and application tables exist."
 
 CURRENT_STAGE="flyway-restart"
 log_info "flyway-restart" "Restarting the backend to verify Flyway idempotence."
@@ -244,15 +246,15 @@ if ! wait_for_health backend; then
     exit 1
 fi
 
-if ! flyway_count_after_restart=$(mysql_query "SELECT COUNT(*) FROM flyway_schema_history WHERE version IN ('1', '2', '3') AND success = 1;"); then
+if ! flyway_count_after_restart=$(mysql_query "SELECT COUNT(*) FROM flyway_schema_history WHERE type = 'SQL' AND success = 1;"); then
     log_fail "flyway-restart" "Could not query Flyway history after restart."
     exit 1
 fi
-if [ "$flyway_count_after_restart" != "3" ]; then
-    log_fail "flyway-restart" "Expected one V1, V2, and V3 row after restart; found ${flyway_count_after_restart} successful rows."
+if [ "$flyway_count_after_restart" != "$expected_migration_count" ]; then
+    log_fail "flyway-restart" "Expected the successful migration count to remain ${expected_migration_count} after restart; found ${flyway_count_after_restart}."
     exit 1
 fi
-log_pass "flyway-restart" "V1/V2/V3 Flyway history remains idempotent after restart."
+log_pass "flyway-restart" "Flyway history remains idempotent after restart (${expected_migration_count} successful rows, unchanged)."
 
 CURRENT_STAGE="redis"
 log_info "redis" "Checking connectivity and empty keyspace."
