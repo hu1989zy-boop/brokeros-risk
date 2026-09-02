@@ -9,7 +9,7 @@ import {
   useState,
   type PropsWithChildren,
 } from 'react';
-import { useAuth } from 'react-oidc-context';
+import { hasAuthParams, useAuth } from 'react-oidc-context';
 import {
   BrowserRouter,
   Navigate,
@@ -106,6 +106,15 @@ function RuntimeProviders({ config, children }: PropsWithChildren<{ config: AppC
     };
     return new HttpRiskCaseRepository(new ApiClient(config.apiBaseUrl, session));
   }, [config.apiBaseUrl, queryClient]);
+
+  // While the OIDC redirect callback is being processed (auth params still in the
+  // URL) or the session is loading, do NOT mount the router. Otherwise the
+  // catch-all route redirect strips the `?code`/`?state` from the URL before
+  // react-oidc-context can exchange the authorization code, and login silently
+  // fails back to the sign-in page.
+  if (hasAuthParams() || auth.isLoading || auth.activeNavigator) {
+    return <FullPageSpinner label="Completing sign-in" />;
+  }
 
   return (
     <QueryClientProvider client={queryClient}>

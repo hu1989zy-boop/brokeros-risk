@@ -18,6 +18,10 @@ test('login → list → detail → add investigation note', async ({ page }) =>
   await page.locator('#kc-login').click();
 
   await expect(page.getByRole('heading', { name: 'Risk cases' })).toBeVisible();
+  // Wait for the first page of results to finish loading before searching/paginating,
+  // otherwise the search races the async list query (Next is disabled while loading,
+  // which would falsely report the case as not found).
+  await expect(page.getByText(/Page \d+/)).toBeVisible();
 
   const caseLink = page.getByRole('button', { name: caseNumber!, exact: true });
   while ((await caseLink.count()) === 0) {

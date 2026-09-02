@@ -390,6 +390,30 @@ Q-016 (React) acceptance: **ACCEPTED — PASS WITH CONDITIONS — 2026-09-03 —
 Product Owner**; committed with the React implementation + v6 review package. C2
 (live E2E) scheduled as a follow-up.
 
-Next gate: satisfy C2 (live Keycloak browser E2E) on a host with the dev stack +
-dev credentials; then Q-016 is complete. Q-016's Core-Domain frontend foundation
-is otherwise delivered.
+### C2 live E2E executed — 2026-09-03 (found + fixed a blocking defect)
+
+Condition C2 (live Keycloak → backend → MySQL browser slice) was **executed by
+Claude Code** against a full local stack (`docker compose --profile console`;
+ephemeral, torn down after). It **found a blocking defect** that only appears in a
+real browser redirect — see
+`review/q-016/review-q-016-v6-claude-code-independent-react-review-20260902-234929/C2-LiveE2E-Result.md`:
+
+- **F5 (BLOCKING, fixed):** the OIDC redirect callback was dropped — the catch-all
+  route stripped `?code`/`?state` before `react-oidc-context` could exchange it,
+  so login silently failed to the sign-in page. Fixed in `src/app/App.tsx` by
+  gating the router on `hasAuthParams() || auth.isLoading` until the callback is
+  processed. (Invisible to the MSW unit tests; Codex had honestly skipped the
+  live E2E.)
+- **F6 (minor test, fixed):** the E2E spec raced the async list load; fixed by
+  waiting for the loaded pagination indicator before searching.
+
+After the fixes, the full slice passes live: Keycloak Auth Code + PKCE login →
+`200` list → detail → history → **`201` add-note**; the DB confirms the note
+persisted, the case `version` incremented 1 → 2, and audit records were written.
+The official `npm run test:e2e` passes (1 passed); Vitest remains 27/27.
+
+**C2 SATISFIED.** With F5/F6 fixed, **all Q-016 acceptance criteria pass**.
+
+Q-016 status: **COMPLETE — 2026-09-03** (React Risk Console; live E2E verified).
+The F5/F6 fixes are committed as a follow-up. Next: Core Domain continues per the
+governance backlog; Q-015 remains parked awaiting the MT4/MT5 SDK.
