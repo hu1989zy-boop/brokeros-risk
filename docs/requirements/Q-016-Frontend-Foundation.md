@@ -1,4 +1,11 @@
-# Q-016: Frontend Foundation (Flutter Risk Console)
+# Q-016: Frontend Foundation (Risk Console)
+
+> **Framework pivoted to React (2026-09-02):** the Product Owner chose
+> **React + TypeScript** over Flutter. "Flutter"/"Dart" wording throughout
+> this document is superseded — read the Risk Console as a **React SPA**. The
+> framework is a HOW/technology detail; the Requirement's WHAT (a thin-client
+> Risk Console) is unchanged. Authoritative pivot record: §17 + **ADR-018** +
+> `docs/architecture/q-016-frontend-foundation-react-pivot-addendum.md`.
 
 ## Status
 
@@ -11,7 +18,8 @@ silently assumed.
 
 - Requirement ID: `Q-016`
 - Architecture phase: Phase 1 (introduces a new client-application surface)
-- Frontend technology: **Flutter** (the Product Owner's stated choice).
+- Frontend technology: **React + TypeScript SPA** (Product Owner decision
+  2026-09-02, ADR-018; superseded the earlier Flutter choice, ADR-017).
 - Depends on: the committed backend Q-008…Q-014 HTTP contracts and Q-009's
   JWT-verification security boundary. Introduces backend read/query
   additions (§5.3(3)); does not change existing backend business logic.
@@ -324,7 +332,41 @@ frontend tests in a real browser (`flutter test --platform chrome` on a host
 with a runnable Chrome); **C2** live Keycloak browser end-to-end slice
 (AC 2, AC 6). See the v4 package `OutstandingConditions.md`.
 
-Next gate: Product Owner acceptance decision — accept PASS WITH CONDITIONS
-(reviewer's F1–F4 fixes are in the working tree, see the v4
-`ChangedFiles.md`) and schedule C1/C2, or route the fixes back through Codex.
-No commit or push has been performed.
+Q-016 (Flutter) acceptance: **ACCEPTED — PASS WITH CONDITIONS — 2026-09-02 —
+Product Owner**; committed as `45ef769` (reviewer's F1–F4 fixes included).
+
+### Frontend framework pivot to React — 2026-09-02
+
+After acceptance, the Product Owner decided (2026-09-02) to build the Risk
+Console in **React + TypeScript** instead of Flutter. This is a Product Owner
+(WHAT/strategic) decision; the Q-016 Requirement (a thin-client Risk Console)
+is **unchanged**. Governance delta (Decision Authority §16.5-B connected
+chain), presented as one bundle at the **frontend-pivot authorization gate**:
+
+- **ADR-018** (`docs/adr/ADR-018-frontend-framework-react-spa.md`) — React +
+  TypeScript SPA (Vite), **superseding ADR-017** on the framework/stack only;
+  Status **Accepted — 2026-09-02 — Product Owner**. Component library: **Ant
+  Design**.
+- **React pivot architecture addendum**
+  (`docs/architecture/q-016-frontend-foundation-react-pivot-addendum.md`) —
+  supersedes the Flutter stack sections of the Q-016 Architecture and
+  Implementation Design; the framework-agnostic content of those docs stands.
+- **React implementation prompt**
+  (`prompts/Q-016-React-Implementation-Prompt.md`) — Codex replaces the Flutter
+  `frontend/` with the React foundation; **no backend change** (the delivered
+  `GET /api/risk-cases`, dev Keycloak, and CORS are reused unchanged).
+
+Carried over unchanged: thin-client discipline; Keycloak/OIDC Auth Code + PKCE;
+the additive `GET /api/risk-cases` endpoint (already in `45ef769`); one vertical
+slice + skeleton. The React stack also **resolves the C1 verification gap** —
+Vitest/Playwright run headless Chromium on Apple Silicon (arm64) and CI.
+
+Frontend-pivot gate status: **AUTHORIZED — 2026-09-02 — Product Owner** (ADR-018
+Accepted; ADR-017 Superseded; component library = Ant Design). The React
+implementation prompt (`prompts/Q-016-React-Implementation-Prompt.md`) is CLEARED
+FOR USE.
+
+Next gate: Codex implements the React Risk Console (replacing the Flutter
+`frontend/`, no backend change) → Claude Code independent review → Product Owner
+acceptance → commit. The governance pivot bundle is committed; the Flutter
+`frontend/` remains in the tree until the React implementation replaces it.

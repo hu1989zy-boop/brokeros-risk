@@ -1,5 +1,13 @@
 # Q-016 Frontend Foundation Implementation Design
 
+> **Frontend stack superseded (2026-09-02):** the Product Owner chose **React +
+> TypeScript** over Flutter. The Flutter/Dart specifics below (pubspec,
+> Riverpod, go_router, dio, freezed, widget names) are replaced by **ADR-018**
+> and `q-016-frontend-foundation-react-pivot-addendum.md`, and by the React
+> implementation prompt `prompts/Q-016-React-Implementation-Prompt.md`. The
+> framework-agnostic parts (backend `GET /api/risk-cases` design, auth flow,
+> AC traceability) remain valid.
+
 ## Document Status
 
 - Requirement: Q-016 — V1, APPROVED — 2026-09-02 — Product Owner

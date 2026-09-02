@@ -1,8 +1,13 @@
 # ADR-017: Frontend Foundation (Flutter Risk Console)
 
-- Status: **Accepted — 2026-09-02 — Product Owner** (accepted together with
-  the Q-016 Architecture/Design bundle at the implementation-authorization
-  gate, per Decision Authority §16.5-B)
+- Status: Accepted 2026-09-02, now **Superseded by ADR-018 — 2026-09-02 —
+  Product Owner** — the Product Owner decided to build the Risk Console in
+  **React + TypeScript** instead of Flutter and accepted ADR-018 at the Q-016
+  frontend-pivot gate. The framework/stack decision in this ADR is replaced by
+  **ADR-018**; the framework-agnostic decisions (thin client; Keycloak/OIDC
+  Auth Code + PKCE; the additive `GET /api/risk-cases` endpoint; one vertical
+  slice + skeleton) are carried forward by ADR-018 unchanged. This ADR remains
+  as the historical record of the Flutter foundation delivered in `45ef769`.
 - Date: 2026-09-02
 - Approval origin: drafted under §16.5-B after Q-016 Requirement V1
   approval (2026-09-02). Prepared by Claude Code, external Architect role.
@@ -12,6 +17,8 @@
 - Depends on: the committed backend Q-008 (Risk Case) contracts and Q-009
   (JWT verification). Introduces no dependency on Q-015.
 - Supersedes: None
+- Superseded by: **ADR-018 (Frontend Framework — React + TypeScript SPA)**,
+  Accepted 2026-09-02 — on the framework/stack decision only.
 
 ## Context
 

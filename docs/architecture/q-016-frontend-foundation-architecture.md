@@ -1,5 +1,12 @@
 # Q-016 Frontend Foundation Architecture
 
+> **Frontend stack superseded (2026-09-02):** the Product Owner chose **React +
+> TypeScript** over Flutter. The client-technology sections below (Flutter,
+> Riverpod, go_router, dio, freezed) are replaced by **ADR-018** and
+> `q-016-frontend-foundation-react-pivot-addendum.md`. The framework-agnostic
+> content here (thin client; OIDC/Keycloak flow; the `GET /api/risk-cases`
+> endpoint; security; traceability; one-slice scope) remains authoritative.
+
 ## Document Status
 
 - Requirement: Q-016 — V1, APPROVED — 2026-09-02 — Product Owner (IdP =
