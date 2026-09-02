@@ -1,0 +1,57 @@
++ export DEBIAN_FRONTEND=noninteractive
++ DEBIAN_FRONTEND=noninteractive
++ apt-get update -qq
++ apt-get install -y -qq chromium
+++ command -v chromium
+++ command -v chromium-browser
++ CHROME=/usr/bin/chromium-browser
++ export CHROME_EXECUTABLE=/usr/bin/chromium-browser
++ CHROME_EXECUTABLE=/usr/bin/chromium-browser
++ echo CHROME_EXECUTABLE=/usr/bin/chromium-browser
++ /usr/bin/chromium-browser --version
++ echo 'chrome version unknown'
++ cd /work/frontend
++ flutter pub get
+CHROME_EXECUTABLE=/usr/bin/chromium-browser
+chrome version unknown
++ echo PUBGET_OK
++ echo '===== ANALYZE ====='
++ flutter analyze
+PUBGET_OK
+===== ANALYZE =====
+Analyzing frontend...                                           
+No issues found! (ran in 8.0s)
+ANALYZE_EXIT=0
+===== TEST (chrome platform) =====
++ echo ANALYZE_EXIT=0
++ echo '===== TEST (chrome platform) ====='
++ flutter test --platform chrome
+[1/1] Web SDK                                                       3.2s
+00:00 +0: loading /work/frontend/test/risk_case_notifiers_test.dart
+[CHROME]:
+[CHROME]:Command '/usr/bin/chromium-browser' requires the chromium snap to be installed.
+[CHROME]:Please install it with:
+[CHROME]:
+[CHROME]:snap install chromium
+[CHROME]:
+Failed to launch browser after 3 tries. Command used to launch it: /usr/bin/chromium-browser --user-data-dir=/tmp/flutter_tools.BQLLYK/flutter_tools_chrome_device.ZYTJYH --remote-debugging-port=36719 --disable-background-timer-throttling --disable-extensions --disable-popup-blocking --bwsi --no-first-run --no-default-browser-check --disable-default-apps --disable-translate --disable-search-engine-choice-screen --no-sandbox --headless --window-size=2400,1800 http://localhost:41813/static/index.html?managerUrl=ws%3A%2F%2Flocalhost%3A41813%2F0&debug=false
+00:00 +0 -1: loading /work/frontend/test/risk_case_notifiers_test.dart [E]
+  Failed to load "/work/frontend/test/risk_case_notifiers_test.dart": Failed to launch browser. Make sure you are using an up-to-date Chrome or Edge. Otherwise, consider using -d web-server instead and filing an issue at https://github.com/flutter/flutter/issues.
+  package:flutter_tools/src/base/common.dart 34:3                  throwToolExit
+  package:flutter_tools/src/web/chrome.dart 341:17                 ChromiumLauncher._spawnChromiumProcess.<fn>
+  dart:async/stream_pipe.dart 14:23                                _runUserCode
+  dart:async/stream.dart 1787:11                                   Stream.firstWhere.<fn>
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/web/chrome.dart 314:7                  ChromiumLauncher._spawnChromiumProcess
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/web/chrome.dart 254:29                 ChromiumLauncher.launch
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/test/flutter_web_platform.dart 818:29  BrowserManager.start
+  ===== asynchronous gap ===========================
+  package:flutter_tools/src/test/flutter_web_platform.dart 591:27  FlutterWebPlatform.load
+  ===== asynchronous gap ===========================
+  package:test_core/src/runner/loader.dart 249:27                  Loader.loadFile.<fn>
+  ===== asynchronous gap ===========================
+  package:test_core/src/runner/load_suite.dart 95:21               new LoadSuite.<fn>.<fn>
+  
+00:00 +0 -1: loading /work/frontend/test/risk_case_widgets_test.dart

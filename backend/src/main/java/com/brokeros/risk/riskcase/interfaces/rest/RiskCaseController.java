@@ -3,6 +3,7 @@ package com.brokeros.risk.riskcase.interfaces.rest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 
 import com.brokeros.risk.api.ApiResponse;
 import com.brokeros.risk.riskcase.application.CreateRiskCaseCommand;
@@ -51,6 +52,23 @@ public class RiskCaseController {
         this.associationService = associationService;
         this.resolutionService = resolutionService;
         this.queryService = queryService;
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<RiskCaseListResponse>> list(
+            @RequestParam(required = false)
+            @Pattern(regexp = "OPEN|IN_REVIEW|ACTION_REQUIRED|RESOLVED|CLOSED|CANCELLED")
+            String status,
+            @RequestParam(required = false)
+            @Pattern(regexp = "LOW|NORMAL|HIGH|CRITICAL")
+            String priority,
+            @RequestParam(required = false) String subjectRef,
+            @RequestParam(required = false) String assignee,
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "20") @Min(1) int size) {
+        return ok(RiskCaseListResponse.from(queryService.listCases(
+                actorContextProvider.currentContext(), status, priority,
+                subjectRef, assignee, page, size)));
     }
 
     @PostMapping

@@ -1,0 +1,8 @@
+## main...origin/main
+?? docs/adr/ADR-017-frontend-foundation.md
+?? docs/architecture/q-016-frontend-foundation-architecture.md
+?? docs/architecture/q-016-frontend-foundation-implementation-design.md
+?? docs/requirements/Q-015-Trading-Data-Ingestion-Foundation.md
+?? docs/requirements/Q-016-Frontend-Foundation.md
+?? review/q-015/
+?? review/q-016/

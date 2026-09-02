@@ -1,0 +1,52 @@
+Q-016 TEST INVENTORY
+
+EXECUTED BACKEND TESTS
+
+Focused Q-016 gate — PASS (9 tests, 0 failures, 0 errors, 0 skipped)
+
+- Q016RiskCaseListApplicationTests (3)
+  - authorization precedes bounded filtered repository query
+  - denial prevents repository access
+  - invalid paging prevents repository access
+- Q016RiskCaseListMySqlTests (2, real MySQL 8.4)
+  - filters and summary projection
+  - 100-row cap, stable order, and hasNext paging
+- RiskCaseRestContractTests (4)
+  - includes additive empty list contract while retaining existing route contracts
+
+Full backend gate — PASS (305 tests, 0 failures, 0 errors, 0 skipped)
+
+- All Q-008, Q-009, Q-010, Q-011, Q-012, Q-013, Q-014, and Q-016 datasource
+  aliases were set to the disposable real-MySQL schema.
+- Compilation and package-with-tests-skipped gates also passed.
+- ConfigurationContractIntegrationTests: 7 passed separately.
+
+FRONTEND TEST SOURCE — NOT EXECUTED (Flutter SDK unavailable)
+
+13 test cases are present:
+
+- api_contract_test.dart (3)
+  - list envelope/summary/page parsing
+  - detail/history/note parsing
+  - unknown ResultCode fallback
+- risk_case_notifiers_test.dart (7)
+  - list success/empty/error
+  - detail success/error
+  - operation success + expectedVersion + reload
+  - version conflict + reload and non-conflict error
+- risk_case_widgets_test.dart (3)
+  - list loading/empty/error/success
+  - detail loading/error/success/associations/history
+  - operation error and expected-version submission
+
+MANDATORY FOLLOW-UP COMMANDS
+
+cd frontend
+flutter pub get
+dart run build_runner build --delete-conflicting-outputs
+flutter analyze
+flutter test
+flutter build web
+
+These commands must pass without skipping mandatory cases before AC1, AC2, AC3, AC4,
+AC6, and AC7 can pass.

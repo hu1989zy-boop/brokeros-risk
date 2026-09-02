@@ -10,6 +10,8 @@ import com.brokeros.risk.evidence.domain.EvidenceRef;
 import com.brokeros.risk.riskcase.application.RiskCaseCreationRecord;
 import com.brokeros.risk.riskcase.application.RiskCaseHistoryCursor;
 import com.brokeros.risk.riskcase.application.RiskCaseHistoryEntry;
+import com.brokeros.risk.riskcase.application.RiskCaseListQuery;
+import com.brokeros.risk.riskcase.application.RiskCaseSummary;
 import com.brokeros.risk.riskcase.domain.ActionAssociationEvent;
 import com.brokeros.risk.riskcase.domain.AssignmentChangeRecord;
 import com.brokeros.risk.riskcase.domain.CaseNumber;
@@ -86,6 +88,9 @@ public interface RiskCaseRepository {
 
     List<RiskCaseHistoryEntry> findHistory(
             RiskCaseId caseId, RiskCaseHistoryCursor cursor, int limit);
+
+    List<RiskCaseSummary> findSummaries(
+            RiskCaseListQuery query, int limit, long offset);
 
     record EffectiveEvidence(long eventId, EvidenceRef evidenceRef) {
     }

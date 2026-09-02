@@ -16,6 +16,10 @@ Available engineering knowledge:
   connectivity boundaries, Kustomize rendering, and reuse guidance.
 - `development-standards.md` — mandatory preflight, architecture, API, database,
   security, auditability, review, and completion rules for every future task.
+- `flutter-risk-console-development.md` — thin Flutter client boundaries,
+  browser Authorization Code + PKCE, memory/secure token handling, bounded
+  query projections, Riverpod state, version conflicts, and honest frontend
+  verification.
 - `observability-correlation.md` — separate Request ID and W3C Trace ID
   contracts, safe header validation, Micrometer/MDC lifecycle, logging rules,
   concurrency tests, and exporter boundaries.

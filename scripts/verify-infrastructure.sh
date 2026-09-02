@@ -47,6 +47,13 @@ export MYSQL_HOST_PORT=0
 export REDIS_HOST_PORT=0
 export KAFKA_HOST_PORT=0
 export BACKEND_HOST_PORT=0
+# `docker compose config` interpolates every service's required (`:?`) variables
+# regardless of the active profile. This verifier runs only the `app` profile and
+# never starts the `console`-profile services (Keycloak / console bootstrap), so it
+# supplies harmless placeholders for their required variables purely to satisfy
+# interpolation. These values are never used to start anything here.
+export KEYCLOAK_ADMIN_PASSWORD="verify-infrastructure-unused"
+export KEYCLOAK_OPERATOR_PASSWORD="verify-infrastructure-unused"
 export MYSQL_PASSWORD
 export MYSQL_ROOT_PASSWORD
 if ! MYSQL_PASSWORD=$(openssl rand -hex 24); then

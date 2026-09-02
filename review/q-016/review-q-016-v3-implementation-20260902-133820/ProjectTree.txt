@@ -1,0 +1,63 @@
+Q-016 bounded implementation tree
+
+.
+├── .env.example
+├── backend/src/main
+│   ├── java/com/brokeros/risk/console/infrastructure/configuration
+│   │   └── DevConsoleCorsConfiguration.java
+│   ├── java/com/brokeros/risk/riskcase
+│   │   ├── application
+│   │   │   ├── RiskCaseListQuery.java
+│   │   │   ├── RiskCasePage.java
+│   │   │   ├── RiskCaseQueryService.java
+│   │   │   ├── RiskCaseSummary.java
+│   │   │   └── port/RiskCaseRepository.java
+│   │   ├── infrastructure/persistence/JdbcRiskCaseRepository.java
+│   │   └── interfaces/rest
+│   │       ├── RiskCaseController.java
+│   │       ├── RiskCaseListResponse.java
+│   │       └── RiskCaseSummaryResponse.java
+│   └── resources/application-dev.yml
+├── backend/src/test/java/com/brokeros/risk/riskcase
+│   ├── application/Q016RiskCaseListApplicationTests.java
+│   ├── infrastructure/persistence/Q016RiskCaseListMySqlTests.java
+│   └── interfaces/rest/RiskCaseRestContractTests.java
+├── deploy/keycloak
+│   ├── brokeros-realm.json
+│   └── q016-security-bootstrap.json
+├── docker-compose.yml
+├── docs
+│   ├── configuration/README.md
+│   ├── lessons/2026-09-02-q-016-implementation.md
+│   └── skills
+│       ├── README.md
+│       └── flutter-risk-console-development.md
+├── frontend
+│   ├── .gitignore
+│   ├── README.md
+│   ├── analysis_options.yaml
+│   ├── pubspec.yaml
+│   ├── lib
+│   │   ├── main.dart
+│   │   ├── app/{app_router.dart,app_theme.dart,risk_console_app.dart}
+│   │   ├── core
+│   │   │   ├── api/{api_client.dart,api_contract.dart}
+│   │   │   ├── auth/{auth_controller.dart,auth_gateway.dart,browser_pkce_authenticator.dart,login_page.dart}
+│   │   │   └── config/app_config.dart
+│   │   ├── features/riskcase
+│   │   │   ├── application/{risk_case_notifiers.dart,risk_case_providers.dart}
+│   │   │   ├── data/{risk_case_models.dart,risk_case_repository.dart}
+│   │   │   └── presentation/{add_note_dialog.dart,risk_case_detail_page.dart,risk_case_list_page.dart}
+│   │   └── shared/async_views.dart
+│   ├── test
+│   │   ├── api_contract_test.dart
+│   │   ├── risk_case_notifiers_test.dart
+│   │   ├── risk_case_widgets_test.dart
+│   │   └── support/fake_risk_case_repository.dart
+│   └── web/{index.html,manifest.json}
+└── scripts
+    ├── README.md
+    └── run-risk-console-dev.sh
+
+Excluded intentionally: generated Dart files, dependency caches, build output,
+complete repository tree, complete Git diff, and unrelated Q-015 material.

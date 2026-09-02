@@ -3,6 +3,7 @@ package com.brokeros.risk.riskcase.infrastructure.persistence;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,8 @@ import com.brokeros.risk.evidence.domain.EvidenceRef;
 import com.brokeros.risk.riskcase.application.RiskCaseCreationRecord;
 import com.brokeros.risk.riskcase.application.RiskCaseHistoryCursor;
 import com.brokeros.risk.riskcase.application.RiskCaseHistoryEntry;
+import com.brokeros.risk.riskcase.application.RiskCaseListQuery;
+import com.brokeros.risk.riskcase.application.RiskCaseSummary;
 import com.brokeros.risk.riskcase.application.port.RiskCaseConflictKind;
 import com.brokeros.risk.riskcase.application.port.RiskCasePersistenceConflictException;
 import com.brokeros.risk.riskcase.application.port.RiskCaseRepository;
@@ -540,6 +543,53 @@ public class JdbcRiskCaseRepository implements RiskCaseRepository {
                 caseId.value(), cursor.caseVersion(), cursor.caseVersion(),
                 cursor.eventRank(), cursor.caseVersion(), cursor.eventRank(),
                 cursor.rowId(), limit);
+    }
+
+    @Override
+    public List<RiskCaseSummary> findSummaries(
+            RiskCaseListQuery query, int limit, long offset) {
+        if (limit < 1 || limit > 101 || offset < 0) {
+            throw new IllegalArgumentException("risk case summary query is outside its bound");
+        }
+        StringBuilder sql = new StringBuilder("""
+                SELECT case_number, subject_ref, status, priority,
+                       current_assignee_ref, created_at, updated_at, version
+                FROM risk_case
+                WHERE 1 = 1
+                """);
+        List<Object> arguments = new ArrayList<>();
+        if (query.status() != null) {
+            sql.append(" AND status = ?");
+            arguments.add(query.status().name());
+        }
+        if (query.priority() != null) {
+            sql.append(" AND priority = ?");
+            arguments.add(query.priority().name());
+        }
+        if (query.subjectRef() != null) {
+            sql.append(" AND subject_ref = ?");
+            arguments.add(query.subjectRef().value());
+        }
+        if (query.assigneeRef() != null) {
+            sql.append(" AND current_assignee_ref = ?");
+            arguments.add(query.assigneeRef().value());
+        }
+        sql.append(" ORDER BY updated_at DESC, id DESC LIMIT ? OFFSET ?");
+        arguments.add(limit);
+        arguments.add(offset);
+        return jdbcTemplate.query(sql.toString(),
+                (resultSet, rowNumber) -> {
+                    String assignee = resultSet.getString("current_assignee_ref");
+                    return new RiskCaseSummary(
+                            new CaseNumber(resultSet.getString("case_number")),
+                            new TradingAccountRef(resultSet.getString("subject_ref")),
+                            RiskCaseStatus.valueOf(resultSet.getString("status")),
+                            RiskCasePriority.valueOf(resultSet.getString("priority")),
+                            assignee == null ? null : new ActorRef(assignee),
+                            resultSet.getTimestamp("created_at").toInstant(),
+                            resultSet.getTimestamp("updated_at").toInstant(),
+                            resultSet.getLong("version"));
+                }, arguments.toArray());
     }
 
     private Optional<RiskCase> one(String sql, Object... arguments) {

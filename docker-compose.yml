@@ -92,6 +92,93 @@ services:
       retries: 10
       start_period: 20s
 
+  keycloak:
+    profiles: ["console"]
+    image: quay.io/keycloak/keycloak:26.7.3
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?KEYCLOAK_ADMIN_PASSWORD must be set in .env}
+      KEYCLOAK_OPERATOR_PASSWORD: ${KEYCLOAK_OPERATOR_PASSWORD:?KEYCLOAK_OPERATOR_PASSWORD must be set in .env}
+      KC_HEALTH_ENABLED: "true"
+      KC_HOSTNAME: http://localhost:8180
+      KC_HTTP_ENABLED: "true"
+    ports:
+      - "127.0.0.1:8180:8080"
+    volumes:
+      - ./deploy/keycloak/brokeros-realm.json:/opt/keycloak/data/import/brokeros-realm.json:ro
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          { printf 'HEAD /health/ready HTTP/1.0\r\n\r\n' >&0;
+          grep 'HTTP/1.0 200'; } 0<>/dev/tcp/127.0.0.1/9000
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  security-bootstrap:
+    profiles: ["console"]
+    build:
+      context: ./backend
+    entrypoint:
+      - java
+      - -Dloader.main=com.brokeros.risk.security.interfaces.bootstrap.SecurityBootstrapCommand
+      - -cp
+      - /app/app.jar
+      - org.springframework.boot.loader.launch.PropertiesLauncher
+      - /config/q016-security-bootstrap.json
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_URL: jdbc:mysql://mysql:3306/brokeros_risk?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      DB_USERNAME: brokeros
+      DB_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD must be set in .env}
+      SECURITY_JWT_ISSUER_URI: http://localhost:8180/realms/brokeros
+      SECURITY_JWT_AUDIENCES: brokeros-risk
+      SECURITY_JWT_JWK_SET_URI: http://keycloak:8080/realms/brokeros/protocol/openid-connect/certs
+    volumes:
+      - ./deploy/keycloak/q016-security-bootstrap.json:/config/q016-security-bootstrap.json:ro
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  console-backend:
+    profiles: ["console"]
+    build:
+      context: ./backend
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_URL: jdbc:mysql://mysql:3306/brokeros_risk?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      DB_USERNAME: brokeros
+      DB_PASSWORD: ${MYSQL_PASSWORD:?MYSQL_PASSWORD must be set in .env}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      SECURITY_JWT_ISSUER_URI: http://localhost:8180/realms/brokeros
+      SECURITY_JWT_AUDIENCES: brokeros-risk
+      SECURITY_JWT_JWK_SET_URI: http://keycloak:8080/realms/brokeros/protocol/openid-connect/certs
+      BROKEROS_RISK_CONSOLE_ALLOWED_ORIGIN: http://localhost:4173
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget -q -O - http://localhost:8080/actuator/health >/dev/null 2>&1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
 volumes:
   mysql-data:
   redis-data:

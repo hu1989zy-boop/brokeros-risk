@@ -110,6 +110,38 @@ public class RiskCaseQueryService {
         }
     }
 
+    public RiskCasePage<RiskCaseSummary> listCases(
+            ActorContext actorContext,
+            String rawStatus,
+            String rawPriority,
+            String rawSubjectRef,
+            String rawAssigneeRef,
+            int page,
+            int requestedSize) {
+        long started = System.nanoTime();
+        requireAuthorized(actorContext);
+        if (page < 0 || requestedSize < 1) {
+            throw new RiskCaseException(ResultCode.RISK_CASE_INVARIANT_VIOLATION);
+        }
+        int size = Math.min(requestedSize, 100);
+        RiskCaseListQuery query = listQuery(
+                rawStatus, rawPriority, rawSubjectRef, rawAssigneeRef);
+        long offset = Math.multiplyExact((long) page, size);
+        try {
+            List<RiskCaseSummary> fetched = new ArrayList<>(
+                    repository.findSummaries(query, size + 1, offset));
+            boolean hasNext = fetched.size() > size;
+            if (hasNext) {
+                fetched.remove(fetched.size() - 1);
+            }
+            metrics.recordSuccess(RiskCaseMetricOperation.READ);
+            return new RiskCasePage<>(fetched, page, size, hasNext);
+        } finally {
+            metrics.recordDuration(RiskCaseMetricOperation.READ,
+                    Duration.ofNanos(System.nanoTime() - started));
+        }
+    }
+
     private void requireAuthorized(ActorContext actorContext) {
         Objects.requireNonNull(actorContext, "actorContext must not be null");
         try {
@@ -126,6 +158,31 @@ public class RiskCaseQueryService {
         } catch (IllegalArgumentException exception) {
             throw new RiskCaseException(ResultCode.RISK_CASE_NOT_FOUND, exception);
         }
+    }
+
+    private RiskCaseListQuery listQuery(
+            String status,
+            String priority,
+            String subjectRef,
+            String assigneeRef) {
+        try {
+            return new RiskCaseListQuery(
+                    blank(status) ? null
+                            : com.brokeros.risk.riskcase.domain.RiskCaseStatus.valueOf(status),
+                    blank(priority) ? null
+                            : com.brokeros.risk.riskcase.domain.RiskCasePriority.valueOf(priority),
+                    blank(subjectRef) ? null
+                            : new com.brokeros.risk.tradingaccount.domain.TradingAccountRef(
+                                    subjectRef),
+                    blank(assigneeRef) ? null
+                            : new com.brokeros.risk.security.domain.ActorRef(assigneeRef));
+        } catch (IllegalArgumentException exception) {
+            throw RiskCaseErrors.invalid(exception);
+        }
+    }
+
+    private boolean blank(String value) {
+        return value == null || value.isBlank();
     }
 
     private RiskCaseHistoryCursor decode(String cursor) {

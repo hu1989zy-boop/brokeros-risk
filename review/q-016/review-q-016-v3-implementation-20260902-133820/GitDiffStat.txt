@@ -1,0 +1,24 @@
+Tracked diff against HEAD
+
+ .env.example                                       |  2 +
+ .../riskcase/application/RiskCaseQueryService.java | 57 ++++++++++++++
+ .../application/port/RiskCaseRepository.java       |  5 ++
+ .../persistence/JdbcRiskCaseRepository.java        | 50 +++++++++++++
+ .../interfaces/rest/RiskCaseController.java        | 18 +++++
+ .../interfaces/rest/RiskCaseRestContractTests.java | 12 ++-
+ docker-compose.yml                                 | 87 ++++++++++++++++++++++
+ docs/configuration/README.md                       | 13 ++++
+ docs/skills/README.md                              |  4 +
+ frontend/README.md                                 | 56 ++++++++++++--
+ scripts/README.md                                  |  6 ++
+ 11 files changed, 302 insertions(+), 8 deletions(-)
+
+Untracked Q-016 implementation inventory not represented by `git diff --stat`
+
+- Backend: 8 new production/configuration files and 2 new test files.
+- Frontend: 29 new source/config/test/web files; the pre-existing README is modified.
+- Dev setup: 2 Keycloak JSON files and 1 launcher script.
+- Engineering knowledge: 1 new skill and 1 new Lessons Learned entry.
+- Review: this new 10-file v3 directory; archive is created only after validation.
+
+The complete Git diff is intentionally excluded.

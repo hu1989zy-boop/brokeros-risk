@@ -1,0 +1,19 @@
+{
+  "provisioningSource": "q016-local-keycloak",
+  "provisioningRef": "brokeros/q016-operator",
+  "actors": [
+    {
+      "actorType": "HUMAN",
+      "principals": [
+        {
+          "issuer": "http://localhost:8180/realms/brokeros",
+          "subject": "16000000-0000-4000-8000-000000000001"
+        }
+      ],
+      "capabilities": [
+        "risk-case:note",
+        "risk-case:read"
+      ]
+    }
+  ]
+}

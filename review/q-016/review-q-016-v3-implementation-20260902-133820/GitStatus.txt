@@ -1,0 +1,59 @@
+Repository baseline
+
+HEAD 8292e13a23a93fd34a486a46b04743786f122a1f
+     feat: complete Q-008 risk case foundation
+
+Initial pre-existing untracked paths
+
+?? docs/adr/ADR-017-frontend-foundation.md
+?? docs/architecture/q-016-frontend-foundation-architecture.md
+?? docs/architecture/q-016-frontend-foundation-implementation-design.md
+?? docs/requirements/Q-015-Trading-Data-Ingestion-Foundation.md
+?? docs/requirements/Q-016-Frontend-Foundation.md
+?? prompts/Q-016-Implementation-Prompt.md
+?? review/q-015/
+?? review/q-016/
+
+Q-016 implementation tracked modifications
+
+ M .env.example
+ M backend/src/main/java/com/brokeros/risk/riskcase/application/RiskCaseQueryService.java
+ M backend/src/main/java/com/brokeros/risk/riskcase/application/port/RiskCaseRepository.java
+ M backend/src/main/java/com/brokeros/risk/riskcase/infrastructure/persistence/JdbcRiskCaseRepository.java
+ M backend/src/main/java/com/brokeros/risk/riskcase/interfaces/rest/RiskCaseController.java
+ M backend/src/test/java/com/brokeros/risk/riskcase/interfaces/rest/RiskCaseRestContractTests.java
+ M docker-compose.yml
+ M docs/configuration/README.md
+ M docs/skills/README.md
+ M frontend/README.md
+ M scripts/README.md
+
+Q-016 implementation untracked additions
+
+?? backend/src/main/java/com/brokeros/risk/console/
+?? backend/src/main/java/com/brokeros/risk/riskcase/application/RiskCaseListQuery.java
+?? backend/src/main/java/com/brokeros/risk/riskcase/application/RiskCasePage.java
+?? backend/src/main/java/com/brokeros/risk/riskcase/application/RiskCaseSummary.java
+?? backend/src/main/java/com/brokeros/risk/riskcase/interfaces/rest/RiskCaseListResponse.java
+?? backend/src/main/java/com/brokeros/risk/riskcase/interfaces/rest/RiskCaseSummaryResponse.java
+?? backend/src/main/resources/application-dev.yml
+?? backend/src/test/java/com/brokeros/risk/riskcase/application/Q016RiskCaseListApplicationTests.java
+?? backend/src/test/java/com/brokeros/risk/riskcase/infrastructure/persistence/Q016RiskCaseListMySqlTests.java
+?? deploy/keycloak/
+?? docs/lessons/2026-09-02-q-016-implementation.md
+?? docs/skills/flutter-risk-console-development.md
+?? frontend/.gitignore
+?? frontend/analysis_options.yaml
+?? frontend/lib/
+?? frontend/pubspec.yaml
+?? frontend/test/
+?? frontend/web/
+?? scripts/run-risk-console-dev.sh
+?? review/q-016/review-q-016-v3-implementation-20260902-133820/
+
+Staging/commit/push
+
+- No files staged.
+- No commit created.
+- Nothing pushed.
+- Older timestamped review packages were not modified.

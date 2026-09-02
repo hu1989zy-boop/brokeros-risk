@@ -56,6 +56,13 @@ not make that value an approved production default. `Sensitivity` is
 | Spring Boot profiles | `spring.profiles.active` | `SPRING_PROFILES_ACTIVE` | Profile list | None | Yes in supported Compose/Kubernetes run modes | deployment | Internal | Must select an existing profile | environment, Compose, test/prod ConfigMap overlays | Yes | Profiles are selection, not a security boundary |
 | Docker Compose MySQL | Not an application property | `MYSQL_PASSWORD` | String | None | Yes for Compose | local/test | Secret | Compose required-variable check | ignored `.env` or ephemeral CI environment | Container restart | Local/CI only; never reuse as production evidence |
 | Docker Compose MySQL | Not an application property | `MYSQL_ROOT_PASSWORD` | String | None | Yes for Compose | local/test | Secret | Compose required-variable check | ignored `.env` or ephemeral CI environment | Container restart | Local/CI only; never expose value |
+| Docker Compose MySQL | Host port mapping | `MYSQL_HOST_PORT` | Integer port | `3306` | No | local/test | Internal | Docker port binding | environment or ignored `.env` | Container restart | Local/CI port override only |
+| Docker Compose Redis | Host port mapping | `REDIS_HOST_PORT` | Integer port | `6379` | No | local/test | Internal | Docker port binding | environment or ignored `.env` | Container restart | Local/CI port override only |
+| Docker Compose Kafka | Host port mapping | `KAFKA_HOST_PORT` | Integer port | `29092` | No | local/test | Internal | Docker port binding | environment or ignored `.env` | Container restart | Local/CI port override only |
+| Docker Compose backend | Host port mapping | `BACKEND_HOST_PORT` | Integer port | `8080` | No | local/test | Internal | Docker port binding | environment or ignored `.env` | Container restart | Existing app-profile override; Q-016 console profile remains fixed at `8080` for its seeded redirect/CORS contract |
+| Q-016 Keycloak dev service | Bootstrap administrator password | `KEYCLOAK_ADMIN_PASSWORD` | String | None | Yes for console profile | local dev | Secret | Compose required-variable check; consumed only by Keycloak bootstrap | ignored `.env` | Container recreation | Development-only; never a production credential |
+| Q-016 Keycloak dev operator | Seeded operator password | `KEYCLOAK_OPERATOR_PASSWORD` | String | None | Yes for console profile | local dev | Secret | Compose required-variable check; set after realm import | ignored `.env` | Keycloak restart/reprovision | Development-only; value is not committed |
+| BrokerOS Q-016 Console | `brokeros.risk.console.allowed-origin` | `BROKEROS_RISK_CONSOLE_ALLOWED_ORIGIN` | Exact browser origin | `http://localhost:4173` | Yes for dev web console | dev | Internal | Exact-origin Spring CORS filter; no wildcard or credentials | packaged dev YAML and console Compose environment | Yes | Development-only CORS contract; production security configuration is unchanged |
 | Spring Boot Actuator | `management.endpoints.web.exposure.include` | None | List | `health,info` | Yes | all | Internal | Contract test excludes `env` and `configprops` | packaged base YAML | Yes | Expansion requires Requirement/security review |
 | Micrometer Tracing | `management.tracing.propagation.type` | None | Enum/list | `w3c` | Yes | all | Internal | Spring/Micrometer binding | packaged base YAML | Yes | ADR-007; do not add proprietary propagation |
 | Spring Boot tracing export | `management.otlp.tracing.export.enabled` | None | Boolean | `false` | Yes | all | Internal | Boolean binding | packaged base YAML | Yes | Exporter requires a future Requirement/ADR |
@@ -76,7 +83,13 @@ not make that value an approved production default. `Sensitivity` is
 - `prod` requires externally supplied database username/password, uses fail-fast
   datasource initialization, larger Hikari defaults, disables OpenAPI/Swagger,
   and uses INFO logging.
+- `dev` adds only the exact local Flutter web origin used by the Q-016 CORS
+  filter. JWT issuer, audience, and JWK settings are still mandatory and are
+  supplied by the Q-016 console Compose service from the seeded Keycloak realm.
 - Docker Compose's optional backend profile selects Spring profile `test`.
+- Docker Compose's optional `console` profile selects Spring profile `dev` for
+  the separate console backend service; it does not weaken the normal app or
+  production profile.
 - Kubernetes test/prod overlays select the matching Spring profile.
 
 Profiles do not establish authorization, secret protection, broker identity, or

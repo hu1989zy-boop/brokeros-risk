@@ -1,0 +1,4 @@
+brokeros:
+  risk:
+    console:
+      allowed-origin: ${BROKEROS_RISK_CONSOLE_ALLOWED_ORIGIN:http://localhost:4173}

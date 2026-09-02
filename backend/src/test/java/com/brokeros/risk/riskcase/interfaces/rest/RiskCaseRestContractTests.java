@@ -32,7 +32,12 @@ class RiskCaseRestContractTests {
                 .collect(Collectors.toSet());
         Set<String> gets = Arrays.stream(RiskCaseController.class.getDeclaredMethods())
                 .filter(method -> method.isAnnotationPresent(GetMapping.class))
-                .flatMap(method -> Arrays.stream(method.getAnnotation(GetMapping.class).value()))
+                .flatMap(method -> {
+                    String[] values = method.getAnnotation(GetMapping.class).value();
+                    return values.length == 0
+                            ? java.util.stream.Stream.of("")
+                            : Arrays.stream(values);
+                })
                 .collect(Collectors.toSet());
 
         assertThat(posts).containsExactlyInAnyOrder(
@@ -50,7 +55,7 @@ class RiskCaseRestContractTests {
                 "/{caseNumber}/cancellation", "/{caseNumber}/resume",
                 "/{caseNumber}/reopen");
         assertThat(gets).containsExactlyInAnyOrder(
-                "/{caseNumber}", "/{caseNumber}/history");
+                "", "/{caseNumber}", "/{caseNumber}/history");
         assertThat(Arrays.stream(RiskCaseController.class.getDeclaredMethods())
                 .noneMatch(method -> method.isAnnotationPresent(DeleteMapping.class))).isTrue();
     }
@@ -82,7 +87,8 @@ class RiskCaseRestContractTests {
                 RiskCaseDecisionAssociationResponse.class,
                 RiskCaseActionAssociationResponse.class, RiskCaseNoteResponse.class,
                 RiskCaseResolutionResponse.class, RiskCaseHistoryEntryResponse.class,
-                RiskCaseHistoryPageResponse.class);
+                RiskCaseHistoryPageResponse.class, RiskCaseSummaryResponse.class,
+                RiskCaseListResponse.class);
         responses.forEach(response -> assertThat(componentNames(response))
                 .doesNotContain("id", "caseId", "rowId", "resolutionId"));
     }
