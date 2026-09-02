@@ -1,0 +1,78 @@
+Q-008 TEST INVENTORY
+Generated: 2026-09-02T02:45:50+08:00
+
+Q-008 total: 54 tests, 0 failures, 0 errors, 0 skipped
+Non-MySQL:    35 tests
+Real MySQL:   19 tests on MySQL 8.4.11
+
+5  com.brokeros.risk.riskcase.RiskCaseArchitectureTests
+   - domain framework/persistence/vendor independence
+   - application transaction ownership without JDBC/vendor access
+   - named aggregate operations and no generic status mutation
+   - no upstream persistence or external execution
+   - independent Audit boundary direction
+
+7  com.brokeros.risk.riskcase.application.RiskCaseApplicationTests
+   - authorization denial before load/provider calls
+   - exact replay and changed-payload conflict
+   - authorize/replay/subject-provider/atomic-write ordering
+   - trusted ActorContext supplies assignment/audit actor
+   - Action originating-Decision relational invariant
+   - ActionOutcome pertaining-Action relational invariant
+   - failed read audit prevents disclosure
+
+15 com.brokeros.risk.riskcase.domain.RiskCaseDomainTests
+   - canonical RC-UUIDv4 CaseNumber
+   - manual and decision-driven creation
+   - assignment-gated begin review
+   - direct resolution and ACTION_REQUIRED resolution paths
+   - return-to-review cycle behavior
+   - close/reopen and resolved/resume cycles
+   - cancellation terminality and OPEN-only unassign
+   - stale version and priority invariants
+   - association status/relationship invariants
+   - immutable cycle-bound ResolutionRecord
+   - exactly-one version increment/deterministic ordering
+
+1  com.brokeros.risk.riskcase.infrastructure.observability.RiskCaseMetricsTests
+   - bounded low-cardinality operation/outcome/conflict/capability tags
+
+7  com.brokeros.risk.riskcase.infrastructure.persistence.Q008MySqlMigrationTests
+   - dynamic V7-to-V8 pending migration and exact 13-table ownership
+   - exact PK/unique/FK/check/index metadata
+   - root code/identifier/assignment/Decision shape checks
+   - global primary Decision and one Resolution per cycle
+   - restrictive append-only/snapshot foreign keys
+   - EXPLAIN-backed lookup/ordering indexes
+   - exact column catalog omitting severity/risk/team/execution payload
+
+12 com.brokeros.risk.riskcase.infrastructure.persistence.Q008MySqlPersistenceTests
+   - create and exact replay write one root/transition/audit
+   - history failure rolls back root and audit
+   - audit failure rolls back root and history
+   - two writers on one version produce one winner and no loser rows
+   - concurrent decision-driven creation elects one primary case
+   - read-audit failure prevents detail response
+   - concurrent resolve writes one resolution/audit
+   - concurrent close versus resume produces one terminal history
+   - concurrent reopen starts one new cycle
+   - duplicate Evidence association appends one immutable event
+   - deterministic history cursor pagination
+   - append-only notes/Evidence/Actions and two complete resolution cycles
+
+3  com.brokeros.risk.riskcase.infrastructure.reference.RiskCaseReferenceAdapterTests
+   - strict subject bar accepts only ELIGIBLE and separates two rejection types
+   - every provenance adapter maps not-found without accepting opaque strings
+   - every provider authority failure maps fail-closed unavailable
+
+4  com.brokeros.risk.riskcase.interfaces.rest.RiskCaseRestContractTests
+   - exact 21 named routes and no DELETE
+   - request DTOs exclude actor/time/status/internal ID/execution command
+   - response DTOs exclude internal BIGINT identity
+   - exact nine Q-008 ResultCodes and HTTP statuses
+
+FULL REPOSITORY GATE
+58 Surefire reports
+300 tests, 0 failures, 0 errors, 0 skipped
+Q-009, Q-010, Q-011, Q-012, Q-013, Q-014, Q-008 datasource variables enabled
+against one disposable MySQL 8.4.11 instance.

@@ -1,0 +1,17 @@
+## main...origin/main
+ M backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+ M docs/architecture/q-008-risk-case-foundation-implementation-design.md
+ M docs/requirements/Q-008-Requirement.md
+ M docs/skills/development-standards.md
+ M scripts/verify-static.sh
+?? backend/src/main/java/com/brokeros/risk/audit/
+?? backend/src/main/java/com/brokeros/risk/riskcase/
+?? backend/src/main/resources/db/migration/V8__create_risk_case_foundation.sql
+?? backend/src/test/java/com/brokeros/risk/riskcase/
+?? docs/architecture/q-008-risk-case-foundation-provider-binding-addendum.md
+?? docs/lessons/2026-09-02-q-008-implementation.md
+?? prompts/Q-008-Implementation-Prompt.md
+?? review/q-008/review-q-008-implementation-readiness-20260902-020000/
+?? review/q-008/review-q-008-v5-implementation-20260902-024550.zip
+?? review/q-008/review-q-008-v5-implementation-20260902-024550/
+?? review/q-008/review-q-008-v6-claude-code-independent-review-20260902-030000/

@@ -1,0 +1,27 @@
+Q-008 bounded change statistics
+Captured before ZIP creation; no complete Git diff is included.
+
+Tracked diff from repository baseline:
+  backend/src/main/java/com/brokeros/risk/api/ResultCode.java  +18 / -0
+  docs/requirements/Q-008-Requirement.md                      +44 / -10  [pre-existing user change]
+  docs/skills/development-standards.md                        +9 / -0
+  scripts/verify-static.sh                                    +35 / -1
+  tracked subtotal                                             +106 / -11
+
+New implementation files:
+  backend/src/main/java/com/brokeros/risk/riskcase/   95 files / 4,621 lines
+  backend/src/main/java/com/brokeros/risk/audit/       3 files /    83 lines
+  backend/src/test/java/com/brokeros/risk/riskcase/    8 files / 1,995 lines
+  V8__create_risk_case_foundation.sql                  1 file  /   259 lines
+  Q-008 Lessons Learned                                1 file  /    63 lines
+
+Pre-existing untracked user/governance files preserved:
+  q-008-risk-case-foundation-provider-binding-addendum.md      155 lines
+  Q-008-Implementation-Prompt.md                               192 lines
+  review-q-008-implementation-readiness-20260902-020000/        2 files / 153 lines
+
+New review evidence:
+  review-q-008-v5-implementation-20260902-024550/       10 files before archive
+
+The tracked `git diff --stat` does not enumerate untracked files; the bounded
+counts above make that scope explicit without embedding the full diff.

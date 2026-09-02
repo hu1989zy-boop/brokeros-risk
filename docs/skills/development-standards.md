@@ -94,6 +94,15 @@ com.brokeros.risk.<module>
 - Use enums with stable codes, never ordinals or magic strings.
 - Express complex transitions through named domain behavior rather than
   arbitrary status setters.
+- When one material command changes an optimistic aggregate root and appends
+  case-owned history plus an independently owned Audit Record, keep the root
+  CAS, history inserts, and audit insert in one local database transaction.
+  Reserve the next version with `UPDATE ... WHERE version = ?`, require exactly
+  one updated row, and never retry a stale command with a freshly loaded
+  version. Prove atomicity against the supported real database with separate
+  failure injection for a history insert and for the audit insert; in both
+  cases the root version/state and every command-owned row must remain
+  unchanged.
 - When an idempotency fingerprint includes an unordered multi-reference set,
   frame every raw value, de-duplicate it, and sort it deterministically before
   hashing. If the approved replay check precedes content validation, preserve

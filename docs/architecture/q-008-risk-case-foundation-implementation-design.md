@@ -2,17 +2,22 @@
 
 ## Status
 
-Design Complete — Ready for Architect Design Review
+**Design APPROVED (V4); implementation AUTHORIZED and delivered.** The
+authoritative, single live-status source for Q-008 is the Requirement's
+Implementation Gate (`docs/requirements/Q-008-Requirement.md` §26) plus the
+V5 Provider Binding Addendum §5 — authoritative if this header ever appears
+to disagree (per `docs/engineering/AI-Engineering-Execution-Protocol.md`
+§16). Summary as of 2026-09-02:
 
 | Gate | Result |
 | --- | --- |
 | Requirement | PASS / APPROVED |
 | Architecture | PASS / APPROVED |
 | ADR-010 | ACCEPTED |
-| Implementation Design Artifact | COMPLETE |
-| Design Review | READY FOR ARCHITECT REVIEW — NOT APPROVED |
-| Implementation | NOT STARTED |
-| Implementation Allowed | NO |
+| Implementation Design (this doc, V4) | APPROVED |
+| Provider Binding Addendum (V5) | APPROVED — see §26 / addendum §5 |
+| Implementation | DELIVERED by Codex; independently reviewed by Claude Code |
+| Implementation Allowed | YES — AUTHORIZED 2026-09-02 (see §26) |
 
 This document resolves the two Implementation Design deferrals authorized by
 Q-008 and ADR-010: the concrete CaseNumber strategy and the relational shape
@@ -941,9 +946,17 @@ Design deferrals:
 3. **External Architect Design approval is not yet recorded.** This document
    and V4 Review are evidence for that review, not self-approval.
 
-Design Gate: **READY FOR ARCHITECT REVIEW — NOT APPROVED**
+Design Gate: **APPROVED (V4) — 2026-08-25 — external Architect; the three
+"blockers" recorded in this §17 above are historical (they were true at
+drafting time) and are all now resolved:** the reference providers exist
+(Q-011…Q-014), the authenticated Actor/authorization provider exists
+(Q-009), and external Architect design approval is recorded. The single
+live-status source is the Requirement's §26, authoritative if this section
+ever appears to disagree (per
+`docs/engineering/AI-Engineering-Execution-Protocol.md` §16).
 
-Implementation Allowed: **NO**
+Implementation Allowed: **YES — AUTHORIZED 2026-09-02 (see Requirement
+§26).**
 
 ## 18. Explicit Deferred Scope
 

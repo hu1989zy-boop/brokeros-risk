@@ -1,0 +1,73 @@
+BrokerOS Risk — bounded Q-008 implementation tree
+
+backend/
+├── src/main/java/com/brokeros/risk/
+│   ├── api/
+│   │   └── ResultCode.java                         [9 Q-008 contracts added]
+│   ├── audit/                                      [3 files]
+│   │   ├── application/port/AuditRecordWriter.java
+│   │   ├── domain/AuditRecord.java
+│   │   └── infrastructure/persistence/JdbcAuditRecordWriter.java
+│   └── riskcase/                                   [95 production files]
+│       ├── application/                            [services, commands, cursors, audit/fingerprint]
+│       │   └── port/                               [repository, metrics, 5 provider ports]
+│       ├── domain/                                 [aggregate, VOs, enums, immutable records]
+│       │   └── RiskCase.java
+│       ├── infrastructure/
+│       │   ├── configuration/RiskCaseModuleConfiguration.java
+│       │   ├── observability/RiskCaseMetrics.java
+│       │   ├── persistence/
+│       │   │   ├── JdbcRiskCaseRepository.java
+│       │   │   └── MySqlRiskCaseConstraintClassifier.java
+│       │   └── reference/                          [Q-010 through Q-014 adapters]
+│       └── interfaces/rest/                        [controller + request/response DTOs]
+│           └── RiskCaseController.java             [21 named routes]
+├── src/main/resources/db/migration/
+│   └── V8__create_risk_case_foundation.sql         [13 additive tables]
+└── src/test/java/com/brokeros/risk/riskcase/       [8 classes, 54 tests]
+    ├── RiskCaseArchitectureTests.java
+    ├── application/RiskCaseApplicationTests.java
+    ├── domain/RiskCaseDomainTests.java
+    ├── infrastructure/observability/RiskCaseMetricsTests.java
+    ├── infrastructure/persistence/
+    │   ├── Q008MySqlMigrationTests.java
+    │   └── Q008MySqlPersistenceTests.java
+    ├── infrastructure/reference/RiskCaseReferenceAdapterTests.java
+    └── interfaces/rest/RiskCaseRestContractTests.java
+
+docs/
+├── adr/
+│   └── ADR-010-risk-case-foundation.md              [read, unchanged]
+├── architecture/
+│   ├── q-008-risk-case-foundation-implementation-design.md [read, unchanged]
+│   └── q-008-risk-case-foundation-provider-binding-addendum.md [pre-existing user change]
+├── lessons/
+│   └── 2026-09-02-q-008-implementation.md
+├── requirements/
+│   └── Q-008-Requirement.md                         [pre-existing user change]
+└── skills/
+    └── development-standards.md                     [atomicity rule added]
+
+prompts/
+└── Q-008-Implementation-Prompt.md                   [pre-existing user change]
+
+review/q-008/
+├── review-q-008-implementation-readiness-20260902-020000/ [pre-existing, untouched]
+└── review-q-008-v5-implementation-20260902-024550/  [this package]
+    ├── ArchitectureReview.md
+    ├── DesignTraceability.md
+    ├── GitDiffStat.txt
+    ├── GitStatus.txt
+    ├── OutstandingItems.md
+    ├── ProjectTree.txt
+    ├── SecurityReview.md
+    ├── Summary.md
+    ├── TestInventory.txt
+    └── Verification.md
+
+scripts/
+└── verify-static.sh                                 [Q-008 exact static contracts]
+
+Excluded from this bounded tree: unchanged upstream Q-009 through Q-014
+implementation trees, build output, complete Git diff, and historical review
+package contents.

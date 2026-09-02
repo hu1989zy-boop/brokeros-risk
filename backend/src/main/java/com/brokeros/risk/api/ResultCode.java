@@ -134,6 +134,24 @@ public enum ResultCode {
             "ACTION_OUTCOME_ACTOR_TYPE_NOT_PERMITTED", "Actor type is not permitted for action outcome recording", HttpStatus.FORBIDDEN),
     ACTION_OUTCOME_AUTHORITY_UNAVAILABLE(
             "ACTION_OUTCOME_AUTHORITY_UNAVAILABLE", "Action outcome authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
+    RISK_CASE_NOT_FOUND(
+            "RISK_CASE_NOT_FOUND", "Risk case was not found", HttpStatus.NOT_FOUND),
+    RISK_CASE_INVALID_TRANSITION(
+            "RISK_CASE_INVALID_TRANSITION", "Risk case transition is invalid", HttpStatus.UNPROCESSABLE_ENTITY),
+    RISK_CASE_INVARIANT_VIOLATION(
+            "RISK_CASE_INVARIANT_VIOLATION", "Risk case invariant is violated", HttpStatus.UNPROCESSABLE_ENTITY),
+    RISK_CASE_VERSION_CONFLICT(
+            "RISK_CASE_VERSION_CONFLICT", "Risk case version conflicts with current state", HttpStatus.CONFLICT),
+    RISK_CASE_IDEMPOTENCY_CONFLICT(
+            "RISK_CASE_IDEMPOTENCY_CONFLICT", "Risk case creation conflicts with a prior request", HttpStatus.CONFLICT),
+    RISK_CASE_PRIMARY_DECISION_CONFLICT(
+            "RISK_CASE_PRIMARY_DECISION_CONFLICT", "Decision already has a primary risk case", HttpStatus.CONFLICT),
+    RISK_CASE_REFERENCE_NOT_FOUND(
+            "RISK_CASE_REFERENCE_NOT_FOUND", "Risk case reference was not found", HttpStatus.UNPROCESSABLE_ENTITY),
+    RISK_CASE_REFERENCE_PROVIDER_UNAVAILABLE(
+            "RISK_CASE_REFERENCE_PROVIDER_UNAVAILABLE", "Risk case reference provider is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
+    RISK_CASE_SUBJECT_NOT_ELIGIBLE(
+            "RISK_CASE_SUBJECT_NOT_ELIGIBLE", "Risk case subject is not eligible", HttpStatus.UNPROCESSABLE_ENTITY),
     INTERNAL_ERROR("INTERNAL_ERROR", "Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final String code;

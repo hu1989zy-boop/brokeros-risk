@@ -1,0 +1,6 @@
+ .../java/com/brokeros/risk/api/ResultCode.java     | 18 ++++++
+ ...8-risk-case-foundation-implementation-design.md | 15 +++--
+ docs/requirements/Q-008-Requirement.md             | 69 +++++++++++++++++-----
+ docs/skills/development-standards.md               |  9 +++
+ scripts/verify-static.sh                           | 36 ++++++++++-
+ 5 files changed, 127 insertions(+), 20 deletions(-)

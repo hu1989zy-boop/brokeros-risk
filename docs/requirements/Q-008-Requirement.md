@@ -2,7 +2,14 @@
 
 ## Status
 
-Approved — Implementation Design V4 Approved / Implementation Authorization Blocked by Prerequisites
+**The authoritative, single live-status source for Q-008 is §26 (the
+Implementation Gate), authoritative if this summary header ever appears to
+disagree (per `docs/engineering/AI-Engineering-Execution-Protocol.md` §16).**
+Summary as of 2026-09-02: Requirement / Architecture / ADR-010 /
+Implementation Design V4 / V5 Binding Addendum all APPROVED; the two
+prerequisites (providers + auth) are resolved; **implementation AUTHORIZED
+(2026-09-02), delivered by Codex, and independently reviewed by Claude
+Code — see §26.**
 
 | Gate | Result |
 | --- | --- |
@@ -11,9 +18,9 @@ Approved — Implementation Design V4 Approved / Implementation Authorization Bl
 | Final Architecture Approval | PASS — external Architect decision recorded 2026-08-24 |
 | ADR-010 | Accepted — external Architect approval |
 | Implementation Design V4 | APPROVED — external Architect decision recorded 2026-08-25 |
-| Implementation | NOT STARTED |
-| Implementation Authorization | BLOCKED BY PREREQUISITES |
-| Implementation Allowed | NO |
+| Provider Binding Addendum V5 | APPROVED — 2026-09-02 (see §26) |
+| Implementation | DELIVERED + independently reviewed (see §26) |
+| Implementation Allowed | YES — AUTHORIZED 2026-09-02 (see §26) |
 
 - Requirement ID: `Q-008`
 - Architecture phase: Phase 1
@@ -21,7 +28,8 @@ Approved — Implementation Design V4 Approved / Implementation Authorization Bl
 - Approved date: 2026-08-24
 - Governing core-domain decision: ADR-009
 - Authoritative Risk Case decision: ADR-010
-- Implementation authorization: BLOCKED BY PREREQUISITES
+- Implementation authorization: **AUTHORIZED 2026-09-02 — see §26 (the
+  single live-status source)**
 
 This Requirement was approved through an explicit external Architect decision
 on 2026-08-24. The approval covers intake, lifecycle, domain boundaries, audit
@@ -31,9 +39,15 @@ API, schema, migration, Kafka, Redis, adapter, or other business
 implementation. The external Architect approved the exact Q-008 Implementation
 Design V4 on 2026-08-25, including its CaseNumber, immutable Resolution History,
 aggregate, concurrency, reference, persistence, audit, lifecycle, API, and
-ADR-009/ADR-010 compatibility decisions. No Implementation Design V5 is
-required. Implementation authorization remains blocked by prerequisites and is
-not inferred from Design approval.
+ADR-009/ADR-010 compatibility decisions. When the five reference providers
+and the authorization provider later shipped (Q-009…Q-014), a V5 Provider
+Binding Addendum was added to bind Design §14's abstract ports to the
+concrete services; implementation was then authorized on 2026-09-02. The
+current authoritative state is §26. (This paragraph describes the
+Requirement-approval history; the earlier statements "no V5 required" and
+"authorization remains blocked" were true at drafting time and have since
+been superseded, per `docs/engineering/AI-Engineering-Execution-Protocol.md`
+§16.)
 
 ## 1. Background
 
@@ -120,9 +134,11 @@ the later Evidence/Decision; those remain in the Core Domain boundary.
 
 No incompatible conflict or unresolved Architecture or Design Gate blocker
 remains. The external Architect approved Implementation Design V4 on
-2026-08-25. Implementation remains blocked because authoritative upstream
-reference providers—including the typed Trading Account subject authority—are
-absent, and no authenticated Actor/authorization provider exists.
+2026-08-25. (Historical, now superseded: at that time implementation was
+blocked because the upstream reference providers and the authenticated
+Actor/authorization provider were absent. Those providers — Q-009…Q-014 —
+have since shipped, and implementation was authorized on 2026-09-02; the
+authoritative state is §26.)
 
 ## 3. Problem Statement
 
@@ -820,13 +836,79 @@ The following remain explicitly deferred and are not pulled into Q-008:
 
 ## 26. Implementation Gate
 
-**Implementation Allowed: NO**
+**Implementation Allowed: YES — AUTHORIZED — 2026-09-02 — Product Owner**,
+against Requirement / Architecture / ADR-010 / Implementation Design V4 /
+the V5 Provider Binding Addendum, with the strict subject-eligibility bar,
+and with an explicit Product Owner directive that Codex complete the
+implementation autonomously in one run without stopping for check-ins (any
+unavoidable assumption to be documented in the review package, never
+fabricated). Codex prompt `prompts/Q-008-Implementation-Prompt.md` is
+CLEARED FOR USE.
 
-Reason: the Requirement and Architecture are approved, ADR-010 is Accepted,
-and Implementation Design V4 is externally approved. Implementation
-authorization remains blocked solely by prerequisites: real authoritative
-Trading Account/Evidence/Decision/Action/ActionOutcome providers and an
-authenticated Actor/authorization provider are unresolved. Do not create a
-`RiskCase` Java type, entity, repository, service, controller, DTO, mapper,
-migration, ResultCode, API, Kafka event/topic, Redis key, Account Control port,
-or external adapter until a separate approved implementation prompt is issued.
+Original blocking reason (2026-08): Requirement/Architecture approved,
+ADR-010 Accepted, Implementation Design V4 externally approved, but
+implementation was blocked solely by two prerequisites — real authoritative
+Trading Account / Evidence / Decision / Action / ActionOutcome providers,
+and an authenticated Actor/authorization provider.
+
+**Both prerequisites are now resolved (2026-09-02):** Q-009 (authorization),
+Q-010 (Trading Account), Q-011 (Evidence), Q-012 (Decision), Q-013
+(Action), and Q-014 (ActionOutcome) are all implemented, independently
+reviewed, and committed.
+
+- Q-008 Implementation Readiness Review: **PASS — 2026-09-02 — Claude
+  Code.** Package
+  `review/q-008/review-q-008-implementation-readiness-20260902-020000/`.
+  The approved V4 design was independently reviewed for soundness (§18
+  checklist) at the Product Owner's request (they delegated the diligence)
+  and found sound with no defect; the five abstract provider ports (Design
+  §14) bind cleanly to the shipped services, including the relational
+  -invariant linking fields.
+- Provider Binding Addendum (Implementation Design V4 → **V5**):
+  `docs/architecture/q-008-risk-case-foundation-provider-binding-addendum.md`.
+- Subject eligibility bar on case creation: **STRICT
+  (`ELIGIBLE_FOR_NEW_ASSOCIATION`) — 2026-09-02 — Product Owner.** One new
+  ResultCode `RISK_CASE_SUBJECT_NOT_ELIGIBLE` (422) follows.
+- Codex implementation prompt: `prompts/Q-008-Implementation-Prompt.md`,
+  **CLEARED FOR USE** (2026-09-02), including the Product Owner's autonomy
+  directive (run to completion without check-ins; document assumptions,
+  never fabricate).
+
+Q-008 Implementation: **SUBMITTED — 2026-09-02 — Codex** (autonomous run).
+Package `review/q-008/review-q-008-v5-implementation-20260902-024550/`.
+Codex self-report: 54 Q-008 tests + full gate 300/0/0; four documented
+governance/tooling/assumption conditions, no criterion knowingly
+unimplemented.
+
+Q-008 Implementation Independent Review: **PASS — 2026-09-02 — Claude
+Code.** Package
+`review/q-008/review-q-008-v6-claude-code-independent-review-20260902-030000/`.
+Verified by direct code inspection (aggregate no-setStatus + version CAS;
+strict subject bar + new `RISK_CASE_SUBJECT_NOT_ELIGIBLE`; relational
+invariants via the provenance linking fields; V8 13 tables, no cross-module
+FK, `decision_ref` + `(case_id, cycle_no)` uniqueness; transaction/CAS/
+audit atomicity; deterministic history ordering; both test-discipline
+lessons honored) and by independently re-executing the full Q-009…Q-014 +
+Q-008 real-MySQL gate in Docker: **300 tests, 0 failures, 0 errors, 0
+skipped.** **No defect found.** Codex's four conditions are legitimate
+disclosures, not defects: the assignee shape-only validation matches Design
+§12.2's IAM deferral; the two stale governance status mirrors (this
+document's top header and the V4 design header) were fixed by Claude Code
+during review; the stale `scripts/verify-infrastructure.sh` (Q-004-specific,
+a production script outside test-maintenance delegation) needs a separate
+authorized maintenance fix; the Flyway 8.4 warning is benign.
+
+Q-008 completes the Evidence → Decision → Action → ActionOutcome → Risk
+Case core-domain chain.
+
+Q-008 Implementation: **ACCEPTED — 2026-09-02 — Product Owner** ("接受
+Q-008 实现"), based on Codex's v5 package and Claude Code's v6 independent
+review (code inspection + independently executed full gate, 300/0/0).
+
+Q-008 Ready for Git Commit: acceptance is separate from staging/commit/push;
+commit authorized by the Product Owner 2026-09-02 ("需要commit"). A separate
+`scripts/verify-infrastructure.sh` maintenance fix was also authorized
+("选择 verify-infrastructure.sh 小维护").
+
+Next gate: commit (Product Owner runs the commands; push is manual on the
+Product Owner's machine).
