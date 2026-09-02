@@ -11,7 +11,7 @@ Repository-owned verification entry points:
   backend health, then removes only that isolated Compose project.
 - `run-risk-console-dev.sh` — starts the local-only Keycloak, provisions the
   seeded Q-016 operator capabilities, starts the development backend, and runs
-  the Flutter web console. Copy `.env.example` to `.env` first. The seeded
+  the React web console. Copy `.env.example` to `.env` first. The seeded
   browser login is `q016-operator` with `KEYCLOAK_OPERATOR_PASSWORD` from the
   local `.env`; it is development-only and has only `risk-case:read` and
   `risk-case:note`.

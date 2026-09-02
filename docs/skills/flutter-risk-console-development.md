@@ -1,5 +1,8 @@
 # Flutter Risk Console Development Skill
 
+> Historical only after ADR-018. Use `react-risk-console-development.md` for
+> current Risk Console work; this file documents the superseded ADR-017 client.
+
 ## When to Use
 
 Use this guidance when implementing or reviewing the BrokerOS Risk Flutter web

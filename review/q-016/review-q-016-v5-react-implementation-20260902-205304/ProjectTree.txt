@@ -1,0 +1,88 @@
+Q-016 bounded changed/project tree
+==================================
+
+frontend/
+├── .gitignore
+├── README.md
+├── index.html
+├── package-lock.json
+├── package.json
+├── playwright.config.ts
+├── public/
+│   └── runtime-config.js
+├── src/
+│   ├── app/
+│   │   ├── App.tsx
+│   │   └── styles.css
+│   ├── core/
+│   │   ├── api/
+│   │   │   ├── apiClient.ts
+│   │   │   ├── contracts.ts
+│   │   │   └── errors.ts
+│   │   ├── auth/
+│   │   │   └── authConfig.ts
+│   │   └── config/
+│   │       └── appConfig.ts
+│   ├── features/riskcase/
+│   │   ├── api/
+│   │   │   ├── riskCaseRepository.ts
+│   │   │   └── riskCaseTypes.ts
+│   │   ├── model/
+│   │   │   ├── riskCaseContext.tsx
+│   │   │   └── riskCaseQueries.ts
+│   │   └── ui/
+│   │       ├── AddNoteDialog.tsx
+│   │       ├── RiskCaseDetailPage.tsx
+│   │       ├── RiskCaseListPage.tsx
+│   │       └── RiskCaseTable.tsx
+│   ├── main.tsx
+│   ├── shared/
+│   │   ├── AsyncState.tsx
+│   │   └── format.ts
+│   └── vite-env.d.ts
+├── tests/
+│   ├── AddNoteDialog.test.tsx
+│   ├── RiskCaseDetailPage.test.tsx
+│   ├── RiskCaseListPage.test.tsx
+│   ├── apiContract.test.ts
+│   ├── appConfig.test.ts
+│   ├── authConfig.test.ts
+│   ├── e2e/
+│   │   └── riskCaseSlice.spec.ts
+│   ├── fixtures/
+│   │   └── riskCases.ts
+│   ├── riskCaseRepository.test.ts
+│   └── support/
+│       ├── render.tsx
+│       ├── server.ts
+│       └── setup.ts
+├── tsconfig.json
+└── vite.config.ts
+
+docs/
+├── configuration/README.md
+├── lessons/2026-09-02-q-016-react-implementation.md
+└── skills/
+    ├── README.md
+    ├── flutter-risk-console-development.md (historical marker added)
+    └── react-risk-console-development.md
+
+scripts/
+├── README.md
+└── run-risk-console-dev.sh
+
+review/q-016/review-q-016-v5-react-implementation-20260902-205304/
+├── ArchitectureReview.md
+├── DesignTraceability.md
+├── GitDiffStat.txt
+├── GitStatus.txt
+├── OutstandingItems.md
+├── ProjectTree.txt
+├── SecurityReview.md
+├── Summary.md
+├── TestInventory.txt
+└── Verification.md
+
+Omitted as generated/irrelevant: .git, node_modules, dist, Playwright reports,
+test-results, historical review-package contents, backend tree, and deleted
+Flutter file-by-file tree (listed in GitStatus.txt).

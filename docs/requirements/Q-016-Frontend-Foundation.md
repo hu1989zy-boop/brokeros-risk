@@ -366,7 +366,30 @@ Accepted; ADR-017 Superseded; component library = Ant Design). The React
 implementation prompt (`prompts/Q-016-React-Implementation-Prompt.md`) is CLEARED
 FOR USE.
 
-Next gate: Codex implements the React Risk Console (replacing the Flutter
-`frontend/`, no backend change) → Claude Code independent review → Product Owner
-acceptance → commit. The governance pivot bundle is committed; the Flutter
-`frontend/` remains in the tree until the React implementation replaces it.
+### React implementation, review, and acceptance — 2026-09-03
+
+Codex delivered the React Risk Console (v5,
+`review/q-016/review-q-016-v5-react-implementation-20260902-205304`): React 18 +
+strict TypeScript + Vite SPA, React Router auth guard, TanStack Query/Table, Ant
+Design, `react-oidc-context` Auth Code + PKCE, a central axios client (Bearer,
+one silent `401` refresh, `403` mapping, envelope parsing), the add-note vertical
+slice with `expectedVersion` conflict handling; the Flutter `frontend/` removed.
+**No backend change** (`git diff -- backend/` empty; no migration).
+
+Claude Code independent review: **PASS WITH CONDITIONS — zero defects** — see
+`review/q-016/review-q-016-v6-claude-code-independent-react-review-20260902-234929/`.
+Reproduced from a **fresh `npm ci`**: strict typecheck 0 errors; **Vitest 27/27**;
+`vite build` PASS; backend untouched. Security/thin-client review clean (OIDC
+Auth Code + PKCE, no client secret/implicit/password grant; memory-only tokens;
+no identity in request bodies; no `localStorage` tokens; no `console.*` in `src`).
+The React pivot **resolved condition C1** — the tests run and pass on arm64.
+Remaining condition **C2**: the live Keycloak→backend Playwright slice (AC 2, 6),
+honestly skipped for missing dev `.env` / seeded case.
+
+Q-016 (React) acceptance: **ACCEPTED — PASS WITH CONDITIONS — 2026-09-03 —
+Product Owner**; committed with the React implementation + v6 review package. C2
+(live E2E) scheduled as a follow-up.
+
+Next gate: satisfy C2 (live Keycloak browser E2E) on a host with the dev stack +
+dev credentials; then Q-016 is complete. Q-016's Core-Domain frontend foundation
+is otherwise delivered.

@@ -1,0 +1,66 @@
+Q-016 React Test Inventory
+==========================
+
+Final Vitest result: 7 files, 27 passed, 0 failed, 0 skipped, 0 unhandled errors.
+
+tests/appConfig.test.ts (3)
+- uses the delivered local endpoints by default
+- accepts a non-secret deployment runtime override
+- fails startup on an unsafe or malformed URL
+
+tests/apiContract.test.ts (4)
+- parses the ApiResponse and bounded list envelope
+- parses detail, history, and add-note response DTOs
+- keeps consumed ResultCodes as a compile-time string union
+- rejects contract drift instead of silently rendering it
+
+tests/authConfig.test.ts (2)
+- uses Authorization Code, PKCE-capable OIDC settings and no password grant
+- keeps the signed-in user and access token out of session storage
+
+tests/riskCaseRepository.test.ts (5)
+- sends bounded filters and the bearer token for the list query
+- submits only note content and expectedVersion
+- performs one silent refresh and retries one 401
+- maps a 403 backend envelope to a typed authorization error
+- stops after refresh failure and requires authentication without a retry loop
+
+tests/RiskCaseListPage.test.tsx (4)
+- renders its loading state
+- renders its empty state
+- renders a typed backend error and retry action
+- renders the TanStack table success state and opens a case
+
+tests/RiskCaseDetailPage.test.tsx (6)
+- renders its loading state
+- renders its error state
+- renders detail, history, and association references
+- renders empty history and association states
+- submits a note successfully with the displayed expected version
+- surfaces a version conflict, reloads, and keeps the note for review
+
+tests/AddNoteDialog.test.tsx (3)
+- keeps an empty note client-side while the backend remains authoritative
+- renders its submitting state
+- surfaces an ordinary backend ResultCode error without closing
+
+Playwright
+----------
+
+tests/e2e/riskCaseSlice.spec.ts (1)
+- login -> list -> detail -> add investigation note
+- Discovery: PASS (1 test in 1 file)
+- Execution: SKIPPED (missing external E2E_OPERATOR_PASSWORD and
+  E2E_CASE_NUMBER; root .env absent)
+- Browser availability: PASS (Chrome for Testing 151 arm64 installed and a real
+  headless Chromium smoke launched)
+
+Support and fixtures
+--------------------
+
+- tests/support/setup.ts: RTL cleanup, MSW lifecycle, browser API shims
+- tests/support/server.ts: default backend envelope handlers
+- tests/support/render.tsx: isolated QueryClient/repository provider helper
+- tests/fixtures/riskCases.ts: synthetic bounded Risk Case DTO fixtures
+
+No backend test was added or run because backend/ has zero task diff.

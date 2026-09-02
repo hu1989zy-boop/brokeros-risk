@@ -5,8 +5,8 @@ script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 repository_root=$(dirname -- "$script_dir")
 cd "$repository_root"
 
-if ! command -v flutter >/dev/null 2>&1; then
-  echo "Flutter SDK is required to run the Q-016 console." >&2
+if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
+  echo "Node.js and npm are required to run the Q-016 console." >&2
   exit 1
 fi
 
@@ -33,10 +33,5 @@ compose run --build --rm security-bootstrap
 compose up --build --wait -d console-backend
 
 cd frontend
-flutter pub get
-dart run build_runner build --delete-conflicting-outputs
-flutter run -d chrome \
-  --web-port 4173 \
-  --dart-define="BROKEROS_API_BASE_URL=http://localhost:8080" \
-  --dart-define="BROKEROS_OIDC_ISSUER=http://localhost:8180/realms/brokeros" \
-  --dart-define="BROKEROS_OIDC_CLIENT_ID=brokeros-risk-console"
+npm ci
+npm run dev

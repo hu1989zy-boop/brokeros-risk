@@ -1,9 +1,0 @@
-{
-  "name": "BrokerOS Risk Console",
-  "short_name": "Risk Console",
-  "start_url": ".",
-  "display": "standalone",
-  "background_color": "#f5f7fb",
-  "theme_color": "#14213d",
-  "description": "BrokerOS Risk operator console"
-}

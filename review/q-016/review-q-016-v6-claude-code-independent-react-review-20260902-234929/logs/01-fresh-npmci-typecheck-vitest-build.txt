@@ -1,0 +1,57 @@
+=== npm ci (fresh install from lock) ===
+
+added 309 packages in 6s
+CI_EXIT=
+
+=== typecheck (tsc --noEmit strict) ===
+
+> brokeros-risk-console@0.1.0 typecheck
+> tsc --noEmit
+
+TYPECHECK_EXIT=
+
+=== vitest run ===
+> vitest run
+
+
+ RUN  v4.1.11 /Users/lukeh/Documents/workspace/codex/brokeros-risk/frontend
+
+(node:77980) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:77985) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:77986) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:77984) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:77983) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:77982) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:77981) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+ Test Files  7 passed (7)
+      Tests  27 passed (27)
+   Start at  23:47:25
+   Duration  5.94s (transform 4.93s, setup 9.70s, import 6.81s, tests 2.32s, environment 8.84s)
+
+TEST_EXIT=
+
+=== vite build ===
+✓ 1566 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                               0.51 kB │ gzip:   0.31 kB
+dist/assets/index-jr2H6uWh.css                5.36 kB │ gzip:   2.05 kB
+dist/assets/RiskCaseDetailPage-CGpN6WuT.js   50.25 kB │ gzip:  15.36 kB
+dist/assets/format-B5lM1s-C.js               80.63 kB │ gzip:  27.30 kB
+dist/assets/RiskCaseListPage-9Acofny-.js    132.77 kB │ gzip:  40.47 kB
+dist/assets/index-Dn2uPQ1x.js               766.04 kB │ gzip: 244.46 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.83s
+BUILD_EXIT=

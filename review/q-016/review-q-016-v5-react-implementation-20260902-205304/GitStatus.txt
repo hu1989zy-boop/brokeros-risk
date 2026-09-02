@@ -1,0 +1,123 @@
+Q-016 React implementation Git status
+======================================
+
+## main...origin/main [ahead 3]
+
+Initial state
+-------------
+- HEAD: 275ef06
+- Worktree was clean before Q-016 React implementation.
+- The three commits ahead of origin/main pre-date this implementation task.
+
+Tracked modifications
+---------------------
+ M docs/configuration/README.md
+ M docs/skills/README.md
+ M docs/skills/flutter-risk-console-development.md
+ M frontend/.gitignore
+ M frontend/README.md
+ M scripts/README.md
+ M scripts/run-risk-console-dev.sh
+
+Authorized Flutter tracked deletions
+------------------------------------
+ D frontend/analysis_options.yaml
+ D frontend/lib/app/app_router.dart
+ D frontend/lib/app/app_theme.dart
+ D frontend/lib/app/risk_console_app.dart
+ D frontend/lib/core/api/api_client.dart
+ D frontend/lib/core/api/api_contract.dart
+ D frontend/lib/core/auth/auth_controller.dart
+ D frontend/lib/core/auth/auth_gateway.dart
+ D frontend/lib/core/auth/browser_pkce_authenticator.dart
+ D frontend/lib/core/auth/login_page.dart
+ D frontend/lib/core/config/app_config.dart
+ D frontend/lib/features/riskcase/application/risk_case_notifiers.dart
+ D frontend/lib/features/riskcase/application/risk_case_providers.dart
+ D frontend/lib/features/riskcase/data/risk_case_models.dart
+ D frontend/lib/features/riskcase/data/risk_case_models.freezed.dart
+ D frontend/lib/features/riskcase/data/risk_case_models.g.dart
+ D frontend/lib/features/riskcase/data/risk_case_repository.dart
+ D frontend/lib/features/riskcase/presentation/add_note_dialog.dart
+ D frontend/lib/features/riskcase/presentation/risk_case_detail_page.dart
+ D frontend/lib/features/riskcase/presentation/risk_case_list_page.dart
+ D frontend/lib/main.dart
+ D frontend/lib/shared/async_views.dart
+ D frontend/pubspec.lock
+ D frontend/pubspec.yaml
+ D frontend/test/api_contract_test.dart
+ D frontend/test/risk_case_notifiers_test.dart
+ D frontend/test/risk_case_widgets_test.dart
+ D frontend/test/support/fake_risk_case_repository.dart
+ D frontend/web/index.html
+ D frontend/web/manifest.json
+
+Untracked React/docs implementation additions
+----------------------------------------------
+?? docs/lessons/2026-09-02-q-016-react-implementation.md
+?? docs/skills/react-risk-console-development.md
+?? frontend/index.html
+?? frontend/package-lock.json
+?? frontend/package.json
+?? frontend/playwright.config.ts
+?? frontend/public/runtime-config.js
+?? frontend/src/app/App.tsx
+?? frontend/src/app/styles.css
+?? frontend/src/core/api/apiClient.ts
+?? frontend/src/core/api/contracts.ts
+?? frontend/src/core/api/errors.ts
+?? frontend/src/core/auth/authConfig.ts
+?? frontend/src/core/config/appConfig.ts
+?? frontend/src/features/riskcase/api/riskCaseRepository.ts
+?? frontend/src/features/riskcase/api/riskCaseTypes.ts
+?? frontend/src/features/riskcase/model/riskCaseContext.tsx
+?? frontend/src/features/riskcase/model/riskCaseQueries.ts
+?? frontend/src/features/riskcase/ui/AddNoteDialog.tsx
+?? frontend/src/features/riskcase/ui/RiskCaseDetailPage.tsx
+?? frontend/src/features/riskcase/ui/RiskCaseListPage.tsx
+?? frontend/src/features/riskcase/ui/RiskCaseTable.tsx
+?? frontend/src/main.tsx
+?? frontend/src/shared/AsyncState.tsx
+?? frontend/src/shared/format.ts
+?? frontend/src/vite-env.d.ts
+?? frontend/tests/AddNoteDialog.test.tsx
+?? frontend/tests/RiskCaseDetailPage.test.tsx
+?? frontend/tests/RiskCaseListPage.test.tsx
+?? frontend/tests/apiContract.test.ts
+?? frontend/tests/appConfig.test.ts
+?? frontend/tests/authConfig.test.ts
+?? frontend/tests/e2e/riskCaseSlice.spec.ts
+?? frontend/tests/fixtures/riskCases.ts
+?? frontend/tests/riskCaseRepository.test.ts
+?? frontend/tests/support/render.tsx
+?? frontend/tests/support/server.ts
+?? frontend/tests/support/setup.ts
+?? frontend/tsconfig.json
+?? frontend/vite.config.ts
+
+New review package (all untracked)
+----------------------------------
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304/ArchitectureReview.md
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304/DesignTraceability.md
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304/GitDiffStat.txt
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304/GitStatus.txt
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304/OutstandingItems.md
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304/ProjectTree.txt
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304/SecurityReview.md
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304/Summary.md
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304/TestInventory.txt
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304/Verification.md
+
+Generated/ignored local paths
+-----------------------------
+- frontend/node_modules/ retained for reviewer reproducibility
+- frontend/dist/ removed after successful build
+- frontend/playwright-report/ and frontend/test-results/ removed
+- stale frontend/build/ Flutter output removed
+
+Staging/commit/push
+-------------------
+- No files staged.
+- No commit created.
+- Nothing pushed.
+- No older timestamped review package modified.

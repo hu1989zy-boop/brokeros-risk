@@ -1,0 +1,76 @@
+Q-016 React implementation Git diff statistics
+================================================
+
+Baseline HEAD: 275ef06 (main; ahead of origin/main by 3 pre-existing commits)
+Initial worktree: clean
+Staged files: none
+Backend task diff: empty
+
+Tracked diff (`git diff --stat`)
+--------------------------------
+ docs/configuration/README.md                       |    6 +-
+ docs/skills/README.md                              |    9 +-
+ docs/skills/flutter-risk-console-development.md    |    3 +
+ frontend/.gitignore                                |    8 +-
+ frontend/README.md                                 |  123 +-
+ frontend/analysis_options.yaml                     |   15 -
+ frontend/lib/app/app_router.dart                   |   44 -
+ frontend/lib/app/app_theme.dart                    |   33 -
+ frontend/lib/app/risk_console_app.dart             |   21 -
+ frontend/lib/core/api/api_client.dart              |  138 --
+ frontend/lib/core/api/api_contract.dart            |   83 -
+ frontend/lib/core/auth/auth_controller.dart        |   55 -
+ frontend/lib/core/auth/auth_gateway.dart            |  160 --
+ frontend/lib/core/auth/browser_pkce_authenticator.dart |   88 -
+ frontend/lib/core/auth/login_page.dart              |   68 -
+ frontend/lib/core/config/app_config.dart            |   31 -
+ frontend/lib/features/riskcase/application/risk_case_notifiers.dart | 139 --
+ frontend/lib/features/riskcase/application/risk_case_providers.dart |  16 -
+ frontend/lib/features/riskcase/data/risk_case_models.dart | 135 --
+ frontend/lib/features/riskcase/data/risk_case_models.freezed.dart | 2005 --------------------
+ frontend/lib/features/riskcase/data/risk_case_models.g.dart | 147 --
+ frontend/lib/features/riskcase/data/risk_case_repository.dart | 87 -
+ frontend/lib/features/riskcase/presentation/add_note_dialog.dart | 93 -
+ frontend/lib/features/riskcase/presentation/risk_case_detail_page.dart | 255 ---
+ frontend/lib/features/riskcase/presentation/risk_case_list_page.dart | 237 ---
+ frontend/lib/main.dart                             |    9 -
+ frontend/lib/shared/async_views.dart               |   74 -
+ frontend/pubspec.lock                              |  999 ----------
+ frontend/pubspec.yaml                              |   30 -
+ frontend/test/api_contract_test.dart               |   86 -
+ frontend/test/risk_case_notifiers_test.dart        |  120 --
+ frontend/test/risk_case_widgets_test.dart          |  112 --
+ frontend/test/support/fake_risk_case_repository.dart | 109 --
+ frontend/web/index.html                            |   16 -
+ frontend/web/manifest.json                         |    9 -
+ scripts/README.md                                  |    2 +-
+ scripts/run-risk-console-dev.sh                    |   13 +-
+
+Tracked total: 37 files changed, 109 insertions(+), 5,469 deletions(-).
+The large deletion count is the explicitly authorized removal of generated
+Flutter/Dart sources and lockfile; it is not backend deletion.
+
+Untracked implementation additions (review v5 excluded)
+--------------------------------------------------------
+- 40 files, 7,933 lines total
+- docs: 2 files (React skill and Q-016 React lesson)
+- frontend: 38 files
+  - src: 19 files
+  - tests: 12 files
+  - toolchain/runtime root: 7 files (including package-lock.json)
+
+Review package additions
+------------------------
+- 10 required/new files under
+  review/q-016/review-q-016-v5-react-implementation-20260902-205304/
+- Older timestamped review packages: unchanged
+
+Backend confirmation
+--------------------
+`git diff --stat -- backend/` -> empty
+`git diff --name-only -- backend/` -> empty
+No Flyway migration, backend source, backend test, Keycloak realm, CORS source,
+Compose file, or deployment resource is changed by this task.
+
+Note: normal `git diff --stat` excludes untracked React files; both tracked and
+untracked scopes are therefore reported explicitly above.
