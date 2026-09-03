@@ -1,0 +1,59 @@
+Q-017 bounded changed/project tree
+==================================
+
+deploy/
+└── keycloak/
+    └── q016-security-bootstrap.json
+
+frontend/
+├── src/
+│   ├── app/
+│   │   └── styles.css
+│   └── features/riskcase/
+│       ├── actions/
+│       │   ├── actionDescriptors.ts
+│       │   ├── actionInputs.ts
+│       │   └── useCaseAction.ts
+│       ├── api/
+│       │   ├── riskCaseRepository.ts
+│       │   └── riskCaseTypes.ts
+│       └── ui/
+│           ├── CaseActionDialog.tsx
+│           ├── CaseActionsBar.tsx
+│           ├── NotesPanel.tsx
+│           └── RiskCaseDetailPage.tsx
+└── tests/
+    ├── CaseActions.test.tsx
+    ├── CaseActionsBar.test.tsx
+    ├── RiskCaseDetailPage.test.tsx
+    ├── fixtures/
+    │   └── riskCases.ts
+    ├── riskCaseRepository.test.ts
+    └── e2e/
+        └── q017CaseLifecycle.spec.ts
+
+docs/
+└── lessons/
+    └── 2026-09-03-q-017-implementation.md
+
+scripts/
+└── README.md
+
+review/q-017/review-q-017-v1-implementation-20260903-020721/
+├── ArchitectureReview.md
+├── DesignTraceability.md
+├── GitDiffStat.txt
+├── GitStatus.txt
+├── OutstandingItems.md
+├── ProjectTree.txt
+├── SecurityReview.md
+├── Summary.md
+├── TestInventory.txt
+└── Verification.md
+
+Explicitly absent from the changed tree: backend/, Flyway migrations, Group C,
+Group E, dependency manifests/lockfiles, Q-016 API client/authentication source,
+Compose, Kubernetes, and existing timestamped review package contents.
+
+Omitted as generated/irrelevant: .git, node_modules, dist assets, Playwright
+report/test-results, backend unchanged tree, and historical review contents.

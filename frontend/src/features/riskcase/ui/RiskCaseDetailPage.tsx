@@ -15,12 +15,38 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { userFacingError } from '../../../core/api/errors';
 import { ErrorState, LoadingState } from '../../../shared/AsyncState';
 import { formatInstant, humanize } from '../../../shared/format';
+import {
+  descriptorFor,
+  type CaseActionDescriptor,
+} from '../actions/actionDescriptors';
+import { useCaseAction } from '../actions/useCaseAction';
 import type { RiskCaseHistoryEntry, RiskCaseView } from '../api/riskCaseTypes';
 import { useAddRiskCaseNote, useRiskCaseDetail } from '../model/riskCaseQueries';
 import { AddNoteDialog } from './AddNoteDialog';
+import { CaseActionDialog } from './CaseActionDialog';
+import { CaseActionsBar } from './CaseActionsBar';
+import { NotesPanel } from './NotesPanel';
+
+const associationEventTypes = new Set([
+  'ATTACHED',
+  'SUPERSEDED',
+  'INVALIDATED',
+  'WITHDRAWN',
+  'DECISION_ASSOCIATED',
+  'DECISION_SELECTED',
+  'ACTION_ASSOCIATED',
+  'OUTCOME_REFERENCED',
+]);
 
 function associationEntries(entries: RiskCaseHistoryEntry[]): RiskCaseHistoryEntry[] {
-  return entries.filter((entry) => entry.affectedRef !== null);
+  return entries.filter(
+    (entry) => entry.affectedRef !== null && associationEventTypes.has(entry.eventType),
+  );
+}
+
+interface SelectedAction {
+  descriptor: CaseActionDescriptor;
+  noteRef?: string;
 }
 
 export function RiskCaseDetailPage() {
@@ -30,6 +56,7 @@ export function RiskCaseDetailPage() {
   const query = useRiskCaseDetail(decodedCaseNumber);
   const mutation = useAddRiskCaseNote();
   const [noteOpen, setNoteOpen] = useState(false);
+  const [selectedAction, setSelectedAction] = useState<SelectedAction | null>(null);
   const [operationMessage, setOperationMessage] = useState<string | null>(null);
 
   if (query.isPending) {
@@ -61,16 +88,31 @@ export function RiskCaseDetailPage() {
             <Typography.Text type="secondary">Version {view.detail.version}</Typography.Text>
           </Space>
         </div>
-        <Space>
-          <Button onClick={() => void query.refetch()}>Reload</Button>
-          <Button type="primary" onClick={() => setNoteOpen(true)}>
-            Add note
-          </Button>
+        <Space direction="vertical" align="end">
+          <Space>
+            <Button onClick={() => void query.refetch()}>Reload</Button>
+            <Button type="primary" onClick={() => setNoteOpen(true)}>
+              Add note
+            </Button>
+          </Space>
+          <CaseActionsBar
+            status={view.detail.status}
+            onSelect={(descriptor) => {
+              setOperationMessage(null);
+              setSelectedAction({ descriptor });
+            }}
+          />
         </Space>
       </Flex>
 
       {operationMessage ? <Alert type="success" showIcon message={operationMessage} /> : null}
-      <RiskCaseDetailContent view={view} />
+      <RiskCaseDetailContent
+        view={view}
+        onCorrectNote={(noteRef) => {
+          setOperationMessage(null);
+          setSelectedAction({ descriptor: descriptorFor('correctNote'), noteRef });
+        }}
+      />
 
       {noteOpen ? (
         <AddNoteDialog
@@ -94,11 +136,67 @@ export function RiskCaseDetailPage() {
           }}
         />
       ) : null}
+
+      {selectedAction ? (
+        <CaseActionFlow
+          key={`${selectedAction.descriptor.id}-${selectedAction.noteRef ?? ''}`}
+          selected={selectedAction}
+          caseNumber={view.detail.caseNumber}
+          expectedVersion={view.detail.version}
+          onCancel={() => setSelectedAction(null)}
+          onSuccess={(message) => {
+            setOperationMessage(message);
+            setSelectedAction(null);
+          }}
+        />
+      ) : null}
     </Space>
   );
 }
 
-export function RiskCaseDetailContent({ view }: { view: RiskCaseView }) {
+function CaseActionFlow({
+  selected,
+  caseNumber,
+  expectedVersion,
+  onCancel,
+  onSuccess,
+}: {
+  selected: SelectedAction;
+  caseNumber: string;
+  expectedVersion: number;
+  onCancel: () => void;
+  onSuccess: (message: string) => void;
+}) {
+  const action = useCaseAction(selected.descriptor, {
+    caseNumber,
+    expectedVersion,
+    noteRef: selected.noteRef,
+  });
+  return (
+    <CaseActionDialog
+      descriptor={selected.descriptor}
+      expectedVersion={expectedVersion}
+      submitting={action.isPending}
+      onCancel={onCancel}
+      onSubmit={async (values) => {
+        const result = await action.run(values);
+        if ('noteRef' in result) {
+          onSuccess(`Investigation note ${result.noteRef} was corrected.`);
+          return;
+        }
+        onSuccess(`${selected.descriptor.label} completed.`);
+      }}
+    />
+  );
+}
+
+export function RiskCaseDetailContent({
+  view,
+  onCorrectNote = () => undefined,
+}: {
+  view: RiskCaseView;
+  onCorrectNote?: (noteRef: string) => void;
+}) {
   const detail = view.detail;
   const associations = associationEntries(view.history.entries);
   return (
@@ -122,6 +220,8 @@ export function RiskCaseDetailContent({ view }: { view: RiskCaseView }) {
       <Card title="Intake summary">
         <Typography.Paragraph className="preserve-lines">{detail.intakeSummary}</Typography.Paragraph>
       </Card>
+
+      <NotesPanel entries={view.history.entries} onCorrect={onCorrectNote} />
 
       <Card title="Association references in history">
         {associations.length === 0 ? (

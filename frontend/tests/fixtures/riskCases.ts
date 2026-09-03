@@ -3,6 +3,7 @@ import type {
   RiskCaseHistoryPage,
   RiskCaseListPage,
   RiskCaseNote,
+  RiskCaseResolution,
 } from '../../src/features/riskcase/api/riskCaseTypes';
 
 export const caseNumber = 'RC-2026-000001';
@@ -48,6 +49,13 @@ export const riskCaseDetail: RiskCaseDetail = {
 export const riskCaseHistory: RiskCaseHistoryPage = {
   entries: [
     {
+      version: 6,
+      eventType: 'NOTE',
+      affectedRef: '17000000-0000-4000-8000-000000000000',
+      actorRef: '16000000-0000-4000-8000-000000000001',
+      occurredAt: '2026-09-02T09:00:00Z',
+    },
+    {
       version: 7,
       eventType: 'DECISION_ASSOCIATED',
       affectedRef: 'decision:demo-5001',
@@ -71,6 +79,16 @@ export const riskCaseNote: RiskCaseNote = {
   version: 8,
   createdByRef: '16000000-0000-4000-8000-000000000001',
   createdAt: '2026-09-02T10:00:00Z',
+};
+
+export const riskCaseResolution: RiskCaseResolution = {
+  riskCase: { ...riskCaseDetail, status: 'RESOLVED', version: 8 },
+  cycleNo: 1,
+  outcome: 'NO_RISK',
+  decisionRef: 'decision:demo-5001',
+  resolutionSummary: 'Resolved after bounded review.',
+  resolvedByRef: '16000000-0000-4000-8000-000000000001',
+  resolvedAt: '2026-09-02T10:00:00Z',
 };
 
 export function envelope<T>(data: T) {

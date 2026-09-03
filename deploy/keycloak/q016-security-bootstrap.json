@@ -11,8 +11,14 @@
         }
       ],
       "capabilities": [
+        "risk-case:assign",
+        "risk-case:cancel",
+        "risk-case:close",
         "risk-case:note",
-        "risk-case:read"
+        "risk-case:read",
+        "risk-case:reopen",
+        "risk-case:resolve",
+        "risk-case:review"
       ]
     }
   ]

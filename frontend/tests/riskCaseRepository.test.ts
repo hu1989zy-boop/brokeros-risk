@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { describe, expect, it, vi } from 'vitest';
 
 import { ApiClient, type AuthSession } from '../src/core/api/apiClient';
-import { AuthenticationRequiredError, AuthorizationError } from '../src/core/api/errors';
+import { ApiError, AuthenticationRequiredError, AuthorizationError } from '../src/core/api/errors';
 import { HttpRiskCaseRepository } from '../src/features/riskcase/api/riskCaseRepository';
 import { envelope, failureEnvelope, riskCaseListPage, riskCaseNote } from './fixtures/riskCases';
 import { apiBaseUrl, server } from './support/server';
@@ -86,6 +86,23 @@ describe('HttpRiskCaseRepository with MSW', () => {
     const repository = new HttpRiskCaseRepository(new ApiClient(apiBaseUrl, authSession()));
 
     await expect(repository.list({}, 0, 20)).rejects.toBeInstanceOf(AuthorizationError);
+  });
+
+  it('does not treat an unknown ResultCode as success', async () => {
+    server.use(
+      http.post(`${apiBaseUrl}/api/risk-cases/:caseNumber/review-start`, () =>
+        HttpResponse.json(failureEnvelope('FUTURE_RISK_CASE_ERROR', 'Future backend rejection')),
+      ),
+    );
+    const repository = new HttpRiskCaseRepository(new ApiClient(apiBaseUrl, authSession()));
+
+    await expect(
+      repository.beginReview({
+        caseNumber: 'RC-2026-000001',
+        reason: 'Synthetic test reason.',
+        expectedVersion: 7,
+      }),
+    ).rejects.toMatchObject({ code: 'FUTURE_RISK_CASE_ERROR' } satisfies Partial<ApiError>);
   });
 
   it('stops after refresh failure and requires authentication without a retry loop', async () => {

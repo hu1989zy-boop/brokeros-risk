@@ -86,6 +86,51 @@ describe('RiskCaseDetailPage', () => {
     expect(screen.getByText('Review a bounded demonstration account event.')).toBeInTheDocument();
     expect(screen.getAllByText(/decision:demo-5001/).length).toBeGreaterThan(0);
     expect(screen.getByText('v7 · Decision Associated')).toBeInTheDocument();
+    expect(screen.getAllByText('17000000-0000-4000-8000-000000000000').length).toBeGreaterThan(0);
+    const associationCard = screen
+      .getByText('Association references in history')
+      .closest<HTMLElement>('.ant-card')!;
+    expect(within(associationCard).queryByText(/Note:/)).not.toBeInTheDocument();
+  });
+
+  it('binds note correction to the selected note reference', async () => {
+    let capturedBody: unknown;
+    let capturedNoteRef: string | undefined;
+    server.use(
+      http.post(
+        `${apiBaseUrl}/api/risk-cases/:caseNumber/notes/:noteRef/corrections`,
+        async ({ params, request }) => {
+          capturedNoteRef = params.noteRef as string;
+          capturedBody = await request.json();
+          return HttpResponse.json(
+            envelope({
+              noteRef: '17000000-0000-4000-8000-000000000001',
+              supersedesNoteRef: params.noteRef,
+              version: 8,
+              createdByRef: '16000000-0000-4000-8000-000000000001',
+              createdAt: '2026-09-02T10:00:00Z',
+            }),
+          );
+        },
+      ),
+    );
+    renderPage();
+    await screen.findByRole('heading', { name: caseNumber });
+
+    await userEvent.click(screen.getByRole('button', { name: 'Correct' }));
+    const dialog = screen.getByRole('dialog');
+    await userEvent.type(
+      within(dialog).getByLabelText('Corrected note'),
+      'Corrected after evidence review.',
+    );
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Correct note' }));
+
+    expect(await screen.findByText(/was corrected/)).toBeInTheDocument();
+    expect(capturedNoteRef).toBe('17000000-0000-4000-8000-000000000000');
+    expect(capturedBody).toEqual({
+      content: 'Corrected after evidence review.',
+      expectedVersion: 7,
+    });
   });
 
   it('renders empty history and association states', async () => {

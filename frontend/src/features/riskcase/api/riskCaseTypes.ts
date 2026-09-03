@@ -22,6 +22,59 @@ export type RiskCaseStatus = (typeof riskCaseStatuses)[number];
 export const riskCasePriorities = ['LOW', 'NORMAL', 'HIGH', 'CRITICAL'] as const;
 export type RiskCasePriority = (typeof riskCasePriorities)[number];
 
+export const riskCaseResolutionOutcomes = [
+  'RISK_CONFIRMED_ACTION_COMPLETED',
+  'NO_RISK',
+  'FALSE_POSITIVE',
+  'MONITORING_ONLY',
+  'NO_ACTION_REQUIRED',
+] as const;
+export type RiskCaseResolutionOutcome = (typeof riskCaseResolutionOutcomes)[number];
+
+export interface VersionedRiskCaseRequest {
+  expectedVersion: number;
+}
+
+export interface ChangeRiskCaseAssignmentRequest extends VersionedRiskCaseRequest {
+  assigneeRef: string;
+  reason: string;
+}
+
+export interface ChangeRiskCasePriorityRequest extends VersionedRiskCaseRequest {
+  priority: RiskCasePriority;
+  reason: string;
+}
+
+export interface RiskCaseReasonRequest extends VersionedRiskCaseRequest {
+  reason: string;
+}
+
+export type BeginRiskCaseReviewRequest = RiskCaseReasonRequest;
+export type MarkRiskCaseActionRequiredRequest = RiskCaseReasonRequest;
+export type ReturnRiskCaseToReviewRequest = RiskCaseReasonRequest;
+export type CloseRiskCaseRequest = RiskCaseReasonRequest;
+
+export interface ResolveRiskCaseRequest extends VersionedRiskCaseRequest {
+  outcome: RiskCaseResolutionOutcome;
+  resolutionSummary: string;
+  evidenceRefs: string[];
+  actionRefs: string[];
+}
+
+export interface CancelRiskCaseRequest extends RiskCaseReasonRequest {
+  duplicateCaseNumber?: string;
+}
+
+export interface ResumeResolvedRiskCaseRequest extends RiskCaseReasonRequest {
+  assigneeRef?: string;
+}
+
+export type ReopenClosedRiskCaseRequest = ResumeResolvedRiskCaseRequest;
+
+export interface CorrectRiskCaseNoteRequest extends VersionedRiskCaseRequest {
+  content: string;
+}
+
 export interface RiskCaseSummary {
   caseNumber: string;
   subjectRef: string;
@@ -84,6 +137,16 @@ export interface RiskCaseNote {
   version: number;
   createdByRef: string;
   createdAt: string;
+}
+
+export interface RiskCaseResolution {
+  riskCase: RiskCaseDetail;
+  cycleNo: number;
+  outcome: RiskCaseResolutionOutcome;
+  decisionRef: string;
+  resolutionSummary: string;
+  resolvedByRef: string;
+  resolvedAt: string;
 }
 
 export interface RiskCaseFilters {
@@ -180,5 +243,25 @@ export function parseRiskCaseNote(value: unknown): RiskCaseNote {
     version: asInteger(record.version, 'RiskCaseNote.version'),
     createdByRef: asString(record.createdByRef, 'RiskCaseNote.createdByRef'),
     createdAt: asInstant(record.createdAt, 'RiskCaseNote.createdAt'),
+  };
+}
+
+export function parseRiskCaseResolution(value: unknown): RiskCaseResolution {
+  const record = asRecord(value, 'RiskCaseResolution');
+  return {
+    riskCase: parseRiskCaseDetail(record.riskCase),
+    cycleNo: asInteger(record.cycleNo, 'RiskCaseResolution.cycleNo'),
+    outcome: enumValue(
+      record.outcome,
+      riskCaseResolutionOutcomes,
+      'RiskCaseResolution.outcome',
+    ),
+    decisionRef: asString(record.decisionRef, 'RiskCaseResolution.decisionRef'),
+    resolutionSummary: asString(
+      record.resolutionSummary,
+      'RiskCaseResolution.resolutionSummary',
+    ),
+    resolvedByRef: asString(record.resolvedByRef, 'RiskCaseResolution.resolvedByRef'),
+    resolvedAt: asInstant(record.resolvedAt, 'RiskCaseResolution.resolvedAt'),
   };
 }

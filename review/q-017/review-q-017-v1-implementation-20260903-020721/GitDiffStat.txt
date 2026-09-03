@@ -1,0 +1,42 @@
+Q-017 implementation Git diff statistics
+=========================================
+
+Baseline HEAD: 7a36bc7 (main; one pre-existing commit ahead of origin/main)
+Staged files: none
+Backend task diff: empty
+
+Tracked diff (`git diff --stat` before adding this review package)
+------------------------------------------------------------------
+ deploy/keycloak/q016-security-bootstrap.json       |   8 +-
+ frontend/src/app/styles.css                        |  12 ++
+ frontend/src/features/riskcase/api/riskCaseRepository.ts | 142 +
+ frontend/src/features/riskcase/api/riskCaseTypes.ts |  83 +
+ frontend/src/features/riskcase/ui/RiskCaseDetailPage.tsx | 116 +-
+ frontend/tests/RiskCaseDetailPage.test.tsx         |  45 +
+ frontend/tests/fixtures/riskCases.ts               |  18 +
+ frontend/tests/riskCaseRepository.test.ts          |  19 +-
+ scripts/README.md                                  |   6 +-
+
+Tracked total: 9 files changed, 437 insertions(+), 12 deletions(-).
+
+Untracked Q-017 implementation/docs (review package excluded)
+--------------------------------------------------------------
+- 10 files, 1,359 lines total.
+- Production feature source: 6 files.
+- Frontend tests: 3 files.
+- Lessons Learned: 1 file.
+
+Review package additions
+------------------------
+- 10 files in this new timestamped directory.
+- One verified sibling ZIP is created by the required packaging workflow.
+- Existing review directories/archives are excluded and unchanged.
+
+Backend confirmation
+--------------------
+`git diff --stat -- backend/` -> empty
+`git status --short -- backend/` -> empty
+No Java, backend test, Flyway migration, SQL, or backend resource is changed.
+
+Note: ordinary `git diff --stat` excludes all untracked action/UI/test/lesson/
+review files. They are enumerated separately above and in GitStatus.txt.

@@ -258,7 +258,29 @@ cancel, reopen}` in the security bootstrap. Thin-client; **no backend
 business-logic/aggregate/migration change** — the only backend-adjacent change is
 that capability grant.
 
-Next gate: Codex implements Q-017 V1 (Groups A+B+D) → Claude Code independent
-review (incl. the live Playwright lifecycle slice) → Product Owner acceptance →
-commit. Groups C (associations) and E (case creation) remain deferred to a future
-Requirement.
+Q-017 implementation (Codex, v1
+`review/q-017/review-q-017-v1-implementation-20260903-020721`): the 11 A+B+D
+operations via a declarative action registry + one TanStack Query runner
+(reusing the Q-016 axios client), status-only availability, terminal
+confirmation, version-conflict reload; the operator granted the V1 capability set
+in the security bootstrap. No backend code/migration change.
+
+Claude Code independent review: **PASS — zero defects — 2026-09-03** — see
+`review/q-017/review-q-017-v2-claude-code-independent-review-20260903-122426/`.
+Reproduced from a fresh `npm ci`: strict typecheck 0 errors; **Vitest 103/103**;
+`vite build` PASS; backend untouched; bootstrap grant = the exact V1 set. **Live
+lifecycle verified** against a real Keycloak→backend→MySQL stack: login (PKCE) →
+assign → begin-review → change-priority → cancel (terminal), with version
+increments + audit rows confirmed in the DB, and `mark-action-required` correctly
+rejected by the backend (422) and surfaced as a readable typed error
+(approach-c working). resolve/close/resume/reopen require a case with a current
+decision + associated action (backend invariant; Group C deferred) — their
+frontend is unit-covered.
+
+Q-017 (V1) acceptance: **ACCEPTED — 2026-09-03 — Product Owner**; committed with
+the implementation + v2 review package.
+
+Q-017 status: **COMPLETE — 2026-09-03** (Risk Console case lifecycle operations,
+Groups A+B+D; live lifecycle verified). Next: Groups C (associations) and E (case
+creation) remain deferred to a future Requirement; Q-015 remains parked awaiting
+the MT4/MT5 SDK.

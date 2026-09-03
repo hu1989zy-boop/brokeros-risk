@@ -1,0 +1,56 @@
+Q-017 implementation Git status
+===============================
+
+Branch / baseline
+-----------------
+## main...origin/main [ahead 1]
+HEAD: 7a36bc7
+The one commit ahead of origin/main predates this implementation work.
+
+Tracked modifications
+---------------------
+ M deploy/keycloak/q016-security-bootstrap.json
+ M frontend/src/app/styles.css
+ M frontend/src/features/riskcase/api/riskCaseRepository.ts
+ M frontend/src/features/riskcase/api/riskCaseTypes.ts
+ M frontend/src/features/riskcase/ui/RiskCaseDetailPage.tsx
+ M frontend/tests/RiskCaseDetailPage.test.tsx
+ M frontend/tests/fixtures/riskCases.ts
+ M frontend/tests/riskCaseRepository.test.ts
+ M scripts/README.md
+
+Untracked Q-017 implementation/documentation
+--------------------------------------------
+?? docs/lessons/2026-09-03-q-017-implementation.md
+?? frontend/src/features/riskcase/actions/actionDescriptors.ts
+?? frontend/src/features/riskcase/actions/actionInputs.ts
+?? frontend/src/features/riskcase/actions/useCaseAction.ts
+?? frontend/src/features/riskcase/ui/CaseActionDialog.tsx
+?? frontend/src/features/riskcase/ui/CaseActionsBar.tsx
+?? frontend/src/features/riskcase/ui/NotesPanel.tsx
+?? frontend/tests/CaseActions.test.tsx
+?? frontend/tests/CaseActionsBar.test.tsx
+?? frontend/tests/e2e/q017CaseLifecycle.spec.ts
+
+New review package / archive
+----------------------------
+?? review/q-017/review-q-017-v1-implementation-20260903-020721/
+?? review/q-017/review-q-017-v1-implementation-20260903-020721.zip
+
+Pre-existing unrelated untracked file (preserved)
+-------------------------------------------------
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304.zip
+
+Backend / migration status
+--------------------------
+- `git status --short -- backend/` is empty.
+- No untracked or modified Flyway migration exists.
+- The only backend-adjacent Q-017 change is the authorized bootstrap JSON under
+  deploy/; scripts/README.md documents that configuration.
+
+Staging / Git actions
+---------------------
+- Staged files: none.
+- Commit: none.
+- Push: none.
+- No existing timestamped review package was changed.

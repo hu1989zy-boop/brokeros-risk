@@ -1,0 +1,77 @@
+Q-017 Test Inventory
+====================
+
+Final Vitest result: 9 files, 103 passed, 0 failed.
+
+tests/CaseActions.test.tsx (67)
+--------------------------------
+- 1 exact registry membership test (the 11 approved operations)
+- 11 success/exact-request-body tests
+- 11 pending/disabled-control tests
+- 11 required-input validation tests
+- 11 ordinary ResultCode error tests
+- 11 typed HTTP 403 authorization tests
+- 11 version-conflict tests: reload, preserve input, retry with new version
+
+tests/CaseActionsBar.test.tsx (7)
+---------------------------------
+- Exact actions for OPEN
+- Exact actions for IN_REVIEW
+- Exact actions for ACTION_REQUIRED
+- Exact actions for RESOLVED
+- Exact actions for CLOSED
+- No lifecycle action for CANCELLED
+- Selected declarative descriptor is passed to shared flow
+
+tests/RiskCaseDetailPage.test.tsx (7)
+-------------------------------------
+- loading state
+- typed load error
+- detail/history/association and note metadata rendering
+- selected noteRef correction binding and exact body
+- empty history/association states
+- add-note success and expectedVersion
+- add-note conflict reload/input preservation regression
+
+tests/riskCaseRepository.test.ts (6)
+------------------------------------
+- bounded list/Bearer request
+- add-note exact body
+- one 401 refresh/retry
+- typed 403 mapping
+- unknown ResultCode is not success
+- refresh failure has no retry loop
+
+tests/RiskCaseListPage.test.tsx (4)
+tests/apiContract.test.ts (4)
+tests/appConfig.test.ts (3)
+tests/authConfig.test.ts (2)
+tests/AddNoteDialog.test.tsx (3)
+
+The inherited Q-016 suite remains green and guards list/detail/note,
+authentication configuration, runtime contract, and error behavior.
+
+Playwright
+----------
+
+tests/e2e/q017CaseLifecycle.spec.ts (1)
+- login → seeded OPEN case → assign → begin review → priority → resolve → close
+- asserts status, every version increment, and corresponding history events
+- Discovery: PASS
+- Execution: SKIPPED (missing external password and seeded Q-017 case number)
+
+tests/e2e/riskCaseSlice.spec.ts (1)
+- inherited Q-016 login → list → detail → add note
+- Execution: SKIPPED (missing external password and Q-016 case number)
+
+Playwright aggregate: 2 discovered, 0 passed, 0 failed, 2 skipped.
+Trace, screenshots, and video are disabled.
+
+Support / fixtures
+------------------
+
+- MSW uses the real `ApiClient` and `HttpRiskCaseRepository` path.
+- Query-backed action harness keeps the detail query active so conflict
+  refetch behavior is exercised, not mocked out at the hook boundary.
+- All identifiers and command values in test source are synthetic.
+- No backend test was added or run because `backend/` has zero task diff.

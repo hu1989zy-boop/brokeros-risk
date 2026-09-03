@@ -175,6 +175,14 @@ select {
   margin-bottom: 16px;
 }
 
+.case-actions {
+  display: flex;
+  max-width: 760px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
 .full-page-card {
   display: grid;
   min-height: 100vh;
@@ -213,5 +221,9 @@ select {
 
   .header-identity {
     display: none;
+  }
+
+  .case-actions {
+    align-items: flex-start;
   }
 }

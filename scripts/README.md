@@ -13,8 +13,10 @@ Repository-owned verification entry points:
   seeded Q-016 operator capabilities, starts the development backend, and runs
   the React web console. Copy `.env.example` to `.env` first. The seeded
   browser login is `q016-operator` with `KEYCLOAK_OPERATOR_PASSWORD` from the
-  local `.env`; it is development-only and has only `risk-case:read` and
-  `risk-case:note`.
+  local `.env`; it is development-only and has the Q-017 V1 capability set:
+  `risk-case:read`, `risk-case:note`, `risk-case:assign`, `risk-case:review`,
+  `risk-case:resolve`, `risk-case:close`, `risk-case:cancel`, and
+  `risk-case:reopen`.
 
 Run Maven checks separately because they are explicit blocking CI steps:
 
