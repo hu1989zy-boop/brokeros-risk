@@ -6,9 +6,12 @@ import { ApiError, userFacingError } from '../../../core/api/errors';
 import type { CaseActionDescriptor } from '../actions/actionDescriptors';
 import {
   invalidReferences,
+  type CaseActionFieldName,
+  type CaseActionFieldOption,
   type CaseActionFieldSpec,
   type CaseActionValues,
 } from '../actions/actionInputs';
+import { ReferenceInput } from './ReferenceInput';
 
 function isFormValidationFailure(value: unknown): value is { errorFields: unknown[] } {
   return (
@@ -23,12 +26,14 @@ export function CaseActionDialog({
   descriptor,
   expectedVersion,
   submitting,
+  onCaseOptions = {},
   onCancel,
   onSubmit,
 }: {
   descriptor: CaseActionDescriptor;
   expectedVersion: number;
   submitting: boolean;
+  onCaseOptions?: Partial<Record<CaseActionFieldName, CaseActionFieldOption[]>>;
   onCancel: () => void;
   onSubmit: (values: CaseActionValues) => Promise<void>;
 }) {
@@ -36,6 +41,12 @@ export function CaseActionDialog({
   const [confirming, setConfirming] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [conflict, setConflict] = useState(false);
+  const [confirmedReferences, setConfirmedReferences] = useState<
+    Partial<Record<CaseActionFieldName, boolean>>
+  >({});
+  const referencesConfirmed = descriptor.fields
+    .filter((field) => field.kind === 'reference')
+    .every((field) => confirmedReferences[field.name] === true);
 
   const submit = async () => {
     try {
@@ -77,7 +88,10 @@ export function CaseActionDialog({
       confirmLoading={submitting}
       maskClosable={!submitting && !confirming}
       closable={!submitting}
-      okButtonProps={{ disabled: submitting, danger: descriptor.terminal && confirming }}
+      okButtonProps={{
+        disabled: submitting || !referencesConfirmed,
+        danger: descriptor.terminal && confirming,
+      }}
       cancelButtonProps={{ disabled: submitting }}
       onCancel={() => {
         if (submitting) return;
@@ -113,8 +127,23 @@ export function CaseActionDialog({
       ) : null}
       <Form<CaseActionValues> form={form} layout="vertical" preserve>
         {descriptor.fields.map((field) => (
-          <Form.Item key={field.name} name={field.name} label={field.label} rules={rulesFor(field)}>
-            {renderField(field, submitting || confirming)}
+          <Form.Item
+            key={field.name}
+            name={field.name}
+            label={field.label}
+            extra={field.help}
+            rules={rulesFor(field)}
+          >
+            {renderField(
+              field,
+              submitting || confirming,
+              onCaseOptions[field.name],
+              (confirmed) =>
+                setConfirmedReferences((current) => ({
+                  ...current,
+                  [field.name]: confirmed,
+                })),
+            )}
           </Form.Item>
         ))}
       </Form>
@@ -122,13 +151,30 @@ export function CaseActionDialog({
   );
 }
 
-function renderField(field: CaseActionFieldSpec, disabled: boolean) {
-  if (field.kind === 'select') {
+function renderField(
+  field: CaseActionFieldSpec,
+  disabled: boolean,
+  onCaseOptions: CaseActionFieldOption[] | undefined,
+  onReferenceConfirmation: (confirmed: boolean) => void,
+) {
+  if (field.kind === 'reference') {
+    return (
+      <ReferenceInput
+        kind={field.referenceKind!}
+        disabled={disabled}
+        required={field.required}
+        onConfirmationChange={onReferenceConfirmation}
+      />
+    );
+  }
+  if (field.kind === 'select' || field.kind === 'on-case-select') {
+    const options = field.kind === 'on-case-select' ? onCaseOptions ?? [] : field.options ?? [];
     return (
       <Select
-        disabled={disabled}
-        options={field.options}
+        disabled={disabled || (field.kind === 'on-case-select' && options.length === 0)}
+        options={options}
         placeholder={field.placeholder ?? `Select ${field.label.toLowerCase()}`}
+        notFoundContent="No eligible reference is visible in the loaded case history."
       />
     );
   }

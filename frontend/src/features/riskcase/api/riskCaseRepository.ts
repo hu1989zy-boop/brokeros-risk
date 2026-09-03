@@ -1,27 +1,39 @@
 import type { ApiClient } from '../../../core/api/apiClient';
 import {
   parseRiskCaseDetail,
+  parseRiskCaseActionAssociation,
+  parseRiskCaseDecisionAssociation,
+  parseRiskCaseEvidenceAssociation,
   parseRiskCaseHistoryPage,
   parseRiskCaseListPage,
   parseRiskCaseNote,
   parseRiskCaseResolution,
   type BeginRiskCaseReviewRequest,
+  type AssociateRiskCaseActionRequest,
+  type AssociateRiskCaseDecisionRequest,
+  type AssociateRiskCaseEvidenceRequest,
   type CancelRiskCaseRequest,
   type ChangeRiskCaseAssignmentRequest,
   type ChangeRiskCasePriorityRequest,
+  type ChangeEvidenceAssociationDispositionRequest,
   type CloseRiskCaseRequest,
   type CorrectRiskCaseNoteRequest,
   type MarkRiskCaseActionRequiredRequest,
   type ReopenClosedRiskCaseRequest,
+  type ReferenceActionOutcomeRequest,
   type ResolveRiskCaseRequest,
   type ResumeResolvedRiskCaseRequest,
   type ReturnRiskCaseToReviewRequest,
   type RiskCaseDetail,
+  type RiskCaseActionAssociation,
+  type RiskCaseDecisionAssociation,
+  type RiskCaseEvidenceAssociation,
   type RiskCaseFilters,
   type RiskCaseListPage,
   type RiskCaseNote,
   type RiskCaseResolution,
   type RiskCaseView,
+  type SelectRiskCaseDecisionRequest,
 } from './riskCaseTypes';
 
 export interface AddNoteCommand {
@@ -46,6 +58,16 @@ export type ResumeResolvedRiskCaseCommand = RiskCaseCommand & ResumeResolvedRisk
 export type ReopenClosedRiskCaseCommand = RiskCaseCommand & ReopenClosedRiskCaseRequest;
 export type CorrectRiskCaseNoteCommand = RiskCaseCommand &
   CorrectRiskCaseNoteRequest & { noteRef: string };
+export type AssociateRiskCaseEvidenceCommand = RiskCaseCommand &
+  AssociateRiskCaseEvidenceRequest;
+export type ChangeEvidenceAssociationDispositionCommand = RiskCaseCommand &
+  ChangeEvidenceAssociationDispositionRequest & { associationEventRef: string };
+export type AssociateRiskCaseDecisionCommand = RiskCaseCommand &
+  AssociateRiskCaseDecisionRequest;
+export type SelectRiskCaseDecisionCommand = RiskCaseCommand & SelectRiskCaseDecisionRequest;
+export type AssociateRiskCaseActionCommand = RiskCaseCommand & AssociateRiskCaseActionRequest;
+export type ReferenceActionOutcomeCommand = RiskCaseCommand &
+  ReferenceActionOutcomeRequest & { actionRef: string };
 
 export interface RiskCaseRepository {
   list(filters: RiskCaseFilters, page: number, size: number): Promise<RiskCaseListPage>;
@@ -62,6 +84,14 @@ export interface RiskCaseRepository {
   resume(command: ResumeResolvedRiskCaseCommand): Promise<RiskCaseDetail>;
   reopen(command: ReopenClosedRiskCaseCommand): Promise<RiskCaseDetail>;
   correctNote(command: CorrectRiskCaseNoteCommand): Promise<RiskCaseNote>;
+  associateEvidence(command: AssociateRiskCaseEvidenceCommand): Promise<RiskCaseEvidenceAssociation>;
+  changeEvidenceDisposition(
+    command: ChangeEvidenceAssociationDispositionCommand,
+  ): Promise<RiskCaseEvidenceAssociation>;
+  associateDecision(command: AssociateRiskCaseDecisionCommand): Promise<RiskCaseDecisionAssociation>;
+  selectDecision(command: SelectRiskCaseDecisionCommand): Promise<RiskCaseDetail>;
+  associateAction(command: AssociateRiskCaseActionCommand): Promise<RiskCaseActionAssociation>;
+  referenceActionOutcome(command: ReferenceActionOutcomeCommand): Promise<RiskCaseActionAssociation>;
 }
 
 export class HttpRiskCaseRepository implements RiskCaseRepository {
@@ -170,6 +200,89 @@ export class HttpRiskCaseRepository implements RiskCaseRepository {
       `${casePath(command.caseNumber)}/notes/${encodeURIComponent(command.noteRef)}/corrections`,
       { content: command.content, expectedVersion: command.expectedVersion },
       parseRiskCaseNote,
+    );
+  }
+
+  associateEvidence(
+    command: AssociateRiskCaseEvidenceCommand,
+  ): Promise<RiskCaseEvidenceAssociation> {
+    return this.apiClient.post(
+      `${casePath(command.caseNumber)}/evidence-associations`,
+      {
+        evidenceRef: command.evidenceRef,
+        source: command.source,
+        reason: command.reason,
+        expectedVersion: command.expectedVersion,
+      },
+      parseRiskCaseEvidenceAssociation,
+    );
+  }
+
+  changeEvidenceDisposition(
+    command: ChangeEvidenceAssociationDispositionCommand,
+  ): Promise<RiskCaseEvidenceAssociation> {
+    return this.apiClient.post(
+      `${casePath(command.caseNumber)}/evidence-associations/${encodeURIComponent(command.associationEventRef)}/dispositions`,
+      {
+        disposition: command.disposition,
+        ...(command.replacementEvidenceRef
+          ? { replacementEvidenceRef: command.replacementEvidenceRef }
+          : {}),
+        source: command.source,
+        reason: command.reason,
+        expectedVersion: command.expectedVersion,
+      },
+      parseRiskCaseEvidenceAssociation,
+    );
+  }
+
+  associateDecision(
+    command: AssociateRiskCaseDecisionCommand,
+  ): Promise<RiskCaseDecisionAssociation> {
+    return this.apiClient.post(
+      `${casePath(command.caseNumber)}/decision-associations`,
+      {
+        decisionRef: command.decisionRef,
+        reason: command.reason,
+        expectedVersion: command.expectedVersion,
+      },
+      parseRiskCaseDecisionAssociation,
+    );
+  }
+
+  selectDecision(command: SelectRiskCaseDecisionCommand): Promise<RiskCaseDetail> {
+    return this.postDetail(command, 'decision-selection', {
+      decisionRef: command.decisionRef,
+      reason: command.reason,
+      expectedVersion: command.expectedVersion,
+    });
+  }
+
+  associateAction(
+    command: AssociateRiskCaseActionCommand,
+  ): Promise<RiskCaseActionAssociation> {
+    return this.apiClient.post(
+      `${casePath(command.caseNumber)}/action-associations`,
+      {
+        actionRef: command.actionRef,
+        reason: command.reason,
+        expectedVersion: command.expectedVersion,
+      },
+      parseRiskCaseActionAssociation,
+    );
+  }
+
+  referenceActionOutcome(
+    command: ReferenceActionOutcomeCommand,
+  ): Promise<RiskCaseActionAssociation> {
+    return this.apiClient.post(
+      `${casePath(command.caseNumber)}/action-associations/${encodeURIComponent(command.actionRef)}/outcomes`,
+      {
+        outcomeRef: command.outcomeRef,
+        reason: command.reason,
+        expectedVersion: command.expectedVersion,
+      },
+      parseRiskCaseActionAssociation,
     );
   }
 

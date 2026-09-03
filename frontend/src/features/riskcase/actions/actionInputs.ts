@@ -4,17 +4,33 @@ import {
 } from '../api/riskCaseTypes';
 
 export type CaseActionFieldName =
+  | 'actionRef'
   | 'actionRefs'
+  | 'associationEventRef'
   | 'assigneeRef'
   | 'content'
+  | 'decisionRef'
+  | 'disposition'
   | 'duplicateCaseNumber'
+  | 'evidenceRef'
   | 'evidenceRefs'
   | 'outcome'
+  | 'outcomeRef'
   | 'priority'
   | 'reason'
-  | 'resolutionSummary';
+  | 'replacementEvidenceRef'
+  | 'resolutionSummary'
+  | 'source';
 
-export type CaseActionFieldKind = 'text' | 'textarea' | 'select' | 'reference-list';
+export type ReferenceKind = 'action' | 'actionOutcome' | 'decision' | 'evidence';
+
+export type CaseActionFieldKind =
+  | 'on-case-select'
+  | 'reference'
+  | 'reference-list'
+  | 'select'
+  | 'text'
+  | 'textarea';
 
 export interface CaseActionFieldOption {
   label: string;
@@ -26,11 +42,13 @@ export interface CaseActionFieldSpec {
   label: string;
   kind: CaseActionFieldKind;
   required: boolean;
+  help?: string;
   maxLength?: number;
   placeholder?: string;
   options?: CaseActionFieldOption[];
   pattern?: RegExp;
   patternMessage?: string;
+  referenceKind?: ReferenceKind;
   referencePattern?: RegExp;
 }
 
@@ -42,9 +60,25 @@ export const caseNumberPattern = new RegExp(`^RC-${canonicalUuidV4Pattern.source
 export const evidenceRefPattern = new RegExp(
   `^ev-${canonicalUuidV4Pattern.source.slice(1, -1)}$`,
 );
+export const decisionRefPattern = new RegExp(
+  `^dec-${canonicalUuidV4Pattern.source.slice(1, -1)}$`,
+);
 export const actionRefPattern = new RegExp(
   `^act-${canonicalUuidV4Pattern.source.slice(1, -1)}$`,
 );
+export const associationActionRefPattern = new RegExp(
+  `^act-${canonicalUuidV4Pattern.source.slice(1, -1)}$`,
+);
+export const actionOutcomeRefPattern = new RegExp(
+  `^aoc-${canonicalUuidV4Pattern.source.slice(1, -1)}$`,
+);
+
+export const referencePatterns: Record<ReferenceKind, RegExp> = {
+  evidence: evidenceRefPattern,
+  decision: decisionRefPattern,
+  action: associationActionRefPattern,
+  actionOutcome: actionOutcomeRefPattern,
+};
 
 export const priorityOptions: CaseActionFieldOption[] = riskCasePriorities.map((priority) => ({
   label: titleCase(priority),

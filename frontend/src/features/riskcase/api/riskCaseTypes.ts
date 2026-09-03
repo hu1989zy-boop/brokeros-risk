@@ -75,6 +75,40 @@ export interface CorrectRiskCaseNoteRequest extends VersionedRiskCaseRequest {
   content: string;
 }
 
+export interface AssociateRiskCaseEvidenceRequest extends VersionedRiskCaseRequest {
+  evidenceRef: string;
+  source: string;
+  reason: string;
+}
+
+export const evidenceDispositions = ['SUPERSEDED', 'INVALIDATED', 'WITHDRAWN'] as const;
+export type EvidenceDisposition = (typeof evidenceDispositions)[number];
+
+export interface ChangeEvidenceAssociationDispositionRequest
+  extends VersionedRiskCaseRequest {
+  disposition: EvidenceDisposition;
+  replacementEvidenceRef?: string;
+  source: string;
+  reason: string;
+}
+
+export interface AssociateRiskCaseDecisionRequest extends VersionedRiskCaseRequest {
+  decisionRef: string;
+  reason: string;
+}
+
+export type SelectRiskCaseDecisionRequest = AssociateRiskCaseDecisionRequest;
+
+export interface AssociateRiskCaseActionRequest extends VersionedRiskCaseRequest {
+  actionRef: string;
+  reason: string;
+}
+
+export interface ReferenceActionOutcomeRequest extends VersionedRiskCaseRequest {
+  outcomeRef: string;
+  reason: string;
+}
+
 export interface RiskCaseSummary {
   caseNumber: string;
   subjectRef: string;
@@ -147,6 +181,31 @@ export interface RiskCaseResolution {
   resolutionSummary: string;
   resolvedByRef: string;
   resolvedAt: string;
+}
+
+export interface RiskCaseEvidenceAssociation {
+  associationEventRef: string;
+  eventType: 'ATTACHED' | EvidenceDisposition;
+  evidenceRef: string;
+  replacementEvidenceRef: string | null;
+  version: number;
+  actorRef: string;
+  occurredAt: string;
+}
+
+export interface RiskCaseDecisionAssociation {
+  decisionRef: string;
+  version: number;
+}
+
+export interface RiskCaseActionAssociation {
+  eventType: 'ACTION_ASSOCIATED' | 'OUTCOME_REFERENCED' | 'WITHDRAWN';
+  actionRef: string;
+  decisionRef: string;
+  outcomeRef: string | null;
+  version: number;
+  actorRef: string;
+  occurredAt: string;
 }
 
 export interface RiskCaseFilters {
@@ -263,5 +322,57 @@ export function parseRiskCaseResolution(value: unknown): RiskCaseResolution {
     ),
     resolvedByRef: asString(record.resolvedByRef, 'RiskCaseResolution.resolvedByRef'),
     resolvedAt: asInstant(record.resolvedAt, 'RiskCaseResolution.resolvedAt'),
+  };
+}
+
+export function parseRiskCaseEvidenceAssociation(
+  value: unknown,
+): RiskCaseEvidenceAssociation {
+  const record = asRecord(value, 'RiskCaseEvidenceAssociation');
+  return {
+    associationEventRef: asString(
+      record.associationEventRef,
+      'RiskCaseEvidenceAssociation.associationEventRef',
+    ),
+    eventType: enumValue(
+      record.eventType,
+      ['ATTACHED', ...evidenceDispositions] as const,
+      'RiskCaseEvidenceAssociation.eventType',
+    ),
+    evidenceRef: asString(record.evidenceRef, 'RiskCaseEvidenceAssociation.evidenceRef'),
+    replacementEvidenceRef: asNullableString(
+      record.replacementEvidenceRef,
+      'RiskCaseEvidenceAssociation.replacementEvidenceRef',
+    ),
+    version: asInteger(record.version, 'RiskCaseEvidenceAssociation.version'),
+    actorRef: asString(record.actorRef, 'RiskCaseEvidenceAssociation.actorRef'),
+    occurredAt: asInstant(record.occurredAt, 'RiskCaseEvidenceAssociation.occurredAt'),
+  };
+}
+
+export function parseRiskCaseDecisionAssociation(
+  value: unknown,
+): RiskCaseDecisionAssociation {
+  const record = asRecord(value, 'RiskCaseDecisionAssociation');
+  return {
+    decisionRef: asString(record.decisionRef, 'RiskCaseDecisionAssociation.decisionRef'),
+    version: asInteger(record.version, 'RiskCaseDecisionAssociation.version'),
+  };
+}
+
+export function parseRiskCaseActionAssociation(value: unknown): RiskCaseActionAssociation {
+  const record = asRecord(value, 'RiskCaseActionAssociation');
+  return {
+    eventType: enumValue(
+      record.eventType,
+      ['ACTION_ASSOCIATED', 'OUTCOME_REFERENCED', 'WITHDRAWN'] as const,
+      'RiskCaseActionAssociation.eventType',
+    ),
+    actionRef: asString(record.actionRef, 'RiskCaseActionAssociation.actionRef'),
+    decisionRef: asString(record.decisionRef, 'RiskCaseActionAssociation.decisionRef'),
+    outcomeRef: asNullableString(record.outcomeRef, 'RiskCaseActionAssociation.outcomeRef'),
+    version: asInteger(record.version, 'RiskCaseActionAssociation.version'),
+    actorRef: asString(record.actorRef, 'RiskCaseActionAssociation.actorRef'),
+    occurredAt: asInstant(record.occurredAt, 'RiskCaseActionAssociation.occurredAt'),
   };
 }

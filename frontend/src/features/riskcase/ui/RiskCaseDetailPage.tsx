@@ -20,29 +20,14 @@ import {
   type CaseActionDescriptor,
 } from '../actions/actionDescriptors';
 import { useCaseAction } from '../actions/useCaseAction';
-import type { RiskCaseHistoryEntry, RiskCaseView } from '../api/riskCaseTypes';
+import type { RiskCaseView } from '../api/riskCaseTypes';
+import { associationHistoryEntries, onCaseReferenceOptions } from '../model/associationProjection';
 import { useAddRiskCaseNote, useRiskCaseDetail } from '../model/riskCaseQueries';
 import { AddNoteDialog } from './AddNoteDialog';
+import { AssociationsPanel } from './AssociationsPanel';
 import { CaseActionDialog } from './CaseActionDialog';
 import { CaseActionsBar } from './CaseActionsBar';
 import { NotesPanel } from './NotesPanel';
-
-const associationEventTypes = new Set([
-  'ATTACHED',
-  'SUPERSEDED',
-  'INVALIDATED',
-  'WITHDRAWN',
-  'DECISION_ASSOCIATED',
-  'DECISION_SELECTED',
-  'ACTION_ASSOCIATED',
-  'OUTCOME_REFERENCED',
-]);
-
-function associationEntries(entries: RiskCaseHistoryEntry[]): RiskCaseHistoryEntry[] {
-  return entries.filter(
-    (entry) => entry.affectedRef !== null && associationEventTypes.has(entry.eventType),
-  );
-}
 
 interface SelectedAction {
   descriptor: CaseActionDescriptor;
@@ -108,6 +93,10 @@ export function RiskCaseDetailPage() {
       {operationMessage ? <Alert type="success" showIcon message={operationMessage} /> : null}
       <RiskCaseDetailContent
         view={view}
+        onAssociationAction={(descriptor) => {
+          setOperationMessage(null);
+          setSelectedAction({ descriptor });
+        }}
         onCorrectNote={(noteRef) => {
           setOperationMessage(null);
           setSelectedAction({ descriptor: descriptorFor('correctNote'), noteRef });
@@ -143,6 +132,7 @@ export function RiskCaseDetailPage() {
           selected={selectedAction}
           caseNumber={view.detail.caseNumber}
           expectedVersion={view.detail.version}
+          view={view}
           onCancel={() => setSelectedAction(null)}
           onSuccess={(message) => {
             setOperationMessage(message);
@@ -158,12 +148,14 @@ function CaseActionFlow({
   selected,
   caseNumber,
   expectedVersion,
+  view,
   onCancel,
   onSuccess,
 }: {
   selected: SelectedAction;
   caseNumber: string;
   expectedVersion: number;
+  view: RiskCaseView;
   onCancel: () => void;
   onSuccess: (message: string) => void;
 }) {
@@ -177,6 +169,7 @@ function CaseActionFlow({
       descriptor={selected.descriptor}
       expectedVersion={expectedVersion}
       submitting={action.isPending}
+      onCaseOptions={onCaseReferenceOptions(view)}
       onCancel={onCancel}
       onSubmit={async (values) => {
         const result = await action.run(values);
@@ -192,13 +185,15 @@ function CaseActionFlow({
 
 export function RiskCaseDetailContent({
   view,
+  onAssociationAction,
   onCorrectNote = () => undefined,
 }: {
   view: RiskCaseView;
+  onAssociationAction?: (descriptor: CaseActionDescriptor) => void;
   onCorrectNote?: (noteRef: string) => void;
 }) {
   const detail = view.detail;
-  const associations = associationEntries(view.history.entries);
+  const associations = associationHistoryEntries(view.history.entries);
   return (
     <>
       <Card title="Case detail">
@@ -222,6 +217,8 @@ export function RiskCaseDetailContent({
       </Card>
 
       <NotesPanel entries={view.history.entries} onCorrect={onCorrectNote} />
+
+      <AssociationsPanel view={view} onSelectAction={onAssociationAction} />
 
       <Card title="Association references in history">
         {associations.length === 0 ? (

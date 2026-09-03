@@ -1,0 +1,43 @@
+Q-018 implementation Git diff statistics
+=========================================
+
+Baseline HEAD: 7d886c9 (main; one pre-existing commit ahead of origin/main)
+Staged files: none
+Backend task diff: empty
+
+Tracked diff before adding this review package
+------------------------------------------------
+ deploy/keycloak/q016-security-bootstrap.json       |   5 +
+ frontend/README.md                                 |  24 +-
+ frontend/src/app/App.tsx                           |  16 +-
+ frontend/src/app/styles.css                        |  17 ++
+ frontend/src/features/riskcase/actions/actionDescriptors.ts | 271 +-
+ frontend/src/features/riskcase/actions/actionInputs.ts | 38 +-
+ frontend/src/features/riskcase/api/riskCaseRepository.ts | 113 +
+ frontend/src/features/riskcase/api/riskCaseTypes.ts | 111 +
+ frontend/src/features/riskcase/ui/CaseActionDialog.tsx | 60 +-
+ frontend/src/features/riskcase/ui/RiskCaseDetailPage.tsx | 35 +-
+
+Tracked total: 10 files changed, 651 insertions(+), 39 deletions(-).
+
+Untracked Q-018 implementation/docs (review package excluded)
+--------------------------------------------------------------
+- 11 files, 1,336 lines total.
+- Production feature source: 6 files, 515 lines.
+- Frontend tests: 4 files, 746 lines.
+- Lessons Learned: 1 file, 75 lines.
+
+Review package additions
+------------------------
+- 10 files in this new timestamped directory.
+- One verified sibling ZIP is created by the required review-package workflow.
+- Existing review directories/archives are excluded and unchanged.
+
+Backend confirmation
+--------------------
+`git diff --stat -- backend/` -> empty
+`git status --short -- backend/src/main/java backend/src/main/resources/db/migration` -> empty
+No Java, backend test, Flyway migration, SQL, or backend resource is changed.
+
+Note: ordinary `git diff --stat` excludes untracked feature/test/lesson/review
+files. They are enumerated separately above and in GitStatus.txt.

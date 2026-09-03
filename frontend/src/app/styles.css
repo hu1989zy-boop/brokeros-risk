@@ -175,6 +175,23 @@ select {
   margin-bottom: 16px;
 }
 
+.reference-input {
+  display: grid;
+  gap: 10px;
+}
+
+.reference-input .ant-card-body {
+  padding: 12px;
+}
+
+.association-section + .association-section {
+  margin-top: 20px;
+}
+
+.association-section .ant-empty {
+  margin-block: 8px;
+}
+
 .case-actions {
   display: flex;
   max-width: 760px;

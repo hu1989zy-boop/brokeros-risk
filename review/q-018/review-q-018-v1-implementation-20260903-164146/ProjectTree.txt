@@ -1,0 +1,62 @@
+Q-018 bounded changed / key-reused tree
+=======================================
+
+deploy/
+└── keycloak/
+    └── q016-security-bootstrap.json
+
+frontend/
+├── README.md
+├── src/
+│   ├── app/
+│   │   ├── App.tsx
+│   │   └── styles.css
+│   └── features/riskcase/
+│       ├── actions/
+│       │   ├── actionDescriptors.ts
+│       │   ├── actionInputs.ts
+│       │   └── useCaseAction.ts              [reused unchanged]
+│       ├── api/
+│       │   ├── referencePreview.ts           [new]
+│       │   ├── riskCaseRepository.ts
+│       │   └── riskCaseTypes.ts
+│       ├── model/
+│       │   ├── associationProjection.ts      [new]
+│       │   ├── referencePreviewContext.tsx   [new]
+│       │   ├── riskCaseQueries.ts            [reused unchanged]
+│       │   └── useReferencePreview.ts        [new]
+│       └── ui/
+│           ├── AssociationsPanel.tsx         [new]
+│           ├── CaseActionDialog.tsx
+│           ├── CaseActionsBar.tsx            [reused unchanged]
+│           ├── ReferenceInput.tsx            [new]
+│           └── RiskCaseDetailPage.tsx
+└── tests/
+    ├── AssociationsPanel.test.tsx            [new]
+    ├── Q018AssociationActions.test.tsx       [new]
+    ├── ReferenceInput.test.tsx               [new]
+    └── e2e/
+        └── q018AssociationLifecycle.spec.ts  [new]
+
+docs/
+└── lessons/
+    └── 2026-09-03-q-018-implementation.md
+
+review/q-018/review-q-018-v1-implementation-20260903-164146/
+├── ArchitectureReview.md
+├── DesignTraceability.md
+├── GitDiffStat.txt
+├── GitStatus.txt
+├── OutstandingItems.md
+├── ProjectTree.txt
+├── SecurityReview.md
+├── Summary.md
+├── TestInventory.txt
+└── Verification.md
+
+Explicitly absent from the changed runtime tree: backend/, Java, backend tests,
+Flyway migrations, SQL, dependency manifests/lockfiles, Compose, Kubernetes,
+new endpoints, Group E, source-entity creation, and JWT/capability parsing.
+
+Omitted as generated/irrelevant: .git, node_modules, dist, historical review
+directories/archives, and unchanged backend/project trees.

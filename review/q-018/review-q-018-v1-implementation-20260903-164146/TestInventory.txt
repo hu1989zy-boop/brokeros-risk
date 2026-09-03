@@ -1,0 +1,77 @@
+Q-018 Test Inventory
+====================
+
+Final Vitest result: 12 files, 148 passed, 0 failed.
+Q-018 addition: 3 files, 45 tests.
+Inherited Q-016/Q-017 regression coverage: 9 files, 103 tests.
+
+tests/Q018AssociationActions.test.tsx (37)
+------------------------------------------------
+- 1 exact registry membership test for the six approved Group C operations
+- 6 success/exact-path/request-body/no-actor tests
+- 6 pending/disabled-submit tests
+- 6 missing/invalid-input tests
+- 6 ordinary backend ResultCode tests
+- 6 typed HTTP 403 authorization tests
+- 6 version-conflict tests: detail reload, input preservation, version-8 retry
+- Uses the real ApiClient, HttpRiskCaseRepository, preview repository, TanStack
+  Query, action runner, dialog, and MSW transport boundary
+
+tests/ReferenceInput.test.tsx (4)
+--------------------------------
+- Valid format -> debounced GET -> small preview -> confirmed state
+- Invalid format -> no GET -> unconfirmed
+- HTTP 404 -> typed not-found -> unconfirmed
+- HTTP 403 -> typed authorization message -> unconfirmed
+
+tests/AssociationsPanel.test.tsx (4)
+------------------------------------
+- Correct decision/action on-case candidate derivation
+- Bounded association rendering and current-decision marking
+- All six Group C action entry points hosted by the panel
+- Same-named WITHDRAWN event classification after an observed action association
+
+Inherited final-green files (103)
+---------------------------------
+- tests/CaseActions.test.tsx (67)
+- tests/CaseActionsBar.test.tsx (7)
+- tests/RiskCaseDetailPage.test.tsx (7)
+- tests/riskCaseRepository.test.ts (6)
+- tests/RiskCaseListPage.test.tsx (4)
+- tests/apiContract.test.ts (4)
+- tests/appConfig.test.ts (3)
+- tests/authConfig.test.ts (2)
+- tests/AddNoteDialog.test.tsx (3)
+
+The inherited suite guards Q-016/Q-017 API/auth/config/list/detail/note and all
+eleven lifecycle operation behaviors. It includes the existing assertion that
+an unknown ResultCode is failure, not success.
+
+Playwright
+----------
+
+tests/e2e/q018AssociationLifecycle.spec.ts (1)
+- login -> seeded case -> decision preview/associate -> select current -> action
+  preview/associate -> assert versions/associations -> resolve reachable
+- Discovery: PASS
+- Execution: SKIPPED (missing password, case, decision, and action inputs)
+- Additional known blocker: approved short refs conflict with backend long refs
+
+Targeted Playwright aggregate: 1 discovered, 0 passed, 0 failed, 1 skipped.
+Trace, screenshots, and video are disabled by configuration.
+
+Backend
+-------
+
+- No backend test was added or run because backend code/tests/migrations have
+  zero Q-018 diff.
+- Existing backend reference/domain/history files were inspected read-only to
+  verify prefix and payload availability; this is not reported as test execution.
+
+Fixtures and safety
+-------------------
+
+- All test credentials, references, reasons, subjects, and response content are
+  synthetic placeholders.
+- No live token, password, customer reference, reason, or entity content is in
+  the tests or review package.

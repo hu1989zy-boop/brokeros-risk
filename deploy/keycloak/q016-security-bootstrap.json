@@ -11,6 +11,11 @@
         }
       ],
       "capabilities": [
+        "action-outcome:read",
+        "action:read",
+        "decision:read",
+        "evidence:read",
+        "risk-case:associate",
         "risk-case:assign",
         "risk-case:cancel",
         "risk-case:close",

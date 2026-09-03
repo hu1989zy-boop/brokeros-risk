@@ -22,7 +22,9 @@ import {
 
 import { ApiClient, type AuthSession } from '../core/api/apiClient';
 import type { AppConfig } from '../core/config/appConfig';
+import { HttpReferencePreviewRepository } from '../features/riskcase/api/referencePreview';
 import { HttpRiskCaseRepository } from '../features/riskcase/api/riskCaseRepository';
+import { ReferencePreviewRepositoryProvider } from '../features/riskcase/model/referencePreviewContext';
 import { RiskCaseRepositoryProvider } from '../features/riskcase/model/riskCaseContext';
 
 const RiskCaseListPage = lazy(async () => {
@@ -88,7 +90,7 @@ function RuntimeProviders({ config, children }: PropsWithChildren<{ config: AppC
       priorSubject.current = authenticatedSubject;
     }
   }, [authenticatedSubject, queryClient]);
-  const repository = useMemo(() => {
+  const repositories = useMemo(() => {
     const session: AuthSession = {
       getAccessToken: () => authRef.current.user?.access_token ?? null,
       refreshAccessToken: async () => {
@@ -104,7 +106,11 @@ function RuntimeProviders({ config, children }: PropsWithChildren<{ config: AppC
         void authRef.current.removeUser();
       },
     };
-    return new HttpRiskCaseRepository(new ApiClient(config.apiBaseUrl, session));
+    const client = new ApiClient(config.apiBaseUrl, session);
+    return {
+      riskCases: new HttpRiskCaseRepository(client),
+      referencePreviews: new HttpReferencePreviewRepository(client),
+    };
   }, [config.apiBaseUrl, queryClient]);
 
   // While the OIDC redirect callback is being processed (auth params still in the
@@ -118,7 +124,11 @@ function RuntimeProviders({ config, children }: PropsWithChildren<{ config: AppC
 
   return (
     <QueryClientProvider client={queryClient}>
-      <RiskCaseRepositoryProvider repository={repository}>{children}</RiskCaseRepositoryProvider>
+      <RiskCaseRepositoryProvider repository={repositories.riskCases}>
+        <ReferencePreviewRepositoryProvider repository={repositories.referencePreviews}>
+          {children}
+        </ReferencePreviewRepositoryProvider>
+      </RiskCaseRepositoryProvider>
     </QueryClientProvider>
   );
 }

@@ -1,0 +1,63 @@
+Q-018 implementation Git status
+===============================
+
+Branch / baseline
+-----------------
+## main...origin/main [ahead 1]
+HEAD: 7d886c9
+The one commit ahead of origin/main predates this Q-018 implementation work.
+
+Tracked Q-018 modifications
+---------------------------
+ M deploy/keycloak/q016-security-bootstrap.json
+ M frontend/README.md
+ M frontend/src/app/App.tsx
+ M frontend/src/app/styles.css
+ M frontend/src/features/riskcase/actions/actionDescriptors.ts
+ M frontend/src/features/riskcase/actions/actionInputs.ts
+ M frontend/src/features/riskcase/api/riskCaseRepository.ts
+ M frontend/src/features/riskcase/api/riskCaseTypes.ts
+ M frontend/src/features/riskcase/ui/CaseActionDialog.tsx
+ M frontend/src/features/riskcase/ui/RiskCaseDetailPage.tsx
+
+Untracked Q-018 implementation / governance
+-------------------------------------------
+?? docs/lessons/2026-09-03-q-018-implementation.md
+?? frontend/src/features/riskcase/api/referencePreview.ts
+?? frontend/src/features/riskcase/model/associationProjection.ts
+?? frontend/src/features/riskcase/model/referencePreviewContext.tsx
+?? frontend/src/features/riskcase/model/useReferencePreview.ts
+?? frontend/src/features/riskcase/ui/AssociationsPanel.tsx
+?? frontend/src/features/riskcase/ui/ReferenceInput.tsx
+?? frontend/tests/AssociationsPanel.test.tsx
+?? frontend/tests/Q018AssociationActions.test.tsx
+?? frontend/tests/ReferenceInput.test.tsx
+?? frontend/tests/e2e/q018AssociationLifecycle.spec.ts
+
+New Q-018 review package / archive
+----------------------------------
+?? review/q-018/review-q-018-v1-implementation-20260903-164146/
+?? review/q-018/review-q-018-v1-implementation-20260903-164146.zip
+
+Pre-existing unrelated untracked files (preserved)
+--------------------------------------------------
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304.zip
+?? review/q-017/review-q-017-v1-implementation-20260903-020721.zip
+
+Backend / migration status
+--------------------------
+- `git diff --stat -- backend/` is empty.
+- `git status --short -- backend/src/main/java backend/src/main/resources/db/migration`
+  is empty.
+- No Java, backend test, backend resource, Flyway migration, or SQL is modified
+  or untracked.
+- The only runtime/backend-adjacent file outside `frontend/` is the explicitly
+  authorized capability bootstrap under `deploy/`. Lessons and review artifacts
+  are required governance output, not runtime changes.
+
+Staging / Git actions
+---------------------
+- Staged files: none.
+- Commit: none.
+- Push: none.
+- No existing timestamped review package or archive was changed.

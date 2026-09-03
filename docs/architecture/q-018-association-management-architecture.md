@@ -29,7 +29,7 @@ change is the capability grant.
 | --- | --- |
 | Operations | Reuse the **Q-017 action registry + `useCaseAction` runner** for the six association operations (Bearer, `expectedVersion`, `403`/`ResultCode` typed errors, version-conflict reload) |
 | On-case references | Selected from the case's **existing detail/history** (association event for disposition; associated decisions for selection; associated actions for an outcome) — no new read |
-| External references | A **`ReferenceInput`** control: operator enters a `ev-/dc-/ac-/ao-` ref → console calls the existing `GET /{ref}` → shows a **preview** (validate + confirm) before the association is submitted |
+| External references | A **`ReferenceInput`** control: operator enters a `ev-/dec-/act-/aoc-` ref → console calls the existing `GET /{ref}` → shows a **preview** (validate + confirm) before the association is submitted |
 | Association state view | The detail page renders current associations (effective evidence, associated + current decision, associated actions + outcomes) from existing reads, so state is visible before/after |
 | Authorization | Server-side, unchanged; operator granted `risk-case:associate` + `evidence:read` + `decision:read` + `action:read` + `action-outcome:read` |
 
@@ -70,7 +70,7 @@ features/riskcase/
 - **`ReferenceInput`**: on entry (debounced), calls the module's `GET /{ref}` and
   renders a preview (key attributes) or a typed "not found / unauthorized / invalid
   format" state; the enclosing action's submit is disabled until a valid ref is
-  confirmed (external refs only). Format is client-validated (`ev-/dc-/ac-/ao-`
+  confirmed (external refs only). Format is client-validated (`ev-/dec-/act-/aoc-`
   UUID) before the call.
 - **On-case pickers**: disposition target, current-decision candidates, and the
   action for an outcome are chosen from the case's existing associations

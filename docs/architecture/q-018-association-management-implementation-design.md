@@ -55,7 +55,7 @@ Path segments are `encodeURIComponent`-escaped. `disposition` is an enum select;
   action-outcomes}/{ref}`, parsed to a small typed preview (key identifying
   fields only — do not dump full entity content).
 - `useReferencePreview(kind, ref)`: TanStack Query, enabled only when `ref`
-  passes the client format check (`^(ev|dc|ac|ao)-<uuid v4>$` per kind), debounced;
+  passes the client format check (`^(ev|dec|act|aoc)-<uuid v4>$` per kind), debounced;
   states: idle / loading / valid(preview) / not-found(404→typed) / forbidden(403) /
   invalid-format. Reuses `ApiClient` (Bearer, envelope, error mapping).
 - `ReferenceInput`: renders the field + a preview card; exposes a `confirmedRef`
@@ -112,7 +112,7 @@ shapes and that unknown `ResultCode`s are not treated as success.
   preview enables submit; 404/403/invalid-format block it; on-case pickers list
   the right candidates.
 - **Live Playwright:** on a seeded case, associate a decision (preview an
-  `dc-…` ref) → select it as current → associate an action (`ac-…`) → assert the
+  `dec-…` ref) → select it as current → associate an action (`act-…`) → assert the
   associations + version; this leaves the case in a state where Q-017 `resolve`
   is reachable (AC 4).
 - Typecheck + `vite build` + Vitest green; `git diff -- backend/` empty; the only

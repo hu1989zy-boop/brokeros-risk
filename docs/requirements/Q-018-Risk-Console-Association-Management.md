@@ -21,7 +21,7 @@ lifecycle (assign, review, resolve, close, …). But a Risk Case's substance is 
 **associations** — the evidence, decisions, and actions attached to it — and the
 console cannot yet manage them. Group C was deferred from Q-017 for one concrete
 reason: associating evidence/decisions/actions requires the operator to supply a
-**reference** (`ev-…`, `dc-…`, `ac-…`, `ao-…`) from another module, and those
+**reference** (`ev-…`, `dec-…`, `act-…`, `aoc-…`) from another module, and those
 modules currently expose only `POST` (create) and `GET /{ref}` (fetch one) —
 **no list/search endpoint** — so there is no way to *discover* a reference. This
 Requirement resolves how the console manages associations given that constraint.
@@ -125,7 +125,7 @@ unusable "paste a raw UUID" flow.
   selection/outcome operation already exposed by `RiskCaseController`.
 - **On-case reference** — a reference already attached to the case, selectable
   from its detail/history.
-- **External reference** — a `ev-/dc-/ac-/ao-` reference from another module,
+- **External reference** — a `ev-/dec-/act-/aoc-` reference from another module,
   supplied per §5.3.
 - **Fetch-by-ref preview** — validating/showing an entered reference via the
   existing `GET /{ref}` before associating.
@@ -256,7 +256,53 @@ security bootstrap. Thin-client; **no new backend endpoint**; **no backend
 code/aggregate/migration change** — the only backend-adjacent change is that
 capability grant.
 
-Next gate: Codex implements Q-018 V1 → Claude Code independent review (incl. the
-live association slice and the resulting Q-017 `resolve` reachability) → Product
-Owner acceptance → commit. Option B (browse/search pickers) and Group E (case
-creation) remain deferred to future Requirements.
+### Implementation, review, and corrections — 2026-09-03
+
+Codex delivered Q-018 (v1
+`review/q-018/review-q-018-v1-implementation-20260903-164146`): the six operations
+via the Q-017 action framework, `ReferenceInput` preview over the existing
+`GET /{ref}`, on-case pickers, `AssociationsPanel`, and the capability grant. No
+backend code/migration change. Codex marked it **BLOCKED** and — correctly and
+honestly — surfaced **two contract defects rooted in the Architect's (Claude
+Code's) design**, which independent review confirmed:
+
+- **Prefix defect (Architect error, corrected).** The Q-018 documents specified
+  reference prefixes `ev-/dc-/ac-/ao-`, but the committed backend regexes are
+  `ev-` (V4) / **`dec-`** (V5) / **`act-`** (V6) / **`aoc-`** (V7). The decision/
+  action/outcome prefixes were wrong in the design (only evidence had been
+  verified). Corrected in the four Q-018 documents **and** in the delivered
+  frontend (`actionInputs.ts` patterns, `ReferenceInput` placeholders, test
+  fixtures); re-verified: strict typecheck 0 errors, **Vitest 148/148**,
+  `vite build` PASS. Prefix correctness is authoritative (matches the backend
+  migration regexes).
+- **On-case ref exposure (design assumption, resolved per §5.3 fallback → B1).**
+  The Risk Case detail/history does not expose an evidence association's
+  `associationEventRef` (history exposes only `{version, eventType, affectedRef,
+  actorRef}`). Per the Product Owner decision **B1**, the evidence-disposition
+  target uses the **manual-entry fallback** (already implemented; FR-02's on-case
+  picker is not met for that ref) — **no backend change**. Decision-selection and
+  action-for-outcome pickers *are* derivable from history and work. The
+  `AssociationsPanel` is a bounded history reconstruction, not an authoritative
+  projection (labelled as such). A future Requirement (Q-019) may add an additive
+  bounded association-projection read endpoint (Option B / proper pickers).
+
+Independent review outcome: **PASS after the prefix correction + B1** — reproduced
+fresh `npm ci` + typecheck 0 + Vitest 148/148 + build; backend untouched
+(`git diff -- backend/` empty, no migration); the only backend-adjacent change is
+the capability grant `{risk-case:associate, evidence:read, decision:read,
+action:read, action-outcome:read}`. The full live association happy-path (associate
+decision → select → associate action → resolve) requires seeding the decision/
+action Core-Domain chain (same precondition as Q-017 `resolve`); it is covered by
+the 148 component tests and the delivered live Playwright spec, to be executed when
+that chain is seeded.
+
+Q-018 (V1) acceptance: **ACCEPTED — 2026-09-03 — Product Owner** (corrected
+implementation: prefixes fixed to `ev-/dec-/act-/aoc-`; disposition on-case ref via
+B1 manual-entry fallback); committed with the implementation + prefix corrections +
+v2 review package.
+
+Q-018 status: **COMPLETE — 2026-09-03** (Risk Console association management, Group
+C, all six operations; Option A reference preview). Next: Option B (browse/search
+pickers + an authoritative association-projection read endpoint) and Group E (case
+creation) remain deferred to future Requirements; Q-015 remains parked awaiting the
+MT4/MT5 SDK.

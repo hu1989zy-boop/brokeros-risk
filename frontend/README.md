@@ -86,7 +86,14 @@ npm run build
 Vitest, React Testing Library, and MSW run in Node/jsdom without a browser.
 The tests cover the typed `ApiResponse` contract, Bearer/401/403 behavior,
 bounded list and detail loading/empty/error/success states, add-note success,
-and `RISK_CASE_VERSION_CONFLICT` recovery.
+the Q-017 case operations, and Q-018 association operations including reference
+preview and `RISK_CASE_VERSION_CONFLICT` recovery.
+
+Q-018 adds six association operations to the case detail's Associations panel.
+External evidence, decision, action, and outcome references are format-checked
+and confirmed through the existing authenticated `GET /{ref}` APIs before the
+operation can be submitted. Decision and action targets already visible on the
+case are selected from the loaded detail/history state.
 
 The Playwright spec is a live test against the running dev console, Keycloak,
 and backend. It intentionally does not record traces, screenshots, or video so
@@ -102,3 +109,18 @@ npm run test:e2e
 `E2E_OPERATOR_USERNAME` defaults to the non-secret dev username
 `q016-operator`. The selected case must be visible through the bounded list and
 the test appends one investigation note to the local dev database.
+
+The Q-018 live slice additionally requires a seeded case and real referenceable
+decision/action entities:
+
+```bash
+E2E_OPERATOR_PASSWORD='<local-dev-password>' \
+E2E_Q018_CASE_NUMBER='<seeded-in-review-case-number>' \
+E2E_Q018_DECISION_REF='<real-decision-ref>' \
+E2E_Q018_ACTION_REF='<real-action-ref>' \
+npm run test:e2e -- q018AssociationLifecycle.spec.ts
+```
+
+The selected case must not already contain those associations. The test adds
+the decision, selects it as current, then adds its action and verifies that the
+Q-017 resolve operation remains reachable.

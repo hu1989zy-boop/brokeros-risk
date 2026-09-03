@@ -13,7 +13,7 @@
 
 Q-017 gave the console the case lifecycle but deferred **Group C** — managing a
 case's evidence/decision/action associations — because associating an entity needs
-its reference (`ev-/dc-/ac-/ao-`, opaque UUIDs) and the source modules expose only
+its reference (`ev-/dec-/act-/aoc-`, opaque UUIDs) and the source modules expose only
 `POST` and `GET /{ref}` (no list/search). The Product Owner approved Q-018 V1 with
 **Option A**: manual reference entry validated by a **fetch-by-ref preview** using
 the existing `GET /{ref}`, keeping the console thin-client with no new backend
