@@ -1,4 +1,5 @@
 import type {
+  RiskCaseAssociations,
   RiskCaseDetail,
   RiskCaseHistoryPage,
   RiskCaseListPage,
@@ -71,6 +72,33 @@ export const riskCaseHistory: RiskCaseHistoryPage = {
     },
   ],
   nextCursor: null,
+};
+
+export const riskCaseAssociations: RiskCaseAssociations = {
+  caseNumber,
+  version: 7,
+  evidenceAssociations: [
+    {
+      eventRef: '18000000-0000-4000-8000-000000000002',
+      evidenceRef: 'ev-18000000-0000-4000-8000-000000000001',
+      disposition: 'ATTACHED',
+      source: 'operator-review',
+      replacementEvidenceRef: null,
+      occurredAt: '2026-09-02T09:10:00Z',
+    },
+  ],
+  decisions: [
+    {
+      decisionRef: 'dec-18000000-0000-4000-8000-000000000001',
+      current: true,
+    },
+  ],
+  actions: [
+    {
+      actionRef: 'act-18000000-0000-4000-8000-000000000001',
+      outcomeRefs: ['aoc-18000000-0000-4000-8000-000000000001'],
+    },
+  ],
 };
 
 export const riskCaseNote: RiskCaseNote = {

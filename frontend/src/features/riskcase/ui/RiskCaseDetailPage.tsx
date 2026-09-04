@@ -20,9 +20,13 @@ import {
   type CaseActionDescriptor,
 } from '../actions/actionDescriptors';
 import { useCaseAction } from '../actions/useCaseAction';
-import type { RiskCaseView } from '../api/riskCaseTypes';
+import type { RiskCaseAssociations, RiskCaseView } from '../api/riskCaseTypes';
 import { associationHistoryEntries, onCaseReferenceOptions } from '../model/associationProjection';
-import { useAddRiskCaseNote, useRiskCaseDetail } from '../model/riskCaseQueries';
+import {
+  useAddRiskCaseNote,
+  useRiskCaseAssociations,
+  useRiskCaseDetail,
+} from '../model/riskCaseQueries';
 import { AddNoteDialog } from './AddNoteDialog';
 import { AssociationsPanel } from './AssociationsPanel';
 import { CaseActionDialog } from './CaseActionDialog';
@@ -39,12 +43,13 @@ export function RiskCaseDetailPage() {
   const decodedCaseNumber = decodeURIComponent(caseNumber);
   const navigate = useNavigate();
   const query = useRiskCaseDetail(decodedCaseNumber);
+  const associationsQuery = useRiskCaseAssociations(decodedCaseNumber);
   const mutation = useAddRiskCaseNote();
   const [noteOpen, setNoteOpen] = useState(false);
   const [selectedAction, setSelectedAction] = useState<SelectedAction | null>(null);
   const [operationMessage, setOperationMessage] = useState<string | null>(null);
 
-  if (query.isPending) {
+  if (query.isPending || associationsQuery.isPending) {
     return <LoadingState label="Loading risk case detail" />;
   }
   if (query.isError) {
@@ -52,6 +57,17 @@ export function RiskCaseDetailPage() {
       <ErrorState
         message={userFacingError(query.error, 'Risk case detail could not be loaded.')}
         onRetry={() => void query.refetch()}
+      />
+    );
+  }
+  if (associationsQuery.isError) {
+    return (
+      <ErrorState
+        message={userFacingError(
+          associationsQuery.error,
+          'Risk case associations could not be loaded.',
+        )}
+        onRetry={() => void associationsQuery.refetch()}
       />
     );
   }
@@ -75,7 +91,13 @@ export function RiskCaseDetailPage() {
         </div>
         <Space direction="vertical" align="end">
           <Space>
-            <Button onClick={() => void query.refetch()}>Reload</Button>
+            <Button
+              onClick={() => void Promise.all([
+                query.refetch(), associationsQuery.refetch(),
+              ])}
+            >
+              Reload
+            </Button>
             <Button type="primary" onClick={() => setNoteOpen(true)}>
               Add note
             </Button>
@@ -93,6 +115,7 @@ export function RiskCaseDetailPage() {
       {operationMessage ? <Alert type="success" showIcon message={operationMessage} /> : null}
       <RiskCaseDetailContent
         view={view}
+        associations={associationsQuery.data}
         onAssociationAction={(descriptor) => {
           setOperationMessage(null);
           setSelectedAction({ descriptor });
@@ -132,7 +155,7 @@ export function RiskCaseDetailPage() {
           selected={selectedAction}
           caseNumber={view.detail.caseNumber}
           expectedVersion={view.detail.version}
-          view={view}
+          associations={associationsQuery.data}
           onCancel={() => setSelectedAction(null)}
           onSuccess={(message) => {
             setOperationMessage(message);
@@ -148,14 +171,14 @@ function CaseActionFlow({
   selected,
   caseNumber,
   expectedVersion,
-  view,
+  associations,
   onCancel,
   onSuccess,
 }: {
   selected: SelectedAction;
   caseNumber: string;
   expectedVersion: number;
-  view: RiskCaseView;
+  associations: RiskCaseAssociations;
   onCancel: () => void;
   onSuccess: (message: string) => void;
 }) {
@@ -169,7 +192,7 @@ function CaseActionFlow({
       descriptor={selected.descriptor}
       expectedVersion={expectedVersion}
       submitting={action.isPending}
-      onCaseOptions={onCaseReferenceOptions(view)}
+      onCaseOptions={onCaseReferenceOptions(associations)}
       onCancel={onCancel}
       onSubmit={async (values) => {
         const result = await action.run(values);
@@ -185,15 +208,17 @@ function CaseActionFlow({
 
 export function RiskCaseDetailContent({
   view,
+  associations,
   onAssociationAction,
   onCorrectNote = () => undefined,
 }: {
   view: RiskCaseView;
+  associations: RiskCaseAssociations;
   onAssociationAction?: (descriptor: CaseActionDescriptor) => void;
   onCorrectNote?: (noteRef: string) => void;
 }) {
   const detail = view.detail;
-  const associations = associationHistoryEntries(view.history.entries);
+  const associationEntries = associationHistoryEntries(view.history.entries);
   return (
     <>
       <Card title="Case detail">
@@ -218,14 +243,14 @@ export function RiskCaseDetailContent({
 
       <NotesPanel entries={view.history.entries} onCorrect={onCorrectNote} />
 
-      <AssociationsPanel view={view} onSelectAction={onAssociationAction} />
+      <AssociationsPanel associations={associations} onSelectAction={onAssociationAction} />
 
       <Card title="Association references in history">
-        {associations.length === 0 ? (
+        {associationEntries.length === 0 ? (
           <Typography.Text type="secondary">No association reference events recorded.</Typography.Text>
         ) : (
           <Space wrap>
-            {associations.map((entry, index) => (
+            {associationEntries.map((entry, index) => (
               <Tag key={`${entry.version}-${entry.eventType}-${entry.affectedRef}-${index}`}>
                 {humanize(entry.eventType)}: {entry.affectedRef}
               </Tag>

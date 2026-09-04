@@ -14,6 +14,8 @@ import com.brokeros.risk.audit.application.port.AuditRecordWriter;
 import com.brokeros.risk.riskcase.application.port.RiskCaseMetricsPort;
 import com.brokeros.risk.riskcase.application.port.RiskCaseRepository;
 import com.brokeros.risk.riskcase.domain.CaseNumber;
+import com.brokeros.risk.riskcase.domain.DecisionAssociation;
+import com.brokeros.risk.riskcase.domain.EvidenceAssociationEvent;
 import com.brokeros.risk.riskcase.domain.RiskCase;
 import com.brokeros.risk.riskcase.domain.RiskCaseSnapshot;
 import com.brokeros.risk.security.application.AuthorizationDeniedException;
@@ -23,6 +25,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
 public class RiskCaseQueryService {
+
+    static final int ASSOCIATION_COLLECTION_LIMIT = 500;
 
     private final AuthorizationGuard authorizationGuard;
     private final RiskCaseRepository repository;
@@ -110,6 +114,59 @@ public class RiskCaseQueryService {
         }
     }
 
+    public RiskCaseAssociations associations(
+            ActorContext actorContext, String rawCaseNumber) {
+        long started = System.nanoTime();
+        requireAuthorized(actorContext);
+        try {
+            RiskCaseAssociations associations = transactionTemplate.execute(status -> {
+                RiskCase riskCase = repository.findByCaseNumber(caseNumber(rawCaseNumber))
+                        .orElseThrow(() -> new RiskCaseException(ResultCode.RISK_CASE_NOT_FOUND));
+                RiskCaseSnapshot snapshot = riskCase.snapshot();
+                List<EvidenceAssociationEvent> evidenceEvents =
+                        repository.findAllEvidenceEvents(snapshot.id());
+                List<RiskCaseRepository.EffectiveEvidence> effectiveEvidence =
+                        repository.findAllEffectiveEvidence(snapshot.id());
+                List<DecisionAssociation> decisionAssociations =
+                        repository.findAllDecisionAssociations(snapshot.id());
+                List<RiskCaseRepository.EffectiveAction> effectiveActions =
+                        repository.findAllEffectiveActions(snapshot.id());
+                requireWithinAssociationLimit(evidenceEvents);
+                requireWithinAssociationLimit(effectiveEvidence);
+                requireWithinAssociationLimit(decisionAssociations);
+                requireWithinAssociationLimit(effectiveActions);
+                return new RiskCaseAssociations(
+                        snapshot.caseNumber(), snapshot.version(),
+                        evidenceEvents.stream()
+                                .map(event -> new RiskCaseAssociations.EvidenceAssociation(
+                                        event.eventRef(), event.evidenceRef(), event.eventType(),
+                                        event.source(), event.replacementEvidenceRef(),
+                                        event.occurredAt()))
+                                .toList(),
+                        decisionAssociations.stream()
+                                .map(association -> new RiskCaseAssociations.DecisionAssociation(
+                                        association.decisionRef(),
+                                        association.decisionRef().equals(
+                                                snapshot.currentDecisionRef())))
+                                .toList(),
+                        effectiveActions.stream()
+                                .map(action -> new RiskCaseAssociations.ActionAssociation(
+                                        action.actionRef(), action.outcomeRef() == null
+                                                ? List.of()
+                                                : List.of(action.outcomeRef())))
+                                .toList());
+            });
+            if (associations == null) {
+                throw new IllegalStateException("associations query returned no result");
+            }
+            metrics.recordSuccess(RiskCaseMetricOperation.READ);
+            return associations;
+        } finally {
+            metrics.recordDuration(RiskCaseMetricOperation.READ,
+                    Duration.ofNanos(System.nanoTime() - started));
+        }
+    }
+
     public RiskCasePage<RiskCaseSummary> listCases(
             ActorContext actorContext,
             String rawStatus,
@@ -149,6 +206,12 @@ public class RiskCaseQueryService {
         } catch (AuthorizationDeniedException exception) {
             metrics.recordAuthorizationDenied(RiskCaseCapabilities.READ);
             throw exception;
+        }
+    }
+
+    private void requireWithinAssociationLimit(List<?> associations) {
+        if (associations.size() > ASSOCIATION_COLLECTION_LIMIT) {
+            throw new RiskCaseException(ResultCode.RISK_CASE_INVARIANT_VIOLATION);
         }
     }
 

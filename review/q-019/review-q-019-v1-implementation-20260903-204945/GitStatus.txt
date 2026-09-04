@@ -1,0 +1,56 @@
+Snapshot basis
+==============
+
+Branch: main
+HEAD: a9cc877e77363d912e1799695cca8574a5b61371
+Snapshot taken after implementation/verification and while this new package was
+being created. The sibling ZIP is created only after package validation, so the
+final automatic archive path is listed under Expected final artifact.
+
+Q-019 modified files
+====================
+
+ M backend/src/main/java/com/brokeros/risk/riskcase/application/RiskCaseQueryService.java
+ M backend/src/main/java/com/brokeros/risk/riskcase/application/port/RiskCaseRepository.java
+ M backend/src/main/java/com/brokeros/risk/riskcase/infrastructure/persistence/JdbcRiskCaseRepository.java
+ M backend/src/main/java/com/brokeros/risk/riskcase/interfaces/rest/RiskCaseController.java
+ M backend/src/test/java/com/brokeros/risk/riskcase/interfaces/rest/RiskCaseRestContractTests.java
+ M frontend/src/features/riskcase/actions/actionDescriptors.ts
+ M frontend/src/features/riskcase/actions/useCaseAction.ts
+ M frontend/src/features/riskcase/api/riskCaseRepository.ts
+ M frontend/src/features/riskcase/api/riskCaseTypes.ts
+ M frontend/src/features/riskcase/model/associationProjection.ts
+ M frontend/src/features/riskcase/model/riskCaseQueries.ts
+ M frontend/src/features/riskcase/ui/AssociationsPanel.tsx
+ M frontend/src/features/riskcase/ui/RiskCaseDetailPage.tsx
+ M frontend/tests/AssociationsPanel.test.tsx
+ M frontend/tests/Q018AssociationActions.test.tsx
+ M frontend/tests/apiContract.test.ts
+ M frontend/tests/fixtures/riskCases.ts
+ M frontend/tests/riskCaseRepository.test.ts
+ M frontend/tests/support/server.ts
+?? backend/src/main/java/com/brokeros/risk/riskcase/application/RiskCaseAssociations.java
+?? backend/src/main/java/com/brokeros/risk/riskcase/interfaces/rest/RiskCaseAssociationsResponse.java
+?? backend/src/test/java/com/brokeros/risk/riskcase/interfaces/rest/Q019RiskCaseAssociationsMySqlTests.java
+?? docs/lessons/2026-09-03-q-019-implementation.md
+?? frontend/tests/e2e/q019AssociationProjectionResolve.spec.ts
+?? review/q-019/review-q-019-v1-implementation-20260903-204945/
+
+Pre-existing untracked artifacts preserved unchanged
+====================================================
+
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304.zip
+?? review/q-017/review-q-017-v1-implementation-20260903-020721.zip
+?? review/q-018/review-q-018-v1-implementation-20260903-164146.zip
+
+Expected final artifact
+=======================
+
+?? review/q-019/review-q-019-v1-implementation-20260903-204945.zip
+
+Git actions
+===========
+
+Staged: none
+Commit: none
+Push: none

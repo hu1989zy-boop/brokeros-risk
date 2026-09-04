@@ -22,12 +22,16 @@ import { HttpReferencePreviewRepository } from '../src/features/riskcase/api/ref
 import { HttpRiskCaseRepository } from '../src/features/riskcase/api/riskCaseRepository';
 import { ReferencePreviewRepositoryProvider } from '../src/features/riskcase/model/referencePreviewContext';
 import { RiskCaseRepositoryProvider } from '../src/features/riskcase/model/riskCaseContext';
-import { useRiskCaseDetail } from '../src/features/riskcase/model/riskCaseQueries';
+import {
+  useRiskCaseAssociations,
+  useRiskCaseDetail,
+} from '../src/features/riskcase/model/riskCaseQueries';
 import { CaseActionDialog } from '../src/features/riskcase/ui/CaseActionDialog';
 import {
   caseNumber,
   envelope,
   failureEnvelope,
+  riskCaseAssociations,
   riskCaseDetail,
 } from './fixtures/riskCases';
 import { apiBaseUrl, server } from './support/server';
@@ -102,6 +106,7 @@ const scenarios: AssociationScenario[] = [
 ];
 
 const onCaseOptions: Partial<Record<CaseActionFieldName, CaseActionFieldOption[]>> = {
+  associationEventRef: [{ label: associationEventRef, value: associationEventRef }],
   decisionRef: [{ label: `${decisionRef} (current)`, value: decisionRef }],
   actionRef: [{ label: actionRef, value: actionRef }],
 };
@@ -144,11 +149,13 @@ function ActionHarness({
   onSuccess: () => void;
 }) {
   const query = useRiskCaseDetail(caseNumber);
-  if (query.isPending) return <div>Loading association action</div>;
-  if (query.isError) return <div>Failed to load association action</div>;
+  const associations = useRiskCaseAssociations(caseNumber);
+  if (query.isPending || associations.isPending) return <div>Loading association action</div>;
+  if (query.isError || associations.isError) return <div>Failed to load association action</div>;
   return (
     <div>
       <span>Version {query.data.detail.version}</span>
+      <span>Projection version {associations.data.version}</span>
       <ActionFlow
         descriptor={descriptorFor(scenario.id)}
         expectedVersion={query.data.detail.version}
@@ -293,6 +300,35 @@ describe('Q-018 association action registry and runner', () => {
     expect(capturedBody).not.toHaveProperty('actorRef');
   });
 
+  it('refetches the authoritative projection after an association write', async () => {
+    const scenario = scenarios.find(({ id }) => id === 'associateDecision')!;
+    let projectionCalls = 0;
+    server.use(
+      http.get(`${apiBaseUrl}/api/risk-cases/:caseNumber/associations`, () => {
+        projectionCalls += 1;
+        return HttpResponse.json(envelope({
+          ...riskCaseAssociations,
+          version: projectionCalls === 1 ? 7 : 8,
+        }));
+      }),
+      http.get(`${apiBaseUrl}/api/decisions/${decisionRef}`, () =>
+        HttpResponse.json(envelope(previewData('decision', decisionRef))),
+      ),
+      http.post(actionUrl(scenario), () =>
+        HttpResponse.json(envelope(successData(scenario.id)), { status: 201 }),
+      ),
+    );
+    const { onSuccess } = renderAction(scenario);
+    const dialog = await fillDialog(scenario);
+    await userEvent.click(
+      within(dialog).getByRole('button', { name: 'Associate decision' }),
+    );
+
+    await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(screen.getByText('Projection version 8')).toBeInTheDocument());
+    expect(projectionCalls).toBeGreaterThanOrEqual(2);
+  });
+
   it.each(scenarios)('$id disables submission while its request is pending', async (scenario) => {
     usePreviewSuccess(scenario);
     server.use(
@@ -372,6 +408,7 @@ describe('Q-018 association action registry and runner', () => {
   it.each(scenarios)('$id reloads on conflict and preserves input', async (scenario) => {
     usePreviewSuccess(scenario);
     let detailCalls = 0;
+    let projectionCalls = 0;
     let postCalls = 0;
     const submittedVersions: number[] = [];
     server.use(
@@ -380,6 +417,10 @@ describe('Q-018 association action registry and runner', () => {
         return HttpResponse.json(
           envelope(detailCalls === 1 ? riskCaseDetail : { ...riskCaseDetail, version: 8 }),
         );
+      }),
+      http.get(`${apiBaseUrl}/api/risk-cases/:caseNumber/associations`, () => {
+        projectionCalls += 1;
+        return HttpResponse.json(envelope(riskCaseAssociations));
       }),
       http.post(actionUrl(scenario), async ({ request }) => {
         postCalls += 1;
@@ -402,6 +443,7 @@ describe('Q-018 association action registry and runner', () => {
       await within(dialog).findByText(/latest version was reloaded; review your preserved input/),
     ).toBeInTheDocument();
     await waitFor(() => expect(screen.getByText('Version 8')).toBeInTheDocument());
+    await waitFor(() => expect(projectionCalls).toBeGreaterThanOrEqual(2));
     expect(within(dialog).getByLabelText('Reason')).toHaveValue(scenario.values.reason);
     await userEvent.click(within(dialog).getByRole('button', { name: descriptorFor(scenario.id).label }));
     await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1));

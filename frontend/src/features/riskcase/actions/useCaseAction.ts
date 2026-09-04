@@ -19,10 +19,16 @@ export function useCaseAction(
     },
     onError: async (error) => {
       if (error instanceof ApiError && error.code === 'RISK_CASE_VERSION_CONFLICT') {
-        await queryClient.refetchQueries({
-          queryKey: riskCaseKeys.detail(context.caseNumber),
-          type: 'active',
-        });
+        await Promise.all([
+          queryClient.refetchQueries({
+            queryKey: riskCaseKeys.detail(context.caseNumber),
+            type: 'active',
+          }),
+          queryClient.refetchQueries({
+            queryKey: riskCaseKeys.associations(context.caseNumber),
+            type: 'active',
+          }),
+        ]);
       }
     },
   });

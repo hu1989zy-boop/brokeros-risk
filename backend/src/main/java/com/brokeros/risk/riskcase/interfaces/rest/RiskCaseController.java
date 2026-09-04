@@ -100,6 +100,13 @@ public class RiskCaseController {
                 actorContextProvider.currentContext(), caseNumber, cursor, limit)));
     }
 
+    @GetMapping("/{caseNumber}/associations")
+    public ResponseEntity<ApiResponse<RiskCaseAssociationsResponse>> associations(
+            @PathVariable String caseNumber) {
+        return ok(RiskCaseAssociationsResponse.from(queryService.associations(
+                actorContextProvider.currentContext(), caseNumber)));
+    }
+
     @PostMapping("/{caseNumber}/assignments")
     public ResponseEntity<ApiResponse<RiskCaseDetailResponse>> assignment(
             @PathVariable String caseNumber,

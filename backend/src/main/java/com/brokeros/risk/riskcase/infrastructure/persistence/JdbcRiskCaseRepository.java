@@ -282,6 +282,30 @@ public class JdbcRiskCaseRepository implements RiskCaseRepository {
     }
 
     @Override
+    public List<EvidenceAssociationEvent> findAllEvidenceEvents(RiskCaseId caseId) {
+        return jdbcTemplate.query("""
+                SELECT id, event_ref, case_id, case_version, event_type, evidence_ref,
+                       prior_event_id, replacement_evidence_ref, reason, source,
+                       actor_ref, occurred_at
+                FROM risk_case_evidence_association_history
+                WHERE case_id = ?
+                ORDER BY case_version, id
+                """, (resultSet, rowNumber) -> new EvidenceAssociationEvent(
+                        resultSet.getLong("id"),
+                        new EvidenceAssociationEventRef(resultSet.getString("event_ref")),
+                        new RiskCaseId(resultSet.getLong("case_id")),
+                        resultSet.getLong("case_version"),
+                        EvidenceAssociationEventType.valueOf(resultSet.getString("event_type")),
+                        new EvidenceRef(resultSet.getString("evidence_ref")),
+                        nullableLong(resultSet, "prior_event_id"),
+                        evidenceRef(resultSet.getString("replacement_evidence_ref")),
+                        resultSet.getString("reason"), resultSet.getString("source"),
+                        new ActorRef(resultSet.getString("actor_ref")),
+                        resultSet.getTimestamp("occurred_at").toInstant()),
+                caseId.value());
+    }
+
+    @Override
     public void appendDecisionAssociation(DecisionAssociation association) {
         try {
             jdbcTemplate.update("""
@@ -299,6 +323,25 @@ public class JdbcRiskCaseRepository implements RiskCaseRepository {
             }
             throw exception;
         }
+    }
+
+    @Override
+    public List<DecisionAssociation> findAllDecisionAssociations(RiskCaseId caseId) {
+        return jdbcTemplate.query("""
+                SELECT id, case_id, case_version, decision_ref, associated_by_ref,
+                       reason, associated_at
+                FROM risk_case_decision_association
+                WHERE case_id = ?
+                ORDER BY case_version, id
+                """, (resultSet, rowNumber) -> new DecisionAssociation(
+                        resultSet.getLong("id"),
+                        new RiskCaseId(resultSet.getLong("case_id")),
+                        resultSet.getLong("case_version"),
+                        new DecisionRef(resultSet.getString("decision_ref")),
+                        new ActorRef(resultSet.getString("associated_by_ref")),
+                        resultSet.getString("reason"),
+                        resultSet.getTimestamp("associated_at").toInstant()),
+                caseId.value());
     }
 
     @Override

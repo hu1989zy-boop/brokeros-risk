@@ -1,0 +1,87 @@
+Q-019 test inventory
+====================
+
+Backend Q-019 real-MySQL tests
+------------------------------
+
+backend/src/test/java/com/brokeros/risk/riskcase/interfaces/rest/
+  Q019RiskCaseAssociationsMySqlTests.java
+    endpointReturnsAuthoritativeProjectionFromRealMysql
+    missingReadCapabilityReturns403BeforeCaseExistenceIsConsidered
+    authorizedMissingCaseReturnsStandardNotFoundContract
+    projectionRejectsACollectionBeyondTheServerCap
+
+Final targeted result: 4 tests; 4 passed; 0 failed; 0 errors; 0 skipped.
+
+Backend contract regression
+---------------------------
+
+backend/src/test/java/com/brokeros/risk/riskcase/interfaces/rest/
+  RiskCaseRestContractTests.java
+    now requires GET /{caseNumber}/associations
+    now inspects all nested association response records for internal IDs
+
+Full backend inventory/result
+-----------------------------
+
+Surefire XML suites: 61
+Tests: 309
+Passed: 309
+Failures: 0
+Errors: 0
+Skipped: 0
+Database-backed Q-008 through Q-014 suites all used the same disposable MySQL 8.4
+schema and all eight existing Flyway migrations.
+
+Frontend Q-019 coverage
+-----------------------
+
+frontend/tests/AssociationsPanel.test.tsx
+  - projection-derived evidence-event/decision/action picker options
+  - authoritative event/disposition/source/current/outcome rendering
+  - all six Group C actions remain hosted
+  - evidence disposition target is an on-case picker
+
+frontend/tests/Q018AssociationActions.test.tsx
+  - projection query participates in the existing action harness
+  - successful association writes invalidate/refetch projection
+  - all six version-conflict cases refetch both detail and projection
+  - existing exact bodies, pending, validation, ResultCode, 403, preservation,
+    and retry coverage remains active
+
+frontend/tests/riskCaseRepository.test.ts
+  - authenticated association GET and strict result parsing
+
+frontend/tests/apiContract.test.ts
+  - DTO fixture parses through the standard ApiResponse contract
+
+frontend/tests/fixtures/riskCases.ts
+frontend/tests/support/server.ts
+  - typed association projection fixture and default MSW route
+
+Full frontend inventory/result
+------------------------------
+
+Test files: 12
+Tests: 150
+Passed: 150
+Failed: 0
+Skipped: 0
+TypeScript: passed
+Production Vite build: passed
+
+Live specification
+------------------
+
+frontend/tests/e2e/q019AssociationProjectionResolve.spec.ts
+  decision association -> projection
+  select current decision -> current marker
+  action association -> projection
+  resolve with associated action -> resolved
+  close -> closed
+
+Discovery: passed.
+Execution: 1 discovered; 1 skipped; 0 passed; 0 failed.
+Reason: operator credential plus seeded case/decision/action refs unavailable.
+
+No test was deleted, weakened, or force-skipped to obtain a passing local gate.

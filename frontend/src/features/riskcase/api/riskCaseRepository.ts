@@ -8,6 +8,7 @@ import {
   parseRiskCaseListPage,
   parseRiskCaseNote,
   parseRiskCaseResolution,
+  parseRiskCaseAssociations,
   type BeginRiskCaseReviewRequest,
   type AssociateRiskCaseActionRequest,
   type AssociateRiskCaseDecisionRequest,
@@ -26,6 +27,7 @@ import {
   type ReturnRiskCaseToReviewRequest,
   type RiskCaseDetail,
   type RiskCaseActionAssociation,
+  type RiskCaseAssociations,
   type RiskCaseDecisionAssociation,
   type RiskCaseEvidenceAssociation,
   type RiskCaseFilters,
@@ -72,6 +74,7 @@ export type ReferenceActionOutcomeCommand = RiskCaseCommand &
 export interface RiskCaseRepository {
   list(filters: RiskCaseFilters, page: number, size: number): Promise<RiskCaseListPage>;
   get(caseNumber: string): Promise<RiskCaseView>;
+  getAssociations(caseNumber: string): Promise<RiskCaseAssociations>;
   addNote(command: AddNoteCommand): Promise<RiskCaseNote>;
   assign(command: ChangeRiskCaseAssignmentCommand): Promise<RiskCaseDetail>;
   changePriority(command: ChangeRiskCasePriorityCommand): Promise<RiskCaseDetail>;
@@ -118,6 +121,13 @@ export class HttpRiskCaseRepository implements RiskCaseRepository {
       ),
     ]);
     return { detail, history };
+  }
+
+  getAssociations(caseNumber: string): Promise<RiskCaseAssociations> {
+    return this.apiClient.get(
+      `${casePath(caseNumber)}/associations`,
+      parseRiskCaseAssociations,
+    );
   }
 
   addNote(command: AddNoteCommand): Promise<RiskCaseNote> {

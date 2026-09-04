@@ -1,0 +1,72 @@
+Q-019 bounded changed-file tree
+================================
+
+backend/
+  src/main/java/com/brokeros/risk/riskcase/
+    application/
+      RiskCaseAssociations.java                         [new]
+      RiskCaseQueryService.java                         [modified]
+      port/RiskCaseRepository.java                      [modified]
+    infrastructure/persistence/
+      JdbcRiskCaseRepository.java                       [modified]
+    interfaces/rest/
+      RiskCaseAssociationsResponse.java                 [new]
+      RiskCaseController.java                           [modified]
+  src/test/java/com/brokeros/risk/riskcase/interfaces/rest/
+    Q019RiskCaseAssociationsMySqlTests.java              [new]
+    RiskCaseRestContractTests.java                       [modified]
+
+frontend/
+  src/features/riskcase/
+    actions/
+      actionDescriptors.ts                              [modified]
+      useCaseAction.ts                                  [modified]
+    api/
+      riskCaseRepository.ts                             [modified]
+      riskCaseTypes.ts                                  [modified]
+    model/
+      associationProjection.ts                          [modified]
+      riskCaseQueries.ts                                [modified]
+    ui/
+      AssociationsPanel.tsx                             [modified]
+      RiskCaseDetailPage.tsx                            [modified]
+  tests/
+    AssociationsPanel.test.tsx                          [modified]
+    Q018AssociationActions.test.tsx                     [modified]
+    apiContract.test.ts                                 [modified]
+    fixtures/riskCases.ts                               [modified]
+    riskCaseRepository.test.ts                          [modified]
+    support/server.ts                                   [modified]
+    e2e/q019AssociationProjectionResolve.spec.ts        [new]
+
+docs/
+  lessons/2026-09-03-q-019-implementation.md             [new]
+
+review/q-019/
+  review-q-019-v1-implementation-20260903-204945/        [new; this package]
+    ArchitectureReview.md
+    DesignTraceability.md
+    GitDiffStat.txt
+    GitStatus.txt
+    OutstandingItems.md
+    ProjectTree.txt
+    SecurityReview.md
+    Summary.md
+    TestInventory.txt
+    Verification.md
+
+Explicitly absent from the task diff
+=====================================
+
+backend/src/main/java/com/brokeros/risk/riskcase/domain/
+backend/src/main/resources/db/migration/
+RiskCaseAssociationService.java
+RiskCaseCommandService.java
+RiskCaseResolutionService.java
+RiskCaseCapabilities.java
+deploy/
+pom.xml
+frontend/package.json
+frontend/package-lock.json
+
+This is a bounded task tree, not a complete repository tree.

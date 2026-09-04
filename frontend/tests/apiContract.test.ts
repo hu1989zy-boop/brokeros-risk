@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { parseApiResponse, type ResultCode } from '../src/core/api/contracts';
 import {
   parseRiskCaseDetail,
+  parseRiskCaseAssociations,
   parseRiskCaseHistoryPage,
   parseRiskCaseListPage,
   parseRiskCaseNote,
@@ -10,6 +11,7 @@ import {
 import {
   envelope,
   riskCaseDetail,
+  riskCaseAssociations,
   riskCaseHistory,
   riskCaseListPage,
   riskCaseNote,
@@ -31,6 +33,9 @@ describe('documented backend contract', () => {
       riskCaseHistory,
     );
     expect(parseApiResponse(envelope(riskCaseNote), parseRiskCaseNote).data).toEqual(riskCaseNote);
+    expect(
+      parseApiResponse(envelope(riskCaseAssociations), parseRiskCaseAssociations).data,
+    ).toEqual(riskCaseAssociations);
   });
 
   it('keeps consumed ResultCodes as a compile-time string union', () => {

@@ -9,6 +9,8 @@ export const riskCaseKeys = {
   list: (filters: RiskCaseFilters, page: number, size: number) =>
     [...riskCaseKeys.all, 'list', filters, page, size] as const,
   detail: (caseNumber: string) => [...riskCaseKeys.all, 'detail', caseNumber] as const,
+  associations: (caseNumber: string) =>
+    [...riskCaseKeys.all, 'associations', caseNumber] as const,
 };
 
 export function useRiskCaseList(filters: RiskCaseFilters, page: number, size: number) {
@@ -25,6 +27,15 @@ export function useRiskCaseDetail(caseNumber: string) {
   return useQuery({
     queryKey: riskCaseKeys.detail(caseNumber),
     queryFn: () => repository.get(caseNumber),
+    retry: false,
+  });
+}
+
+export function useRiskCaseAssociations(caseNumber: string) {
+  const repository = useRiskCaseRepository();
+  return useQuery({
+    queryKey: riskCaseKeys.associations(caseNumber),
+    queryFn: () => repository.getAssociations(caseNumber),
     retry: false,
   });
 }

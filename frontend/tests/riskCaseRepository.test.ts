@@ -4,7 +4,13 @@ import { describe, expect, it, vi } from 'vitest';
 import { ApiClient, type AuthSession } from '../src/core/api/apiClient';
 import { ApiError, AuthenticationRequiredError, AuthorizationError } from '../src/core/api/errors';
 import { HttpRiskCaseRepository } from '../src/features/riskcase/api/riskCaseRepository';
-import { envelope, failureEnvelope, riskCaseListPage, riskCaseNote } from './fixtures/riskCases';
+import {
+  envelope,
+  failureEnvelope,
+  riskCaseAssociations,
+  riskCaseListPage,
+  riskCaseNote,
+} from './fixtures/riskCases';
 import { apiBaseUrl, server } from './support/server';
 
 function authSession(token = 'test-access-token'): AuthSession {
@@ -16,6 +22,22 @@ function authSession(token = 'test-access-token'): AuthSession {
 }
 
 describe('HttpRiskCaseRepository with MSW', () => {
+  it('gets and parses the authoritative association projection with bearer auth', async () => {
+    let capturedAuthorization: string | null = null;
+    server.use(
+      http.get(`${apiBaseUrl}/api/risk-cases/:caseNumber/associations`, ({ request }) => {
+        capturedAuthorization = request.headers.get('Authorization');
+        return HttpResponse.json(envelope(riskCaseAssociations));
+      }),
+    );
+    const repository = new HttpRiskCaseRepository(new ApiClient(apiBaseUrl, authSession()));
+
+    await expect(repository.getAssociations('RC-2026-000001')).resolves.toEqual(
+      riskCaseAssociations,
+    );
+    expect(capturedAuthorization).toBe('Bearer test-access-token');
+  });
+
   it('sends bounded filters and the bearer token for the list query', async () => {
     let capturedAuthorization: string | null = null;
     let capturedUrl = '';

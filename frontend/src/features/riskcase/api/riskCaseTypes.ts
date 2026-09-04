@@ -208,6 +208,33 @@ export interface RiskCaseActionAssociation {
   occurredAt: string;
 }
 
+export interface RiskCaseAssociations {
+  caseNumber: string;
+  version: number;
+  evidenceAssociations: RiskCaseEvidenceAssociationProjection[];
+  decisions: RiskCaseDecisionAssociationProjection[];
+  actions: RiskCaseActionAssociationProjection[];
+}
+
+export interface RiskCaseEvidenceAssociationProjection {
+  eventRef: string;
+  evidenceRef: string;
+  disposition: 'ATTACHED' | EvidenceDisposition;
+  source: string;
+  replacementEvidenceRef: string | null;
+  occurredAt: string;
+}
+
+export interface RiskCaseDecisionAssociationProjection {
+  decisionRef: string;
+  current: boolean;
+}
+
+export interface RiskCaseActionAssociationProjection {
+  actionRef: string;
+  outcomeRefs: string[];
+}
+
 export interface RiskCaseFilters {
   status?: RiskCaseStatus;
   priority?: RiskCasePriority;
@@ -374,5 +401,71 @@ export function parseRiskCaseActionAssociation(value: unknown): RiskCaseActionAs
     version: asInteger(record.version, 'RiskCaseActionAssociation.version'),
     actorRef: asString(record.actorRef, 'RiskCaseActionAssociation.actorRef'),
     occurredAt: asInstant(record.occurredAt, 'RiskCaseActionAssociation.occurredAt'),
+  };
+}
+
+export function parseRiskCaseAssociations(value: unknown): RiskCaseAssociations {
+  const record = asRecord(value, 'RiskCaseAssociations');
+  return {
+    caseNumber: asString(record.caseNumber, 'RiskCaseAssociations.caseNumber'),
+    version: asInteger(record.version, 'RiskCaseAssociations.version'),
+    evidenceAssociations: asArray(
+      record.evidenceAssociations,
+      'RiskCaseAssociations.evidenceAssociations',
+      (value) => {
+        const evidence = asRecord(value, 'RiskCaseAssociations.evidenceAssociation');
+        return {
+          eventRef: asString(
+            evidence.eventRef,
+            'RiskCaseAssociations.evidenceAssociation.eventRef',
+          ),
+          evidenceRef: asString(
+            evidence.evidenceRef,
+            'RiskCaseAssociations.evidenceAssociation.evidenceRef',
+          ),
+          disposition: enumValue(
+            evidence.disposition,
+            ['ATTACHED', ...evidenceDispositions] as const,
+            'RiskCaseAssociations.evidenceAssociation.disposition',
+          ),
+          source: asString(
+            evidence.source,
+            'RiskCaseAssociations.evidenceAssociation.source',
+          ),
+          replacementEvidenceRef: asNullableString(
+            evidence.replacementEvidenceRef,
+            'RiskCaseAssociations.evidenceAssociation.replacementEvidenceRef',
+          ),
+          occurredAt: asInstant(
+            evidence.occurredAt,
+            'RiskCaseAssociations.evidenceAssociation.occurredAt',
+          ),
+        };
+      },
+    ),
+    decisions: asArray(record.decisions, 'RiskCaseAssociations.decisions', (value) => {
+      const decision = asRecord(value, 'RiskCaseAssociations.decision');
+      return {
+        decisionRef: asString(
+          decision.decisionRef,
+          'RiskCaseAssociations.decision.decisionRef',
+        ),
+        current: asBoolean(decision.current, 'RiskCaseAssociations.decision.current'),
+      };
+    }),
+    actions: asArray(record.actions, 'RiskCaseAssociations.actions', (value) => {
+      const action = asRecord(value, 'RiskCaseAssociations.action');
+      return {
+        actionRef: asString(action.actionRef, 'RiskCaseAssociations.action.actionRef'),
+        outcomeRefs: asArray(
+          action.outcomeRefs,
+          'RiskCaseAssociations.action.outcomeRefs',
+          (outcomeRef) => asString(
+            outcomeRef,
+            'RiskCaseAssociations.action.outcomeRef',
+          ),
+        ),
+      };
+    }),
   };
 }

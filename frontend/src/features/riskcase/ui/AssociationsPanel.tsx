@@ -1,38 +1,21 @@
-import { Alert, Button, Card, Empty, List, Space, Tag, Typography } from 'antd';
+import { Button, Card, Empty, List, Space, Tag, Typography } from 'antd';
 
 import { humanize } from '../../../shared/format';
 import {
   associationActionDescriptors,
   type CaseActionDescriptor,
 } from '../actions/actionDescriptors';
-import type { RiskCaseView } from '../api/riskCaseTypes';
-import { projectAssociations } from '../model/associationProjection';
+import type { RiskCaseAssociations } from '../api/riskCaseTypes';
 
 export function AssociationsPanel({
-  view,
+  associations,
   onSelectAction,
 }: {
-  view: RiskCaseView;
+  associations: RiskCaseAssociations;
   onSelectAction?: (descriptor: CaseActionDescriptor) => void;
 }) {
-  const projection = projectAssociations(view);
   return (
     <Card title="Associations" data-testid="associations-panel">
-      <Alert
-        className="dialog-alert"
-        type="info"
-        showIcon
-        message="Bounded association view"
-        description="Current decision is authoritative detail data. Evidence, associated decisions, actions, and outcome presence are reconstructed only from the loaded history page; the backend does not expose a complete current-association projection."
-      />
-      {view.history.nextCursor ? (
-        <Alert
-          className="dialog-alert"
-          type="warning"
-          showIcon
-          message="More history exists; this association view may be incomplete."
-        />
-      ) : null}
       {onSelectAction ? (
         <section className="association-section" aria-label="Association actions">
           <Typography.Title level={5}>Association operations</Typography.Title>
@@ -46,36 +29,37 @@ export function AssociationsPanel({
         </section>
       ) : null}
       <AssociationList
-        title="Evidence history"
-        empty="No evidence association is visible in loaded history."
-        items={projection.evidence.map((item) => ({
-          key: item.evidenceRef,
+        title="Evidence associations"
+        empty="No evidence associations are recorded on this case."
+        items={associations.evidenceAssociations.map((item) => ({
+          key: item.eventRef,
           primary: item.evidenceRef,
-          secondary: `Latest visible event: ${humanize(item.latestEventType)} at v${item.version}`,
+          secondary: `${humanize(item.disposition)} · ${item.source}${
+            item.replacementEvidenceRef
+              ? ` · replacement ${item.replacementEvidenceRef}`
+              : ''
+          } · event ${item.eventRef}`,
         }))}
       />
       <AssociationList
         title="Associated decisions"
-        empty="No decision association is visible in loaded case state."
-        items={projection.decisions.map((reference) => ({
-          key: reference,
-          primary: reference,
-          secondary:
-            reference === view.detail.currentDecisionRef ? 'Current decision' : 'Associated',
-          current: reference === view.detail.currentDecisionRef,
+        empty="No decisions are associated with this case."
+        items={associations.decisions.map((decision) => ({
+          key: decision.decisionRef,
+          primary: decision.decisionRef,
+          secondary: decision.current ? 'Current decision' : 'Associated',
+          current: decision.current,
         }))}
       />
       <AssociationList
         title="Associated actions"
-        empty="No action association is visible in loaded history."
-        items={projection.actions.map((item) => ({
+        empty="No effective actions are associated with this case."
+        items={associations.actions.map((item) => ({
           key: item.actionRef,
           primary: item.actionRef,
-          secondary: item.outcomeRecorded
-            ? 'Outcome reference recorded (outcome ref is not exposed by history)'
-            : item.active
-              ? 'Associated'
-              : 'Withdrawn',
+          secondary: item.outcomeRefs.length > 0
+            ? `Outcomes: ${item.outcomeRefs.join(', ')}`
+            : 'No outcome reference recorded',
         }))}
       />
     </Card>

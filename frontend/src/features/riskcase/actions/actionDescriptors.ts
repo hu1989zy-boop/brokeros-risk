@@ -347,14 +347,12 @@ const descriptors: CaseActionDescriptor[] = [
       {
         name: 'associationEventRef',
         label: 'Association event reference',
-        kind: 'text',
+        kind: 'on-case-select',
         required: true,
         maxLength: 36,
         pattern: canonicalUuidV4Pattern,
         patternMessage: 'Enter the canonical lowercase UUIDv4 association event reference.',
-        placeholder: 'History does not expose this event ID; paste its UUIDv4 reference',
-        help:
-          'Risk Case detail/history does not expose this event ID, and no approved preview endpoint exists. Confirm the UUID from an authoritative source before submitting.',
+        placeholder: 'Select an evidence association event on this case',
       },
       {
         name: 'disposition',

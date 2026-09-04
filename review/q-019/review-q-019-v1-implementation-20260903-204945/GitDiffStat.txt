@@ -1,0 +1,28 @@
+Q-019 source diff statistics (before adding this review package)
+================================================================
+
+Tracked modifications (`git diff --stat`):
+
+19 files changed, 467 insertions(+), 200 deletions(-)
+
+New Q-019 files not included by plain `git diff --stat`:
+
+  60  backend/src/main/java/com/brokeros/risk/riskcase/application/RiskCaseAssociations.java
+  52  backend/src/main/java/com/brokeros/risk/riskcase/interfaces/rest/RiskCaseAssociationsResponse.java
+ 308  backend/src/test/java/com/brokeros/risk/riskcase/interfaces/rest/Q019RiskCaseAssociationsMySqlTests.java
+ 157  frontend/tests/e2e/q019AssociationProjectionResolve.spec.ts
+  57  docs/lessons/2026-09-03-q-019-implementation.md
+-----
+ 634  new-file lines
+
+Approximate task source/document total before review package:
+
+24 files; 1,101 inserted/new lines; 200 deleted lines.
+
+Scope notes
+===========
+
+- Review-package files and the generated ZIP are excluded from these figures.
+- The complete Git diff is deliberately not copied into this review package.
+- Three pre-existing untracked review ZIPs are not Q-019 changes and are excluded.
+- Targeted aggregate/domain, migration, capability, and write-service diff: empty.

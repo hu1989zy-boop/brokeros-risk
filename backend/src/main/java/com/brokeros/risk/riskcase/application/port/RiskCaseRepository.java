@@ -60,7 +60,11 @@ public interface RiskCaseRepository {
 
     List<EffectiveEvidence> findAllEffectiveEvidence(RiskCaseId caseId);
 
+    List<EvidenceAssociationEvent> findAllEvidenceEvents(RiskCaseId caseId);
+
     void appendDecisionAssociation(DecisionAssociation association);
+
+    List<DecisionAssociation> findAllDecisionAssociations(RiskCaseId caseId);
 
     void appendDecisionSelection(DecisionSelectionRecord record);
 

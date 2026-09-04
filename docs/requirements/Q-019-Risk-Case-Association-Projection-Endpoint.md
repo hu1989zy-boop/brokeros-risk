@@ -222,7 +222,31 @@ aggregate/business-rule/migration change, no new table/column, no new capability
 Console switches `AssociationsPanel` to the authoritative projection and the
 evidence-disposition target to an on-case picker (closes Q-018 D2).
 
-Next gate: Codex implements Q-019 V1 → Claude Code independent review (incl. the
-backend real-MySQL projection test and the **first live `resolve` end-to-end
-slice**) → Product Owner acceptance → commit. Option B (external-ref search, Q-020)
-and Group E remain deferred.
+Q-019 implementation (Codex, v1
+`review/q-019/review-q-019-v1-implementation-20260903-204945`): the additive read
+endpoint + query-service method + two read-only queries + DTO + real-MySQL test,
+and the console switch (authoritative `AssociationsPanel` + evidence-disposition
+on-case `eventRef` picker). No aggregate/business-rule/migration change; no new
+capability.
+
+Claude Code independent review: **PASS — 2026-09-03** — see
+`review/q-019/review-q-019-v2-claude-code-independent-review-20260903-210401/`.
+Independently reproduced: backend full real-MySQL gate **309/0/0** (incl.
+`Q019RiskCaseAssociationsMySqlTests` **4/4**); frontend **150/150** + typecheck 0 +
+`vite build`; additive-read-only boundary confirmed (endpoint uses `risk-case:read`,
+two read-only `SELECT`s, bounded projection with a server cap, no aggregate/
+migration/capability change). Console closes the Q-018 D2 gap (authoritative panel +
+real disposition picker). One live item outstanding (AC 4): the console-driven
+`resolve` slice needs a seeded decision/action (the same deep Core-Domain seed
+noted since Q-017); the backend real-MySQL test already proves the resolvable
+associated state is reachable.
+
+Q-019 (V1) acceptance: **ACCEPTED — 2026-09-03 — Product Owner**; committed with
+the implementation + v2 review package.
+
+Q-019 status: **COMPLETE — 2026-09-03** (Risk Case association projection endpoint;
+console switched to the authoritative projection + evidence-disposition on-case
+picker — Q-018 D2 closed). The console-driven live `resolve` slice (AC 4) is
+scheduled when a decision/action Core-Domain seed is set up. Option B (external-ref
+search, Q-020) and Group E remain deferred; Q-015 remains parked awaiting the
+MT4/MT5 SDK.

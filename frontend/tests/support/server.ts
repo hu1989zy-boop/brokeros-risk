@@ -5,6 +5,7 @@ import {
   caseNumber,
   envelope,
   riskCaseDetail,
+  riskCaseAssociations,
   riskCaseHistory,
   riskCaseListPage,
   riskCaseNote,
@@ -19,6 +20,9 @@ export const defaultHandlers = [
   ),
   http.get(`${apiBaseUrl}/api/risk-cases/${caseNumber}/history`, () =>
     HttpResponse.json(envelope(riskCaseHistory)),
+  ),
+  http.get(`${apiBaseUrl}/api/risk-cases/${caseNumber}/associations`, () =>
+    HttpResponse.json(envelope(riskCaseAssociations)),
   ),
   http.post(`${apiBaseUrl}/api/risk-cases/${caseNumber}/notes`, () =>
     HttpResponse.json(envelope(riskCaseNote), { status: 201 }),

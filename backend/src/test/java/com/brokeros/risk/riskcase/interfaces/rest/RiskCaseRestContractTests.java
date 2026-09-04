@@ -55,7 +55,8 @@ class RiskCaseRestContractTests {
                 "/{caseNumber}/cancellation", "/{caseNumber}/resume",
                 "/{caseNumber}/reopen");
         assertThat(gets).containsExactlyInAnyOrder(
-                "", "/{caseNumber}", "/{caseNumber}/history");
+                "", "/{caseNumber}", "/{caseNumber}/history",
+                "/{caseNumber}/associations");
         assertThat(Arrays.stream(RiskCaseController.class.getDeclaredMethods())
                 .noneMatch(method -> method.isAnnotationPresent(DeleteMapping.class))).isTrue();
     }
@@ -88,7 +89,10 @@ class RiskCaseRestContractTests {
                 RiskCaseActionAssociationResponse.class, RiskCaseNoteResponse.class,
                 RiskCaseResolutionResponse.class, RiskCaseHistoryEntryResponse.class,
                 RiskCaseHistoryPageResponse.class, RiskCaseSummaryResponse.class,
-                RiskCaseListResponse.class);
+                RiskCaseListResponse.class, RiskCaseAssociationsResponse.class,
+                RiskCaseAssociationsResponse.EvidenceAssociation.class,
+                RiskCaseAssociationsResponse.DecisionAssociation.class,
+                RiskCaseAssociationsResponse.ActionAssociation.class);
         responses.forEach(response -> assertThat(componentNames(response))
                 .doesNotContain("id", "caseId", "rowId", "resolutionId"));
     }
