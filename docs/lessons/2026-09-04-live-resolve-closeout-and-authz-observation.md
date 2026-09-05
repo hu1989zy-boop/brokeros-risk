@@ -4,9 +4,9 @@ Context: after Q-019 was accepted and pushed (`f295ab8`), a **post-acceptance
 close-out** attempt tried to drive the **first end-to-end `resolve`** of the
 Q-016 → Q-019 Risk Console arc through the live console (login → open a resolvable
 case → resolve → close). This note records what was verified, why the live
-`resolve` is still outstanding, and one authorization observation worth a separate
-investigation. Nothing here changes Q-019's accepted status; it is a follow-up
-tracker.
+`resolve` is still outstanding, and an authorization observation that a follow-up
+investigation has since **root-caused (not a bug)**. Nothing here changes Q-019's
+accepted status; it is a follow-up tracker.
 
 ## What WAS verified live (real)
 
@@ -38,41 +38,63 @@ Core-Domain provenance chain (trading account → evidence → decision-with-evi
    `decision_evidence_reference` linkage rows exist. Each layer seeded reveals the
    next requirement — a layered seed that is disproportionate to hand-assemble.
 2. **Build the chain via the real create APIs** (the reliable path — the APIs
-   enforce consistency). Blocked by the authorization observation below.
+   enforce consistency). Was believed blocked by an "authz anomaly"; that is now
+   **root-caused and cleared** (see below) — the operator was simply missing one
+   test-only grant, `trading-account-reference:read`. With the capability set in the
+   table below, this path is expected to work; it has not yet been re-run live.
 
-## Authorization observation — to investigate (NOT a confirmed defect)
+## Authorization observation — RESOLVED (root-caused; NOT a bug)
 
-Granting the console operator the cross-module record capabilities and creating the
-chain via `POST /api/evidence` etc. failed: `POST /api/evidence` returns **403
-`AUTHORIZATION_DENIED`** at `EvidenceRecordingService` line ~80
-(`authorizationGuard.requireAllowed(actorContext, EvidenceCapabilities.RECORD)`),
-even though:
+**Update (2026-09-04, static source investigation): this is not an authorization
+bug. The authorization system worked exactly as designed; the earlier note
+mis-attributed the denial.**
 
-- the operator actor is **HUMAN / ACTIVE** (so the `requireHuman` check at ~148 is
-  not the cause, and it is downstream of the failing `requireAllowed` anyway);
-- `evidence:record` was granted **through the proper security-bootstrap mechanism**
-  on a **fresh database** (`createdActors=1`), not a raw insert;
-- the exact `JdbcAuthorizationAdapter.DECISION_SQL` join for that actor_ref +
-  `evidence:record` returns **exactly one `GRANTED` row**, which `toDecision` should
-  turn into `allow`;
-- the **same guard** honours `risk-case:read` (list → 200) and the module reads
-  `evidence:read` / `decision:read` (GET by fake ref → 404, i.e. authorized) for
-  the **same token/actor**.
+`POST /api/evidence` requires **two** capabilities, checked in order:
 
-So a properly-granted, single-row `GRANTED` `evidence:record` is denied while
-sibling capabilities on the same actor pass. This could not be explained from the
-static `decide()` query + `toDecision` logic; it needs **runtime debugging** of the
-actor-context resolution / capability check for the write path. It is flagged as an
-**observation**, not a confirmed bug — the full 309 real-MySQL gate and all
-committed tests pass, so the guard is not broadly broken; the anomaly is specific
-to this scenario and may reflect a nuance not yet understood.
+1. `evidence:record` — `EvidenceRecordingService.record` ~line 80
+   (`requireAllowed(actorContext, EvidenceCapabilities.RECORD)`). This **passed** —
+   it was granted, and the single `GRANTED` row is real.
+2. `trading-account-reference:read` — reached at `EvidenceRecordingService` ~line
+   111 via `eligibilityService.validateForNewRiskCaseAssociation(...)`, whose first
+   act is `requireAllowed(actorContext, TradingAccountCapabilities.READ)`
+   (`= "trading-account-reference:read"`) in
+   `TradingAccountReferenceEligibilityService` line 31. This **failed** — that
+   capability was never in the operator's grant set — throwing
+   `AuthorizationDeniedException`.
 
-Reproduction (local): `docker compose --profile console` fresh stack; temporarily
-add `evidence:record` (etc.) to `deploy/keycloak/q016-security-bootstrap.json`;
-bootstrap on a fresh DB; obtain an operator token via the PKCE flow; `POST
-/api/evidence {operationId, subjectRef: <ACTIVE ta-…>, observationText}` → 403
-`AUTHORIZATION_DENIED`. (The temporary bootstrap edit was reverted; committed
-config stays least-privilege.)
+That second denial is **not caught** by the `try/catch` around the eligibility call
+(which only catches `TradingAccountAuthorityUnavailableException`), so it propagates
+to the standard **403 `AUTHORIZATION_DENIED`**. Crucially,
+`AuthorizationDeniedException` carries **only** `ResultCode.AUTHORIZATION_DENIED`
+with **no capability field**, so the response for a missing
+`trading-account-reference:read` is byte-identical to one for a missing
+`evidence:record`. That is why the earlier note read the 403 as an `evidence:record`
+denial: having confirmed the single `GRANTED` row for `evidence:record`, it did not
+trace the flow to the **second** capability gate inside subject-eligibility
+validation. (By design: recording evidence about a trading account requires
+authority to read/validate that account reference.)
+
+The temporary test bootstrap added the five `:record` capabilities + `risk-case:create`
+but **not** `trading-account-reference:read` — the one, and only, missing grant. It
+blocks at the very first create call, which is exactly where the 403 was seen.
+
+### Full capability set to build the resolvable chain via the create APIs
+
+Each record service also validates the referenced entity's provenance / subject
+eligibility, each needing one extra READ capability:
+
+| Endpoint | Primary | Secondary (provenance / eligibility) |
+| --- | --- | --- |
+| `POST /api/evidence` | `evidence:record` | `trading-account-reference:read` |
+| `POST /api/decisions` | `decision:record` | `trading-account-reference:read` + `evidence:read` |
+| `POST /api/actions` | `action:record` | `decision:read` |
+| `POST /api/action-outcomes` | `action-outcome:record` | `action:read` |
+
+The committed 13 already include `evidence:read` / `decision:read` / `action:read`,
+so for a test operator the only additional grants needed to build the chain are the
+five `:record` + `risk-case:create` **plus `trading-account-reference:read`**. These
+are **test-only** grants; the committed least-privilege set for a read-only console
+operator correctly excludes all record/create and trading-account capabilities.
 
 ## What remains verified about resolve/close (despite no live run)
 
@@ -83,9 +105,21 @@ config stays least-privilege.)
 
 ## Recommended follow-up
 
-- **Investigate the authorization observation** with runtime logging on the write
-  path (a real authz bug here would matter broadly).
-- Provide a **proper resolvable-case seed harness** (or a system/service actor able
-  to author provenance) so the live `resolve` E2E can run.
-- Fold the **live end-to-end `resolve`** confirmation into a future Requirement —
+- ~~Investigate the authorization observation.~~ **Done** — root-caused above (not
+  a bug; a missing `trading-account-reference:read` test grant). No code change.
+- **Re-run the API-create path** to build a real resolvable case, granting the test
+  operator the capability set in the table above (the five `:record` +
+  `risk-case:create` + `trading-account-reference:read`), then drive the live
+  `resolve`/`close` from the console — the first live `resolve` of the arc. This is
+  the remaining outstanding item.
+- Fold that **live end-to-end `resolve`** confirmation into a future Requirement —
   candidate **Q-020** (alongside the deferred Option B external-reference search).
+
+## Lesson
+
+`AuthorizationDeniedException` → `403 AUTHORIZATION_DENIED` carries no capability
+discriminator, and a single flow can gate on **more than one** capability (a
+primary write capability plus secondary read/eligibility capabilities on the
+referenced entities). Do not attribute a 403 to the first capability you checked:
+trace the whole request path for every `requireAllowed` before concluding. Verifying
+one `GRANTED` row proves that one capability, not the request.
