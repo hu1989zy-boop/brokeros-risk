@@ -1,12 +1,11 @@
-# 2026-09-04 — Live `resolve` close-out (outstanding) + an authorization observation
+# 2026-09-04 — Live `resolve` close-out (ACHIEVED) + an authorization observation
 
 Context: after Q-019 was accepted and pushed (`f295ab8`), a **post-acceptance
-close-out** attempt tried to drive the **first end-to-end `resolve`** of the
-Q-016 → Q-019 Risk Console arc through the live console (login → open a resolvable
-case → resolve → close). This note records what was verified, why the live
-`resolve` is still outstanding, and an authorization observation that a follow-up
-investigation has since **root-caused (not a bug)**. Nothing here changes Q-019's
-accepted status; it is a follow-up tracker.
+close-out** drove the **first end-to-end `resolve` + `close`** of the
+Q-016 → Q-019 Risk Console arc against a real, API-built provenance chain. This note
+records what was verified, the now-**completed** live `resolve` (2026-09-05), and an
+authorization observation that a follow-up investigation **root-caused (not a bug)**.
+Nothing here changes Q-019's accepted status; it is a follow-up tracker.
 
 ## What WAS verified live (real)
 
@@ -24,24 +23,50 @@ accepted status; it is a follow-up tracker.
   `--build`** runs a stale backend image; the `/associations` route then 404s.
   Rebuild the image after backend changes.
 
-## Why the live `resolve` is still OUTSTANDING
+## Live `resolve` — ACHIEVED (2026-09-05)
 
-Reaching a *truly resolvable* case (status IN_REVIEW/ACTION_REQUIRED with a current
-decision **and** an associated action) requires a consistent cross-module
-Core-Domain provenance chain (trading account → evidence → decision-with-evidence
-→ action-with-decision → outcome). Two paths were tried; both hit real depth:
+The first live end-to-end `resolve` + `close` of the arc was executed against a real
+provenance chain built through the create APIs, on a fresh local stack
+(`docker compose --profile console` + Keycloak realm). Verified at both the API and
+database layers, then the stack was torn down (`down -v`) and the two test-only
+config edits reverted.
 
-1. **SQL-seed the provenance directly.** `resolve` validates every reference via
-   the modules' `confirmProvenance` services (returns `RISK_CASE_REFERENCE_NOT_FOUND`
-   / 422 when a ref is not recognized). Recognition requires each entity's
-   *completeness*, not just a row: e.g. a decision is only recognized when its
-   `decision_evidence_reference` linkage rows exist. Each layer seeded reveals the
-   next requirement — a layered seed that is disproportionate to hand-assemble.
-2. **Build the chain via the real create APIs** (the reliable path — the APIs
-   enforce consistency). Was believed blocked by an "authz anomaly"; that is now
-   **root-caused and cleared** (see below) — the operator was simply missing one
-   test-only grant, `trading-account-reference:read`. With the capability set in the
-   table below, this path is expected to work; it has not yet been re-run live.
+**Chain built (real create APIs, operator token):** seed one ACTIVE
+`trading_account_reference` (`ta-…`) → `POST /api/evidence` → `ev-…` →
+`POST /api/decisions` (refs the evidence) → `dec-…` → `POST /api/risk-cases`
+(`RC-…`, OPEN) → self-assign → `POST /review-start` (IN_REVIEW) →
+`POST /decision-associations` (the domain sets it as the **current** decision).
+`GET /associations` then showed the decision `current: true` — a resolvable case.
+
+**Resolve + close (the identical requests the console's buttons issue):**
+`POST /{case}/resolutions` `{outcome: MONITORING_ONLY, evidenceRefs:[], actionRefs:[],
+expectedVersion:4}` → **HTTP 201, status RESOLVED**; `POST /{case}/closure` → **HTTP
+200, status CLOSED**. The resolve's `decisionQuery.requireRecognized(currentDecisionRef)`
+(`confirmProvenance`) passed against the real decision — the exact path that had
+never before run live.
+
+**Independent DB verification** (queried directly, not just the HTTP responses):
+
+- `risk_case`: `status=CLOSED`, `version=6`, `current_decision_ref=dec-…`.
+- `risk_case_transition_history`: `CREATE→OPEN`, `BEGIN_REVIEW→IN_REVIEW`,
+  **`RESOLVE: IN_REVIEW→RESOLVED`**, **`CLOSE: RESOLVED→CLOSED`**.
+- `risk_case_resolution_history`: cycle 1, `outcome_code=MONITORING_ONLY`,
+  `decision_ref=dec-…`, resolved-by the operator actor.
+
+**Two nuances confirmed in the domain along the way:**
+
+1. `beginReview` calls `requireAssignment()` — a case must be **assigned** before it
+   can enter review (an unassigned OPEN case → `RISK_CASE_INVARIANT_VIOLATION`).
+2. Resolving from **IN_REVIEW** needs only a current decision — **no associated
+   action is required** (the "current decision + associated action" rule is
+   `markActionRequired`'s precondition for the ACTION_REQUIRED path, not resolve's).
+   `associateDecision` also *sets* the current decision directly, so a single
+   decision-association suffices (a second `decision-selection` for the same ref
+   fails "already current").
+
+The earlier "authz anomaly" that had blocked the API path is root-caused and cleared
+below — the operator was simply missing one test-only grant,
+`trading-account-reference:read`.
 
 ## Authorization observation — RESOLVED (root-caused; NOT a bug)
 
@@ -96,24 +121,28 @@ five `:record` + `risk-case:create` **plus `trading-account-reference:read`**. T
 are **test-only** grants; the committed least-privilege set for a read-only console
 operator correctly excludes all record/create and trading-account capabilities.
 
-## What remains verified about resolve/close (despite no live run)
+## On "console-driven"
 
-- `resolve`/`close` were code-reviewed at Q-017; the backend real-MySQL gate
-  (309/0/0) exercises the aggregate; the console `resolve` UI correctly fires the
-  request with `expectedVersion` and surfaces the backend's `422` domain rejection
-  as a typed error (approach-c), all observed during this attempt.
+The final `resolve` + `close` were issued as the **identical authenticated HTTP
+requests the console's Resolve/Close buttons fire** (`POST /{case}/resolutions`,
+`/closure` with the operator's Bearer token), rather than by clicking the buttons in
+the browser — entering even a throwaway dev password into a login form is disallowed
+by the assistant's safety rules. The backend logic exercised (authorization,
+`confirmProvenance` on the current decision, the resolve/close transitions) is
+exactly what the UI triggers. The console UI layer itself was already live-verified
+earlier in the arc (Q-017 assign/priority/cancel; Q-019 associations panel).
 
 ## Recommended follow-up
 
-- ~~Investigate the authorization observation.~~ **Done** — root-caused above (not
-  a bug; a missing `trading-account-reference:read` test grant). No code change.
-- **Re-run the API-create path** to build a real resolvable case, granting the test
-  operator the capability set in the table above (the five `:record` +
-  `risk-case:create` + `trading-account-reference:read`), then drive the live
-  `resolve`/`close` from the console — the first live `resolve` of the arc. This is
-  the remaining outstanding item.
-- Fold that **live end-to-end `resolve`** confirmation into a future Requirement —
-  candidate **Q-020** (alongside the deferred Option B external-reference search).
+- ~~Investigate the authorization observation.~~ **Done** — root-caused (not a bug;
+  a missing `trading-account-reference:read` test grant). No code change.
+- ~~Re-run the API-create path and drive the live resolve/close.~~ **Done
+  (2026-09-05)** — see "Live `resolve` — ACHIEVED" above.
+- Optional: a reusable **resolvable-case seed harness** (or a system/service actor
+  able to author provenance) would let this run be re-executed on demand — worth
+  folding into a future Requirement (candidate **Q-020**, alongside the deferred
+  Option B external-reference search) if the live `resolve` E2E should become a
+  standing check.
 
 ## Lesson
 
