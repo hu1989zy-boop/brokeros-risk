@@ -1,4 +1,5 @@
 import type { CaseActionFieldName, CaseActionFieldOption } from '../actions/actionInputs';
+import type { ReferenceBrowseScope } from '../api/referenceList';
 import type { RiskCaseAssociations, RiskCaseHistoryEntry } from '../api/riskCaseTypes';
 
 const associationEvents = new Set([
@@ -30,6 +31,22 @@ export function onCaseReferenceOptions(
       label: action.actionRef,
       value: action.actionRef,
     })),
+  };
+}
+
+export function referenceBrowseScope(
+  subjectRef: string,
+  associations: RiskCaseAssociations,
+): ReferenceBrowseScope {
+  const decisionRef =
+    associations.decisions.find((decision) => decision.current)?.decisionRef ??
+    associations.decisions[0]?.decisionRef;
+  return {
+    subjectRef,
+    ...(decisionRef ? { decisionRef } : {}),
+    ...(associations.actions[0]?.actionRef
+      ? { actionRef: associations.actions[0].actionRef }
+      : {}),
   };
 }
 

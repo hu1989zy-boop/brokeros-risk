@@ -286,3 +286,32 @@ console `ReferenceInput` gains a browse/pick mode (scoped to the case) with manu
 entry retained. **No aggregate/business-rule change, no table/column change, no new
 capability.** Key finding: all four scope-key indexes already exist (V4–V7), so V1 is
 expected to add no migration at all.
+
+Q-020 implementation (Codex, v1
+`review/q-020/review-q-020-v1-implementation-20260905-223756`): four additive
+scoped-list endpoints + list services + query-port/JDBC read methods + list DTOs +
+module wiring + a real-MySQL test per module, and the console `ReferenceListRepository`
++ provider + four conditional hooks + `ReferenceInput` browse/pick mode +
+`CaseActionDialog`/`RiskCaseDetailPage` case-scoped wiring + tests. No
+aggregate/business-rule/migration change; no new capability.
+
+Claude Code independent review: **PASS — 2026-09-05** — see
+`review/q-020/review-q-020-v2-claude-code-independent-review-20260905-225541/`.
+Independently reproduced: backend full real-MySQL gate **317/0/0** (incl. the four
+`Q020…ReferenceListMySqlTests` **4/4** — bounded 202→200, most-recent-first, unknown
+key → empty, malformed → request-invalid 400, denied → 403, content field absent, no
+access-log row, scope-key index present); frontend **156/156** + typecheck 0 +
+`vite build`; boundary confirmed (additive read only, **no migration** — Flyway V1–V8,
+no aggregate/write change, **no new capability**, content-free SQL/DTO, least-authority
+console scope). Codex's one interpretation (validate the scope key via the module value
+object → request-invalid, vs a controller `@Pattern`) confirmed correct.
+
+Q-020 (V1) acceptance: **ACCEPTED — 2026-09-06 — Product Owner**; committed with the
+implementation + Codex v1 review package + the v2 independent review package.
+
+Q-020 status: **COMPLETE — 2026-09-06** (External-Reference Scoped Search / Browse,
+Option B: four content-free scoped-list endpoints reusing existing `*:read`; console
+`ReferenceInput` case-scoped browse/pick with manual fallback). The Q-016→Q-019 console
+arc's last deferred gap (Option B) is closed. Minor V1 note: outcome browse scopes to
+the first on-case action when several exist (manual entry covers the rest). Q-015
+remains parked awaiting the MT4/MT5 SDK.

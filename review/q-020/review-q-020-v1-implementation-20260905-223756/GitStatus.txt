@@ -1,0 +1,68 @@
+Branch: main
+Snapshot: after implementation and package creation, before sibling ZIP creation
+
+ M backend/src/main/java/com/brokeros/risk/action/application/port/ActionQueryPort.java
+ M backend/src/main/java/com/brokeros/risk/action/infrastructure/configuration/ActionModuleConfiguration.java
+ M backend/src/main/java/com/brokeros/risk/action/infrastructure/persistence/JdbcActionQueryAdapter.java
+ M backend/src/main/java/com/brokeros/risk/action/interfaces/rest/ActionController.java
+ M backend/src/main/java/com/brokeros/risk/actionoutcome/application/port/ActionOutcomeQueryPort.java
+ M backend/src/main/java/com/brokeros/risk/actionoutcome/infrastructure/configuration/ActionOutcomeModuleConfiguration.java
+ M backend/src/main/java/com/brokeros/risk/actionoutcome/infrastructure/persistence/JdbcActionOutcomeQueryAdapter.java
+ M backend/src/main/java/com/brokeros/risk/actionoutcome/interfaces/rest/ActionOutcomeController.java
+ M backend/src/main/java/com/brokeros/risk/decision/application/port/DecisionQueryPort.java
+ M backend/src/main/java/com/brokeros/risk/decision/infrastructure/configuration/DecisionModuleConfiguration.java
+ M backend/src/main/java/com/brokeros/risk/decision/infrastructure/persistence/JdbcDecisionQueryAdapter.java
+ M backend/src/main/java/com/brokeros/risk/decision/interfaces/rest/DecisionController.java
+ M backend/src/main/java/com/brokeros/risk/evidence/application/port/EvidenceQueryPort.java
+ M backend/src/main/java/com/brokeros/risk/evidence/infrastructure/configuration/EvidenceModuleConfiguration.java
+ M backend/src/main/java/com/brokeros/risk/evidence/infrastructure/persistence/JdbcEvidenceQueryAdapter.java
+ M backend/src/main/java/com/brokeros/risk/evidence/interfaces/rest/EvidenceController.java
+ M backend/src/test/java/com/brokeros/risk/action/application/ActionApplicationTests.java
+ M backend/src/test/java/com/brokeros/risk/action/interfaces/rest/ActionRestContractTests.java
+ M backend/src/test/java/com/brokeros/risk/actionoutcome/application/ActionOutcomeApplicationTests.java
+ M backend/src/test/java/com/brokeros/risk/actionoutcome/interfaces/rest/ActionOutcomeRestContractTests.java
+ M backend/src/test/java/com/brokeros/risk/decision/application/DecisionApplicationTests.java
+ M backend/src/test/java/com/brokeros/risk/decision/interfaces/rest/DecisionRestContractTests.java
+ M backend/src/test/java/com/brokeros/risk/evidence/application/EvidenceApplicationTests.java
+ M backend/src/test/java/com/brokeros/risk/evidence/interfaces/rest/EvidenceRestContractTests.java
+ M frontend/src/app/App.tsx
+ M frontend/src/features/riskcase/model/associationProjection.ts
+ M frontend/src/features/riskcase/ui/CaseActionDialog.tsx
+ M frontend/src/features/riskcase/ui/ReferenceInput.tsx
+ M frontend/src/features/riskcase/ui/RiskCaseDetailPage.tsx
+ M frontend/tests/AssociationsPanel.test.tsx
+ M frontend/tests/Q018AssociationActions.test.tsx
+ M frontend/tests/ReferenceInput.test.tsx
+?? backend/src/main/java/com/brokeros/risk/action/application/ActionReferenceListService.java
+?? backend/src/main/java/com/brokeros/risk/action/application/ActionReferenceSummary.java
+?? backend/src/main/java/com/brokeros/risk/action/interfaces/rest/ActionReferenceListResponse.java
+?? backend/src/main/java/com/brokeros/risk/actionoutcome/application/ActionOutcomeReferenceListService.java
+?? backend/src/main/java/com/brokeros/risk/actionoutcome/application/ActionOutcomeReferenceSummary.java
+?? backend/src/main/java/com/brokeros/risk/actionoutcome/interfaces/rest/ActionOutcomeReferenceListResponse.java
+?? backend/src/main/java/com/brokeros/risk/api/ReferenceListLimits.java
+?? backend/src/main/java/com/brokeros/risk/decision/application/DecisionReferenceListService.java
+?? backend/src/main/java/com/brokeros/risk/decision/application/DecisionReferenceSummary.java
+?? backend/src/main/java/com/brokeros/risk/decision/interfaces/rest/DecisionReferenceListResponse.java
+?? backend/src/main/java/com/brokeros/risk/evidence/application/EvidenceReferenceListService.java
+?? backend/src/main/java/com/brokeros/risk/evidence/application/EvidenceReferenceSummary.java
+?? backend/src/main/java/com/brokeros/risk/evidence/interfaces/rest/EvidenceReferenceListResponse.java
+?? backend/src/test/java/com/brokeros/risk/action/interfaces/rest/Q020ActionReferenceListMySqlTests.java
+?? backend/src/test/java/com/brokeros/risk/actionoutcome/interfaces/rest/Q020ActionOutcomeReferenceListMySqlTests.java
+?? backend/src/test/java/com/brokeros/risk/decision/interfaces/rest/Q020DecisionReferenceListMySqlTests.java
+?? backend/src/test/java/com/brokeros/risk/evidence/interfaces/rest/Q020EvidenceReferenceListMySqlTests.java
+?? backend/src/test/java/com/brokeros/risk/reference/
+?? docs/lessons/2026-09-05-q-020-implementation.md
+?? frontend/src/features/riskcase/api/referenceList.ts
+?? frontend/src/features/riskcase/model/referenceListContext.tsx
+?? frontend/src/features/riskcase/model/useReferenceList.ts
+?? frontend/tests/referenceListRepository.test.ts
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304.zip
+?? review/q-017/review-q-017-v1-implementation-20260903-020721.zip
+?? review/q-018/review-q-018-v1-implementation-20260903-164146.zip
+?? review/q-019/review-q-019-v1-implementation-20260903-204945.zip
+?? review/q-020/
+
+Notes:
+- The four Q-016 through Q-019 ZIPs pre-existed Q-020 and were not modified.
+- `review/q-020/` contains only the new V1 implementation package at this snapshot.
+- Nothing is staged. No commit or push was performed.

@@ -7,7 +7,12 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { ApiClient, type AuthSession } from '../src/core/api/apiClient';
 import type { ReferenceKind } from '../src/features/riskcase/actions/actionInputs';
+import {
+  HttpReferenceListRepository,
+  type ReferenceBrowseScope,
+} from '../src/features/riskcase/api/referenceList';
 import { HttpReferencePreviewRepository } from '../src/features/riskcase/api/referencePreview';
+import { ReferenceListRepositoryProvider } from '../src/features/riskcase/model/referenceListContext';
 import { ReferencePreviewRepositoryProvider } from '../src/features/riskcase/model/referencePreviewContext';
 import { ReferenceInput } from '../src/features/riskcase/ui/ReferenceInput';
 import { envelope, failureEnvelope } from './fixtures/riskCases';
@@ -15,13 +20,18 @@ import { apiBaseUrl, server } from './support/server';
 
 const evidenceRef = 'ev-18000000-0000-4000-8000-000000000001';
 
-function renderInput(kind: ReferenceKind = 'evidence') {
+function renderInput(
+  kind: ReferenceKind = 'evidence',
+  browseScope?: ReferenceBrowseScope,
+) {
   const auth: AuthSession = {
     getAccessToken: () => 'synthetic-test-token',
     refreshAccessToken: async () => null,
     authenticationRequired: vi.fn(),
   };
-  const repository = new HttpReferencePreviewRepository(new ApiClient(apiBaseUrl, auth));
+  const client = new ApiClient(apiBaseUrl, auth);
+  const repository = new HttpReferencePreviewRepository(client);
+  const referenceLists = new HttpReferenceListRepository(client);
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const confirmation = vi.fn();
 
@@ -29,17 +39,20 @@ function renderInput(kind: ReferenceKind = 'evidence') {
     const [value, setValue] = useState('');
     return (
       <QueryClientProvider client={queryClient}>
-        <ReferencePreviewRepositoryProvider repository={repository}>
-          <label htmlFor="reference-under-test">Reference</label>
-          <ReferenceInput
-            id="reference-under-test"
-            kind={kind}
-            value={value}
-            required
-            onChange={setValue}
-            onConfirmationChange={confirmation}
-          />
-        </ReferencePreviewRepositoryProvider>
+        <ReferenceListRepositoryProvider repository={referenceLists}>
+          <ReferencePreviewRepositoryProvider repository={repository}>
+            <label htmlFor="reference-under-test">Reference</label>
+            <ReferenceInput
+              id="reference-under-test"
+              kind={kind}
+              value={value}
+              required
+              browseScope={browseScope}
+              onChange={setValue}
+              onConfirmationChange={confirmation}
+            />
+          </ReferencePreviewRepositoryProvider>
+        </ReferenceListRepositoryProvider>
       </QueryClientProvider>
     );
   }
@@ -117,5 +130,78 @@ describe('Q-018 ReferenceInput', () => {
       await screen.findByText('You are not authorized to preview this reference.'),
     ).toBeInTheDocument();
     expect(confirmation).toHaveBeenLastCalledWith(false);
+  });
+});
+
+describe('Q-020 ReferenceInput browse mode', () => {
+  it('browses within the supplied subject scope and selects into the existing preview flow', async () => {
+    const subjectRef = 'ta-18000000-0000-4000-8000-000000000002';
+    let requestedScope: string | null = null;
+    server.use(
+      http.get(`${apiBaseUrl}/api/evidence`, ({ request }) => {
+        requestedScope = new URL(request.url).searchParams.get('subjectRef');
+        return HttpResponse.json(
+          envelope({
+            items: [
+              {
+                evidenceRef,
+                subjectRef,
+                status: 'ACTIVE',
+                recordedAt: '2026-09-05T00:00:00Z',
+              },
+            ],
+          }),
+        );
+      }),
+      http.get(`${apiBaseUrl}/api/evidence/${evidenceRef}`, () =>
+        HttpResponse.json(
+          envelope({
+            evidenceRef,
+            subjectRef,
+            source: 'MANUAL',
+            status: 'ACTIVE',
+            recordedAt: '2026-09-05T00:00:00Z',
+          }),
+        ),
+      ),
+    );
+    const { confirmation } = renderInput('evidence', { subjectRef });
+
+    await userEvent.click(screen.getByLabelText('Reference'));
+    await userEvent.click(
+      await screen.findByText((content, element) =>
+        Boolean(element?.classList.contains('ant-select-item-option-content')) &&
+        content.includes(evidenceRef)),
+    );
+
+    expect(requestedScope).toBe(subjectRef);
+    expect(await screen.findByText('Confirmed reference preview')).toBeInTheDocument();
+    await waitFor(() => expect(confirmation).toHaveBeenLastCalledWith(true));
+  });
+
+  it('retains manual entry when a browse scope is available', async () => {
+    const subjectRef = 'ta-18000000-0000-4000-8000-000000000002';
+    server.use(
+      http.get(`${apiBaseUrl}/api/evidence`, () =>
+        HttpResponse.json(envelope({ items: [] })),
+      ),
+      http.get(`${apiBaseUrl}/api/evidence/${evidenceRef}`, () =>
+        HttpResponse.json(
+          envelope({
+            evidenceRef,
+            subjectRef,
+            source: 'MANUAL',
+            status: 'ACTIVE',
+            recordedAt: '2026-09-05T00:00:00Z',
+          }),
+        ),
+      ),
+    );
+    renderInput('evidence', { subjectRef });
+
+    await userEvent.click(screen.getByText('Enter manually'));
+    await userEvent.type(screen.getByLabelText('Reference'), evidenceRef);
+
+    expect(await screen.findByText('Confirmed reference preview')).toBeInTheDocument();
   });
 });

@@ -1,0 +1,60 @@
+Q-020 bounded changed-area tree (not a full repository tree)
+
+backend/src/main/java/com/brokeros/risk/
+├── api/ReferenceListLimits.java
+├── evidence/
+│   ├── application/{EvidenceReferenceListService,EvidenceReferenceSummary}.java
+│   ├── application/port/EvidenceQueryPort.java
+│   ├── infrastructure/{configuration/EvidenceModuleConfiguration,persistence/JdbcEvidenceQueryAdapter}.java
+│   └── interfaces/rest/{EvidenceController,EvidenceReferenceListResponse}.java
+├── decision/
+│   ├── application/{DecisionReferenceListService,DecisionReferenceSummary}.java
+│   ├── application/port/DecisionQueryPort.java
+│   ├── infrastructure/{configuration/DecisionModuleConfiguration,persistence/JdbcDecisionQueryAdapter}.java
+│   └── interfaces/rest/{DecisionController,DecisionReferenceListResponse}.java
+├── action/
+│   ├── application/{ActionReferenceListService,ActionReferenceSummary}.java
+│   ├── application/port/ActionQueryPort.java
+│   ├── infrastructure/{configuration/ActionModuleConfiguration,persistence/JdbcActionQueryAdapter}.java
+│   └── interfaces/rest/{ActionController,ActionReferenceListResponse}.java
+└── actionoutcome/
+    ├── application/{ActionOutcomeReferenceListService,ActionOutcomeReferenceSummary}.java
+    ├── application/port/ActionOutcomeQueryPort.java
+    ├── infrastructure/{configuration/ActionOutcomeModuleConfiguration,persistence/JdbcActionOutcomeQueryAdapter}.java
+    └── interfaces/rest/{ActionOutcomeController,ActionOutcomeReferenceListResponse}.java
+
+backend/src/test/java/com/brokeros/risk/
+├── reference/Q020ReferenceListMySqlSupport.java
+├── evidence/interfaces/rest/Q020EvidenceReferenceListMySqlTests.java
+├── decision/interfaces/rest/Q020DecisionReferenceListMySqlTests.java
+├── action/interfaces/rest/Q020ActionReferenceListMySqlTests.java
+├── actionoutcome/interfaces/rest/Q020ActionOutcomeReferenceListMySqlTests.java
+└── [existing application and REST contract tests updated for additive port/routes]
+
+frontend/src/
+├── app/App.tsx
+└── features/riskcase/
+    ├── api/referenceList.ts
+    ├── model/associationProjection.ts
+    ├── model/referenceListContext.tsx
+    ├── model/useReferenceList.ts
+    └── ui/{CaseActionDialog,ReferenceInput,RiskCaseDetailPage}.tsx
+
+frontend/tests/
+├── AssociationsPanel.test.tsx
+├── Q018AssociationActions.test.tsx
+├── ReferenceInput.test.tsx
+└── referenceListRepository.test.ts
+
+docs/lessons/2026-09-05-q-020-implementation.md
+review/q-020/review-q-020-v1-implementation-20260905-223756/
+├── Summary.md
+├── ArchitectureReview.md
+├── DesignTraceability.md
+├── ProjectTree.txt
+├── GitStatus.txt
+├── GitDiffStat.txt
+├── Verification.md
+├── SecurityReview.md
+├── TestInventory.txt
+└── OutstandingItems.md

@@ -8,6 +8,7 @@ import com.brokeros.risk.evidence.application.EvidenceDetailReadService;
 import com.brokeros.risk.evidence.application.EvidenceFingerprintFactory;
 import com.brokeros.risk.evidence.application.EvidenceProvenanceQueryService;
 import com.brokeros.risk.evidence.application.EvidenceRecordingService;
+import com.brokeros.risk.evidence.application.EvidenceReferenceListService;
 import com.brokeros.risk.evidence.application.port.EvidenceAccessLogPort;
 import com.brokeros.risk.evidence.application.port.EvidenceMutationPort;
 import com.brokeros.risk.evidence.application.port.EvidenceMetricsPort;
@@ -77,5 +78,13 @@ public class EvidenceModuleConfiguration {
             Clock securityClock) {
         return new EvidenceDetailReadService(
                 authorizationGuard, queryPort, accessLogPort, metrics, securityClock);
+    }
+
+    @Bean
+    EvidenceReferenceListService evidenceReferenceListService(
+            AuthorizationGuard authorizationGuard,
+            EvidenceQueryPort queryPort,
+            EvidenceMetricsPort metrics) {
+        return new EvidenceReferenceListService(authorizationGuard, queryPort, metrics);
     }
 }

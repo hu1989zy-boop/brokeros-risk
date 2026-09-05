@@ -1,9 +1,12 @@
 package com.brokeros.risk.actionoutcome.infrastructure.persistence;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.brokeros.risk.action.domain.ActionRef;
 import com.brokeros.risk.actionoutcome.application.ActionOutcomeAuthorityUnavailableException;
 import com.brokeros.risk.actionoutcome.application.ActionOutcomeException;
+import com.brokeros.risk.actionoutcome.application.ActionOutcomeReferenceSummary;
 import com.brokeros.risk.actionoutcome.application.port.ActionOutcomeQueryPort;
 import com.brokeros.risk.actionoutcome.domain.ActionOutcomeOperationId;
 import com.brokeros.risk.actionoutcome.domain.ActionOutcomeRecord;
@@ -63,6 +66,31 @@ public class JdbcActionOutcomeQueryAdapter implements ActionOutcomeQueryPort {
                     FROM action_outcome_record
                     WHERE action_outcome_ref = ?
                     """, JdbcActionOutcomeRowMappers.actionOutcomeRecord(), ref.value());
+        } catch (ActionOutcomeException exception) {
+            throw exception;
+        } catch (DataAccessException | IllegalArgumentException exception) {
+            throw new ActionOutcomeAuthorityUnavailableException(exception);
+        }
+    }
+
+    @Override
+    public List<ActionOutcomeReferenceSummary> findSummariesByAction(
+            ActionRef actionRef,
+            int limit) {
+        try {
+            return jdbcTemplate.query("""
+                    SELECT action_outcome_ref,
+                           action_ref,
+                           recorded_at
+                    FROM action_outcome_record
+                    WHERE action_ref = ?
+                    ORDER BY recorded_at DESC, id DESC
+                    LIMIT ?
+                    """, (resultSet, rowNumber) -> new ActionOutcomeReferenceSummary(
+                            new ActionOutcomeRef(resultSet.getString("action_outcome_ref")),
+                            new ActionRef(resultSet.getString("action_ref")),
+                            resultSet.getTimestamp("recorded_at").toInstant()),
+                    actionRef.value(), limit);
         } catch (ActionOutcomeException exception) {
             throw exception;
         } catch (DataAccessException | IllegalArgumentException exception) {

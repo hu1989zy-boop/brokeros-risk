@@ -6,10 +6,13 @@ import java.util.Optional;
 import com.brokeros.risk.evidence.application.CompletedEvidenceOperation;
 import com.brokeros.risk.evidence.application.EvidenceAuthorityUnavailableException;
 import com.brokeros.risk.evidence.application.EvidenceException;
+import com.brokeros.risk.evidence.application.EvidenceReferenceSummary;
 import com.brokeros.risk.evidence.application.port.EvidenceQueryPort;
 import com.brokeros.risk.evidence.domain.EvidenceOperationId;
 import com.brokeros.risk.evidence.domain.EvidenceRecord;
 import com.brokeros.risk.evidence.domain.EvidenceRef;
+import com.brokeros.risk.evidence.domain.EvidenceStatus;
+import com.brokeros.risk.tradingaccount.domain.TradingAccountRef;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -68,6 +71,33 @@ public class JdbcEvidenceQueryAdapter implements EvidenceQueryPort {
                         ON replacement.id = record_row.superseded_by_id
                     WHERE record_row.evidence_ref = ?
                     """, JdbcEvidenceRowMappers.evidenceRecord(), ref.value()));
+        } catch (EvidenceException exception) {
+            throw exception;
+        } catch (DataAccessException | IllegalArgumentException exception) {
+            throw new EvidenceAuthorityUnavailableException(exception);
+        }
+    }
+
+    @Override
+    public List<EvidenceReferenceSummary> findSummariesBySubject(
+            TradingAccountRef subjectRef,
+            int limit) {
+        try {
+            return jdbcTemplate.query("""
+                    SELECT evidence_ref,
+                           subject_ref,
+                           status,
+                           recorded_at
+                    FROM evidence_record
+                    WHERE subject_ref = ?
+                    ORDER BY recorded_at DESC, id DESC
+                    LIMIT ?
+                    """, (resultSet, rowNumber) -> new EvidenceReferenceSummary(
+                            new EvidenceRef(resultSet.getString("evidence_ref")),
+                            new TradingAccountRef(resultSet.getString("subject_ref")),
+                            EvidenceStatus.valueOf(resultSet.getString("status")),
+                            resultSet.getTimestamp("recorded_at").toInstant()),
+                    subjectRef.value(), limit);
         } catch (EvidenceException exception) {
             throw exception;
         } catch (DataAccessException | IllegalArgumentException exception) {

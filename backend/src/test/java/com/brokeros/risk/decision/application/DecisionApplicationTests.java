@@ -647,6 +647,13 @@ class DecisionApplicationTests {
         public Optional<DecisionRecord> findByRef(DecisionRef ref) {
             return Optional.empty();
         }
+
+        @Override
+        public List<DecisionReferenceSummary> findSummariesBySubject(
+                TradingAccountRef subjectRef,
+                int limit) {
+            return List.of();
+        }
     }
 
     private static class StubDecisionMutationPort implements DecisionMutationPort {
@@ -667,6 +674,12 @@ class DecisionApplicationTests {
         @Override
         public Optional<EvidenceRecord> findByRef(EvidenceRef ref) {
             return Optional.empty();
+        }
+
+        @Override
+        public List<com.brokeros.risk.evidence.application.EvidenceReferenceSummary>
+                findSummariesBySubject(TradingAccountRef subjectRef, int limit) {
+            return List.of();
         }
     }
 

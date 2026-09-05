@@ -7,6 +7,7 @@ import com.brokeros.risk.action.application.ActionDetailReadService;
 import com.brokeros.risk.action.application.ActionFingerprintFactory;
 import com.brokeros.risk.action.application.ActionProvenanceQueryService;
 import com.brokeros.risk.action.application.ActionRecordingService;
+import com.brokeros.risk.action.application.ActionReferenceListService;
 import com.brokeros.risk.action.application.AuthorizedMutationFactory;
 import com.brokeros.risk.action.application.port.ActionAccessLogPort;
 import com.brokeros.risk.action.application.port.ActionMetricsPort;
@@ -69,5 +70,13 @@ public class ActionModuleConfiguration {
             Clock securityClock) {
         return new ActionDetailReadService(
                 authorizationGuard, queryPort, accessLogPort, metrics, securityClock);
+    }
+
+    @Bean
+    ActionReferenceListService actionReferenceListService(
+            AuthorizationGuard authorizationGuard,
+            ActionQueryPort queryPort,
+            ActionMetricsPort metrics) {
+        return new ActionReferenceListService(authorizationGuard, queryPort, metrics);
     }
 }

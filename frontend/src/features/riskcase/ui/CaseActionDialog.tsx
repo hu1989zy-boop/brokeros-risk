@@ -11,6 +11,7 @@ import {
   type CaseActionFieldSpec,
   type CaseActionValues,
 } from '../actions/actionInputs';
+import type { ReferenceBrowseScope } from '../api/referenceList';
 import { ReferenceInput } from './ReferenceInput';
 
 function isFormValidationFailure(value: unknown): value is { errorFields: unknown[] } {
@@ -27,6 +28,7 @@ export function CaseActionDialog({
   expectedVersion,
   submitting,
   onCaseOptions = {},
+  browseScope,
   onCancel,
   onSubmit,
 }: {
@@ -34,6 +36,7 @@ export function CaseActionDialog({
   expectedVersion: number;
   submitting: boolean;
   onCaseOptions?: Partial<Record<CaseActionFieldName, CaseActionFieldOption[]>>;
+  browseScope?: ReferenceBrowseScope;
   onCancel: () => void;
   onSubmit: (values: CaseActionValues) => Promise<void>;
 }) {
@@ -138,6 +141,7 @@ export function CaseActionDialog({
               field,
               submitting || confirming,
               onCaseOptions[field.name],
+              browseScope,
               (confirmed) =>
                 setConfirmedReferences((current) => ({
                   ...current,
@@ -155,6 +159,7 @@ function renderField(
   field: CaseActionFieldSpec,
   disabled: boolean,
   onCaseOptions: CaseActionFieldOption[] | undefined,
+  browseScope: ReferenceBrowseScope | undefined,
   onReferenceConfirmation: (confirmed: boolean) => void,
 ) {
   if (field.kind === 'reference') {
@@ -163,6 +168,7 @@ function renderField(
         kind={field.referenceKind!}
         disabled={disabled}
         required={field.required}
+        browseScope={browseScope}
         onConfirmationChange={onReferenceConfirmation}
       />
     );

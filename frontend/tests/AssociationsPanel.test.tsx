@@ -3,7 +3,10 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
 import { descriptorFor } from '../src/features/riskcase/actions/actionDescriptors';
-import { onCaseReferenceOptions } from '../src/features/riskcase/model/associationProjection';
+import {
+  onCaseReferenceOptions,
+  referenceBrowseScope,
+} from '../src/features/riskcase/model/associationProjection';
 import { AssociationsPanel } from '../src/features/riskcase/ui/AssociationsPanel';
 import { riskCaseAssociations } from './fixtures/riskCases';
 
@@ -30,6 +33,19 @@ describe('Q-019 authoritative association projection and panel', () => {
         value: 'act-18000000-0000-4000-8000-000000000001',
       },
     ]);
+  });
+
+  it('builds the least-authority browse scope from case subject and on-case refs', () => {
+    expect(
+      referenceBrowseScope(
+        'ta-18000000-0000-4000-8000-000000000003',
+        riskCaseAssociations,
+      ),
+    ).toEqual({
+      subjectRef: 'ta-18000000-0000-4000-8000-000000000003',
+      decisionRef: 'dec-18000000-0000-4000-8000-000000000001',
+      actionRef: 'act-18000000-0000-4000-8000-000000000001',
+    });
   });
 
   it('renders evidence event, disposition, current decision, and exact outcome refs', () => {

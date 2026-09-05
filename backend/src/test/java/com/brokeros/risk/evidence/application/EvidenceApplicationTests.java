@@ -7,6 +7,7 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -494,6 +495,13 @@ class EvidenceApplicationTests {
         @Override
         public Optional<EvidenceRecord> findByRef(EvidenceRef ref) {
             return Optional.empty();
+        }
+
+        @Override
+        public List<EvidenceReferenceSummary> findSummariesBySubject(
+                TradingAccountRef subjectRef,
+                int limit) {
+            return List.of();
         }
     }
 

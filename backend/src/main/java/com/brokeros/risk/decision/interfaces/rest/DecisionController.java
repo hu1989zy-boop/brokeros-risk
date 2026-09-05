@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import com.brokeros.risk.api.ApiResponse;
 import com.brokeros.risk.decision.application.DecisionDetailReadService;
 import com.brokeros.risk.decision.application.DecisionRecordingService;
+import com.brokeros.risk.decision.application.DecisionReferenceListService;
 import com.brokeros.risk.decision.application.RecordDecisionCommand;
 import com.brokeros.risk.security.application.port.ActorContextProvider;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,14 +27,17 @@ public class DecisionController {
     private final ActorContextProvider actorContextProvider;
     private final DecisionRecordingService recordingService;
     private final DecisionDetailReadService detailReadService;
+    private final DecisionReferenceListService referenceListService;
 
     public DecisionController(
             ActorContextProvider actorContextProvider,
             DecisionRecordingService recordingService,
-            DecisionDetailReadService detailReadService) {
+            DecisionDetailReadService detailReadService,
+            DecisionReferenceListService referenceListService) {
         this.actorContextProvider = actorContextProvider;
         this.recordingService = recordingService;
         this.detailReadService = detailReadService;
+        this.referenceListService = referenceListService;
     }
 
     @PostMapping
@@ -45,6 +50,16 @@ public class DecisionController {
                         new RecordDecisionCommand(
                                 request.operationId(), request.subjectRef(),
                                 request.evidenceRefs(), request.conclusionText())));
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @GetMapping(params = "subjectRef")
+    @Operation(summary = "List decision references by subject")
+    public ResponseEntity<ApiResponse<DecisionReferenceListResponse>> list(
+            @RequestParam String subjectRef) {
+        DecisionReferenceListResponse response = DecisionReferenceListResponse.from(
+                referenceListService.listBySubject(
+                        actorContextProvider.currentContext(), subjectRef));
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

@@ -32,6 +32,16 @@ class EvidenceRestContractTests {
         assertThat(EvidenceController.class.getMethod("detail", String.class)
                 .getAnnotation(GetMapping.class).value())
                 .containsExactly("/{evidenceRef}");
+        assertThat(EvidenceController.class.getMethod("list", String.class)
+                .getAnnotation(GetMapping.class).params())
+                .containsExactly("subjectRef");
+    }
+
+    @Test
+    void referenceListItemIsContentFree() {
+        assertThat(componentNames(EvidenceReferenceListResponse.Item.class))
+                .containsExactly("evidenceRef", "subjectRef", "status", "recordedAt")
+                .doesNotContain("observationText", "source", "recordedByActorRef");
     }
 
     @Test

@@ -7,6 +7,7 @@ import com.brokeros.risk.evidence.application.CorrectEvidenceCommand;
 import com.brokeros.risk.evidence.application.EvidenceCorrectionService;
 import com.brokeros.risk.evidence.application.EvidenceDetailReadService;
 import com.brokeros.risk.evidence.application.EvidenceRecordingService;
+import com.brokeros.risk.evidence.application.EvidenceReferenceListService;
 import com.brokeros.risk.evidence.application.RecordEvidenceCommand;
 import com.brokeros.risk.security.application.port.ActorContextProvider;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,16 +30,19 @@ public class EvidenceController {
     private final EvidenceRecordingService recordingService;
     private final EvidenceCorrectionService correctionService;
     private final EvidenceDetailReadService detailReadService;
+    private final EvidenceReferenceListService referenceListService;
 
     public EvidenceController(
             ActorContextProvider actorContextProvider,
             EvidenceRecordingService recordingService,
             EvidenceCorrectionService correctionService,
-            EvidenceDetailReadService detailReadService) {
+            EvidenceDetailReadService detailReadService,
+            EvidenceReferenceListService referenceListService) {
         this.actorContextProvider = actorContextProvider;
         this.recordingService = recordingService;
         this.correctionService = correctionService;
         this.detailReadService = detailReadService;
+        this.referenceListService = referenceListService;
     }
 
     @PostMapping
@@ -64,6 +69,16 @@ public class EvidenceController {
                         new CorrectEvidenceCommand(
                                 request.operationId(), evidenceRef,
                                 request.correctionReason(), request.observationText())));
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @GetMapping(params = "subjectRef")
+    @Operation(summary = "List evidence references by subject")
+    public ResponseEntity<ApiResponse<EvidenceReferenceListResponse>> list(
+            @RequestParam String subjectRef) {
+        EvidenceReferenceListResponse response = EvidenceReferenceListResponse.from(
+                referenceListService.listBySubject(
+                        actorContextProvider.currentContext(), subjectRef));
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

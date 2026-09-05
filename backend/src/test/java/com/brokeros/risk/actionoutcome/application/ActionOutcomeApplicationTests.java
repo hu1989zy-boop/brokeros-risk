@@ -7,6 +7,7 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -551,6 +552,13 @@ class ActionOutcomeApplicationTests {
         public Optional<ActionOutcomeRecord> findByRef(ActionOutcomeRef ref) {
             return Optional.empty();
         }
+
+        @Override
+        public List<ActionOutcomeReferenceSummary> findSummariesByAction(
+                ActionRef actionRef,
+                int limit) {
+            return List.of();
+        }
     }
 
     private static class StubActionOutcomeMutationPort
@@ -572,6 +580,12 @@ class ActionOutcomeApplicationTests {
         @Override
         public Optional<ActionRecord> findByRef(ActionRef ref) {
             return Optional.empty();
+        }
+
+        @Override
+        public List<com.brokeros.risk.action.application.ActionReferenceSummary>
+                findSummariesByDecision(DecisionRef decisionRef, int limit) {
+            return List.of();
         }
     }
 }

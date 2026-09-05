@@ -1,14 +1,17 @@
 package com.brokeros.risk.decision.infrastructure.persistence;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.brokeros.risk.decision.application.CompletedDecisionOperation;
 import com.brokeros.risk.decision.application.DecisionAuthorityUnavailableException;
 import com.brokeros.risk.decision.application.DecisionException;
+import com.brokeros.risk.decision.application.DecisionReferenceSummary;
 import com.brokeros.risk.decision.application.port.DecisionQueryPort;
 import com.brokeros.risk.decision.domain.DecisionOperationId;
 import com.brokeros.risk.decision.domain.DecisionRecord;
 import com.brokeros.risk.decision.domain.DecisionRef;
+import com.brokeros.risk.tradingaccount.domain.TradingAccountRef;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -72,6 +75,31 @@ public class JdbcDecisionQueryAdapter implements DecisionQueryPort {
                     WHERE record_row.decision_ref = ?
                     ORDER BY reference_row.evidence_ref
                     """, JdbcDecisionRowMappers.decisionRecord(), ref.value());
+        } catch (DecisionException exception) {
+            throw exception;
+        } catch (DataAccessException | IllegalArgumentException exception) {
+            throw new DecisionAuthorityUnavailableException(exception);
+        }
+    }
+
+    @Override
+    public List<DecisionReferenceSummary> findSummariesBySubject(
+            TradingAccountRef subjectRef,
+            int limit) {
+        try {
+            return jdbcTemplate.query("""
+                    SELECT decision_ref,
+                           subject_ref,
+                           recorded_at
+                    FROM decision_record
+                    WHERE subject_ref = ?
+                    ORDER BY recorded_at DESC, id DESC
+                    LIMIT ?
+                    """, (resultSet, rowNumber) -> new DecisionReferenceSummary(
+                            new DecisionRef(resultSet.getString("decision_ref")),
+                            new TradingAccountRef(resultSet.getString("subject_ref")),
+                            resultSet.getTimestamp("recorded_at").toInstant()),
+                    subjectRef.value(), limit);
         } catch (DecisionException exception) {
             throw exception;
         } catch (DataAccessException | IllegalArgumentException exception) {

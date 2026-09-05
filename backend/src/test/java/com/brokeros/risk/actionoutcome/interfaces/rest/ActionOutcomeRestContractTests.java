@@ -29,9 +29,19 @@ class ActionOutcomeRestContractTests {
         assertThat(ActionOutcomeController.class.getMethod("detail", String.class)
                 .getAnnotation(GetMapping.class).value())
                 .containsExactly("/{actionOutcomeRef}");
+        assertThat(ActionOutcomeController.class.getMethod("list", String.class)
+                .getAnnotation(GetMapping.class).params())
+                .containsExactly("actionRef");
         assertThat(ActionOutcomeController.class.getDeclaredMethods())
                 .extracting(method -> method.getName())
-                .containsExactlyInAnyOrder("record", "detail");
+                .containsExactlyInAnyOrder("record", "detail", "list");
+    }
+
+    @Test
+    void referenceListItemIsContentFree() {
+        assertThat(componentNames(ActionOutcomeReferenceListResponse.Item.class))
+                .containsExactly("actionOutcomeRef", "actionRef", "recordedAt")
+                .doesNotContain("outcomeText", "source", "recordedByActorRef", "status");
     }
 
     @Test

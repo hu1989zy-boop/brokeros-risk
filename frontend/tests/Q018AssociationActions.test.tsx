@@ -18,8 +18,11 @@ import type {
   CaseActionValues,
 } from '../src/features/riskcase/actions/actionInputs';
 import { useCaseAction } from '../src/features/riskcase/actions/useCaseAction';
+import { HttpReferenceListRepository } from '../src/features/riskcase/api/referenceList';
+import type { ReferenceBrowseScope } from '../src/features/riskcase/api/referenceList';
 import { HttpReferencePreviewRepository } from '../src/features/riskcase/api/referencePreview';
 import { HttpRiskCaseRepository } from '../src/features/riskcase/api/riskCaseRepository';
+import { ReferenceListRepositoryProvider } from '../src/features/riskcase/model/referenceListContext';
 import { ReferencePreviewRepositoryProvider } from '../src/features/riskcase/model/referencePreviewContext';
 import { RiskCaseRepositoryProvider } from '../src/features/riskcase/model/riskCaseContext';
 import {
@@ -119,10 +122,15 @@ function authSession(): AuthSession {
   };
 }
 
-function renderAction(scenario: AssociationScenario, onSuccess = vi.fn()) {
+function renderAction(
+  scenario: AssociationScenario,
+  onSuccess = vi.fn(),
+  browseScope?: ReferenceBrowseScope,
+) {
   const client = new ApiClient(apiBaseUrl, authSession());
   const riskCases = new HttpRiskCaseRepository(client);
   const previews = new HttpReferencePreviewRepository(client);
+  const referenceLists = new HttpReferenceListRepository(client);
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
   });
@@ -130,23 +138,30 @@ function renderAction(scenario: AssociationScenario, onSuccess = vi.fn()) {
     return (
       <QueryClientProvider client={queryClient}>
         <RiskCaseRepositoryProvider repository={riskCases}>
-          <ReferencePreviewRepositoryProvider repository={previews}>
-            {children}
-          </ReferencePreviewRepositoryProvider>
+          <ReferenceListRepositoryProvider repository={referenceLists}>
+            <ReferencePreviewRepositoryProvider repository={previews}>
+              {children}
+            </ReferencePreviewRepositoryProvider>
+          </ReferenceListRepositoryProvider>
         </RiskCaseRepositoryProvider>
       </QueryClientProvider>
     );
   }
-  render(<ActionHarness scenario={scenario} onSuccess={onSuccess} />, { wrapper: Providers });
+  render(
+    <ActionHarness scenario={scenario} onSuccess={onSuccess} browseScope={browseScope} />,
+    { wrapper: Providers },
+  );
   return { onSuccess };
 }
 
 function ActionHarness({
   scenario,
   onSuccess,
+  browseScope,
 }: {
   scenario: AssociationScenario;
   onSuccess: () => void;
+  browseScope?: ReferenceBrowseScope;
 }) {
   const query = useRiskCaseDetail(caseNumber);
   const associations = useRiskCaseAssociations(caseNumber);
@@ -160,6 +175,7 @@ function ActionHarness({
         descriptor={descriptorFor(scenario.id)}
         expectedVersion={query.data.detail.version}
         onSuccess={onSuccess}
+        browseScope={browseScope}
       />
     </div>
   );
@@ -169,10 +185,12 @@ function ActionFlow({
   descriptor,
   expectedVersion,
   onSuccess,
+  browseScope,
 }: {
   descriptor: CaseActionDescriptor;
   expectedVersion: number;
   onSuccess: () => void;
+  browseScope?: ReferenceBrowseScope;
 }) {
   const action = useCaseAction(descriptor, { caseNumber, expectedVersion });
   return (
@@ -181,6 +199,7 @@ function ActionFlow({
       expectedVersion={expectedVersion}
       submitting={action.isPending}
       onCaseOptions={onCaseOptions}
+      browseScope={browseScope}
       onCancel={() => undefined}
       onSubmit={async (values) => {
         await action.run(values);
@@ -448,5 +467,54 @@ describe('Q-018 association action registry and runner', () => {
     await userEvent.click(within(dialog).getByRole('button', { name: descriptorFor(scenario.id).label }));
     await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1));
     expect(submittedVersions).toEqual([7, 8]);
+  });
+});
+
+describe('Q-020 browse selection through the existing association runner', () => {
+  it('submits a browsed evidence reference in the unchanged Q-018 request body', async () => {
+    const scenario = scenarios.find(({ id }) => id === 'associateEvidence')!;
+    const subjectRef = 'ta-18000000-0000-4000-8000-000000000003';
+    let capturedBody: unknown;
+    server.use(
+      http.get(`${apiBaseUrl}/api/evidence`, ({ request }) => {
+        expect(new URL(request.url).searchParams.get('subjectRef')).toBe(subjectRef);
+        return HttpResponse.json(envelope({
+          items: [{
+            evidenceRef,
+            subjectRef,
+            status: 'ACTIVE',
+            recordedAt: '2026-09-05T00:00:00Z',
+          }],
+        }));
+      }),
+      http.get(`${apiBaseUrl}/api/evidence/${evidenceRef}`, () =>
+        HttpResponse.json(envelope(previewData('evidence', evidenceRef))),
+      ),
+      http.post(actionUrl(scenario), async ({ request }) => {
+        capturedBody = await request.json();
+        return HttpResponse.json(envelope(successData(scenario.id)), { status: 201 });
+      }),
+    );
+    const { onSuccess } = renderAction(scenario, vi.fn(), { subjectRef });
+    const dialog = await screen.findByRole('dialog');
+    const user = userEvent.setup();
+
+    await user.click(within(dialog).getByLabelText('Evidence reference'));
+    await user.click(
+      await screen.findByText((content, element) =>
+        Boolean(element?.classList.contains('ant-select-item-option-content')) &&
+        content.includes(evidenceRef)),
+    );
+    fireEvent.change(within(dialog).getByLabelText('Association source'), {
+      target: { value: scenario.values.source },
+    });
+    fireEvent.change(within(dialog).getByLabelText('Reason'), {
+      target: { value: scenario.values.reason },
+    });
+    await within(dialog).findByText('Confirmed reference preview');
+    await user.click(within(dialog).getByRole('button', { name: 'Associate evidence' }));
+
+    await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1));
+    expect(capturedBody).toEqual(scenario.expectedBody);
   });
 });

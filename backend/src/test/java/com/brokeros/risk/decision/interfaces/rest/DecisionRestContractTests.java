@@ -29,9 +29,19 @@ class DecisionRestContractTests {
         assertThat(DecisionController.class.getMethod("detail", String.class)
                 .getAnnotation(GetMapping.class).value())
                 .containsExactly("/{decisionRef}");
+        assertThat(DecisionController.class.getMethod("list", String.class)
+                .getAnnotation(GetMapping.class).params())
+                .containsExactly("subjectRef");
         assertThat(DecisionController.class.getDeclaredMethods())
                 .extracting(method -> method.getName())
-                .containsExactlyInAnyOrder("record", "detail");
+                .containsExactlyInAnyOrder("record", "detail", "list");
+    }
+
+    @Test
+    void referenceListItemIsContentFree() {
+        assertThat(componentNames(DecisionReferenceListResponse.Item.class))
+                .containsExactly("decisionRef", "subjectRef", "recordedAt")
+                .doesNotContain("conclusionText", "source", "recordedByActorRef", "status");
     }
 
     @Test

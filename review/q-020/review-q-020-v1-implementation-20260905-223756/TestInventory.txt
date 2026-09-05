@@ -1,0 +1,64 @@
+Q-020 test inventory
+
+Backend focused real-MySQL tests (4 tests total)
+- Q020EvidenceReferenceListMySqlTests: 1 test, passed
+- Q020DecisionReferenceListMySqlTests: 1 test, passed
+- Q020ActionReferenceListMySqlTests: 1 test, passed
+- Q020ActionOutcomeReferenceListMySqlTests: 1 test, passed
+
+Each focused test performs multiple endpoint assertions covering:
+- authorized scoped result
+- 202 seeded rows capped to 200
+- timestamp ties ordered by descending id
+- minimal metadata and ISO recordedAt
+- recorded-content field absent
+- valid unknown key -> HTTP 200 / empty items
+- malformed key -> module request-invalid
+- denied existing READ capability -> AUTHORIZATION_DENIED
+- authorization-denial metric
+- no full-detail access-log rows
+- expected V4-V7 natural-scope index
+
+Backend existing tests updated
+- EvidenceApplicationTests: explicit query-port stub supports additive list method
+- EvidenceRestContractTests: list route and content-free response shape
+- DecisionApplicationTests: explicit query-port stub supports additive list method
+- DecisionRestContractTests: list route and content-free response shape
+- ActionApplicationTests: explicit query-port stub supports additive list method
+- ActionRestContractTests: list route and content-free response shape
+- ActionOutcomeApplicationTests: explicit query-port stub supports additive list method
+- ActionOutcomeRestContractTests: list route and content-free response shape
+
+Backend final full suite
+- 317 tests
+- 0 failures
+- 0 errors
+- 0 skipped
+
+Frontend Q-020 coverage
+- referenceListRepository.test.ts: 2 tests
+  - exact four URLs/query params and typed minimal parsing
+  - empty list parsing
+- ReferenceInput.test.tsx: 6 tests total; 2 Q-020 browse/manual cases
+  - subject-scoped browse selection enters existing preview flow
+  - manual entry remains available with browse scope
+- AssociationsPanel.test.tsx: 5 tests total; 1 Q-020 scope case
+  - case subject + current on-case decision + on-case action projection
+- Q018AssociationActions.test.tsx: 39 tests total; 1 Q-020 end-to-end component case
+  - browse evidence, preview it, and submit the exact unchanged Q-018 body
+
+Frontend focused gate
+- 4 files
+- 52 tests passed
+
+Frontend final full suite
+- 13 test files passed
+- 156 tests passed
+- 0 failed
+- Vitest browser execution: not requested; prompt explicitly specifies no browser
+
+Other verification
+- TypeScript strict check: passed
+- Vite production build: passed; 1,581 modules transformed
+- Repository static verification: passed
+- Git whitespace/error check: passed

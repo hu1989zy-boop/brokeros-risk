@@ -1,0 +1,23 @@
+Q-020 implementation diff summary
+
+Tracked diff (`git diff --stat` before adding this package):
+32 files changed, 672 insertions(+), 40 deletions(-)
+
+New Q-020 implementation/documentation files not represented by unstaged
+`git diff --stat`:
+23 files, 1,328 lines total
+
+Tracked changes by area:
+- Backend main: 16 existing files (ports, configurations, JDBC adapters, controllers).
+- Backend tests: 8 existing application/REST contract files.
+- Frontend main: 5 existing files.
+- Frontend tests: 3 existing files.
+
+Untracked Q-020 files by area:
+- Backend main: 13 files (shared cap; four services; four summaries; four DTOs).
+- Backend tests: 5 files (shared MySQL support and one endpoint test per module).
+- Frontend: 4 files (repository, provider, hooks, repository tests).
+- Documentation: 1 Lessons Learned file.
+
+The new review package files and its sibling ZIP are deliberately excluded from
+the implementation-source statistics above. No complete Git diff is stored here.

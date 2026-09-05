@@ -22,8 +22,10 @@ import {
 
 import { ApiClient, type AuthSession } from '../core/api/apiClient';
 import type { AppConfig } from '../core/config/appConfig';
+import { HttpReferenceListRepository } from '../features/riskcase/api/referenceList';
 import { HttpReferencePreviewRepository } from '../features/riskcase/api/referencePreview';
 import { HttpRiskCaseRepository } from '../features/riskcase/api/riskCaseRepository';
+import { ReferenceListRepositoryProvider } from '../features/riskcase/model/referenceListContext';
 import { ReferencePreviewRepositoryProvider } from '../features/riskcase/model/referencePreviewContext';
 import { RiskCaseRepositoryProvider } from '../features/riskcase/model/riskCaseContext';
 
@@ -109,6 +111,7 @@ function RuntimeProviders({ config, children }: PropsWithChildren<{ config: AppC
     const client = new ApiClient(config.apiBaseUrl, session);
     return {
       riskCases: new HttpRiskCaseRepository(client),
+      referenceLists: new HttpReferenceListRepository(client),
       referencePreviews: new HttpReferencePreviewRepository(client),
     };
   }, [config.apiBaseUrl, queryClient]);
@@ -125,9 +128,11 @@ function RuntimeProviders({ config, children }: PropsWithChildren<{ config: AppC
   return (
     <QueryClientProvider client={queryClient}>
       <RiskCaseRepositoryProvider repository={repositories.riskCases}>
-        <ReferencePreviewRepositoryProvider repository={repositories.referencePreviews}>
-          {children}
-        </ReferencePreviewRepositoryProvider>
+        <ReferenceListRepositoryProvider repository={repositories.referenceLists}>
+          <ReferencePreviewRepositoryProvider repository={repositories.referencePreviews}>
+            {children}
+          </ReferencePreviewRepositoryProvider>
+        </ReferenceListRepositoryProvider>
       </RiskCaseRepositoryProvider>
     </QueryClientProvider>
   );

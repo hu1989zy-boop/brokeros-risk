@@ -8,6 +8,7 @@ import com.brokeros.risk.decision.application.DecisionDetailReadService;
 import com.brokeros.risk.decision.application.DecisionFingerprintFactory;
 import com.brokeros.risk.decision.application.DecisionProvenanceQueryService;
 import com.brokeros.risk.decision.application.DecisionRecordingService;
+import com.brokeros.risk.decision.application.DecisionReferenceListService;
 import com.brokeros.risk.decision.application.port.DecisionAccessLogPort;
 import com.brokeros.risk.decision.application.port.DecisionMetricsPort;
 import com.brokeros.risk.decision.application.port.DecisionMutationPort;
@@ -72,5 +73,13 @@ public class DecisionModuleConfiguration {
             Clock securityClock) {
         return new DecisionDetailReadService(
                 authorizationGuard, queryPort, accessLogPort, metrics, securityClock);
+    }
+
+    @Bean
+    DecisionReferenceListService decisionReferenceListService(
+            AuthorizationGuard authorizationGuard,
+            DecisionQueryPort queryPort,
+            DecisionMetricsPort metrics) {
+        return new DecisionReferenceListService(authorizationGuard, queryPort, metrics);
     }
 }

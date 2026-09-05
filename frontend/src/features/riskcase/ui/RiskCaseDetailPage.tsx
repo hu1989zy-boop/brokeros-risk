@@ -21,7 +21,11 @@ import {
 } from '../actions/actionDescriptors';
 import { useCaseAction } from '../actions/useCaseAction';
 import type { RiskCaseAssociations, RiskCaseView } from '../api/riskCaseTypes';
-import { associationHistoryEntries, onCaseReferenceOptions } from '../model/associationProjection';
+import {
+  associationHistoryEntries,
+  onCaseReferenceOptions,
+  referenceBrowseScope,
+} from '../model/associationProjection';
 import {
   useAddRiskCaseNote,
   useRiskCaseAssociations,
@@ -155,6 +159,7 @@ export function RiskCaseDetailPage() {
           selected={selectedAction}
           caseNumber={view.detail.caseNumber}
           expectedVersion={view.detail.version}
+          subjectRef={view.detail.subjectRef}
           associations={associationsQuery.data}
           onCancel={() => setSelectedAction(null)}
           onSuccess={(message) => {
@@ -171,6 +176,7 @@ function CaseActionFlow({
   selected,
   caseNumber,
   expectedVersion,
+  subjectRef,
   associations,
   onCancel,
   onSuccess,
@@ -178,6 +184,7 @@ function CaseActionFlow({
   selected: SelectedAction;
   caseNumber: string;
   expectedVersion: number;
+  subjectRef: string;
   associations: RiskCaseAssociations;
   onCancel: () => void;
   onSuccess: (message: string) => void;
@@ -193,6 +200,7 @@ function CaseActionFlow({
       expectedVersion={expectedVersion}
       submitting={action.isPending}
       onCaseOptions={onCaseReferenceOptions(associations)}
+      browseScope={referenceBrowseScope(subjectRef, associations)}
       onCancel={onCancel}
       onSubmit={async (values) => {
         const result = await action.run(values);
