@@ -410,3 +410,14 @@ Windows test environment. Until then, Q-015 is **approved and parked at the
 Architecture gate awaiting the SDK.** Per Decision Authority §16.5-B, once
 the SDK is available, Claude Code may draft Architecture → canonical-model
 ADR → Implementation Design as a connected chain.
+
+**Phase split (2026-09-06, Product Owner).** To make SDK-independent progress
+now, Q-015 delivery is split into **Phase A (SDK-independent)** and **Phase B
+(SDK-gated)** — see `docs/requirements/Q-015-Phase-A-SDK-Independent-Addendum.md`.
+This §17 park remains authoritative for **Phase B** (the canonical field model,
+MT4/MT5 gateway interfaces, native adapters, and Windows integration stay blocked
+on the SDK + x64 Windows). The **addendum's** gate section is authoritative for
+**Phase A** (the reliability pipeline, `SERVICE`-actor auth boundary, and
+partitioned storage skeleton, built against a provisional payload-opaque envelope
+contract). Nothing in Phase A invents a Manager API interface or commits the
+canonical field model (AGENTS.md).
