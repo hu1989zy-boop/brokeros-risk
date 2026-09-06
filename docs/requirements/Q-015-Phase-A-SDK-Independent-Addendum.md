@@ -214,8 +214,41 @@ envelope contract onto Kafka; a full-retention partitioned storage skeleton
 (metadata-indexed, opaque payload); a synthetic-envelope replay harness; and
 (optionally) a pre-SDK public-doc research note — **no invented Manager API
 interface, no canonical field model, no Q-008…Q-014 change, Q-009 reused,
-read-only**. On the Product Owner's explicit approval, the Phase A §16.5-B
-Architecture / ADR / Implementation Design bundle follows.
+read-only**.
+
+Phase A implementation (Codex, v1
+`review/q-015/review-q-015-phase-a-v1-implementation-20260906-013112`): the
+`com.brokeros.risk.tradingdata` module (domain / application / infrastructure /
+interfaces), `POST /api/trading-data/ingest` (`SERVICE` actor + `trading-data:ingest`,
+separate bootstrap), reliability by envelope metadata, migration **V9**
+(`trading_data_event` + `trading_data_ingestion_gap`, opaque payload), a
+synthetic-envelope test harness, the A5 research note, and CI boundary guards. No
+canonical field model, no invented Manager API interface, no `gateway`, no Q-008…Q-014
+change; operator bootstrap untouched.
+
+Claude Code independent review: **PASS — 2026-09-06** — see
+`review/q-015/review-q-015-phase-a-v2-claude-code-independent-review-20260906-164811/`.
+Independently reproduced: backend full real-MySQL gate **342/0/0** (incl. the 8 Q-015
+classes 24/24, `Q015MySqlTests` 5/5; Flyway V9 applied, migration-count updated);
+boundary confirmed (payload `byte[]`/`BLOB` never parsed — tested with non-UTF-8 bytes;
+no `gateway`/native symbol; `ResultCode` purely additive; operator bootstrap untouched;
+now CI-guarded in `verify-static.sh` + `TradingDataArchitectureTests`). The dual-write is
+publish-inside-transaction (rollback on publish failure → at-least-once, not silent
+loss). Concurring with Codex's **PASS WITH CONDITIONS**.
+
+Q-015 Phase A (V1) acceptance: **ACCEPTED — 2026-09-06 — Product Owner**; committed
+with the implementation + Codex v1 review package + the v2 independent review package.
+
+Q-015 **Phase A status: COMPLETE — 2026-09-06** (SDK-independent ingestion foundation).
+Four accepted **conditions carried forward** to Phase B / operational hardening (not
+defects in Phase A scope): (1) time-partitioning target — V1 uses the cleared
+non-partitioned fallback to preserve the global `(server, seq)` idempotency key; (2)
+MySQL/Kafka non-atomicity — **at-least-once** by design (an outbox / transactional
+producer / reconciliation is future authorized work; do not infer exactly-once); (3)
+same-server concurrent sequence ownership — V1 assumes serialized single-server
+ingress; define concurrency/late-arrival/gap-overlap semantics before concurrent
+production; (4) Kafka deployment validation (topic partitions, replication/min-ISR,
+producer idempotence/acks, ACL/TLS, max message size, real-broker backpressure).
 
 **Phase B** (canonical field model + ADR, MT4/MT5 gateway interfaces + native
 adapters, native→canonical translation, markout tick capture, x64 Windows

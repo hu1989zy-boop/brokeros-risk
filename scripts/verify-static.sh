@@ -47,7 +47,7 @@ find scripts -type f -name '*.sh' -exec sh -n {} \;
 
 migration_count=$(find backend/src/main/resources/db/migration -maxdepth 1 \
     -type f -name 'V*__*.sql' | wc -l | tr -d '[:space:]')
-test "$migration_count" = "8"
+test "$migration_count" = "9"
 
 if grep -Eiq 'create[[:space:]]+table|alter[[:space:]]+table|drop[[:space:]]+table|truncate[[:space:]]+table' \
     backend/src/main/resources/db/migration/V1__initial_schema.sql; then
@@ -203,6 +203,27 @@ grep -Fq 'flyway.info().pending().length' "$q008_migration_test"
 if grep -Eq 'flyway\.migrate\(\)\.migrationsExecuted\)\.isEqualTo\([0-9]+\)' \
     "$q008_migration_test"; then
     printf '%s\n' "Q-008 migration test must derive unrestricted migration counts dynamically." >&2
+    exit 1
+fi
+
+q015_create_count=$(grep -Eic '^[[:space:]]*create[[:space:]]+table' \
+    backend/src/main/resources/db/migration/V9__create_trading_data_ingestion_foundation.sql)
+test "$q015_create_count" = "2"
+
+if grep -Eiq '^[[:space:]]*(drop|truncate|alter|delete|update|insert)[[:space:]]' \
+    backend/src/main/resources/db/migration/V9__create_trading_data_ingestion_foundation.sql; then
+    printf '%s\n' "Q-015 migration must remain forward-only, additive, and schema-only." >&2
+    exit 1
+fi
+
+for q015_table in trading_data_event trading_data_ingestion_gap; do
+    grep -Eq "^[[:space:]]*CREATE TABLE ${q015_table}[[:space:]]*\\(" \
+        backend/src/main/resources/db/migration/V9__create_trading_data_ingestion_foundation.sql
+done
+
+if grep -Eiq 'manager[[:space:]]+api|native[[:space:]]+adapter|order_ticket|deal_ticket|position_ticket' \
+    backend/src/main/resources/db/migration/V9__create_trading_data_ingestion_foundation.sql; then
+    printf '%s\n' "Q-015 Phase A migration must remain SDK-independent and payload-opaque." >&2
     exit 1
 fi
 

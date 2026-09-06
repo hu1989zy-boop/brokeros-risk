@@ -1,0 +1,72 @@
+Q-015 Phase A implementation tree (bounded)
+
+backend/src/main/java/com/brokeros/risk/
+├── api/ResultCode.java                         [four Q-015 codes added]
+└── tradingdata/
+    ├── application/
+    │   ├── IngestTradingDataCommand.java
+    │   ├── TradingDataAuthorityUnavailableException.java
+    │   ├── TradingDataBackpressureException.java
+    │   ├── TradingDataCapabilities.java
+    │   ├── TradingDataException.java
+    │   ├── TradingDataIngestionResult.java
+    │   ├── TradingDataIngestionService.java
+    │   └── port/
+    │       ├── TradingDataAppendOutcome.java
+    │       ├── TradingDataEventPublisher.java
+    │       ├── TradingDataEventStore.java
+    │       └── TradingDataMetricsPort.java
+    ├── domain/
+    │   ├── PlatformTag.java
+    │   ├── TradingDataEnvelope.java
+    │   └── TradingDataIngestionOutcome.java
+    ├── infrastructure/
+    │   ├── configuration/TradingDataModuleConfiguration.java
+    │   ├── messaging/KafkaTradingDataEventPublisher.java
+    │   ├── observability/MicrometerTradingDataMetrics.java
+    │   └── persistence/
+    │       ├── JdbcTradingDataEventStore.java
+    │       └── MySqlTradingDataConstraintClassifier.java
+    └── interfaces/rest/
+        ├── IngestTradingDataRequest.java
+        ├── TradingDataIngestionController.java
+        └── TradingDataIngestionResponse.java
+
+backend/src/main/resources/db/migration/
+└── V9__create_trading_data_ingestion_foundation.sql
+
+backend/src/test/java/com/brokeros/risk/
+├── FlywayMigrationTests.java                   [V9 assertion added]
+└── tradingdata/
+    ├── TradingDataArchitectureTests.java
+    ├── TradingDataBootstrapContractTests.java
+    ├── application/TradingDataApplicationTests.java
+    ├── domain/TradingDataDomainTests.java
+    ├── infrastructure/
+    │   ├── messaging/KafkaTradingDataEventPublisherTests.java
+    │   ├── observability/TradingDataMetricsTests.java
+    │   └── persistence/Q015MySqlTests.java
+    └── interfaces/rest/TradingDataRestContractTests.java
+
+deploy/keycloak/
+└── q015-ingestion-bootstrap.json
+
+docs/
+├── 2026-09-06-mt4-mt5-neutrality-pre-sdk-notes.md
+└── lessons/2026-09-06-q-015-phase-a-implementation.md
+
+scripts/
+└── verify-static.sh                             [migration inventory/V9 checks]
+
+review/q-015/
+└── review-q-015-phase-a-v1-implementation-20260906-013112/
+    ├── ArchitectureReview.md
+    ├── DesignTraceability.md
+    ├── GitDiffStat.txt
+    ├── GitStatus.txt
+    ├── OutstandingItems.md
+    ├── ProjectTree.txt
+    ├── SecurityReview.md
+    ├── Summary.md
+    ├── TestInventory.txt
+    └── Verification.md

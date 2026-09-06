@@ -1,0 +1,26 @@
+Git state snapshot for Q-015 Phase A implementation review
+Branch: main
+Baseline HEAD: a783e48
+
+ M backend/src/main/java/com/brokeros/risk/api/ResultCode.java
+ M backend/src/test/java/com/brokeros/risk/FlywayMigrationTests.java
+ M scripts/verify-static.sh
+?? backend/src/main/java/com/brokeros/risk/tradingdata/
+?? backend/src/main/resources/db/migration/V9__create_trading_data_ingestion_foundation.sql
+?? backend/src/test/java/com/brokeros/risk/tradingdata/
+?? deploy/keycloak/q015-ingestion-bootstrap.json
+?? docs/2026-09-06-mt4-mt5-neutrality-pre-sdk-notes.md
+?? docs/lessons/2026-09-06-q-015-phase-a-implementation.md
+?? review/q-015/review-q-015-phase-a-v1-implementation-20260906-013112/
+?? review/q-015/review-q-015-phase-a-v1-implementation-20260906-013112.zip
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304.zip
+?? review/q-017/review-q-017-v1-implementation-20260903-020721.zip
+?? review/q-018/review-q-018-v1-implementation-20260903-164146.zip
+?? review/q-019/review-q-019-v1-implementation-20260903-204945.zip
+?? review/q-020/review-q-020-v1-implementation-20260905-223756.zip
+
+Notes:
+- The Q-016 through Q-020 ZIP files pre-existed this task and were preserved.
+- The Q-015 package directory and ZIP are intentionally listed as the expected
+  final non-overwriting handoff artifacts.
+- Nothing is staged. No commit or push was performed.

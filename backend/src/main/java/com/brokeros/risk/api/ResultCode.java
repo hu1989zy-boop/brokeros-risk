@@ -134,6 +134,14 @@ public enum ResultCode {
             "ACTION_OUTCOME_ACTOR_TYPE_NOT_PERMITTED", "Actor type is not permitted for action outcome recording", HttpStatus.FORBIDDEN),
     ACTION_OUTCOME_AUTHORITY_UNAVAILABLE(
             "ACTION_OUTCOME_AUTHORITY_UNAVAILABLE", "Action outcome authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
+    TRADING_DATA_REQUEST_INVALID(
+            "TRADING_DATA_REQUEST_INVALID", "Trading data request is invalid", HttpStatus.BAD_REQUEST),
+    TRADING_DATA_ACTOR_TYPE_NOT_PERMITTED(
+            "TRADING_DATA_ACTOR_TYPE_NOT_PERMITTED", "Actor type is not permitted for trading data ingestion", HttpStatus.FORBIDDEN),
+    TRADING_DATA_BACKPRESSURE(
+            "TRADING_DATA_BACKPRESSURE", "Trading data ingestion is temporarily throttled", HttpStatus.TOO_MANY_REQUESTS),
+    TRADING_DATA_AUTHORITY_UNAVAILABLE(
+            "TRADING_DATA_AUTHORITY_UNAVAILABLE", "Trading data authority is unavailable", HttpStatus.SERVICE_UNAVAILABLE),
     RISK_CASE_NOT_FOUND(
             "RISK_CASE_NOT_FOUND", "Risk case was not found", HttpStatus.NOT_FOUND),
     RISK_CASE_INVALID_TRANSITION(

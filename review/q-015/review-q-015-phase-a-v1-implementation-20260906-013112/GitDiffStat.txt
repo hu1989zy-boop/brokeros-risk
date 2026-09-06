@@ -1,0 +1,19 @@
+Q-015 implementation delta summary before adding this review package
+
+Tracked diff:
+ .../java/com/brokeros/risk/api/ResultCode.java     |  8 ++++++
+ .../com/brokeros/risk/FlywayMigrationTests.java    | 29 ++++++++++++++++++++++
+ scripts/verify-static.sh                           | 23 ++++++++++++++++--
+ 3 files changed, 59 insertions(+), 1 deletion(-)
+
+Untracked implementation/documentation artifacts:
+- 22 production Java files under backend/src/main/java/.../tradingdata
+- 8 Q-015 test Java files under backend/src/test/java/.../tradingdata
+- 1 Flyway migration (V9)
+- 1 Q-015 authorization bootstrap JSON
+- 1 A5 research note
+- 1 Q-015 Lessons Learned document
+- 34 new files / 1,907 physical lines in total before the review package
+
+No full Git diff is included. Existing untracked sibling review ZIPs are not part
+of this implementation delta.

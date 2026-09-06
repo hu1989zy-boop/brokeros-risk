@@ -1,0 +1,47 @@
+Q-015 Phase A test inventory
+
+Q-015 module tests (24 @Test methods)
+  2  TradingDataArchitectureTests
+     - no gateway/native SDK/payload parsing surface
+     - store isolation and exact approved Kafka topic
+  1  TradingDataBootstrapContractTests
+     - one SERVICE actor with only trading-data:ingest
+  6  TradingDataApplicationTests
+     - accepted opaque envelope persist/publish
+     - duplicate success/no republish
+     - visible sequence-gap marker/metric
+     - capability check/default denial order
+     - non-service and malformed metadata codes
+     - bounded backpressure and no committed gap metric
+  2  TradingDataDomainTests
+     - arbitrary-byte opacity/defensive copy
+     - metadata and 1..65535 payload boundaries
+  2  KafkaTradingDataEventPublisherTests
+     - exact topic/key/message bytes
+     - timeout and failed-send mappings
+  1  TradingDataMetricsTests
+     - named outcome/denial/gap/backpressure/duration meters
+  5  Q015MySqlTests
+     - dynamic V8-to-V9 migration and two-table shape
+     - opaque byte round trip/history index/unique/gap
+     - endpoint accepted then duplicate/no republish
+     - publisher failure transaction rollback
+     - database checks reject invalid metadata/payload
+  5  TradingDataRestContractTests
+     - exact approved route
+     - request/response seam shape
+     - Bean Validation including required numerics and payload cap
+     - Base64 decode/error mapping
+     - HTTP result-code semantics
+
+Shared migration coverage
+  1  FlywayMigrationTests.q015MigrationIsAdditiveAndCreatesOnlyApprovedTradingDataTables
+
+Q-015-specific total: 25 test methods (24 module + 1 shared V9 assertion).
+Focused final selection executed: 24 tests (19 non-DB Q-015 + all 5 shared Flyway).
+Final full repository gate executed: 342 tests; 0 failures; 0 errors; 0 skipped.
+Real-MySQL Q-015 subset inside full gate: 5/5 passed.
+
+No frontend tests: no frontend change, per cleared prompt.
+No live Kafka/embedded Kafka: sender-future contract seam used, per cleared prompt.
+No SDK/Windows/native test: explicitly Phase B and unavailable.

@@ -134,4 +134,33 @@ class FlywayMigrationTests {
                 "evidence_operation_history",
                 "evidence_access_log");
     }
+
+    @Test
+    void q015MigrationIsAdditiveAndCreatesOnlyApprovedTradingDataTables() throws IOException {
+        ClassPathResource migration = new ClassPathResource(
+                "db/migration/V9__create_trading_data_ingestion_foundation.sql");
+        String sql = migration.getContentAsString(UTF_8);
+
+        assertThat(migration.exists()).isTrue();
+        assertThat(sql)
+                .contains(
+                        "CREATE TABLE trading_data_event",
+                        "CREATE TABLE trading_data_ingestion_gap",
+                        "uq_trading_data_event_source_sequence",
+                        "ix_trading_data_event_account_occurred_at",
+                        "OCTET_LENGTH(payload) BETWEEN 1 AND 65535")
+                .doesNotContainIgnoringCase(
+                        "DROP TABLE", "TRUNCATE TABLE", "ALTER TABLE",
+                        "INSERT INTO", "DELETE FROM", "UPDATE ");
+
+        Matcher matcher = Pattern.compile(
+                        "(?im)^\\s*CREATE\\s+TABLE\\s+([a-z0-9_]+)")
+                .matcher(sql);
+        java.util.Set<String> tables = new java.util.LinkedHashSet<>();
+        while (matcher.find()) {
+            tables.add(matcher.group(1));
+        }
+        assertThat(tables).containsExactly(
+                "trading_data_event", "trading_data_ingestion_gap");
+    }
 }

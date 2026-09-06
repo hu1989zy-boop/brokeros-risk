@@ -1,0 +1,18 @@
+{
+  "provisioningSource": "q015-local-keycloak",
+  "provisioningRef": "brokeros/q015-ingestion-service",
+  "actors": [
+    {
+      "actorType": "SERVICE",
+      "principals": [
+        {
+          "issuer": "http://localhost:8180/realms/brokeros",
+          "subject": "15000000-0000-4000-8000-000000000015"
+        }
+      ],
+      "capabilities": [
+        "trading-data:ingest"
+      ]
+    }
+  ]
+}
