@@ -52,6 +52,13 @@ Reuse: the existing `com.brokeros.risk.tradingdata` module — `TradingDataInges
    `(server,seq)` → no double store), visible gap marker on a sequence jump, opaque payload
    round-trip, ordering per account, malformed → dead-letter. Use an embedded/test Kafka
    (spring-kafka-test) — no live broker or gateway needed. Keep the full backend gate green.
+   **Test material:** real, de-identified canonical event payloads (validated against a
+   live MT4 demo server) are provided at
+   `backend/src/test/resources/q015/mt4-canonical-golden.jsonl` — these are the ADR-024
+   canonical events the gateway will produce; wrap each in the Phase A envelope
+   (`envelopeVersion, platform, sourceServerId, sourceSequence, tradingAccountId=accountRef,
+   occurredAt, payload=<the canonical JSON>`) with a synthesized `sourceSequence`, and add
+   your own duplicate / sequence-gap / malformed cases for the reliability assertions.
 
 ## Hard boundaries — do not do these
 
