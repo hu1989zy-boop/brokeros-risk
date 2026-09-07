@@ -39,8 +39,9 @@ A stores/forwards it opaquely; consumers parse it.
 - **`TRADE_ACTIVITY`** — a trade/deal observation. MT4 `TradeRecord` (ADD/UPDATE/DELETE)
   and MT5 `IMTDeal` both map here.
 - **`ACCOUNT_STATE`** — balance / equity / credit / margin (parent §5.3(1)).
-- **`QUOTE`** — bid/ask tick (MT4 `UPDATE_BIDASK` / MT5 ticks) — the source for the
-  ±30 s markout window.
+- **`QUOTE`** — bid/ask tick (MT4 `UPDATE_BIDASK` / MT5 ticks), emitted **raw**; the ±30 s
+  markout window is computed **downstream by a future Flink job** (a windowed `QUOTE`↔
+  `TRADE_ACTIVITY` join), not by the gateway or this model.
 
 Each event also carries a **`lifecycleHint`** (`OPEN | MODIFY | CLOSE | EXECUTE |
 STATE`) derived neutrally (MT4 `TRANS_ADD→OPEN`, `TRANS_UPDATE→MODIFY`,
@@ -100,7 +101,8 @@ binary encoding is a possible later optimization; not V1.
 - Genuinely neutral: MT4 order-as-position and MT5 deal/position/order both map to a
   common observation stream, tagged, without leaking either (parent §14 satisfied).
 - Append-only immutable observations align with Phase A's store and defer position
-  reconstruction to a future consumer (not Q-015's job).
+  reconstruction (and markout) to a future consumer — a **Flink** job on the canonical
+  Kafka stream (not Q-015's job).
 - Time-as-UTC-with-offset and raw retention prevent the classic MT timezone bug (the
   capture proved MT4 ≠ UTC) and keep the model lossless/auditable.
 - The MT5 side of the model is designed now (from real MT5 headers) even though the MT5

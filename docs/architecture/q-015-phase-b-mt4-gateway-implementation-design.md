@@ -1,9 +1,15 @@
 # Q-015 Phase B (MT4) Implementation Design — MT4 Gateway
 
-Status: **V1**, part of the Phase B (MT4) §16.5-B bundle. The authoritative build spec
-for the **MT4 gateway**; subordinate to the parent Requirement, the Phase A addendum,
-ADR-024 (the canonical model), and the Phase B Architecture. Vendor detail stays in
-this gateway only (AGENTS.md L75).
+Status: **V2 (2026-09-07)**, part of the Phase B (MT4) §16.5-B bundle. The authoritative
+build spec for the **MT4 gateway**; subordinate to the parent Requirement, the Phase A
+addendum, ADR-024 (the canonical model), and the Phase B Architecture (V2). Vendor detail
+stays in this gateway only (AGENTS.md L75).
+
+**V2:** the gateway **produces canonical JSON directly to Kafka** (librdkafka) instead of
+HTTP-POSTing to a platform endpoint; it emits **raw `QUOTE` ticks** (markout windowing is
+a downstream Flink job, not the gateway); the mapper is written as **portable C++** (POD
+input) so its golden tests run off-Windows. Phase A ingests by **consuming Kafka** (a
+separate Java task).
 
 ## 0. Ground rules
 
@@ -12,29 +18,34 @@ this gateway only (AGENTS.md L75).
   nothing from the SDK (the API loads `mtmanapi64.dll` at runtime via `CManagerFactory`).
 - **Read/ingest only.** Never call any MT4 write/trade/admin operation. Only
   `Connect/Login/PumpingSwitchEx/TradesRequest/ServerTime/Disconnect/Release` + reads.
-- No MT4 native type crosses the HTTP boundary — only ADR-024 canonical events (JSON).
-- No secret/PII in code, logs, or the repo. Credentials + endpoint via env/secure config.
-- Do **not** modify the Java modules or Phase A. The gateway is an HTTP client of the
-  existing `POST /api/trading-data/ingest`.
+- No MT4 native type crosses the Kafka boundary — only ADR-024 canonical events (JSON).
+- No secret/PII in code, logs, or the repo. Credentials via env/secure config.
+- Do **not** modify the Java modules from the gateway. The gateway only **produces to
+  Kafka**; the Phase A Kafka-consumer ingestion (separate Java task) reads that topic.
 
 ## 1. Component structure (`gateway/mt4/`)
 
 - `main.cpp` — arg/env parse, lifecycle, reconnect loop.
 - `Mt4Session.{h,cpp}` — wraps `CManagerFactory`/`CManagerInterface`: connect, login,
   pumping subscription, snapshot pull, disconnect; owns the pump callback.
-- `CanonicalMapper.{h,cpp}` — pure functions mapping native → ADR-024 canonical events
-  (no I/O; unit-tested). `TradeRecord → TRADE_ACTIVITY`; user/account → `ACCOUNT_STATE`;
-  bid/ask → `QUOTE`.
-- `Envelope.{h,cpp}` — builds the Phase A envelope JSON (`envelopeVersion`, `platform`,
-  `sourceServerId`, `sourceSequence`, `tradingAccountId`, `occurredAt`, `payload`).
-- `PhaseAClient.{h,cpp}` — HTTPS POST to the ingestion endpoint with the Bearer token;
-  bounded retry/backoff on 429/503; a small ordered outbound buffer.
-- `SequenceSource.{h,cpp}` — monotonic per-connection counter + epoch on reconnect.
-- `Config.{h,cpp}` — env/secure-config loader (server, manager login, password, token,
-  endpoint URL, server UTC offset override).
-- `build.bat` — x64, `/MT`, `/I <mt-manager-libs>\Include`, `ws2_32.lib` + the HTTP/TLS
-  lib (WinHTTP, built into Windows — no third-party). Documents the local SDK path.
-- `tests/` — mapping unit tests against captured golden records.
+- **`CanonicalMapper.{h,cpp}` — PORTABLE C++** (compiles off-Windows): pure functions
+  mapping a **plain POD** mirror of the native fields → ADR-024 canonical events, no I/O,
+  no SDK header. `TradeRecord-POD → TRADE_ACTIVITY`; account → `ACCOUNT_STATE`; bid/ask →
+  raw `QUOTE`. This is the Type-1 correctness core; its golden tests run on Linux/CI.
+- `Envelope.{h,cpp}` — builds the envelope JSON (`envelopeVersion`, `platform`,
+  `sourceServerId`, `sourceSequence`, `tradingAccountId`, `occurredAt`, `payload`) — the
+  Kafka message value. Portable.
+- `KafkaProducer.{h,cpp}` — **librdkafka** producer: `acks=all` + idempotent producer,
+  topic `trading-data.canonical`, key = `accountRef`; unrecoverable produce failure → the
+  gateway fails visibly (no silent loss). Portable (librdkafka builds on Linux+Windows).
+- `SequenceSource.{h,cpp}` — monotonic per-connection counter + epoch on reconnect. Portable.
+- **`Mt4Session.{h,cpp}` — the ONLY Windows-native glue:** `CManagerFactory`/pumping;
+  reads real `TradeRecord`/quote/account and fills the POD for the mapper.
+- `Config.{h,cpp}` — env/secure-config loader (MT4 server + manager login/password; Kafka
+  brokers + credentials/ACL; `SOURCE_SERVER_ID`; server UTC offset override).
+- `build.bat` (Windows, x64, `/MT`, `/I <mt-manager-libs>\Include`, `ws2_32.lib` +
+  librdkafka) and a portable build (CMake) for the mapper/envelope/producer + tests.
+- `tests/` — mapper golden unit tests (portable), run off-Windows.
 
 ## 2. Session + pumping (from the real API)
 
@@ -55,7 +66,8 @@ this gateway only (AGENTS.md L75).
     record pointer, re-pull via `TradesRequest`/`TradesGetByLogin` and diff — decide at
     implementation against the real callback payload; **do not guess** the `data`
     layout — verify it live and record the finding.)
-  - `PUMP_UPDATE_BIDASK` → `QUOTE` into the rolling per-instrument tick buffer.
+  - `PUMP_UPDATE_BIDASK` → **raw `QUOTE`** events (no buffering/windowing in the gateway;
+    markout is a downstream Flink job).
   - `PUMP_UPDATE_USERS` / margin events → `ACCOUNT_STATE`.
   - `PUMP_PING` → liveness timestamp only.
 - **Reconnect:** on `PUMP_STOP_PUMPING` / connection loss, reconnect; on re-login start a
@@ -86,24 +98,26 @@ this gateway only (AGENTS.md L75).
 `ACCOUNT_STATE`: `accountRef`, `balance`, `equity`, `credit`, `margin`, `currency`,
 `occurredAt` (UTC). `QUOTE`: `symbol`, `bid`, `ask`, `occurredAt` (UTC).
 
-## 4. Envelope + delivery
+## 4. Envelope + Kafka delivery (V2)
 
 - `Envelope::build(event, seq)`: `envelopeVersion=<Phase A current>`, `platform=MT4`,
-  `sourceServerId=<server id/config>`, `sourceSequence=seq`,
-  `tradingAccountId=event.accountRef`, `occurredAt=event.occurredAt`,
-  `payload=<canonical event JSON>` (base64 per the Phase A request DTO).
-- `PhaseAClient::post(envelopeJson)`: WinHTTP HTTPS POST to
-  `POST /api/trading-data/ingest`, header `Authorization: Bearer <SERVICE token>`;
-  success → advance cursor; `429/503` → bounded exponential backoff, **do not advance**
-  (preserve per-account order); persistent failure past the buffer → exit visibly.
-- The SERVICE token is obtained per the deployment's OIDC/`SERVICE`-actor mechanism
-  (config); the gateway never embeds it.
+  `sourceServerId=<config>`, `sourceSequence=seq`, `tradingAccountId=event.accountRef`,
+  `occurredAt=event.occurredAt` (UTC), `payload=<canonical event JSON>` — serialized as
+  one Kafka message value (JSON).
+- `KafkaProducer::produce(envelopeJson, key=accountRef)`: librdkafka, topic
+  `trading-data.canonical`, **idempotent producer + `acks=all`** so Kafka guarantees
+  per-partition order + no silent duplicate/loss; a delivery-report error that cannot be
+  recovered → the gateway stops and exits **visibly** (parent §5.3(3)), never silently
+  dropping. Ordering per account is Kafka's per-partition guarantee (key = accountRef).
+- No HTTP, no Bearer token in the gateway. The producer authenticates to Kafka via
+  **SASL/mTLS** using credentials from secure config (Architecture §3, §6).
 
 ## 5. Config (env / secure store)
 
-`MT4_SERVER`, `MT4_MANAGER_LOGIN`, `MT4_MANAGER_PASSWORD`, `PHASE_A_URL`,
-`PHASE_A_TOKEN` (or a token-acquisition config), `MT4_SERVER_UTC_OFFSET` (optional
-override), `SOURCE_SERVER_ID`. All required-secret values must be absent from the repo.
+`MT4_SERVER`, `MT4_MANAGER_LOGIN`, `MT4_MANAGER_PASSWORD`, `KAFKA_BROKERS`,
+`KAFKA_TOPIC` (default `trading-data.canonical`), Kafka SASL/mTLS credentials/certs,
+`SOURCE_SERVER_ID`, `MT4_SERVER_UTC_OFFSET` (optional override). All secret values must
+be absent from the repo (env/secure store only).
 
 ## 6. Tests
 
@@ -111,30 +125,29 @@ override), `SOURCE_SERVER_ID`. All required-secret values must be absent from th
   the intake) → assert the canonical output: `volumeLots` (79→0.79, 100→1.00),
   side/reason enums, `occurredAt` = UTC after applying the measured offset,
   `lifecycleHint` per trans-type, refs, money. These are the core correctness tests.
-- **Envelope tests:** the envelope JSON matches the Phase A request DTO; payload is the
-  canonical JSON; `sourceSequence` monotonic; epoch resets on reconnect.
+- **Envelope tests:** the envelope JSON matches the Phase A envelope shape; payload is the
+  canonical JSON; `sourceSequence` monotonic; epoch resets on reconnect. Portable.
 - **Live integration (x64 Windows, demo server):** connect → pumping → N neutral events
-  POSTed to a Phase A test endpoint (or a local stub) → assert accepted; a forced
-  reconnect produces a visible epoch boundary. Report honestly what ran (server
+  **produced to Kafka** (the compose Kafka or a local broker) → assert consumed; a forced
+  reconnect produces a visible epoch boundary. Report honestly what ran (server/broker
   availability) — never claim an un-run live check.
 
 ## 7. Out of scope (MT4 bundle)
 
 - The **MT5 gateway** (later, own intake/design; reuses ADR-024).
-- Full **markout window emission** may be a second MT4 iteration if the first lands the
-  trade/account stream cleanly (buffer the ticks now; window emission called out in
-  `Verification.md` if deferred).
-- Position reconstruction / Evidence formation (parent §5.2, future). Any change to
-  Phase A or the Java modules. Any MT4 write operation.
+- **Markout** windowing = a downstream **Flink** job (parent §5.2). The gateway emits
+  **raw `QUOTE` ticks**; it does not buffer or window them.
+- Position reconstruction / Evidence formation (parent §5.2, future Flink). Any MT4
+  write operation. The gateway does not touch the Java modules (it only produces to Kafka).
 
 ## 8. Traceability
 
 | Parent/ADR item | Gateway element |
 | --- | --- |
-| Neutral model (ADR-024) | `CanonicalMapper` |
-| FR-004 reliability / envelope | `SequenceSource` + `Envelope` + `PhaseAClient` + Phase A |
-| §5.3(3) no silent loss | reconnect epoch boundary + bounded buffer + visible failure |
-| FR-005 SERVICE auth | `PhaseAClient` Bearer (Q-009 SERVICE, trading-data:ingest) |
-| §5.3(1) markout | `QUOTE` rolling buffer (window emission per §7) |
+| Neutral model (ADR-024) | `CanonicalMapper` (portable POD → canonical) |
+| FR-004 reliability / envelope | `SequenceSource` + `Envelope` + `KafkaProducer` (idempotent, acks=all) + Phase A Kafka consumer |
+| §5.3(3) no silent loss | reconnect epoch boundary + idempotent producer + visible produce-failure exit |
+| FR-005 trusted source | Kafka SASL/mTLS + topic ACLs on `trading-data.canonical` |
+| §5.3(1) markout | raw `QUOTE` on Kafka → **Flink** computes the ±30s window (downstream) |
 | FR-008 read-only | no MT4 write calls anywhere |
-| AGENTS.md L75 | vendor detail only in `gateway/mt4/` |
+| AGENTS.md L75 | vendor detail only in `gateway/mt4/` (Windows glue); canonical on Kafka |

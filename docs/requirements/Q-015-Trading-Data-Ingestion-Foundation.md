@@ -437,11 +437,23 @@ prompt (`prompts/Q-015-Phase-B-MT4-Implementation-Prompt.md`) is **CLEARED FOR U
 Build shape: a new read-only C++ **`gateway/mt4/`** component (on x64 Windows, hosting
 `mtmanapi64.dll`) that maps native `TradeRecord`/quotes/account into ADR-024 neutral
 canonical events (time→UTC with the measured server offset, volume→lots, side/reason
-neutral enums), **synthesizes the `sourceSequence`** MT4 does not provide, and POSTs
-them (as the Phase A payload-opaque envelope) to the existing
-`POST /api/trading-data/ingest` as the Q-015 `SERVICE` actor. Vendor detail stays in the
-gateway only; no MT4 type crosses the boundary; no Java/Phase A change; read-only; the
-licensed SDK is never committed (AGENTS.md).
+neutral enums), **synthesizes the `sourceSequence`** MT4 does not provide, and delivers
+them (as the Phase A payload-opaque envelope). Vendor detail stays in the gateway only;
+no MT4 type crosses the boundary; read-only; the licensed SDK is never committed (AGENTS.md).
+
+**Transport V2 (Product Owner, 2026-09-07):** the gateway **produces canonical JSON
+directly to Kafka** (`trading-data.canonical`, key=accountRef, idempotent producer) rather
+than HTTP-POSTing; every downstream consumes that neutral stream (the store, local macOS
+dev, and a **future Flink** analytics/risk layer). Consequently **Phase A's ingestion is
+revised from the HTTP endpoint to a Kafka consumer → the same V9 partitioned store**
+(reliability rules + schema unchanged; only the trigger moves; the trust boundary becomes
+Kafka SASL/mTLS + ACLs rather than the Q-009 `SERVICE`-actor HTTP check). **Markout** (±30s)
++ position reconstruction move **downstream to Flink** — the gateway emits **raw QUOTE
+ticks**, not a windowed buffer (ADR-024 + Architecture V2). **Work split** (Codex has no
+x64 Windows): the C++ gateway (SDK + portable canonical mapper + librdkafka producer) is
+built on the Windows host hand-in-hand; the **portable Java Kafka-consumer ingestion**
+(prompt `prompts/Q-015-Phase-B-MT4-Implementation-Prompt.md`) is the Codex-buildable,
+independently-reviewed half.
 
 **Still parked (Phase B, MT5):** the **MT5 gateway** awaits its own live intake (capture
 against a demo MT5 server) and Implementation Design; ADR-024 already designs the MT5
