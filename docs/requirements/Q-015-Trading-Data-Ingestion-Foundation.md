@@ -421,3 +421,29 @@ on the SDK + x64 Windows). The **addendum's** gate section is authoritative for
 partitioned storage skeleton, built against a provisional payload-opaque envelope
 contract). Nothing in Phase A invents a Manager API interface or commits the
 canonical field model (AGENTS.md).
+
+**Phase B — UNBLOCKED (2026-09-07, Product Owner): the external prerequisite is
+satisfied.** The real MT4 + MT5 Manager API SDKs are in hand (local-only under the
+gitignored `mt-manager-libs/`), and connectivity + a live MT4 sample capture were
+proven on an x64 Windows host (demo MT4 server, Manager login, pumping). Per Decision
+Authority §16.5-B, the Phase B Architecture → canonical-model ADR → Implementation
+Design chain is now authored.
+
+Q-015 **Phase B (MT4) bundle** — Architecture V1 / ADR-024 (canonical model, Accepted)
+/ MT4-gateway Implementation Design V1: **ACCEPTED (bundle) — 2026-09-07 — Product
+Owner** at the implementation-authorization gate (§16.5-B). **Implementation AUTHORIZED
+— 2026-09-07** for the **neutral model (MT4+MT5) + the MT4 gateway first**; the Codex
+prompt (`prompts/Q-015-Phase-B-MT4-Implementation-Prompt.md`) is **CLEARED FOR USE**.
+Build shape: a new read-only C++ **`gateway/mt4/`** component (on x64 Windows, hosting
+`mtmanapi64.dll`) that maps native `TradeRecord`/quotes/account into ADR-024 neutral
+canonical events (time→UTC with the measured server offset, volume→lots, side/reason
+neutral enums), **synthesizes the `sourceSequence`** MT4 does not provide, and POSTs
+them (as the Phase A payload-opaque envelope) to the existing
+`POST /api/trading-data/ingest` as the Q-015 `SERVICE` actor. Vendor detail stays in the
+gateway only; no MT4 type crosses the boundary; no Java/Phase A change; read-only; the
+licensed SDK is never committed (AGENTS.md).
+
+**Still parked (Phase B, MT5):** the **MT5 gateway** awaits its own live intake (capture
+against a demo MT5 server) and Implementation Design; ADR-024 already designs the MT5
+side of the neutral model, so no model re-cut is expected. Markout window emission may
+be a called-out second MT4 iteration.
