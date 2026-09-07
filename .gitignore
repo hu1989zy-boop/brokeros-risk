@@ -31,3 +31,7 @@ replay_pid*
 application-local.yml
 application-local.yaml
 application-local.properties
+
+# Licensed MT4/MT5 Manager API binaries + any captured broker/server data.
+# NEVER commit: MetaQuotes vendor license + broker infrastructure/PII exposure.
+mt-manager-libs/
