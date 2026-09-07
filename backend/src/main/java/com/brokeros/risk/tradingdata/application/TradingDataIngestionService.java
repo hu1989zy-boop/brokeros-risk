@@ -54,17 +54,7 @@ public final class TradingDataIngestionService {
             requireAuthorized(actorContext);
             requireService(actorContext);
             TradingDataEnvelope envelope = envelope(command);
-            TradingDataIngestionResult result = transactionTemplate.execute(
-                    status -> ingestTransaction(envelope));
-            if (result == null) {
-                throw new TradingDataAuthorityUnavailableException(
-                        new IllegalStateException("ingestion transaction returned no result"));
-            }
-            if (result.gapDetected()) {
-                metrics.recordGapDetected();
-            }
-            metrics.recordOperation(result.outcome());
-            return result;
+            return persist(envelope, true);
         } catch (TradingDataBackpressureException exception) {
             metrics.recordBackpressure();
             throw exception;
@@ -73,7 +63,33 @@ public final class TradingDataIngestionService {
         }
     }
 
-    private TradingDataIngestionResult ingestTransaction(TradingDataEnvelope envelope) {
+    /** Kafka ACLs authenticate this entry; only the Kafka boundary calls it. */
+    public TradingDataIngestionResult ingestFromKafka(TradingDataEnvelope envelope) {
+        long started = System.nanoTime();
+        try {
+            // The event is already on Kafka. Never publish it back to the input topic.
+            return persist(Objects.requireNonNull(envelope), false);
+        } finally {
+            metrics.recordDuration(Duration.ofNanos(System.nanoTime() - started));
+        }
+    }
+
+    private TradingDataIngestionResult persist(TradingDataEnvelope envelope, boolean publish) {
+        TradingDataIngestionResult result = transactionTemplate.execute(
+                status -> ingestTransaction(envelope, publish));
+        if (result == null) {
+            throw new TradingDataAuthorityUnavailableException(
+                    new IllegalStateException("ingestion transaction returned no result"));
+        }
+        if (result.gapDetected()) {
+            metrics.recordGapDetected();
+        }
+        metrics.recordOperation(result.outcome());
+        return result;
+    }
+
+    private TradingDataIngestionResult ingestTransaction(
+            TradingDataEnvelope envelope, boolean publish) {
         OptionalLong previousSequence =
                 eventStore.lastContiguousSequence(envelope.sourceServerId());
         Instant receivedAt = clock.instant();
@@ -93,7 +109,9 @@ public final class TradingDataIngestionService {
                     envelope.sourceSequence() - 1,
                     receivedAt);
         }
-        eventPublisher.publish(envelope);
+        if (publish) {
+            eventPublisher.publish(envelope);
+        }
         return new TradingDataIngestionResult(
                 TradingDataIngestionOutcome.ACCEPTED, gapDetected);
     }

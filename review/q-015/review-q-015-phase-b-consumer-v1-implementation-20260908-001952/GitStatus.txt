@@ -1,0 +1,34 @@
+Baseline/current HEAD: ab82faa27d8f2d4fd79f086e5df80791e26350ab
+Branch: main
+
+Working tree snapshot (new package shown as a directory; archive created afterward):
+ M backend/pom.xml
+ M backend/src/main/java/com/brokeros/risk/tradingdata/application/TradingDataIngestionService.java
+ M backend/src/main/java/com/brokeros/risk/tradingdata/interfaces/rest/TradingDataIngestionController.java
+ M backend/src/test/java/com/brokeros/risk/tradingdata/TradingDataArchitectureTests.java
+ M docs/configuration/README.md
+ M docs/skills/development-standards.md
+?? backend/src/main/java/com/brokeros/risk/tradingdata/domain/CanonicalTradingDataEvent.java
+?? backend/src/main/java/com/brokeros/risk/tradingdata/infrastructure/configuration/TradingDataKafkaConfiguration.java
+?? backend/src/main/java/com/brokeros/risk/tradingdata/infrastructure/messaging/CanonicalTradingDataDeadLetterPublisher.java
+?? backend/src/main/java/com/brokeros/risk/tradingdata/infrastructure/messaging/CanonicalTradingDataKafkaListener.java
+?? backend/src/main/java/com/brokeros/risk/tradingdata/infrastructure/messaging/CanonicalTradingDataMessageReader.java
+?? backend/src/main/java/com/brokeros/risk/tradingdata/infrastructure/messaging/InvalidCanonicalMessageException.java
+?? backend/src/test/java/com/brokeros/risk/tradingdata/infrastructure/messaging/CanonicalFixtureSupport.java
+?? backend/src/test/java/com/brokeros/risk/tradingdata/infrastructure/messaging/CanonicalTradingDataMessageReaderTests.java
+?? backend/src/test/java/com/brokeros/risk/tradingdata/infrastructure/messaging/Q015CanonicalKafkaMySqlTests.java
+?? backend/src/test/java/com/brokeros/risk/tradingdata/infrastructure/messaging/TradingDataKafkaConfigurationTests.java
+?? backend/src/test/resources/application.properties
+?? docs/lessons/2026-09-08-q-015-phase-b-consumer-implementation.md
+?? docs/q-015-phase-b-consumer-operations.md
+?? review/q-015/review-q-015-phase-a-v1-implementation-20260906-013112.zip
+?? review/q-015/review-q-015-phase-b-consumer-v1-implementation-20260908-001952/
+?? review/q-016/review-q-016-v5-react-implementation-20260902-205304.zip
+?? review/q-017/review-q-017-v1-implementation-20260903-020721.zip
+?? review/q-018/review-q-018-v1-implementation-20260903-164146.zip
+?? review/q-019/review-q-019-v1-implementation-20260903-204945.zip
+?? review/q-020/review-q-020-v1-implementation-20260905-223756.zip
+
+Staged diff (must be empty):
+
+Pre-existing untracked items are the six non-consumer review ZIPs; untouched.

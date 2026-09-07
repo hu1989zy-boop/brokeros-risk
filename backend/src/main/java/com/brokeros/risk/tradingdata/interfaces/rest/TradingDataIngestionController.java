@@ -7,6 +7,7 @@ import com.brokeros.risk.security.application.port.ActorContextProvider;
 import com.brokeros.risk.tradingdata.application.TradingDataIngestionService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/trading-data")
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@ConditionalOnProperty(name = "brokeros.risk.tradingdata.http-test-aid-enabled", havingValue = "true")
 public class TradingDataIngestionController {
 
     private final ActorContextProvider actorContextProvider;
@@ -29,7 +31,8 @@ public class TradingDataIngestionController {
     }
 
     @PostMapping("/ingest")
-    @Operation(summary = "Ingest one opaque trading-data envelope")
+    @Operation(summary = "Test aid: ingest one legacy opaque envelope", deprecated = true,
+            description = "Disabled by default. Production canonical ingestion uses Kafka.")
     public ResponseEntity<ApiResponse<TradingDataIngestionResponse>> ingest(
             @Valid @RequestBody IngestTradingDataRequest request) {
         TradingDataIngestionResponse response = TradingDataIngestionResponse.from(

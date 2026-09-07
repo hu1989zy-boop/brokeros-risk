@@ -117,6 +117,16 @@ com.brokeros.risk.<module>
 - Event: `eventId`, `eventType`, `eventVersion`, `occurredAt`, `source`,
   `payload`; assess correlation and trace identifiers.
 - Never publish an entity directly or create a topic without approved design.
+- When an approved ingestion trigger moves from producer to consumer, keep the
+  local persistence/idempotency operation reusable but never republish a consumed
+  record to its input topic. Acknowledge only after the durable local transaction
+  (or confirmed quarantine publication) completes. Prove offset retention and
+  restart replay after database and quarantine failures against a real broker.
+- If storage must preserve opaque JSON, extract original payload bytes rather
+  than reserializing a typed validation projection. Assert byte equality with
+  whitespace, Unicode, long decimal lexemes and unknown extensions. Disable
+  permissive scalar coercions at the canonical boundary; never infer missing
+  financial currency from an otherwise useful recorded fixture.
 - Redis key: `brokeros:risk:<domain>:<type>:<id>`.
 - Declare TTL, invalidation, and durable source of truth; Redis is not the sole
   durable store.

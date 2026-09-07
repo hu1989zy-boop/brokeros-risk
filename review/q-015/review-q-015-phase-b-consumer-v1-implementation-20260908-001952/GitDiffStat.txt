@@ -1,0 +1,26 @@
+Tracked working-tree diff statistics (untracked additions listed separately below):
+
+ backend/pom.xml                                    |  5 +++
+ .../application/TradingDataIngestionService.java   | 44 +++++++++++++++-------
+ .../rest/TradingDataIngestionController.java       |  5 ++-
+ .../tradingdata/TradingDataArchitectureTests.java  | 26 ++++++++++++-
+ docs/configuration/README.md                       | 16 +++++++-
+ docs/skills/development-standards.md               | 10 +++++
+ 6 files changed, 89 insertions(+), 17 deletions(-)
+
+Untracked task source/document additions (line counts):
+87 lines  backend/src/main/java/com/brokeros/risk/tradingdata/domain/CanonicalTradingDataEvent.java
+79 lines  backend/src/main/java/com/brokeros/risk/tradingdata/infrastructure/configuration/TradingDataKafkaConfiguration.java
+44 lines  backend/src/main/java/com/brokeros/risk/tradingdata/infrastructure/messaging/CanonicalTradingDataDeadLetterPublisher.java
+56 lines  backend/src/main/java/com/brokeros/risk/tradingdata/infrastructure/messaging/CanonicalTradingDataKafkaListener.java
+141 lines  backend/src/main/java/com/brokeros/risk/tradingdata/infrastructure/messaging/CanonicalTradingDataMessageReader.java
+11 lines  backend/src/main/java/com/brokeros/risk/tradingdata/infrastructure/messaging/InvalidCanonicalMessageException.java
+46 lines  backend/src/test/java/com/brokeros/risk/tradingdata/infrastructure/messaging/CanonicalFixtureSupport.java
+137 lines  backend/src/test/java/com/brokeros/risk/tradingdata/infrastructure/messaging/CanonicalTradingDataMessageReaderTests.java
+285 lines  backend/src/test/java/com/brokeros/risk/tradingdata/infrastructure/messaging/Q015CanonicalKafkaMySqlTests.java
+62 lines  backend/src/test/java/com/brokeros/risk/tradingdata/infrastructure/messaging/TradingDataKafkaConfigurationTests.java
+3 lines  backend/src/test/resources/application.properties
+71 lines  docs/lessons/2026-09-08-q-015-phase-b-consumer-implementation.md
+153 lines  docs/q-015-phase-b-consumer-operations.md
+
+This new review package is untracked. No full diff is included.

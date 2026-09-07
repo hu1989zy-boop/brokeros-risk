@@ -1,0 +1,89 @@
+Apache Maven 3.9.9 (8e8579a9e76f7d015ee5ec7bfcdc97d260186937)
+Maven home: /usr/share/maven
+Java version: 21.0.7, vendor: Eclipse Adoptium, runtime: /opt/java/openjdk
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "7.0.12-linuxkit", arch: "aarch64", family: "unix"
+
+[INFO] Compiling 427 source files with javac [debug parameters release 21] to target/classes
+[INFO] Compiling 78 source files with javac [debug parameters release 21] to target/test-classes
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.113 s -- in com.brokeros.risk.evidence.application.EvidenceApplicationTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.065 s -- in com.brokeros.risk.evidence.EvidenceArchitectureTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s -- in com.brokeros.risk.evidence.infrastructure.observability.EvidenceMetricsTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.164 s -- in com.brokeros.risk.evidence.infrastructure.persistence.Q011MySqlMigrationTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.214 s -- in com.brokeros.risk.evidence.infrastructure.persistence.Q011MySqlPersistenceTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.607 s -- in com.brokeros.risk.evidence.infrastructure.persistence.Q011SecurityMySqlIntegrationTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.brokeros.risk.evidence.domain.EvidenceDomainTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.807 s -- in com.brokeros.risk.evidence.interfaces.rest.Q020EvidenceReferenceListMySqlTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.brokeros.risk.evidence.interfaces.rest.EvidenceRestContractTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.314 s -- in com.brokeros.risk.config.ConfigurationContractIntegrationTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in com.brokeros.risk.security.SecurityArchitectureTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.brokeros.risk.security.application.SecurityApplicationTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.038 s -- in com.brokeros.risk.security.infrastructure.configuration.SecurityConfigurationTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.701 s -- in com.brokeros.risk.security.infrastructure.persistence.Q009MySqlIntegrationTests
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.784 s -- in com.brokeros.risk.security.infrastructure.authentication.SecurityBoundaryIntegrationTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.brokeros.risk.security.domain.SecurityDomainTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.brokeros.risk.security.interfaces.bootstrap.SecurityBootstrapCommandTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.607 s -- in com.brokeros.risk.observability.RequestCorrelationIntegrationTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.229 s -- in com.brokeros.risk.riskcase.application.RiskCaseApplicationTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.032 s -- in com.brokeros.risk.riskcase.application.Q016RiskCaseListApplicationTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.brokeros.risk.riskcase.infrastructure.observability.RiskCaseMetricsTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.022 s -- in com.brokeros.risk.riskcase.infrastructure.persistence.Q016RiskCaseListMySqlTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.222 s -- in com.brokeros.risk.riskcase.infrastructure.persistence.Q008MySqlMigrationTests
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.829 s -- in com.brokeros.risk.riskcase.infrastructure.persistence.Q008MySqlPersistenceTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.131 s -- in com.brokeros.risk.riskcase.infrastructure.reference.RiskCaseReferenceAdapterTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.027 s -- in com.brokeros.risk.riskcase.RiskCaseArchitectureTests
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in com.brokeros.risk.riskcase.domain.RiskCaseDomainTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.022 s -- in com.brokeros.risk.riskcase.interfaces.rest.Q019RiskCaseAssociationsMySqlTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.brokeros.risk.riskcase.interfaces.rest.RiskCaseRestContractTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.035 s -- in com.brokeros.risk.action.ActionArchitectureTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.brokeros.risk.action.application.ActionApplicationTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.brokeros.risk.action.infrastructure.observability.ActionMetricsTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.966 s -- in com.brokeros.risk.action.infrastructure.persistence.Q013SecurityMySqlIntegrationTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.257 s -- in com.brokeros.risk.action.infrastructure.persistence.Q013MySqlPersistenceTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.620 s -- in com.brokeros.risk.action.infrastructure.persistence.Q013MySqlMigrationTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.brokeros.risk.action.domain.ActionDomainTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.brokeros.risk.action.interfaces.rest.ActionRestContractTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.649 s -- in com.brokeros.risk.action.interfaces.rest.Q020ActionReferenceListMySqlTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in com.brokeros.risk.tradingaccount.TradingAccountArchitectureTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.brokeros.risk.tradingaccount.application.TradingAccountApplicationTests
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.844 s -- in com.brokeros.risk.tradingaccount.infrastructure.persistence.Q010MySqlIntegrationTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.brokeros.risk.tradingaccount.domain.TradingAccountDomainTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.905 s -- in com.brokeros.risk.tradingaccount.interfaces.bootstrap.Q010BootstrapMySqlIntegrationTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.brokeros.risk.tradingaccount.interfaces.bootstrap.TradingAccountAuthorityBootstrapCommandTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.592 s -- in com.brokeros.risk.BrokerOsRiskApplicationTests
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in com.brokeros.risk.decision.application.DecisionApplicationTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.brokeros.risk.decision.infrastructure.observability.DecisionMetricsTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.378 s -- in com.brokeros.risk.decision.infrastructure.persistence.Q012SecurityMySqlIntegrationTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.291 s -- in com.brokeros.risk.decision.infrastructure.persistence.Q012MySqlMigrationTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.473 s -- in com.brokeros.risk.decision.infrastructure.persistence.Q012MySqlPersistenceTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.brokeros.risk.decision.domain.DecisionDomainTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in com.brokeros.risk.decision.DecisionArchitectureTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.659 s -- in com.brokeros.risk.decision.interfaces.rest.Q020DecisionReferenceListMySqlTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.brokeros.risk.decision.interfaces.rest.DecisionRestContractTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.032 s -- in com.brokeros.risk.actionoutcome.ActionOutcomeArchitectureTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in com.brokeros.risk.actionoutcome.application.ActionOutcomeApplicationTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s -- in com.brokeros.risk.actionoutcome.infrastructure.observability.ActionOutcomeMetricsTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.042 s -- in com.brokeros.risk.actionoutcome.infrastructure.persistence.Q014SecurityMySqlIntegrationTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.171 s -- in com.brokeros.risk.actionoutcome.infrastructure.persistence.Q014MySqlMigrationTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.686 s -- in com.brokeros.risk.actionoutcome.infrastructure.persistence.Q014MySqlPersistenceTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.brokeros.risk.actionoutcome.domain.ActionOutcomeDomainTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.brokeros.risk.actionoutcome.interfaces.rest.ActionOutcomeRestContractTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.744 s -- in com.brokeros.risk.actionoutcome.interfaces.rest.Q020ActionOutcomeReferenceListMySqlTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.brokeros.risk.FlywayMigrationTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.070 s -- in com.brokeros.risk.exception.GlobalExceptionHandlerTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.026 s -- in com.brokeros.risk.tradingdata.TradingDataArchitectureTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.brokeros.risk.tradingdata.TradingDataBootstrapContractTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.brokeros.risk.tradingdata.application.TradingDataApplicationTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.brokeros.risk.tradingdata.infrastructure.observability.TradingDataMetricsTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.781 s -- in com.brokeros.risk.tradingdata.infrastructure.persistence.Q015MySqlTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.163 s -- in com.brokeros.risk.tradingdata.infrastructure.messaging.KafkaTradingDataEventPublisherTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.020 s -- in com.brokeros.risk.tradingdata.infrastructure.messaging.TradingDataKafkaConfigurationTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.047 s -- in com.brokeros.risk.tradingdata.infrastructure.messaging.CanonicalTradingDataMessageReaderTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 21.97 s -- in com.brokeros.risk.tradingdata.infrastructure.messaging.Q015CanonicalKafkaMySqlTests
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.brokeros.risk.tradingdata.domain.TradingDataDomainTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.brokeros.risk.tradingdata.interfaces.rest.TradingDataRestContractTests
+[INFO] Tests run: 356, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Building jar: /workspace/backend/target/brokeros-risk-backend-0.1.0-SNAPSHOT.jar
+[INFO] BUILD SUCCESS
+[INFO] Total time:  01:34 min
+[INFO] Finished at: 2026-09-07T16:20:59Z

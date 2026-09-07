@@ -1,0 +1,119 @@
+Final Maven package test inventory (XML properties/secret-bearing environment excluded).
+
+com.brokeros.risk.BrokerOsRiskApplicationTests: tests=7, failures=0, errors=0, skipped=0
+com.brokeros.risk.FlywayMigrationTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.action.ActionArchitectureTests: tests=4, failures=0, errors=0, skipped=0
+com.brokeros.risk.action.application.ActionApplicationTests: tests=8, failures=0, errors=0, skipped=0
+com.brokeros.risk.action.domain.ActionDomainTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.action.infrastructure.observability.ActionMetricsTests: tests=1, failures=0, errors=0, skipped=0
+com.brokeros.risk.action.infrastructure.persistence.Q013MySqlMigrationTests: tests=6, failures=0, errors=0, skipped=0
+com.brokeros.risk.action.infrastructure.persistence.Q013MySqlPersistenceTests: tests=6, failures=0, errors=0, skipped=0
+com.brokeros.risk.action.infrastructure.persistence.Q013SecurityMySqlIntegrationTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.action.interfaces.rest.ActionRestContractTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.action.interfaces.rest.Q020ActionReferenceListMySqlTests: tests=1, failures=0, errors=0, skipped=0
+com.brokeros.risk.actionoutcome.ActionOutcomeArchitectureTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.actionoutcome.application.ActionOutcomeApplicationTests: tests=8, failures=0, errors=0, skipped=0
+com.brokeros.risk.actionoutcome.domain.ActionOutcomeDomainTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.actionoutcome.infrastructure.observability.ActionOutcomeMetricsTests: tests=1, failures=0, errors=0, skipped=0
+com.brokeros.risk.actionoutcome.infrastructure.persistence.Q014MySqlMigrationTests: tests=7, failures=0, errors=0, skipped=0
+com.brokeros.risk.actionoutcome.infrastructure.persistence.Q014MySqlPersistenceTests: tests=7, failures=0, errors=0, skipped=0
+com.brokeros.risk.actionoutcome.infrastructure.persistence.Q014SecurityMySqlIntegrationTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.actionoutcome.interfaces.rest.ActionOutcomeRestContractTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.actionoutcome.interfaces.rest.Q020ActionOutcomeReferenceListMySqlTests: tests=1, failures=0, errors=0, skipped=0
+com.brokeros.risk.config.ConfigurationContractIntegrationTests: tests=7, failures=0, errors=0, skipped=0
+com.brokeros.risk.decision.DecisionArchitectureTests: tests=3, failures=0, errors=0, skipped=0
+com.brokeros.risk.decision.application.DecisionApplicationTests: tests=9, failures=0, errors=0, skipped=0
+com.brokeros.risk.decision.domain.DecisionDomainTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.decision.infrastructure.observability.DecisionMetricsTests: tests=1, failures=0, errors=0, skipped=0
+com.brokeros.risk.decision.infrastructure.persistence.Q012MySqlMigrationTests: tests=7, failures=0, errors=0, skipped=0
+com.brokeros.risk.decision.infrastructure.persistence.Q012MySqlPersistenceTests: tests=6, failures=0, errors=0, skipped=0
+com.brokeros.risk.decision.infrastructure.persistence.Q012SecurityMySqlIntegrationTests: tests=6, failures=0, errors=0, skipped=0
+com.brokeros.risk.decision.interfaces.rest.DecisionRestContractTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.decision.interfaces.rest.Q020DecisionReferenceListMySqlTests: tests=1, failures=0, errors=0, skipped=0
+com.brokeros.risk.evidence.EvidenceArchitectureTests: tests=3, failures=0, errors=0, skipped=0
+com.brokeros.risk.evidence.application.EvidenceApplicationTests: tests=8, failures=0, errors=0, skipped=0
+com.brokeros.risk.evidence.domain.EvidenceDomainTests: tests=4, failures=0, errors=0, skipped=0
+com.brokeros.risk.evidence.infrastructure.observability.EvidenceMetricsTests: tests=1, failures=0, errors=0, skipped=0
+com.brokeros.risk.evidence.infrastructure.persistence.Q011MySqlMigrationTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.evidence.infrastructure.persistence.Q011MySqlPersistenceTests: tests=8, failures=0, errors=0, skipped=0
+com.brokeros.risk.evidence.infrastructure.persistence.Q011SecurityMySqlIntegrationTests: tests=4, failures=0, errors=0, skipped=0
+com.brokeros.risk.evidence.interfaces.rest.EvidenceRestContractTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.evidence.interfaces.rest.Q020EvidenceReferenceListMySqlTests: tests=1, failures=0, errors=0, skipped=0
+com.brokeros.risk.exception.GlobalExceptionHandlerTests: tests=4, failures=0, errors=0, skipped=0
+com.brokeros.risk.observability.RequestCorrelationIntegrationTests: tests=7, failures=0, errors=0, skipped=0
+com.brokeros.risk.riskcase.RiskCaseArchitectureTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.riskcase.application.Q016RiskCaseListApplicationTests: tests=3, failures=0, errors=0, skipped=0
+com.brokeros.risk.riskcase.application.RiskCaseApplicationTests: tests=7, failures=0, errors=0, skipped=0
+com.brokeros.risk.riskcase.domain.RiskCaseDomainTests: tests=15, failures=0, errors=0, skipped=0
+com.brokeros.risk.riskcase.infrastructure.observability.RiskCaseMetricsTests: tests=1, failures=0, errors=0, skipped=0
+com.brokeros.risk.riskcase.infrastructure.persistence.Q008MySqlMigrationTests: tests=7, failures=0, errors=0, skipped=0
+com.brokeros.risk.riskcase.infrastructure.persistence.Q008MySqlPersistenceTests: tests=12, failures=0, errors=0, skipped=0
+com.brokeros.risk.riskcase.infrastructure.persistence.Q016RiskCaseListMySqlTests: tests=2, failures=0, errors=0, skipped=0
+com.brokeros.risk.riskcase.infrastructure.reference.RiskCaseReferenceAdapterTests: tests=3, failures=0, errors=0, skipped=0
+com.brokeros.risk.riskcase.interfaces.rest.Q019RiskCaseAssociationsMySqlTests: tests=4, failures=0, errors=0, skipped=0
+com.brokeros.risk.riskcase.interfaces.rest.RiskCaseRestContractTests: tests=4, failures=0, errors=0, skipped=0
+com.brokeros.risk.security.SecurityArchitectureTests: tests=2, failures=0, errors=0, skipped=0
+com.brokeros.risk.security.application.SecurityApplicationTests: tests=6, failures=0, errors=0, skipped=0
+com.brokeros.risk.security.domain.SecurityDomainTests: tests=7, failures=0, errors=0, skipped=0
+com.brokeros.risk.security.infrastructure.authentication.SecurityBoundaryIntegrationTests: tests=10, failures=0, errors=0, skipped=0
+com.brokeros.risk.security.infrastructure.configuration.SecurityConfigurationTests: tests=3, failures=0, errors=0, skipped=0
+com.brokeros.risk.security.infrastructure.persistence.Q009MySqlIntegrationTests: tests=1, failures=0, errors=0, skipped=0
+com.brokeros.risk.security.interfaces.bootstrap.SecurityBootstrapCommandTests: tests=2, failures=0, errors=0, skipped=0
+com.brokeros.risk.tradingaccount.TradingAccountArchitectureTests: tests=2, failures=0, errors=0, skipped=0
+com.brokeros.risk.tradingaccount.application.TradingAccountApplicationTests: tests=5, failures=0, errors=0, skipped=0
+com.brokeros.risk.tradingaccount.domain.TradingAccountDomainTests: tests=6, failures=0, errors=0, skipped=0
+com.brokeros.risk.tradingaccount.infrastructure.persistence.Q010MySqlIntegrationTests: tests=10, failures=0, errors=0, skipped=0
+com.brokeros.risk.tradingaccount.interfaces.bootstrap.Q010BootstrapMySqlIntegrationTests: tests=1, failures=0, errors=0, skipped=0
+com.brokeros.risk.tradingaccount.interfaces.bootstrap.TradingAccountAuthorityBootstrapCommandTests: tests=3, failures=0, errors=0, skipped=0
+com.brokeros.risk.tradingdata.TradingDataArchitectureTests: tests=4, failures=0, errors=0, skipped=0
+  legacyHttpTestAidIsAbsentByDefault
+  storeIsolatedToNewTablesAndPublisherUsesApprovedTopic
+  moduleHasNoGatewayNativeSdkOrUnsafeLoggingSurface
+  canonicalParsingDoesNotLeakIntoPersistenceOrReliability
+com.brokeros.risk.tradingdata.TradingDataBootstrapContractTests: tests=1, failures=0, errors=0, skipped=0
+  ingestionBootstrapProvisionsOneServiceWithOnlyIngestCapability
+com.brokeros.risk.tradingdata.application.TradingDataApplicationTests: tests=6, failures=0, errors=0, skipped=0
+  duplicateIsSuccessfulNoOpAndIsNotRepublished
+  backpressureIsSurfacedAndCounted
+  acceptedEnvelopePersistsThenPublishesWithOpaqueBytesUntouched
+  nonServiceActorAndMalformedMetadataUseApprovedCodes
+  capabilityIsCheckedBeforeServiceActorType
+  sequenceJumpCreatesVisibleGapBeforePublishing
+com.brokeros.risk.tradingdata.domain.TradingDataDomainTests: tests=2, failures=0, errors=0, skipped=0
+  envelopeRejectsInvalidMetadataAndPayloadSizeWithoutInspectingPayload
+  envelopePreservesArbitraryOpaqueBytesAndDefendsItsBoundary
+com.brokeros.risk.tradingdata.infrastructure.messaging.CanonicalTradingDataMessageReaderTests: tests=7, failures=0, errors=0, skipped=0
+  decimalLexemesUnicodeWhitespaceAndUnknownExtensionsAreNeverRewritten
+  everyRecordedGoldenPayloadRoundTripsByteForByte
+  neutralSupersetHasOptionalRefsAndRequiresRawCodesForOther
+  enforcesPayloadAndParsingBoundsAndSafeDiagnostics
+  rejectsInvalidJsonTombstonesVersionsDuplicateKeysCoercionAndInvalidEnums
+  optionalRefsAndBothNeutralNonTradeKindsAcceptWithoutInventingRefs
+  rejectsMismatchedKeyProvenanceAccountAndTime
+com.brokeros.risk.tradingdata.infrastructure.messaging.KafkaTradingDataEventPublisherTests: tests=2, failures=0, errors=0, skipped=0
+  boundedSendTimeoutBecomesThrottleResponse
+  publishesWithAccountKeyAndPreservesOpaquePayloadEncoding
+com.brokeros.risk.tradingdata.infrastructure.messaging.Q015CanonicalKafkaMySqlTests: tests=4, failures=0, errors=0, skipped=0
+  recordedCanonicalEventsReachStoreExactlyAndDuplicatesGapsAndAccountOrderAreVisible
+  databaseFailureRollsBackEventAndGapStopsWithoutCommittingAndReplaysAfterRestart
+  malformedRecordsAreQuarantinedWithOriginalBytesAndSafeProvenanceThenConsumptionContinues
+  failedDeadLetterPublishCannotAdvanceOffsetAndRestartReplaysOriginal
+com.brokeros.risk.tradingdata.infrastructure.messaging.TradingDataKafkaConfigurationTests: tests=1, failures=0, errors=0, skipped=0
+  nativeSecuritySettingsSurviveWhileSafeDeliverySettingsCannotBeWeakened
+com.brokeros.risk.tradingdata.infrastructure.observability.TradingDataMetricsTests: tests=1, failures=0, errors=0, skipped=0
+  metricsUseOnlyBoundedMetadataTags
+com.brokeros.risk.tradingdata.infrastructure.persistence.Q015MySqlTests: tests=5, failures=0, errors=0, skipped=0
+  storeRoundTripsOpaqueBytesSupportsHistoryAndEnforcesIdempotencyAndGap
+  migrationUpgradesV8ByDynamicCountAndCreatesOnlyTwoEmptyTables
+  databaseChecksRejectInvalidMetadataAndEmptyPayload
+  endpointAcceptsThenDeduplicatesAndPublishesOnlyOnce
+  publisherFailureRollsBackNewEventAndGapMarker
+com.brokeros.risk.tradingdata.interfaces.rest.TradingDataRestContractTests: tests=5, failures=0, errors=0, skipped=0
+  base64IsDecodedToOpaqueBytesAndMalformedEncodingUsesModuleCode
+  requestAndResponseExposeOnlyVersionedOpaqueEnvelopeContract
+  resultCodesExposeApprovedHttpSemantics
+  beanValidationCoversEnvelopeMetadata
+  controllerExposesOnlyTheApprovedIngestionRoute
+
+Total: {"tests":356,"failures":0,"errors":0,"skipped":0}
+Q-015: {"tests":38,"failures":0,"errors":0,"skipped":0}

@@ -1,0 +1,9 @@
+1	initial schema	SQL	V1__initial_schema.sql	579555062	2026-09-07 16:20:53	1
+2	create security actor foundation	SQL	V2__create_security_actor_foundation.sql	-1969581872	2026-09-07 16:20:53	1
+3	create trading account reference authority	SQL	V3__create_trading_account_reference_authority.sql	-742232764	2026-09-07 16:20:53	1
+4	create evidence provenance foundation	SQL	V4__create_evidence_provenance_foundation.sql	2061366007	2026-09-07 16:20:53	1
+5	create decision provenance foundation	SQL	V5__create_decision_provenance_foundation.sql	-865357324	2026-09-07 16:20:53	1
+6	create action provenance foundation	SQL	V6__create_action_provenance_foundation.sql	729225041	2026-09-07 16:20:53	1
+7	create action outcome provenance foundation	SQL	V7__create_action_outcome_provenance_foundation.sql	-627779038	2026-09-07 16:20:53	1
+8	create risk case foundation	SQL	V8__create_risk_case_foundation.sql	1720066707	2026-09-07 16:20:53	1
+9	create trading data ingestion foundation	SQL	V9__create_trading_data_ingestion_foundation.sql	-1462251667	2026-09-07 16:20:53	1

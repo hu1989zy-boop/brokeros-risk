@@ -455,6 +455,30 @@ built on the Windows host hand-in-hand; the **portable Java Kafka-consumer inges
 (prompt `prompts/Q-015-Phase-B-MT4-Implementation-Prompt.md`) is the Codex-buildable,
 independently-reviewed half.
 
+Q-015 Phase B **portable Kafka-consumer ingestion (V2 half)** — Codex implementation
+(`review/q-015/review-q-015-phase-b-consumer-v1-implementation-20260908-001952`) +
+Claude Code independent review **PASS — 2026-09-08**
+(`review/q-015/review-q-015-phase-b-consumer-v2-claude-code-independent-review-20260908-005020`):
+**ACCEPTED — 2026-09-08 — Product Owner.** A `@KafkaListener` on `trading-data.canonical`
+drives the existing Phase A idempotency/gap/partitioned-store transaction with **no
+republish** (a `publish=false` trigger), malformed → a visible dead-letter with original
+bytes, offset advances only after commit (else stop + replay), payload stored **opaquely**
+(original bytes sliced; a typed canonical model validates/routes only). Independently
+reproduced: backend real-MySQL + embedded-Kafka gate **356/0/0** (incl.
+`Q015CanonicalKafkaMySqlTests` 4/4); **no schema change** (V9), no SDK, no new capability;
+changes confined to `tradingdata` + config docs + `spring-kafka-test`. The legacy HTTP
+endpoint is default-off (a test aid).
+
+**Conditions carried to the MT4 gateway + envelope (Windows line) / production, not
+consumer defects:** (1) **global `(server,seq)` gap detection vs Kafka account
+partitioning** — `MAX(sequence)` assumes serialized delivery; concurrent/cross-partition
+consumption needs cursor ownership/reconciliation before concurrent production; (2) **the
+envelope has no reconnect-epoch field** — a same-server sequence reset can collide with old
+rows, so the gateway/envelope must add a durable epoch/discontinuity representation before
+live reconnect acceptance; (3) raw `QUOTE` needs an `accountRef`; (4) the gateway must
+supply `currency` (the typed model is a routing projection, not a financial validator);
+(5) production Kafka security/topology + at-least-once recovery.
+
 **Still parked (Phase B, MT5):** the **MT5 gateway** awaits its own live intake (capture
 against a demo MT5 server) and Implementation Design; ADR-024 already designs the MT5
 side of the neutral model, so no model re-cut is expected. Markout window emission may

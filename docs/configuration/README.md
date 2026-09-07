@@ -48,8 +48,10 @@ not make that value an approved production default. `Sensitivity` is
 | Spring Data Redis | `spring.data.redis.password` | `REDIS_PASSWORD` | String | Empty | Only when the selected Redis requires authentication | all | Secret | Bound by Spring Data Redis; never log value | environment or future approved Secret reference | Yes | Adding a production source requires deployment review |
 | Spring Data Redis | `spring.data.redis.timeout` | `REDIS_TIMEOUT` | Duration | `2s` | No | all | Internal | Spring duration binding | YAML, environment | Yes | Unit is explicit |
 | Spring Kafka | `spring.kafka.bootstrap-servers` | `KAFKA_BOOTSTRAP_SERVERS` | Host/port list | `localhost:29092` | No | all | Internal | Spring Kafka address binding/connectivity | YAML, environment, Compose, ConfigMap | Yes | Alias/list semantics are stable |
-| Spring Kafka | `spring.kafka.consumer.group-id` | `KAFKA_CONSUMER_GROUP` | String | `brokeros-risk`; test uses `brokeros-risk-test` | No | base/test | Internal | Non-empty when a consumer is introduced | YAML, environment | Yes | No consumer/topic is authorized by this entry |
-| Spring Kafka | `spring.kafka.consumer.auto-offset-reset` | None | Enum/string | `earliest` | No | all | Internal | Spring Kafka enum binding | packaged base YAML | Yes | Not permission to create a consumer |
+| Spring Kafka | `spring.kafka.consumer.group-id` | `KAFKA_CONSUMER_GROUP` | String | `brokeros-risk`; test uses `brokeros-risk-test` | Yes for ingestion | base/test | Internal | Non-empty stable group | YAML, environment | Yes | Q-015 V2 canonical-store consumer; changing group replays according to offset-reset |
+| Spring Kafka | `spring.kafka.consumer.auto-offset-reset` | None | Enum/string | `earliest` | No | all | Internal | Spring Kafka enum binding | packaged base YAML | Yes | Q-015 V2; applies only when the group has no valid committed offset |
+| Spring Kafka | `spring.kafka.listener.auto-startup` | Native `SPRING_KAFKA_LISTENER_AUTO_STARTUP` | Boolean | Framework true in all packaged profiles; test-classpath properties false | No | all | Internal | Spring Boot Boolean binding | framework, test resources, environment | Yes | Q-015 V2 listener; embedded tests explicitly start it; deployed test environments keep automatic ingestion |
+| BrokerOS Q-015 Trading Data | `brokeros.risk.tradingdata.http-test-aid-enabled` | Native `BROKEROS_RISK_TRADINGDATA_HTTP_TEST_AID_ENABLED` | Conditional flag | false (absent) | No | all | Internal | Only explicit `true` registers the endpoint | external environment or test properties | Yes | Deprecated Phase A HTTP test aid; SERVICE/capability authorization unchanged; leave disabled in production |
 | Spring Kafka | `spring.kafka.producer.acks` | None | Enum/string | `all` | No | all | Internal | Spring Kafka binding | packaged base YAML | Yes | Not permission to create a producer |
 | Spring Boot server | `server.port` | `SERVER_PORT` | Integer port | `8080` | No | all | Public | Integer/port binding | YAML, environment, ConfigMap | Yes | API address change requires deployment review |
 | Micrometer Tracing | `management.tracing.sampling.probability` | `TRACING_SAMPLING_PROBABILITY` | Decimal 0..1 | `0.1`; test uses `1.0` | No | base/test | Internal | Micrometer/Spring binding | YAML, environment | Yes | ADR-007 governs tracing semantics |
@@ -99,6 +101,16 @@ not make that value an approved production default. `Sensitivity` is
 Profiles do not establish authorization, secret protection, broker identity, or
 business policy. A production process started without the supported `prod`
 selection is a deployment error; Q-006 does not add a second environment flag.
+
+Q-015 Phase B's module factory retains native Kafka authentication and TLS properties.
+It fixes its transport invariants: byte-array values/string keys, auto-commit off,
+record acknowledgement with synchronous commits, single listener thread, at most 100
+records per poll and consumer topic auto-creation off. Its producer fixes `acks=all`,
+idempotence, one in-flight request, three retries, 5-second block/request timeouts and
+15-second delivery timeout. Incompatible native overrides for those invariants are
+intentionally superseded. No new framework-properties wrapper or secret source is
+introduced. Topic provisioning, ACLs, replay and existing source-sequence limits are
+documented in `docs/q-015-phase-b-consumer-operations.md`.
 
 ## Override Priority
 

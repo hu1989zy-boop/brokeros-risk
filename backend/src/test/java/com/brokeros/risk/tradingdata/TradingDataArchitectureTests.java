@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.runner.WebApplicationContextRunner;
+import com.brokeros.risk.tradingdata.interfaces.rest.TradingDataIngestionController;
 
 class TradingDataArchitectureTests {
 
     @Test
-    void moduleHasNoGatewayNativeSdkOrPayloadParsingSurface() throws IOException {
+    void moduleHasNoGatewayNativeSdkOrUnsafeLoggingSurface() throws IOException {
         Path module = repositoryRoot()
                 .resolve("backend/src/main/java/com/brokeros/risk/tradingdata");
         try (Stream<Path> paths = Files.walk(module)) {
@@ -29,6 +31,28 @@ class TradingDataArchitectureTests {
                     "Manager API", "native adapter", "native field",
                     "order ticket", "deal ticket", "position ticket",
                     "logger.info", "logger.debug", "payload.toString");
+        }
+    }
+
+    @Test
+    void legacyHttpTestAidIsAbsentByDefault() {
+        new WebApplicationContextRunner()
+                .withUserConfiguration(TradingDataIngestionController.class)
+                .run(context -> {
+                    assertThat(context).hasNotFailed();
+                    assertThat(context).doesNotHaveBean(TradingDataIngestionController.class);
+                });
+    }
+
+    @Test
+    void canonicalParsingDoesNotLeakIntoPersistenceOrReliability() throws IOException {
+        Path module = repositoryRoot().resolve("backend/src/main/java/com/brokeros/risk/tradingdata");
+        for (String folder : List.of("application", "infrastructure/persistence")) {
+            try (Stream<Path> paths = Files.walk(module.resolve(folder))) {
+                String source = paths.filter(path -> path.toString().endsWith(".java"))
+                        .map(TradingDataArchitectureTests::read).reduce("", String::concat);
+                assertThat(source).doesNotContain("ObjectMapper", "JsonNode", "CanonicalTradingDataEvent");
+            }
         }
     }
 
