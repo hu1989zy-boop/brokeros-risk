@@ -35,3 +35,17 @@ application-local.properties
 # Licensed MT4/MT5 Manager API binaries + any captured broker/server data.
 # NEVER commit: MetaQuotes vendor license + broker infrastructure/PII exposure.
 mt-manager-libs/
+
+# MT4 gateway (gateway/mt4/): the C++ source + build scripts ARE tracked, but the
+# licensed SDK dropped alongside it and all build output must NEVER be committed.
+gateway/mt4/Include/
+gateway/mt4/libs/
+gateway/mt4/*.dll
+gateway/mt4/*.exe
+gateway/mt4/*.obj
+gateway/mt4/*.lib
+gateway/mt4/*.pdb
+gateway/mt4/*.ilk
+gateway/mt4/*.exp
+gateway/mt4/mt4capture.txt
+gateway/mt4/*.jsonl
